@@ -1,0 +1,1 @@
+# synergy_wallet_app
