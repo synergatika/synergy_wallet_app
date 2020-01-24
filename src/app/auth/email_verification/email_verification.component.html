@@ -1,0 +1,23 @@
+<!--begin::Head-->
+<div class="kt-login__head">
+	<span class="kt-login__signup-label">Do you have already validated your email address?</span>&nbsp;&nbsp;
+	<a href="javascript:;" routerLink="/auth/login"
+		class="kt-link kt-login__signup-link">{{ 'AUTH.LOGIN.BUTTON' | translate }}</a>
+</div>
+<!--end::Head-->
+
+<!--begin::Body-->
+<div class="kt-login__body">
+	<!--begin::Check Email Verification-->
+	<div class="kt-login__form">
+		<div class="kt-login__title">
+			<h3>Email Verification</h3>
+		</div>
+
+		<kt-auth-notice></kt-auth-notice>
+
+	</div>
+	<!--end::Check Email Verification-->
+</div>
+
+<!--end::Body-->
