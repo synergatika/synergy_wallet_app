@@ -1,1 +1,22 @@
-<p>scan-offers works!</p>
+<aw-wizard>
+    <aw-wizard-step stepTitle="Scan Or Add">
+        <app-sub-scanner *ngIf="!showEmailForm" (scan_results)="onSuccessScan($event)">
+        </app-sub-scanner>
+        <button type="button" (click)="onShowEmailFormChange()">Email Register</button>
+        <div *ngIf="showEmailForm">
+            <app-sub-email-form (add_email)="onSubmitEmailForm($event)">
+            </app-sub-email-form>
+            <button type="button" awPreviousStep>Go to previous step</button>
+            <button type="button" awNextStep>Go to next step</button>
+        </div>
+    </aw-wizard-step>
+    <aw-wizard-step stepTitle="Offer" awOptionalStep>
+        <app-sub-offer-form (add_offer)="onSubmitOfferForm($event)">
+        </app-sub-offer-form>
+        <button type="button" awPreviousStep>Previous Step</button>
+    </aw-wizard-step>
+    <aw-wizard-step stepTitle="Final">
+        <button type="button" awPreviousStep>Previous Step</button>
+        <button type="button" (click)="finishFunction()">Finish</button>
+    </aw-wizard-step>
+</aw-wizard>

@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatDialogModule } from '@angular/material/dialog';
+
 // Interceptors
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
@@ -36,6 +38,7 @@ import { InvitationComponent } from './invitation/invitation.component';
     AppRoutingModule,
     HttpClientModule,
     NoopAnimationsModule,
+    MatDialogModule,
     TranslateModule.forRoot(),
   ],
   providers: [

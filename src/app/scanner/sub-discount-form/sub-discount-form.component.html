@@ -1,0 +1,34 @@
+<form [formGroup]="submitForm">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="form-group transaction">
+                <h4 class="transaction-title">Transaction Amount</h4>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-text">€</span>
+                        <input type="number" class="form-control final-amount" name="final_amount"
+                            formControlName="final_amount" placeholder="Amount">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 discount-container">
+            <div class="">
+                <h4> You can have a discount of
+                    <span class="discount">{{transaction.discount_amount | currency:'EUR'}}</span>.
+                </h4>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <mat-checkbox (click)="onWantRedeemCheckboxChange()" type="checkbox" class="form-check-input"
+                            name="redeem" formControlName="wantRedeem" value="">
+                            Check to Redeem discount
+                        </mat-checkbox>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<button type="button" (click)="onNextStep()">Go to next step</button>

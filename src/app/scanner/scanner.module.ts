@@ -11,6 +11,12 @@ import { ScanLoyaltyComponent } from './scan-loyalty/scan-loyalty.component';
 import { ScanMicrocreditComponent } from './scan-microcredit/scan-microcredit.component';
 
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ArchwizardModule } from 'angular-archwizard';
+import { SubScannerComponent } from './sub-scanner/sub-scanner.component';
+import { SubAmountFormComponent } from './sub-amount-form/sub-amount-form.component';
+import { SubEmailFormComponent } from './sub-email-form/sub-email-form.component';
+import { SubDiscountFormComponent } from './sub-discount-form/sub-discount-form.component';
+import { SubOfferFormComponent } from './sub-offer-form/sub-offer-form.component';
 
 const routes: Routes = [
     {
@@ -23,7 +29,7 @@ const routes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'offer',
+                path: 'offer/:offer_id',
                 component: ScanOffersComponent,
             },
             {
@@ -42,6 +48,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         ZXingScannerModule,
+        ArchwizardModule,
 
         CommonModule,
         FormsModule,
@@ -69,7 +76,12 @@ const routes: Routes = [
         ScannerComponent,
         ScanOffersComponent,
         ScanLoyaltyComponent,
-        ScanMicrocreditComponent
+        ScanMicrocreditComponent,
+        SubScannerComponent,
+        SubAmountFormComponent,
+        SubEmailFormComponent,
+        SubDiscountFormComponent,
+        SubOfferFormComponent
     ],
     entryComponents: [
     ]

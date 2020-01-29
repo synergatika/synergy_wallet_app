@@ -1,0 +1,15 @@
+<form [formGroup]="submitForm">
+    <!--begin: Form Wizard Step 1-->
+    <div class="col-xl-6">
+        <h5>Scan your barcode or enter a customer's e-mail</h5>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" formControlName="email" placeholder="Email" value="@">
+            <span *ngIf="isControlHasError('email','required')"
+                class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+            <span *ngIf="isControlHasError('email','email')"
+                class="error text-danger">{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</span>
+            <span class="form-text text-muted">Please enter client's email address.</span>
+        </div>
+    </div>
+</form>
