@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
+// Services
 import { MerchantsService } from '../core/services/merchants.service';
 import { ItemsService } from '../core/services/items.service';
 
@@ -17,6 +18,7 @@ export class CustomerExploreOneComponent implements OnInit, OnDestroy {
   merchant: any;
   offers: any;
   posts: any;
+  events: any;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -34,11 +36,14 @@ export class CustomerExploreOneComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
+  /**
+	 * On init
+	 */
   ngOnInit() {
     this.fetchMerchantData();
     this.fetchOffersData();
     this.fetchPostsData();
-    //this.fetchEventsData();
+    this.fetchEventsData();
   }
 
   /**
@@ -96,6 +101,25 @@ export class CustomerExploreOneComponent implements OnInit, OnDestroy {
           data => {
             console.log(data);
             this.posts = data;
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
+  fetchEventsData() {
+    this.itemsService.readPrivateEventsByStore(this.merchant_id)
+      .pipe(
+        tap(
+          data => {
+            console.log(data);
+            this.events = data;
           },
           error => {
           }),

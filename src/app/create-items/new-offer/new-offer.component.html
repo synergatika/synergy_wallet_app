@@ -4,6 +4,20 @@
         <div class="kt-form__section kt-form__section--first">
             <div class="kt-wizard-v3__form">
                 <div class="form-group">
+                    <label>{{'FIELDS.OFFER_TITLE.TITLE' | translate}}</label>
+                    <input type="text" class="form-control" name="Title" formControlName="title"
+                        placeholder="{{'FIELDS.OFFER_TITLE.PLACEHOLDER' | translate}}" value="title">
+                    <span *ngIf="isControlHasError('title','required')"
+                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+                    <span *ngIf="isControlHasError('title','minlength')"
+                        class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+                        {{validator.title.minLength}}</span>
+                    <span *ngIf="isControlHasError('title','maxlength')"
+                        class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+                        {{validator.title.maxLength}}</span>
+                    <span class="form-text text-muted">{{'FIELDS.OFFER_TITLE.DESC' | translate}}</span>
+                </div>
+                <div class="form-group">
                     <label>{{'FIELDS.OFFER_DESCRIPTION.TITLE' | translate}}</label>
                     <input type="text" class="form-control" name="Description" formControlName="description"
                         placeholder="{{'FIELDS.OFFER_DESCRIPTION.PLACEHOLDER' | translate}}" value="description">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+// Services
 import { AuthenticationService } from '../core/services/authentication.service';
 
 @Component({
@@ -9,16 +10,16 @@ import { AuthenticationService } from '../core/services/authentication.service';
 })
 export class QrCodeComponent implements OnInit {
 
-  public myAngularxQrCode: string = null;
+  public qrCode: string = null;
 
   constructor(
     private authenticationService: AuthenticationService
   ) {
+    this.qrCode = this.authenticationService.currentUserValue.user['email'];
   }
 
   ngOnInit() {
-    this.myAngularxQrCode = this.authenticationService.currentUserValue.user['email'];
-    //this.authenticationService.currentUserValue.user['email'];
+
   }
 }
 

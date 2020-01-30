@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 import { Subject, Subscriber } from 'rxjs';
+import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 
+// Services
 import { AuthenticationService } from '../core/services/authentication.service';
 import { LoyaltyService } from '../core/services/loyalty.service';
 

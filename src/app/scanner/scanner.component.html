@@ -2,6 +2,8 @@
 <main id="logout-button-holder">
     <button mat-raised-button id="logout-button" (click)="openModalA()">Scan for Points</button>
 </main>
+
 <main id="logout-button-holder">
-    <button mat-raised-button id="logout-button" (click)="openModalB()">Scan for Offer</button>
+    <button *ngFor="let offer of offers" mat-raised-button id="logout-button" (click)="openModalB(offer.offer_id)">Scan
+        for Offer: {{offer.description}}</button>
 </main>

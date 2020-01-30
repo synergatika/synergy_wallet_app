@@ -187,6 +187,11 @@ export const locale = {
                 G: 'Recreation and Culture'
             },
 
+            OFFER_TITLE: {
+                TITLE: 'Offer\'s Title',
+                PLACEHOLDER: 'Title',
+                DESC: 'Please, enter Offer\'s Title.'
+            },
             OFFER_DESCRIPTION: {
                 TITLE: 'Offer\'s Description',
                 PLACEHOLDER: 'Description',

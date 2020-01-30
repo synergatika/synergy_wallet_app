@@ -26,11 +26,6 @@ const routes: Routes = [
         component: ScannerComponent,
         children: [
             {
-                path: '',
-                redirectTo: 'loyalty',
-                pathMatch: 'full'
-            },
-            {
                 path: 'offer/:offer_id',
                 component: ScanOffersComponent,
             },

@@ -1,9 +1,16 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
+import { tap, takeUntil, finalize } from 'rxjs/operators';
 
+// Services
 import { MerchantsService } from '../core/services/merchants.service';
 import { ItemsService } from '../core/services/items.service';
-import { tap, takeUntil, finalize } from 'rxjs/operators';
+
+// Models
+import { Merchant } from '../core/models/merchant.model';
+import { Offer } from '../core/models/offer.model';
+import { Post } from '../core/models/post.model';
+import { Event } from '../core/models/event.model';
 
 @Component({
   selector: 'app-customer-explore',
@@ -15,10 +22,10 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  merchants: any;
-  posts: any;
-  offers: any;
-  events: any;
+  merchants: Merchant[];
+  posts: Post[];
+  offers: Offer[];
+  events: Event[];
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -28,12 +35,19 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
+  /**
+	 * On init
+	 */
   ngOnInit() {
     this.fetchMerchantsData();
-    this.fetchPostsData();
     this.fetchOffersData();
+    this.fetchPostsData();
+    this.fetchEventsData();
   }
 
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -59,6 +73,25 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  fetchOffersData() {
+    this.itemsService.readAllOffers()
+      .pipe(
+        tap(
+          data => {
+            this.offers = data;
+            console.log(this.offers)
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
   fetchPostsData() {
     this.itemsService.readAllPrivatePosts()
       .pipe(
@@ -66,7 +99,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
           data => {
             this.posts = data;
             console.log(this.posts)
-
           },
           error => {
           }),
@@ -85,26 +117,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.events = data;
-          },
-          error => {
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-
-  fetchOffersData() {
-    this.itemsService.readAllOffers()
-      .pipe(
-        tap(
-          data => {
-            this.offers = data;
-            console.log(this.offers)
-
+            console.log(this.events);
           },
           error => {
           }),

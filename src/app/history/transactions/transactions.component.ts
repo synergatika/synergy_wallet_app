@@ -27,12 +27,27 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService
   ) {
+    this.access = this.authenticationService.currentUserValue.user["access"];
     this.unsubscribe = new Subject();
   }
 
+	/**
+	 * On init
+	 */
   ngOnInit() {
-    this.access = this.authenticationService.currentUserValue.user["access"];
+    this.fetchTransactionsData();
+  }
 
+	/**
+	 * On destroy
+	 */
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
+
+  fetchTransactionsData() {
     this.loyaltyService.readTransactions()
       .pipe(
         tap(
@@ -51,11 +66,5 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
   }
 }

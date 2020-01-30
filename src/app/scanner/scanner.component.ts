@@ -26,7 +26,6 @@ export class ScannerComponent implements OnInit, OnDestroy {
 
   offers: LoyaltyLocalInterface["Offer"][];
 
-
   constructor(
     public matDialog: MatDialog,
     private cdRef: ChangeDetectorRef,
@@ -60,7 +59,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     const modalDialog = this.matDialog.open(ScanLoyaltyComponent, dialogConfig);
   }
 
-  openModalB() {
+  openModalB(offer_id) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -68,7 +67,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {
-      offer_id: '5e3298c9ba608903716b09c2'
+      offer_id: offer_id//'5e3298c9ba608903716b09c2'
     };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(ScanOffersComponent, dialogConfig);

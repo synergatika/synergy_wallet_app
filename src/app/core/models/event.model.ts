@@ -5,8 +5,11 @@ export interface Event {
     merchant_imageURL: string;
 
     event_id: string;
+    event_imageURL: string;
+    title: string;
     content: string;
-    type: number;
+    location: string;
+    dateTime: string;
     access: number;
     createdAt: string;
 }
