@@ -47,10 +47,12 @@ export class AuthComponent implements OnInit {
 	ngOnInit(): void {
 		this.translationService.setLanguage(this.translationService.getSelectedLanguage());
 		// this.headerLogo = this.layoutConfigService.getLogo();
-
+		this.render.addClass(document.body, 'auth-page');
 		// this.splashScreenService.hide();
 	}
-
+	ngOnDestroy() {
+		this.render.removeClass(document.body, 'auth-page');
+	}
 	/**
 	 * Load CSS for this specific page only, and destroy when navigate away
 	 * @param styleUrl

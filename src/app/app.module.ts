@@ -25,6 +25,16 @@ import { CustomerExploreComponent } from './customer-explore/customer-explore.co
 import { CustomerSupportComponent } from './customer-support/customer-support.component';
 import { CustomerExploreOneComponent } from './customer-explore-one/customer-explore-one.component';
 
+import { LayoutComponent } from './views/layout/layout.component';
+import { HeaderComponent } from './views/layout/header/header.component';
+import { TopbarComponent } from './views/layout/header/topbar/topbar.component';
+import { MenuComponent } from './views/layout/header/menu/menu.component';
+import { UserMenuComponent } from './views/layout/header/user-menu/user-menu.component';
+import { FooterComponent } from './views/layout/footer/footer.component';
+import { MatInputModule, MatCardModule } from "@angular/material";
+
+import { MenuService } from './core/services/menu.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +45,13 @@ import { CustomerExploreOneComponent } from './customer-explore-one/customer-exp
     CustomerExploreComponent,
     CustomerSupportComponent,
     CustomerExploreOneComponent,
-
+	
+	MenuComponent,
+    LayoutComponent,
+    HeaderComponent,
+    TopbarComponent,
+	UserMenuComponent,
+	FooterComponent
   ],
   imports: [
     QRCodeModule,
@@ -46,10 +62,13 @@ import { CustomerExploreOneComponent } from './customer-explore-one/customer-exp
     NoopAnimationsModule,
     MatDialogModule,
     TranslateModule.forRoot(),
+	MatCardModule,
+	MatInputModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+	MenuService
   ],
   bootstrap: [AppComponent]
 })

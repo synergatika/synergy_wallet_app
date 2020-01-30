@@ -1,0 +1,12 @@
+.footer__wrapper {
+	color: #ccc;
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .8rem 0;
+	a {
+		color: #eee;
+		padding: 0 3px;
+		margin: 0 2px;
+	}
+}

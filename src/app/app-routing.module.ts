@@ -5,34 +5,42 @@ import { CustomerDashboardComponent } from './customer-dashboard/customer-dashbo
 import { CustomerExploreComponent } from './customer-explore/customer-explore.component';
 import { CustomerExploreOneComponent } from './customer-explore-one/customer-explore-one.component';
 import { InvitationComponent } from './invitation/invitation.component';
+import { LayoutComponent } from './views/layout/layout.component';
 
 const routes: Routes = [
   // Customer Zone
-  {
-    path: 'qr-code', component: QrCodeComponent
-  },
-  {
-    path: 'dashboard', component: CustomerDashboardComponent
-  },
-  {
-    path: 'explore', component: CustomerExploreComponent
-  },
-  {
-    path: 'explore-one/:_id', component: CustomerExploreOneComponent
-  },
+	{
+		path: '',
+		component: LayoutComponent,
+		children: [
+			{
+			path: 'qr-code', component: QrCodeComponent
+			},
+			{
+			path: 'dashboard', component: CustomerDashboardComponent
+			},
+			{
+			path: 'explore', component: CustomerExploreComponent
+			},
+			{
+			path: 'explore-one/:_id', component: CustomerExploreOneComponent
+			},
 
-  { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  { path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },
-  { path: 'scanner', loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule) },
-  { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
-  { path: 'history', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
+			
+			{ path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },
+			{ path: 'scanner', loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule) },
+			{ path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
+			{ path: 'history', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
 
 
-  {
-    path: 'invitation', component: InvitationComponent
-  },
-  { path: '', redirectTo: 'create', pathMatch: 'full' },
-  { path: '**', redirectTo: 'qr-code', pathMatch: 'full' },
+			{
+			path: 'invitation', component: InvitationComponent
+			},
+		]
+	},
+	{ path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+	{ path: '', redirectTo: 'create', pathMatch: 'full' },
+	{ path: '**', redirectTo: 'qr-code', pathMatch: 'full' },
 ]
 
 @NgModule({
