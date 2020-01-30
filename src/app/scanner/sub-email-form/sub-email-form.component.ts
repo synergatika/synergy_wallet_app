@@ -16,6 +16,8 @@ export class SubEmailFormComponent implements OnInit {
   add_email: EventEmitter<string> = new EventEmitter<string>();
 
   submitForm: FormGroup;
+  submitted: boolean = false;
+
   user: LoyaltyLocalInterface["User"];
 
   constructor(
@@ -38,8 +40,17 @@ export class SubEmailFormComponent implements OnInit {
     });
   }
 
-  nextStep() {
+  onNextStep() {
+    if (this.submitted) return;
+    this.submitted = true;
+
     const controls = this.submitForm.controls;
+    if (this.submitForm.invalid) {
+      Object.keys(controls).forEach(controlName =>
+        controls[controlName].markAsTouched()
+      );
+      return;
+    };
 
     this.user.email = controls.email.value;
     this.loyaltyLocalService.changeUser(this.user);

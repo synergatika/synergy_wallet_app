@@ -19,16 +19,22 @@ import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { QRCodeModule } from 'angularx-qrcode';
 
 import { QrCodeComponent } from './qr-code/qr-code.component';
-import { BalanceComponent } from './balance/balance.component';
 import { InvitationComponent } from './invitation/invitation.component';
+import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
+import { CustomerExploreComponent } from './customer-explore/customer-explore.component';
+import { CustomerSupportComponent } from './customer-support/customer-support.component';
+import { CustomerExploreOneComponent } from './customer-explore-one/customer-explore-one.component';
 
 @NgModule({
   declarations: [
     AppComponent,
 
     QrCodeComponent,
-    BalanceComponent,
     InvitationComponent,
+    CustomerDashboardComponent,
+    CustomerExploreComponent,
+    CustomerSupportComponent,
+    CustomerExploreOneComponent,
 
   ],
   imports: [

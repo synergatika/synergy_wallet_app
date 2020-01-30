@@ -2,15 +2,15 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 import { Subject, Subscriber } from 'rxjs';
 
-import { AuthenticationService } from '../core/services/authentication.service'
-import { LoyaltyService } from '../core/services/loyalty.service'
+import { AuthenticationService } from '../core/services/authentication.service';
+import { LoyaltyService } from '../core/services/loyalty.service';
 
 @Component({
-  selector: 'app-balance',
-  templateUrl: './balance.component.html',
-  styleUrls: ['./balance.component.sass']
+  selector: 'app-customer-dashboard',
+  templateUrl: './customer-dashboard.component.html',
+  styleUrls: ['./customer-dashboard.component.sass']
 })
-export class BalanceComponent implements OnInit, OnDestroy {
+export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
   balance: number = 0;
 
@@ -36,6 +36,20 @@ export class BalanceComponent implements OnInit, OnDestroy {
   * On init
   */
   ngOnInit() {
+    this.fetchBalanceData();
+  }
+
+
+  /**
+   * On destroy
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
+
+  fetchBalanceData() {
     this.loyaltyService.readBalance()
       .pipe(
         tap(
@@ -51,15 +65,5 @@ export class BalanceComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  }
-
-
-  /**
-   * On destroy
-   */
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
   }
 }

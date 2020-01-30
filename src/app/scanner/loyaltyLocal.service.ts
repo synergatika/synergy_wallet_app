@@ -7,7 +7,7 @@ import { LoyaltyLocalInterface } from './loyaltyLocal.interface';
 @Injectable()
 export class LoyaltyLocalService {
 
-    loyaltyLocalInterface: LoyaltyLocalInterface;
+    //loyaltyLocalInterface: LoyaltyLocalInterface;
 
     private userSource = new BehaviorSubject({
         identifier: '',

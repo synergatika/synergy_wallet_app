@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -13,19 +13,16 @@ import { LoyaltyLocalService } from '../loyaltyLocal.service';
 // Local Models & Interfaces
 import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
 
-import { MatDialogRef } from '@angular/material';
-import { MAT_DIALOG_DATA } from '@angular/material';
-
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-scan-offers',
   templateUrl: './scan-offers.component.html',
   styleUrls: ['./scan-offers.component.sass'],
-  providers: [LoyaltyLocalService]
+  // providers: [LoyaltyLocalService]
 })
 export class ScanOffersComponent implements OnInit, OnDestroy {
 
   offer_id: string;
-  identifier: string = '';
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -36,18 +33,19 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   submitted: boolean = false;
 
+  showEmailForm = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private loyaltyService: LoyaltyService,
     private loyaltyLocalService: LoyaltyLocalService,
+    public dialogRef: MatDialogRef<ScanOffersComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
-      console.log(params);
-      this.offer_id = params.offer_id;
-    });
-
-    this.loyaltyLocalService.offers.subscribe(offers => this.offers = offers)
+    this.offer_id = this.data.offer_id;
+    this.loyaltyLocalService.offers.subscribe(offers => this.offers = offers);
+    this.loyaltyLocalService.offerTransaction.subscribe(transaction => this.transaction = transaction);
+    this.loyaltyLocalService.user.subscribe(user => this.user = user);
     this.unsubscribe = new Subject();
   }
 
@@ -63,18 +61,19 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   initializeOfferData() {
     const currentOffer = this.offers[this.offers.map(function (e) { return e.offer_id; }).indexOf(this.offer_id)];
-
     this.transaction.offer_id = currentOffer.offer_id;
     this.transaction.cost = currentOffer.cost;
     this.loyaltyLocalService.changeOfferTransaction(this.transaction);
   }
 
   fetchBalanceData() {
-    this.loyaltyService.memberBalance((this.user.identifier || this.user.email).toLowerCase())
+    const identifier = this.user.identifier || this.user.email;
+    this.loyaltyService.memberBalance((identifier).toLowerCase())
       .pipe(
         tap(
           data => {
-            this.transaction.points = data.points;
+            console.log(parseInt(data.data.points, 16));
+            this.transaction.points = parseInt(data.data.points, 16);
             this.loyaltyLocalService.changeOfferTransaction(this.transaction);
             console.log(data);
           },
@@ -102,12 +101,17 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   }
 
+  onShowEmailFormChange() {
+    this.showEmailForm = !this.showEmailForm;
+  }
+
   finalize() {
     if (this.submitted) return;
     this.submitted = true;
 
+    const identifier = this.user.identifier || this.user.email;
     const redeemPoints = {
-      _to: (this.user.identifier || this.user.email).toLowerCase(),
+      _to: (identifier).toLowerCase(),
       _points: this.transaction.discount_points,
       password: 'my_password'//controls.password.value
     };

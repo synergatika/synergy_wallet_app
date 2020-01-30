@@ -21,7 +21,7 @@ import { LoyaltyLocalInterface } from "../loyaltyLocal.interface";
   selector: 'app-scan-loyalty',
   templateUrl: './scan-loyalty.component.html',
   styleUrls: ['./scan-loyalty.component.sass'],
-  providers: [LoyaltyLocalService]
+  // providers: [LoyaltyLocalService]
 })
 export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 

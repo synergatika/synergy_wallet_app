@@ -18,6 +18,8 @@ import { SubEmailFormComponent } from './sub-email-form/sub-email-form.component
 import { SubDiscountFormComponent } from './sub-discount-form/sub-discount-form.component';
 import { SubOfferFormComponent } from './sub-offer-form/sub-offer-form.component';
 
+import { LoyaltyLocalService } from './loyaltyLocal.service';
+
 const routes: Routes = [
     {
         path: '',
@@ -64,6 +66,7 @@ const routes: Routes = [
         // EffectsModule.forFeature([AuthEffects]),
     ],
     providers: [
+        LoyaltyLocalService
         // InterceptService,
         // {
         //     provide: HTTP_INTERCEPTORS,

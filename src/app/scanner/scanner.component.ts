@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 
-import { OffersService } from '../core/services/offers.service';
+import { ItemsService } from '../core/services/items.service';
 import { AuthenticationService } from '../core/services/authentication.service';
 
 import { LoyaltyLocalInterface } from './loyaltyLocal.interface';
@@ -17,7 +17,7 @@ import { ScanOffersComponent } from './scan-offers/scan-offers.component';
   selector: 'app-scanner',
   templateUrl: './scanner.component.html',
   styleUrls: ['./scanner.component.sass'],
-  providers: [LoyaltyLocalService]
+  // providers: [LoyaltyLocalService]
 })
 export class ScannerComponent implements OnInit, OnDestroy {
 
@@ -32,10 +32,20 @@ export class ScannerComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private loyaltyLocalService: LoyaltyLocalService,
     private authenticationService: AuthenticationService,
-    private offersService: OffersService,
+    private itemsService: ItemsService,
   ) {
     this.loyaltyLocalService.offers.subscribe(offers => this.offers = offers)
     this.unsubscribe = new Subject();
+  }
+
+  ngOnInit() {
+    this.fetchOffersData();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
   }
 
   openModalA() {
@@ -45,9 +55,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     dialogConfig.id = "modal-component";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
-    dialogConfig.data = {
-      offer_id: '5e31aac39c804306ae7529b0'
-    };
+
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(ScanLoyaltyComponent, dialogConfig);
   }
@@ -59,18 +67,21 @@ export class ScannerComponent implements OnInit, OnDestroy {
     dialogConfig.id = "modal-component";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
+    dialogConfig.data = {
+      offer_id: '5e3298c9ba608903716b09c2'
+    };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(ScanOffersComponent, dialogConfig);
   }
 
 
   fetchOffersData() {
-    this.offersService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"])
+    this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"])
       .pipe(
         tap(
           data => {
             this.offers = data;
-            this.loyaltyLocalService.changeOffers(data);
+            this.loyaltyLocalService.changeOffers(this.offers);
           },
           error => {
           }),
@@ -81,16 +92,6 @@ export class ScannerComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  }
-
-  ngOnInit() {
-    this.fetchOffersData();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
   }
 
 }
