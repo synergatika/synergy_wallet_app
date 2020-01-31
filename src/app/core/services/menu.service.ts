@@ -10,20 +10,21 @@ export class MenuService {
 	constructor() {}
 
 	openNav() {
-		document.getElementById("mySidenav").style.width = "250px";
-		document.getElementById("main").style.marginLeft = "250px";
+		//document.getElementById("mySidenav").style.width = "250px";
+		//document.getElementById("main").style.marginLeft = "250px";
+		document.getElementById("mySidenav").classList.add("menu-active");
+		document.getElementById("main").classList.add("main-menu-active");
 		document.getElementById("menu_overlay").classList.add("overlay-show");
 		//document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-		//document.body.classList.add("menu-overlay");
 		
 	}
 	
 	closeNav() {
-		document.getElementById("mySidenav").style.width = "0";
-		document.getElementById("main").style.marginLeft = "0";
-		//document.body.classList.replace("menu-overlay", "");
+		//document.getElementById("mySidenav").style.width = "0";
+		//document.getElementById("main").style.marginLeft = "0";
+		document.getElementById("mySidenav").classList.remove("menu-active");
+		document.getElementById("main").classList.remove("main-menu-active");
 		document.getElementById("menu_overlay").classList.remove("overlay-show");
-		//document.body.classList.remove("menu-overlay");
 	} 
 	
 }

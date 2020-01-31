@@ -1,4 +1,107 @@
-<div>
-    <div class="kt-heading kt-heading--md">Current Balance</div>
-    <p class="points-paragraph">You currently have <span class="points">{{balance}}</span> points.</p>
+<div class="dashboard">
+	<div class="badge-container">
+		<div class="mr-4">
+			<img src="../../../assets/media/images/Badge-Icon.png">
+		</div>
+		<div class="">
+			<h2>Τίτλος Badges</h2>
+			<p>Μπορείτε αγοράζοντας να μπλα μπλα μπλα</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<mat-card class="dashboard-card wallet-card">
+			  <mat-card-header class="wallet-card-header">
+				<mat-card-title>Το πορτοφόλι μου</mat-card-title>
+				<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png">
+			  </mat-card-header>
+			  <mat-card-content>
+					<!--begin::Content-->
+					<div class="wallet_single_wrapper">						
+						<div class="single row wallet-row">
+							<div class="col-sm-9 single-content">
+								<span class="wallet-img">
+									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
+								</span>
+								<div class="">
+									<div class="single-title">Synergey Πόντοι</div>
+									<div class="single-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />όλο το δίκτυο</div>
+								</div>
+							</div>
+							<div class="col-sm-3 single-amount">
+								<div>
+									<span class="points">{{balance}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="single row" *ngFor="let single of (list)">
+							<div class="col-sm-9 single-content">
+								<div class="wallet-img">
+									<img src={{single.img}} alt={{single.title}} />
+								</div>
+								<div class="">
+
+									<div class="single-title">{{single.title}}</div>
+									<div class="single-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />{{coops[single.coop_id]['name']}}</div>
+									<div class="single-subtitle">εώς {{single.expires}}</div>
+								</div>
+							</div>
+							<div class="col-sm-3 single-amount">
+								<div>
+									<span class="points">{{single.price_reduced | currency:'EUR'}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end::Content-->
+			  </mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Προσφορές</h3>
+		</div>
+	</div>
+	<div class="row" *ngIf="offers">
+		<div class="col-md-6" *ngFor="let offer of (offers)">
+			<mat-card class="dashboard-card offer-card">
+			  <mat-card-content>
+					<!--begin::Content-->
+					<div class="wallet_offer_wrapper">
+						<div class="offer row" >
+							<div class="col-sm-12 offer-img-container">
+								<div class="offer-img">
+									<img src={{offer.merchant_imageURL}} alt={{offer.title}} />
+									<div class="offer-expires">έως {{offer.expiresAt | date: 'd.M'}}</div>
+								</div>
+								
+							</div>
+							<div class="col-sm-12 offer-amount">
+								<div class="offer-heading">
+									<div class="offer-title">{{offer.description}}</div>
+									<div>
+										<span class="points">{{offer.cost | currency:'EUR'}}</span>
+									</div>
+								</div>
+								<div class="offer-description">
+									{{offer.description}}
+								</div>
+								<div class="offer-info">
+									<div class="">
+										<div class="offer-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />{{offer.merchant_name}}</div>
+										<div class="offer-subtitle"><img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />{{offer.expiresAt}}</div>
+									</div>
+									<div class="share">
+										<img src="../../../assets/media/images/Share.png" alt="share" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end::Content-->
+			  </mat-card-content>
+			</mat-card>
+		</div>
+	</div>
 </div>

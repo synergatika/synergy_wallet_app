@@ -8,7 +8,7 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-customer-explore',
   templateUrl: './customer-explore.component.html',
-  styleUrls: ['./customer-explore.component.sass']
+  styleUrls: ['./customer-explore.component.scss']
 })
 export class CustomerExploreComponent implements OnInit, OnDestroy {
 

@@ -1,7 +1,18 @@
-.header__wrapper {
-	align-items: center;
-    justify-content: space-between;
-	.header_right__wrapper {
-		display: flex;
+.app-header {
+	background-color: #37aba7;
+	padding: 10px 30px;
+	.header__wrapper {
+		align-items: center;
+		justify-content: space-between;	    
+		.header_left__wrapper {
+			align-items: center;
+			display: flex;
+			a {
+				margin-right: 20px;
+			}
+		}   
+		.header_right__wrapper {
+			display: flex;
+		}
 	}
 }

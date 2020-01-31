@@ -1,0 +1,9 @@
+.menu-icon {
+	width: 45px;
+	padding: 2px 7px;
+	cursor: pointer;
+	transition: opacity 0.2s;
+	&:hover {
+		opacity: 0.6;
+	}
+}

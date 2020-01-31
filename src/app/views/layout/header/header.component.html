@@ -1,12 +1,13 @@
-<div class="app-header container">
+<div class="app-header">
 	<div class="row header__wrapper">
-		<div>
+		<div class="header_left__wrapper">
 			<a href="javascript:;" routerLink="/">
 				<img src={{logo}}>
 			</a>
-		</div>		
-		<div class="header_right__wrapper">
-			<app-menu></app-menu>
+			<app-topbar></app-topbar>
+		</div>
+				
+		<div class="header_right__wrapper">		
 			<app-user-menu></app-user-menu>
 		</div>
 	</div>

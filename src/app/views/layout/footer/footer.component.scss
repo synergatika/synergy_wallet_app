@@ -1,12 +1,27 @@
-.footer__wrapper {
-	color: #ccc;
-	display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: .8rem 0;
-	a {
-		color: #eee;
-		padding: 0 3px;
-		margin: 0 2px;
+.footer-wrapper {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #fff;
+	width: 100%;
+	padding: 18px;
+	z-index: 2;
+	.footer-content {
+		max-width: 400px;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		margin: 0 auto;
+		img {
+			max-width: 45px;
+			margin: 5px auto;
+		}
+		a {
+			text-align: center;
+			display: block;
+			font-weight: 600;
+			color: #000;
+		}
 	}
 }

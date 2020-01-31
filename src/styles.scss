@@ -1,14 +1,30 @@
 html, body { height: 100%; }
 body { 
 	margin: 0; 
-	padding-top: 20px;
+	//padding-top: 20px;
 	background-color: #f2f3f8;
 	font-family: "Noto Sans", "Helvetica Neue", sans-serif; 
-	//color: #37aba7;
+	a {
+		color: #368f8c;
+		transition: color 0.3s;
+		&:hover {
+			color: #37aba7;
+		}
+	}
 	&.menu-overlay {
 		background-color: rgba(0,0,0,0.4);
 	}
-	
+	.btn-primary {
+		background-color: #37aba7;
+		border-color: #37aba7;
+		&:hover {
+			background-color: #368f8c;
+			border-color: #368f8c;
+		}
+	}
+	.mat-card:not([class*=mat-elevation-z]) {
+		box-shadow: 0 6px 21px -2px #d1cbcb;
+	}
 }
 
 .auth-page {

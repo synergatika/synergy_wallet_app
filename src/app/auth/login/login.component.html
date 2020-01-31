@@ -1,23 +1,19 @@
 <!--begin::Head-->
-<div class="kt-login__head">
-	<span class="kt-login__signup-label">{{ 'AUTH.MESSAGES.HAVE_ACCOUNT' | translate }}</span>&nbsp;&nbsp;
-	<a href="javascript:;" routerLink="/auth/register"
-		class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
-</div>
+
 <!--end::Head-->
 
 <!--begin::Body-->
 <div class="kt-login__body">
 	<!--begin::Signin-->
 	<div class="kt-login__form">
-		<div class="kt-login__title">
+		<div class="kt-login__title mb-3">
 			<h3>{{ 'AUTH.LOGIN.TITLE' | translate }}</h3>
 		</div>
 
 		<kt-auth-notice></kt-auth-notice>
 
 		<!--begin::Form-->
-		<form class="kt-form" [formGroup]="loginForm" autocomplete="off">
+		<form class="kt-form" [formGroup]="loginForm" autocomplete="off" class="login-form">
 			<div class="form-group">
 				<mat-form-field>
 					<mat-label>{{ 'AUTH.INPUT.EMAIL' | translate }}</mat-label>
@@ -59,7 +55,7 @@
 			</div>
 			<!--begin::Action-->
 			<div class="kt-login__actions">
-				<a href="javascript:;" routerLink="/auth/forgot-password" class="kt-link kt-login__link-forgot">
+				<a href="javascript:;" routerLink="/auth/forgot-password" class="link-forgot mr-3">
 					{{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
 				</a>
 				<a href="javascript:;" routerLink="/" class="kt-link kt-login__link-forgot">
@@ -72,37 +68,12 @@
 			<!--end::Action-->
 		</form>
 		<!--end::Form-->
-
-		<!--begin::Divider-->
-		<!--	<div class="kt-login__divider">
-			<div class="kt-divider">
-				<span></span>
-				<span>OR</span>
-				<span></span>
-			</div>
-		</div> -->
-		<!--end::Divider-->
-
-		<!--begin::Options-->
-		<!--
-		<div class="kt-login__options">
-			<a href="https://www.facebook.com/keenthemes/" target="_blank" class="btn btn-primary kt-btn">
-				<i class="fab fa-facebook-f"></i>
-				Facebook
-			</a>
-
-			<a href="https://twitter.com/keenthemes/" target="_blank" class="btn btn-info kt-btn">
-				<i class="fab fa-twitter"></i>
-				Twitter
-			</a>
-
-			<a href="javascript:;" class="btn btn-danger kt-btn">
-				<i class="fab fa-google"></i>
-				Google
-			</a>
+		<div class="kt-login__head">
+			<span class="kt-login__signup-label">{{ 'AUTH.MESSAGES.HAVE_ACCOUNT' | translate }}</span>&nbsp;&nbsp;
+			<a href="javascript:;" routerLink="/auth/register"
+				class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
 		</div>
-	-->
-		<!--end::Options-->
+		
 	</div>
 	<!--end::Signin-->
 </div>
