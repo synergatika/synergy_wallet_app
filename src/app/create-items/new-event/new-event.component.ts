@@ -40,7 +40,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   originalImage: boolean = false;
 
   submitForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -136,6 +136,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
+
+	/**
+	 * On Form Submit
+	 */
   onSubmit() {
     if (this.submitted) return;
 
@@ -147,7 +151,9 @@ export class NewEventComponent implements OnInit, OnDestroy {
       );
       return;
     }
+
     this.submitted = true;
+    this.loading = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);

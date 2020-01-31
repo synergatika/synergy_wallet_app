@@ -33,20 +33,25 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  submitted: boolean = false;
-  submitForm: FormGroup;
+  // submitted: boolean = false;
+  // submitForm: FormGroup;
 
-  showEmailForm = false;
+  showIdentifierForm = false;
   showCardScanner = false;
 
   public user: LoyaltyLocalInterface["User"];
   public transaction: LoyaltyLocalInterface["PointsTransaction"];
   public action: LoyaltyLocalInterface["Actions"];
 
+  messages = {
+    stepB: '',
+    stepC: ''
+  }
 
   state: string = '11';
   constructor(
     private cdRef: ChangeDetectorRef,
+    private translate: TranslateService,
     private loyaltyService: LoyaltyService,
     private loyaltyLocalService: LoyaltyLocalService
   ) {
@@ -55,17 +60,22 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     this.loyaltyLocalService.actions.subscribe(action => this.action = action);
     this.unsubscribe = new Subject();
   }
-  // constructor(
-  //   private router: Router,
-  //   private loyaltyService: LoyaltyService,
-  //   private authenticationService: AuthenticationService,
-  //   private cdRef: ChangeDetectorRef,
-  //   private fb: FormBuilder,
-  //   private translate: TranslateService
-  // ) {
-  //   
-  // }
 
+	/**
+	 * On init
+	 */
+  ngOnInit() {
+    this.initForm();
+  }
+
+	/**
+	 * On destroy
+	 */
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
 
   /**
    * States: 
@@ -86,29 +96,37 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
    * user_exists_B: 1
    */
 
-  onSuccessScan(event: string) {
-    this.loyaltyService.checkByIdentifier((this.user.identifier).toLowerCase())
+  onSuccessScanIdentifier(event: string) {
+
+    this.loyaltyService.checkIdentifier((this.user.identifier_scan).toLowerCase())
       .pipe(
         tap(
           data => {
-            if (data.message === 'user_not_exists') {
-              this.state = '11';
-              this.showEmailForm = true;
-            } else if (data.message === 'user_no_email') {
-              // User is registred No Email & Only Card - Ask Email
-              this.state = '10';
-              this.showEmailForm = true;
-            } else if (data.message === 'user_no_card') {
-              // User is registred Only Email & No Card - Go to Step 2
-              this.state = '01';
+            if (data.message === 'email_both') {
+              // Ok!
+              this.state = '011';
+              this.onAfterNextStep(3);
+            } else if (data.message === 'email_none') {
+              this.state = '000';
+              // Cannot Be Happened!
+            } else if (data.message === 'email_no_card') {
+              // Ok! Maybe ask card???
+              this.state = '001';
+              this.onAfterNextStep(3);
+            } else if (data.message === 'card_both') {
+              this.state = '111';
+              this.onAfterNextStep(3);
+            } else if (data.message === 'card_none') {
+              this.state = '100';
+              this.messages.stepB = 'New Card. If user is regitered enter email to link! If not ask email to register! Or procced and create a card account';
               this.onNextStep();
-            } else if (data.data) {
-              // User is registred with Email & Card - Go to Step 2
-              this.state = '00';
+            } else if (data.message === 'card_no_email') {
+              this.state = '101';
+              this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
               this.onNextStep();
+            } else {
+              // Cannot Be Happened!
             }
-
-            console.log(data);//this.balance = parseInt(data.points, 16);
           },
           error => {
             console.log(error);
@@ -120,58 +138,99 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-
-    // State 00: All Good -> User Account has Email & Card Number - No action
-    // State 01: Half Good -> User Account has Email but No Card Number - Nothing to Do
-    // State 10: Half Good -> User Account has Card Number but No Email - Add email - Message About it.
-    // State 11: No Good -> User Account has No Email & No Card Number - Add email - Message about it.
   }
 
-  onSubmitEmailForm(event: string) {
-    if (event) {
-      this.loyaltyService.checkByEmail((this.user.email).toLowerCase())
-        .pipe(
-          tap(
-            data => {
-              if (data.msg === 'user_not_exists') {
-                if (this.user.identifier && this.state === '11') {
-                  this.action.need_full_registration = true;
-                }
-                else if (this.user.identifier && this.state === '10') {
-                  this.action.need_email_update = true;
-                }
-                else {
-                  this.action.need_email_registration = true;
-                }
-                this.loyaltyLocalService.changeActions(this.action);
-                this.onNextStep();
-              } else if (data.data) {
-                if (this.user.identifier) {
-                  this.action.need_card_update = true;
-                  this.loyaltyLocalService.changeActions(this.action);
-                }
-                this.onNextStep();
-              }
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-    } else {
-      if (this.user.identifier) {
-        this.action.need_card_registration = true;
-        this.loyaltyLocalService.changeActions(this.action);
-        this.onNextStep();
-      } else {
-        console.log("Mail or Scan!");
-      }
-    }
+  onSubmitIdentifierForm(event: string) {
+
+    this.loyaltyService.checkIdentifier((this.user.identifier_form).toLowerCase())
+      .pipe(
+        tap(
+          data => {
+            if (data.message === 'email_both') {
+              // Είχε ξαχάσει κάρτα κινητό οπότε προχωράμε
+              this.state = '011';
+              this.onAfterNextStep(2);
+            } else if (data.message === 'email_none') {
+              // Θα χρειαστεί εγγραφή
+              this.messages.stepC = 'User would be created';
+              this.state = '000';
+              this.user.email = this.user.identifier_form;
+              this.loyaltyLocalService.changeUser(this.user);
+              this.onAfterNextStep(2);
+            } else if (data.message === 'email_no_card') {
+              // Ok! Maybe ask card???
+              this.state = '001';
+              this.onAfterNextStep(2);
+            } else if (data.message === 'card_both') {
+              // Μπήκε με αριθμό κάρτας
+              this.state = '111';
+              this.onAfterNextStep(2);
+            } else if (data.message === 'card_none') {
+              // Πληκτρολόγησε Νέα Κάρτα
+              this.messages.stepB = 'New Card. If user is regitered enter email to link! If not ask email to register! Or procced and create a card account';
+              this.state = '100';
+              this.onNextStep();
+            } else if (data.message === 'card_no_email') {
+              // Πληκτρολόγησε την κάρτα, Ζήτα Email
+              this.state = '101';
+              this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
+              this.onNextStep();
+            } else {
+              // Cannot Be Happened!
+            }
+          },
+          error => {
+            console.log(error);
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
+  onSubmitEmailForm(event) {
+    console.log(event);
+    this.loyaltyService.checkIdentifier((this.user.email).toLowerCase())
+      .pipe(
+        tap(
+          data => {
+            // Βάζει το email. Oι απαντήσεις εδώ είναι 2:
+            // α) υπάρχων χρήστης -> update card Number,
+            // b) νέος χρήστης -> register
+
+            // ή δεν βάζει email άρα συνεχίζουμε με την κάρτα ως έχει!
+            if (data.message === 'email_both') {
+              // Είχε ξαχάσει κάρτα κινητό οπότε προχωράμε
+              this.state = '011';
+              this.onNextStep();
+            } else if (data.message === 'email_none') {
+              this.messages.stepC = 'User would be created';
+              this.state = '000';
+              this.user.email = this.user.identifier_form;
+              this.loyaltyLocalService.changeUser(this.user);
+              this.onNextStep();
+            } else if (data.message === 'email_no_card') {
+              // Ok! Maybe ask card???
+              this.messages.stepC = 'Link Done';
+              this.state = '001';
+              this.onNextStep();
+            } else {
+              // Cannot Be Happened!
+            }
+          },
+          error => {
+            console.log(error);
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
   }
 
   onSubmitAmountForm(event: number) {
@@ -195,8 +254,11 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     this.onNextStep();
   }
 
+  onAfterNextStep(step: number) {
+    this.wizard.goToStep(step);
+  }
+
   onNextStep() {
-    console.log("On Next Step");
     this.wizard.goToNextStep();
   }
 
@@ -206,23 +268,12 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 
 
 
-  onShowEmailFormChange() {
-    this.showEmailForm = !this.showEmailForm;
-    //amountForm.initializeComponent();
+  onShowIdentifierFormChange() {
+    this.showIdentifierForm = !this.showIdentifierForm;
   }
 
   initForm() {
 
-  }
-
-  ngOnInit() {
-    this.initForm();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
   }
 
   earnPoints(earnPoints, redeemPoints) {

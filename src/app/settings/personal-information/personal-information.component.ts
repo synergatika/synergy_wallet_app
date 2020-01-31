@@ -79,6 +79,23 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {
     this.unsubscribe = new Subject();
+    this.access = this.authenticationService.currentUserValue.user["access"];
+  }
+
+	/**
+	 * On init
+	 */
+  ngOnInit() {
+    this.initForm();
+  }
+
+	/**
+	 * On destroy
+	 */
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
   }
 
   initForm() {
@@ -165,17 +182,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
-  ngOnInit() {
-    this.access = this.authenticationService.currentUserValue.user["access"];
-    this.initForm();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
-
+  /**
+	 * On Form Submit
+	 */
   onSubmit() {
     if (this.submitted) return;
 
@@ -190,7 +199,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
           return;
         }
       }
+
       this.submitted = true;
+      this.loading = true;
 
       const formData = new FormData();
       formData.append('imageURL', this.fileData);
@@ -235,7 +246,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
           return;
         }
       }
+
       this.submitted = true;
+      this.loading = true;
 
       const formData = new FormData();
       formData.append('imageURL', this.fileData);

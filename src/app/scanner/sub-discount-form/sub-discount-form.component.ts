@@ -68,7 +68,7 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     this.initForm();
 
     if (this.transaction.amount >= 5) {
-      this.loyaltyService.memberBalance((this.user.identifier || this.user.email).toLowerCase())
+      this.loyaltyService.memberBalance((this.user.identifier_scan || this.user.identifier_form).toLowerCase())
         .pipe(
           tap(
             data => {

@@ -40,7 +40,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   originalImage: boolean = false;
 
   submitForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -60,6 +60,22 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {
     this.unsubscribe = new Subject();
+  }
+
+	/**
+	 * On init
+	 */
+  ngOnInit() {
+    this.initForm();
+  }
+
+	/**
+	 * On destroy
+	 */
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
   }
 
   initForm() {
@@ -89,22 +105,6 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     });
   }
 
-	/**
-	 * On init
-	 */
-  ngOnInit() {
-    this.initForm();
-  }
-
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
-
   fileProgress(fileInput: any) {
     this.fileData = <File>fileInput.target.files[0];
     this.preview();
@@ -132,6 +132,9 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
+  /**
+	 * On Form Submit
+	 */
   onSubmit() {
     if (this.submitted) return;
 
@@ -143,6 +146,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
       );
       return;
     }
+    this.loading = true;
     this.submitted = true;
 
     var _date = new Date();

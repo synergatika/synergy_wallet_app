@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -14,6 +14,7 @@ import { LoyaltyLocalService } from '../loyaltyLocal.service';
 import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { WizardComponent } from 'angular-archwizard';
 @Component({
   selector: 'app-scan-offers',
   templateUrl: './scan-offers.component.html',
@@ -21,6 +22,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   // providers: [LoyaltyLocalService]
 })
 export class ScanOffersComponent implements OnInit, OnDestroy {
+
+  @ViewChild(WizardComponent, { static: true })
+  public wizard: WizardComponent;
 
   offer_id: string;
 
@@ -33,7 +37,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   submitted: boolean = false;
 
-  showEmailForm = false;
+  showIdentifierForm = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -67,15 +71,16 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
   }
 
   fetchBalanceData() {
-    const identifier = this.user.identifier || this.user.email;
+    const identifier = this.user.identifier_scan || this.user.identifier_form;
     this.loyaltyService.memberBalance((identifier).toLowerCase())
       .pipe(
         tap(
           data => {
             console.log(parseInt(data.data.points, 16));
             this.transaction.points = parseInt(data.data.points, 16);
+            this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
             this.loyaltyLocalService.changeOfferTransaction(this.transaction);
-            console.log(data);
+            this.onNextStep();
           },
           error => {
             console.log(error);
@@ -89,27 +94,35 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  onSuccessScan(event: string) {
+  onSuccessScanIdentifier(event: string) {
     this.fetchBalanceData();
   }
 
-  onSubmitEmailForm(event: string) {
+  onSubmitIdentifierForm(event: string) {
     this.fetchBalanceData();
   }
 
   onSubmitOfferForm(event: number) {
-
+    console.log(this.transaction);
   }
 
-  onShowEmailFormChange() {
-    this.showEmailForm = !this.showEmailForm;
+  onShowIdentifierFormChange() {
+    this.showIdentifierForm = !this.showIdentifierForm;
+  }
+
+  onNextStep() {
+    this.wizard.goToNextStep();
+  }
+
+  onPreviousStep() {
+    this.wizard.goToPreviousStep();
   }
 
   finalize() {
     if (this.submitted) return;
     this.submitted = true;
 
-    const identifier = this.user.identifier || this.user.email;
+    const identifier = this.user.identifier_scan || this.user.identifier_form;
     const redeemPoints = {
       _to: (identifier).toLowerCase(),
       _points: this.transaction.discount_points,

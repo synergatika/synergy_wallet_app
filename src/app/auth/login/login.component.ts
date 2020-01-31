@@ -45,12 +45,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 			maxLength: 100
 		}
 	}
-	// Public params
-	loginForm: FormGroup;
-	loading = false;
+
 	isLoggedIn$: Observable<boolean>;
 	errors: any = [];
 
+	loginForm: FormGroup;
+	submitted: boolean = false;
+
+	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
 	private returnUrl: any;
@@ -141,6 +143,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 * Form Submit
 	 */
 	submit() {
+		if (this.submitted) return;
+
 		const controls = this.loginForm.controls;
 		/** check form */
 		if (this.loginForm.invalid) {
@@ -151,6 +155,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		}
 
 		this.loading = true;
+		this.submitted = true;
 
 		const authData = {
 			email: (controls.email.value).toLowerCase(),
@@ -175,6 +180,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 					},
 					error => {
 						this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
+						this.submitted = false;
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {

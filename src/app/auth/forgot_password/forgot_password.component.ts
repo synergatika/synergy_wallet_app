@@ -28,11 +28,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Public params
 	emailForm: FormGroup;
-	loading = false;
-	errors: any = [];
 
+	loading: boolean = false;
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
 	/**

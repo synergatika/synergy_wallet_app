@@ -19,6 +19,7 @@ import { SubDiscountFormComponent } from './sub-discount-form/sub-discount-form.
 import { SubOfferFormComponent } from './sub-offer-form/sub-offer-form.component';
 
 import { LoyaltyLocalService } from './loyaltyLocal.service';
+import { SubIdentifierFormComponent } from './sub-identifier-form/sub-identifier-form.component';
 
 const routes: Routes = [
     {
@@ -79,7 +80,8 @@ const routes: Routes = [
         SubAmountFormComponent,
         SubEmailFormComponent,
         SubDiscountFormComponent,
-        SubOfferFormComponent
+        SubOfferFormComponent,
+        SubIdentifierFormComponent
     ],
     entryComponents: [
     ]

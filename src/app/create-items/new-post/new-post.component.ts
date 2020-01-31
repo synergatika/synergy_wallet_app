@@ -36,7 +36,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
   originalImage: boolean = false;
 
   submitForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -122,6 +122,9 @@ export class NewPostComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
+	/**
+	 * On Form Submit
+	 */
   onSubmit() {
     if (this.submitted) return;
 
@@ -133,6 +136,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
+    this.loading = true;
     this.submitted = true;
 
     const formData = new FormData();

@@ -1,0 +1,19 @@
+<form [formGroup]="submitForm">
+    <!--begin: Form Wizard Step 1-->
+    <div class="col-xl-6">
+        <h5>Identifier</h5>
+        <div class="form-group">
+            <label>Identifier</label>
+            <input type="text" class="form-control" name="identifier" formControlName="identifier"
+                placeholder="Identifier" value="0">
+            <span *ngIf="isControlHasError('identifier','required')"
+                class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+            <span *ngIf="isControlHasError('identifier','min')"
+                class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}</span>
+            <span class="form-text text-muted">Please enter
+                email or card number.</span>
+        </div>
+    </div>
+</form>
+
+<button type="button" (click)="onNextStep()">Go to next step</button>

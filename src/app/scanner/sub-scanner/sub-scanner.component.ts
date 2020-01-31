@@ -10,7 +10,7 @@ import { LoyaltyLocalInterface } from "../loyaltyLocal.interface";
 export class SubScannerComponent implements OnInit {
 
   @Output()
-  scan_results: EventEmitter<string> = new EventEmitter<string>();
+  scan_identifier: EventEmitter<string> = new EventEmitter<string>();
 
   scanned: boolean = false;
   user: LoyaltyLocalInterface["User"];
@@ -27,9 +27,9 @@ export class SubScannerComponent implements OnInit {
 
     this.scanned = true;
 
-    this.user.identifier = result;
+    this.user.identifier_scan = result;
     this.loyaltyLocalService.changeUser(this.user);
-    this.scan_results.emit(result);
+    this.scan_identifier.emit(result);
   }
 
   scanErrorHandler(error: any): void {

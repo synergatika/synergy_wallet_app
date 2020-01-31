@@ -24,15 +24,17 @@ import { environment } from '../../../environments/environment';
 	encapsulation: ViewEncapsulation.None
 })
 export class EmailVerificationComponent implements OnInit, OnDestroy {
-	// Public params
+
 	verifyForm: FormGroup;
-	loading = false;
+	submitted: boolean = false;
 
 	check = false;
 	isLoggedIn$: Observable<boolean>;
 	errors: any = [];
 
 	token: string = '';
+
+	loading = false;
 	private unsubscribe: Subject<any>;
 
 	// Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -60,6 +62,9 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute
 	) {
 		this.unsubscribe = new Subject();
+		this.activatedRoute.params.subscribe(params => {
+			this.token = params['token'];
+		});
 	}
 
 	/**
@@ -70,9 +75,6 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit(): void {
-		this.activatedRoute.params.subscribe(params => {
-			this.token = params['token'];
-		});
 		this.checkToken();
 	}
 

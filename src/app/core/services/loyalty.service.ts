@@ -24,8 +24,8 @@ export class LoyaltyService {
     private http: HttpClient
   ) { }
 
-  checkByIdentifier(identifier: string) {
-    return this.http.get<any>(`${environment.apiUrl}/auth/check/identifier/${identifier}`)
+  checkIdentifier(identifier: string) {
+    return this.http.get<any>(`${environment.apiUrl}/auth/check_identifier/${identifier}`)
       .pipe(map(data => {
         return data;
       }));

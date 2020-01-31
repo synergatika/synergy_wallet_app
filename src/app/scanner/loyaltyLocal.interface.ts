@@ -1,5 +1,6 @@
 interface User {
-    identifier: string;
+    identifier_scan: string;
+    identifier_form: string;
     email: string | undefined;
 }
 
@@ -37,6 +38,8 @@ interface OfferTransaction {
     cost: number;
     discount_points: number;
     points: number;
+    possible_quantity: number;
+    quantity: number;
 }
 
 export interface LoyaltyLocalInterface {

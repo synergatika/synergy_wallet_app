@@ -10,7 +10,8 @@ export class LoyaltyLocalService {
     //loyaltyLocalInterface: LoyaltyLocalInterface;
 
     private userSource = new BehaviorSubject({
-        identifier: '',
+        identifier_scan: '',
+        identifier_form: '',
         email: ''
     });
     user = this.userSource.asObservable();
@@ -42,7 +43,9 @@ export class LoyaltyLocalService {
         offer_id: '',
         cost: 0,
         discount_points: 0,
-        points: 0
+        points: 0,
+        possible_quantity: 0,
+        quantity: 0
     });
     offerTransaction = this.offerTransactionSource.asObservable();
 

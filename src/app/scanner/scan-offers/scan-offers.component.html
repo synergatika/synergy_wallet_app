@@ -1,10 +1,10 @@
 <aw-wizard>
     <aw-wizard-step stepTitle="Scan Or Add">
-        <app-sub-scanner *ngIf="!showEmailForm" (scan_results)="onSuccessScan($event)">
+        <app-sub-scanner *ngIf="!showIdentifierForm" (scan_identifier)="onSuccessScanIdentifier($event)">
         </app-sub-scanner>
-        <button type="button" (click)="onShowEmailFormChange()">Email Register</button>
-        <div *ngIf="showEmailForm">
-            <app-sub-email-form (add_email)="onSubmitEmailForm($event)">
+        <button type="button" (click)="onShowIdentifierFormChange()">Identifier Form</button>
+        <div *ngIf="showIdentifierForm">
+            <app-sub-email-form (add_identifier)="onSubmitIdentifierForm($event)">
             </app-sub-email-form>
             <button type="button" awPreviousStep>Go to previous step</button>
         </div>
