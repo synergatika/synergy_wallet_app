@@ -67,7 +67,14 @@ export class AuthenticationService {
       }));
   }
 
-  register_without_pass(access: string, name: string, email: string, sector?: string) {
+  register_customer(email?: string, card?: string) {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/customer`, { email: email, card: card })
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  register_merchant(access: string, name: string, email: string, sector?: string) {
     return this.http.post<any>(`${environment.apiUrl}/auth/register/${access}`, { name, email, sector })
       .pipe(map(data => {
         return data;

@@ -54,8 +54,8 @@ export class SubIdentifierFormComponent implements OnInit {
   }
 
   onNextStep() {
-    if (this.submitted) return;
-    this.submitted = true;
+    // if (this.submitted) return;
+    // this.submitted = true;
 
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {

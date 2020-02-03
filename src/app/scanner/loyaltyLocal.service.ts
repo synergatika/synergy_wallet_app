@@ -26,13 +26,8 @@ export class LoyaltyLocalService {
     pointsTransaction = this.pointsTransactionSource.asObservable();
 
     private actionsSource = new BehaviorSubject({
-        can_redeem: false,
-        want_redeem: false,
-        need_full_registration: false,
-        need_card_update: false,
-        need_email_update: false,
-        need_email_registration: false,
-        need_card_registration: false,
+        redeem: '00',
+        registration: '00000'
     });
     actions = this.actionsSource.asObservable();
 

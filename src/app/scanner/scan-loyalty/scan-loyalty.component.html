@@ -10,7 +10,7 @@
         <div *ngIf="showIdentifierForm">
             <app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
             </app-sub-identifier-form>
-            <button type="button" awPreviousStep>Go to previous step</button>
+            <!-- <button type="button" awPreviousStep>Go to previous step</button> -->
         </div>
     </aw-wizard-step>
     <aw-wizard-step stepTitle="Email" awOptionalStep>
@@ -32,6 +32,6 @@
     </aw-wizard-step>
     <aw-wizard-step stepTitle="Final">
         <button type="button" awPreviousStep>Previous Step</button>
-        <button type="button" (click)="finishFunction()">Finish</button>
+        <button type="button" (click)="finishFunction()">Exit</button>
     </aw-wizard-step>
 </aw-wizard>

@@ -72,7 +72,11 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
         .pipe(
           tap(
             data => {
-              this.transaction.points = parseInt(data.data.points, 16);
+              if (data.data) {
+                this.transaction.points = parseInt(data.data.points, 16);
+              } else {
+                this.transaction.points = 0;
+              }
               this.initializeDiscountAmount();
             },
             error => {
@@ -108,22 +112,19 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   canRedeem() {
     const controls = this.submitForm.controls;
     controls["wantRedeem"].enable();
-    this.actions.want_redeem = true;
-    this.actions.can_redeem = true;
+    this.actions.redeem = '10';
   }
 
   cannotRedeem() {
     const controls = this.submitForm.controls;
     controls["wantRedeem"].disable();
-    this.actions.want_redeem = false;
-    this.actions.can_redeem = false;
+    this.actions.redeem = '00';
   }
 
   onWantRedeemCheckboxChange() {
     const controls = this.submitForm.controls;
-    this.actions.want_redeem = controls.wantRedeem.value;
-    console.log(this.actions.want_redeem);
-    if (!this.actions.want_redeem) {
+    this.actions.redeem = '1' + ((controls.wantRedeem.value) ? '1' : '0');
+    if (this.actions.redeem !== '11') {
       this.transaction.final_amount = this.transaction.amount - this.transaction.discount_amount;
     } else {
       this.transaction.final_amount = this.transaction.amount;
@@ -132,8 +133,8 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   }
 
   onNextStep() {
-    if (this.submitted) return;
-    this.submitted = true;
+    // if (this.submitted) return;
+    // this.submitted = true;
 
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {
@@ -148,7 +149,7 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
 
     this.add_discount.emit({
       final_amount: this.transaction.final_amount,
-      points: (this.actions.want_redeem) ? this.transaction.discount_amount * this.conversionRatiο : 0
+      points: (this.actions.redeem === '11') ? this.transaction.discount_amount * this.conversionRatiο : 0
     });
   }
 

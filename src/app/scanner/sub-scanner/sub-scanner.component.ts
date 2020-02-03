@@ -23,8 +23,7 @@ export class SubScannerComponent implements OnInit {
 
 
   scanSuccessHandler(result: string): void {
-    if (this.scanned) return;
-
+    if (this.scanned) return
     this.scanned = true;
 
     this.user.identifier_scan = result;

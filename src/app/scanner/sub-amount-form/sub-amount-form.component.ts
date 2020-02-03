@@ -27,6 +27,9 @@ export class SubAmountFormComponent implements OnInit {
     this.loyaltyLocalService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
   }
 
+	/**
+	 * On init
+	 */
   ngOnInit() {
     this.initForm();
   }
@@ -41,8 +44,8 @@ export class SubAmountFormComponent implements OnInit {
   }
 
   onNextStep() {
-    if (this.submitted) return;
-    this.submitted = true;
+    // if (this.submitted) return;
+    // this.submitted = true;
 
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {

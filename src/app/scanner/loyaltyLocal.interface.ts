@@ -13,13 +13,8 @@ interface PointsTransaction {
 }
 
 interface Actions {
-    can_redeem: boolean;
-    want_redeem: boolean;
-    need_full_registration: boolean;
-    need_card_update: boolean;
-    need_email_update: boolean;
-    need_email_registration: boolean;
-    need_card_registration: boolean;
+    redeem: string; // '00', '10', '11' - Cannnot and Does Not Want, Can but Does Not Want, Can and Want
+    registration: string; // '00', '01', '10', '11' - None, Link Card, Link Email, Full Registration
 }
 
 interface Offer {

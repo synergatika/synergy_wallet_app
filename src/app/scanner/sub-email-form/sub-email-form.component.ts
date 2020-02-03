@@ -41,9 +41,9 @@ export class SubEmailFormComponent implements OnInit {
   }
 
   onNextStep() {
-    if (this.submitted) return;
-    this.submitted = true;
-
+    // if (this.submitted) return;
+    // this.submitted = true;
+    console.log("1");
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -51,7 +51,7 @@ export class SubEmailFormComponent implements OnInit {
       );
       return;
     };
-
+    console.log("2");
     this.user.email = controls.email.value;
     this.loyaltyLocalService.changeUser(this.user);
     this.add_email.emit(this.user.email);

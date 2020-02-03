@@ -31,6 +31,22 @@ export class LoyaltyService {
       }));
   }
 
+
+  linkCard(email: string, card: string) {
+    return this.http.put<any>(`${environment.apiUrl}/auth/link_card/${email}`, { card: card })
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+
+  linkEmail(email: string, card: string, ) {
+    return this.http.put<any>(`${environment.apiUrl}/auth/link_email/${card}`, { email: email })
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   checkByEmail(email: string) {
     return this.http.get<any>(`${environment.apiUrl}/auth/check/email/${email}`)
       .pipe(map(data => {
