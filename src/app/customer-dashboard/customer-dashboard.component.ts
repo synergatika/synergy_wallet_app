@@ -1,10 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 import { Subject, Subscriber } from 'rxjs';
 
 import { AuthenticationService } from '../core/services/authentication.service';
 import { LoyaltyService } from '../core/services/loyalty.service';
 import { ItemsService } from '../core/services/items.service';
+import { FooterComponent } from '../views/layout/footer/footer.component';
+
+import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -28,8 +31,11 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			points: "50",
 			price_reduced: "160",
 			price_initial: "200",
-			img: './assets/media/images/syballis-micro-humbnail.jpg'
-			
+			img: './assets/media/images/syballis-micro-humbnail.jpg',
+			microcredit_num: '3767',
+			address: 'Nileos 35, 11851, Athens',
+			op_hours: '09:00-15:00',
+			phone: '2103606333'
 		},
 		{
 			id: "Ekdoseis3d76r3",
@@ -39,7 +45,11 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			points: "55",
 			price_reduced: "80",
 			price_initial: "140",
-			img: './assets/media/images/ekdoseis.png'
+			img: './assets/media/images/ekdoseis.png',
+			microcredit_num: '3768',
+			address: 'Akakiou 1 - 3 & Ipeirou 60, 10439, Athens',
+			op_hours: '09:00-19:00',
+			phone: '2103606333'
 		},
 	];
 	
@@ -64,7 +74,10 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			"phone": "2103606333",
 			"address": "Nileos 35, 11851, Athens"
 		},
-	}
+	};
+	microcredit: any;
+	
+	@ViewChild('microcredit_item', {static: false}) microcreditItem;
 
   /**
  * Component constructor
@@ -78,6 +91,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService,
 	private itemsService: ItemsService,
+	private modalService: NgbModal
   ) {
     this.unsubscribe = new Subject();
   }
@@ -136,5 +150,18 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+  
+  openCoop(singleId) {
+		this.microcredit = this.list.find(x => x.id === singleId);
+		console.log(this.microcredit);
+		console.log(singleId);
+		this.modalService.open(this.microcreditItem).result.then((result) => {
+			console.log('closed');
+
+			}, (reason) => {
+				console.log('dismissed');
+
+        });
   }
 }

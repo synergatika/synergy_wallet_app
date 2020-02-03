@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatInputModule, MatCardModule } from "@angular/material";
 // Interceptors
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
@@ -31,9 +31,23 @@ import { TopbarComponent } from './views/layout/header/topbar/topbar.component';
 import { MenuComponent } from './views/layout/header/menu/menu.component';
 import { UserMenuComponent } from './views/layout/header/user-menu/user-menu.component';
 import { FooterComponent } from './views/layout/footer/footer.component';
-import { MatInputModule, MatCardModule } from "@angular/material";
+import { CardOfferComponent } from './views/layout/card-offer/card-offer.component';
+import { CardCoopComponent } from './views/layout/card-coop/card-coop.component';
+import { CardPostComponent } from './views/layout/card-post/card-post.component';
+import { CardMicrocreditComponent } from './views/layout/card-microcredit/card-microcredit.component';
 
 import { MenuService } from './core/services/menu.service';
+
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
 
 @NgModule({
   declarations: [
@@ -51,7 +65,11 @@ import { MenuService } from './core/services/menu.service';
     HeaderComponent,
     TopbarComponent,
 	UserMenuComponent,
-	FooterComponent
+	FooterComponent,
+	CardOfferComponent,
+	CardCoopComponent,
+	CardPostComponent,
+	CardMicrocreditComponent
   ],
   imports: [
     QRCodeModule,
@@ -63,11 +81,17 @@ import { MenuService } from './core/services/menu.service';
     MatDialogModule,
     TranslateModule.forRoot(),
 	MatCardModule,
-	MatInputModule
+	MatInputModule,
+	SwiperModule,
+	NgbModalModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+	{
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
+    },
 	MenuService
   ],
   bootstrap: [AppComponent]

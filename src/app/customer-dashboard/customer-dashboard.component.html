@@ -34,7 +34,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="single row" *ngFor="let single of (list)">
+						<div class="single row wallet-coop" *ngFor="let single of (list)" (click)="openCoop(single.id)">
 							<div class="col-sm-9 single-content">
 								<div class="wallet-img">
 									<img src={{single.img}} alt={{single.title}} />
@@ -65,43 +65,14 @@
 	</div>
 	<div class="row" *ngIf="offers">
 		<div class="col-md-6" *ngFor="let offer of (offers)">
-			<mat-card class="dashboard-card offer-card">
-			  <mat-card-content>
-					<!--begin::Content-->
-					<div class="wallet_offer_wrapper">
-						<div class="offer row" >
-							<div class="col-sm-12 offer-img-container">
-								<div class="offer-img">
-									<img src={{offer.merchant_imageURL}} alt={{offer.title}} />
-									<div class="offer-expires">έως {{offer.expiresAt | date: 'd.M'}}</div>
-								</div>
-								
-							</div>
-							<div class="col-sm-12 offer-amount">
-								<div class="offer-heading">
-									<div class="offer-title">{{offer.description}}</div>
-									<div>
-										<span class="points">{{offer.cost | currency:'EUR'}}</span>
-									</div>
-								</div>
-								<div class="offer-description">
-									{{offer.description}}
-								</div>
-								<div class="offer-info">
-									<div class="">
-										<div class="offer-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />{{offer.merchant_name}}</div>
-										<div class="offer-subtitle"><img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />{{offer.expiresAt}}</div>
-									</div>
-									<div class="share">
-										<img src="../../../assets/media/images/Share.png" alt="share" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end::Content-->
-			  </mat-card-content>
-			</mat-card>
+			<app-card-offer [offer]="offer"></app-card-offer>
 		</div>
 	</div>
 </div>
+
+<ng-template #microcredit_item let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<app-card-microcredit [microcredit]="microcredit"></app-card-microcredit>
+</ng-template>

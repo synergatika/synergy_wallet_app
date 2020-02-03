@@ -11,6 +11,9 @@ body {
 			color: #37aba7;
 		}
 	}
+	.section-heading {
+		margin-bottom: 20px;
+	}
 	&.menu-overlay {
 		background-color: rgba(0,0,0,0.4);
 	}
@@ -24,10 +27,40 @@ body {
 	}
 	.mat-card:not([class*=mat-elevation-z]) {
 		box-shadow: 0 6px 21px -2px #d1cbcb;
+		border-radius: 9px;
 	}
+	
+	// Slider
+	swiper.swiper-wrapper {
+		margin-bottom: 50px;
+	}
+	.swiper-button-next, .swiper-button-prev {
+		top: 22%;
+	}
+	.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+		bottom: 80px;
+	}
+	//Modal
+	.close-btn {
+		position: absolute;
+		right: -10px;
+		top: -10px;
+		border-radius: 50%;
+		border: 1px solid transparent;
+		width: 35px;
+		height: 35px;
+		font-size: 30px;
+		z-index: 1;
+		span {
+			position: relative;
+			top: -6px;
+		}
+	}
+
 }
 
 .auth-page {
 	background-color: #0c1a33;
 }
+
 

@@ -11,7 +11,23 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
   styleUrls: ['./customer-explore.component.scss']
 })
 export class CustomerExploreComponent implements OnInit, OnDestroy {
+	config: any = {
+		// Optional parameters
+		loop: true,
 
+		// If we need pagination
+		pagination: {
+		  el: '.swiper-pagination',
+		  clickable: true
+		},
+
+		// Navigation arrows
+		navigation: {
+		  nextEl: '.swiper-button-next',
+		  prevEl: '.swiper-button-prev',
+		},
+
+	};
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -65,6 +81,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.posts = data;
+			console.log("posts");
             console.log(this.posts)
 
           },
