@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { MerchantsService } from '../core/services/merchants.service';
-import { ItemsService } from '../core/services/items.service';
+import { MerchantsService } from '../../../core/services/merchants.service';
+import { ItemsService } from '../../../core/services/items.service';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+
+import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-customer-explore',
@@ -28,18 +30,20 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		},
 
 	};
-  loading: boolean = false;
-  private unsubscribe: Subject<any>;
+	loading: boolean = false;
+	private unsubscribe: Subject<any>;
 
-  merchants: any;
-  posts: any;
-  offers: any;
-  events: any;
-
+	merchants: any;
+	posts: any;
+	offers: any;
+	events: any;
+	@ViewChild('coopModal', {static: false}) coopModal;
+	
   constructor(
     private cdRef: ChangeDetectorRef,
     private merchantsService: MerchantsService,
     private itemsService: ItemsService,
+	private modalService: NgbModal,
   ) {
     this.unsubscribe = new Subject();
   }
@@ -132,5 +136,17 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+  
+  openCoop(coop) {
+		console.log('coop modal');
+		//console.log(coop);
+		this.modalService.open(this.coopModal).result.then((result) => {
+			console.log('closed');
+
+			}, (reason) => {
+				console.log('dismissed');
+
+        });
   }
 }

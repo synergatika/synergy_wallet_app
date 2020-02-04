@@ -16,3 +16,13 @@
 		}
 	}
 }
+
+@media (max-width: 576px) {
+	.app-header {
+		.header__wrapper {
+			.header_left__wrapper {
+				display: block;
+			}
+		}
+	}
+}

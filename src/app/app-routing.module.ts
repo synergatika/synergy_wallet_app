@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { QrCodeComponent } from './qr-code/qr-code.component';
-import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
-import { CustomerExploreComponent } from './customer-explore/customer-explore.component';
-import { CustomerExploreOneComponent } from './customer-explore-one/customer-explore-one.component';
+import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
+import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
+import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
+import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
 import { InvitationComponent } from './invitation/invitation.component';
 import { LayoutComponent } from './views/layout/layout.component';
 
@@ -14,8 +14,11 @@ const routes: Routes = [
 		component: LayoutComponent,
 		children: [
 			{
-			path: 'qr-code', component: QrCodeComponent
+				path: '', component: CustomerDashboardComponent
 			},
+			/*{
+			path: 'qr-code', component: QrCodeComponent
+			},*/
 			{
 			path: 'dashboard', component: CustomerDashboardComponent
 			},

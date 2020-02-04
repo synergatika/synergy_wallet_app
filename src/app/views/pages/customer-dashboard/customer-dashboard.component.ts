@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 import { Subject, Subscriber } from 'rxjs';
 
-import { AuthenticationService } from '../core/services/authentication.service';
-import { LoyaltyService } from '../core/services/loyalty.service';
-import { ItemsService } from '../core/services/items.service';
-import { FooterComponent } from '../views/layout/footer/footer.component';
+import { AuthenticationService } from '../../../core/services/authentication.service';
+import { LoyaltyService } from '../../../core/services/loyalty.service';
+import { ItemsService } from '../../../core/services/items.service';
+import { QrCodeComponent } from '../../../views/pages/qr-code/qr-code.component';
 
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -78,6 +78,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	microcredit: any;
 	
 	@ViewChild('microcredit_item', {static: false}) microcreditItem;
+	@ViewChild('qrcode', {static: false}) qrcode;
 
   /**
  * Component constructor
@@ -163,5 +164,16 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 				console.log('dismissed');
 
         });
+  }
+  
+  openQrcode() {
+		/*this.modalService.open(this.qrcode).result.then((result) => {
+			console.log('closed');
+
+			}, (reason) => {
+				console.log('dismissed');
+
+        });*/
+		const modalRef = this.modalService.open(QrCodeComponent);
   }
 }

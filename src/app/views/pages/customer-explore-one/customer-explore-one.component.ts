@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 
-import { MerchantsService } from '../core/services/merchants.service';
-import { ItemsService } from '../core/services/items.service';
+import { MerchantsService } from '../../../core/services/merchants.service';
+import { ItemsService } from '../../../core/services/items.service';
 
 @Component({
   selector: 'app-customer-explore-one',

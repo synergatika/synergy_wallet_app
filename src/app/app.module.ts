@@ -18,12 +18,12 @@ import { ErrorInterceptor } from './core/helpers/error.interceptor';
 
 import { QRCodeModule } from 'angularx-qrcode';
 
-import { QrCodeComponent } from './qr-code/qr-code.component';
+import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 import { InvitationComponent } from './invitation/invitation.component';
-import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
-import { CustomerExploreComponent } from './customer-explore/customer-explore.component';
-import { CustomerSupportComponent } from './customer-support/customer-support.component';
-import { CustomerExploreOneComponent } from './customer-explore-one/customer-explore-one.component';
+import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
+import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
+import { CustomerSupportComponent } from './views/pages/customer-support/customer-support.component';
+import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { HeaderComponent } from './views/layout/header/header.component';
@@ -42,7 +42,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -83,7 +83,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	MatCardModule,
 	MatInputModule,
 	SwiperModule,
-	NgbModalModule
+	NgbModalModule,
+	NgbDropdownModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
@@ -94,6 +95,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     },
 	MenuService
   ],
+  entryComponents: [QrCodeComponent], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

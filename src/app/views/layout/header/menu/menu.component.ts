@@ -11,27 +11,27 @@ export class MenuComponent implements OnInit {
 		{
 			title: 'Home',
 			link: '/',
-			icon: '',
+			icon: 'home-roof',
 		},
 		{
 			title: 'Dashboard',
 			link: 'dashboard',
-			icon: '',
+			icon: 'wallet-outline',
 		},
 		{
 			title: 'Profile',
 			link: 'settings',
-			icon: '',
+			icon: 'settings',
 		},
 		{
 			title: 'QR code',
 			link: 'qr-code',
-			icon: '',
+			icon: 'qrcode',
 		},
 		{
 			title: 'Explore',
 			link: 'explore',
-			icon: '',
+			icon: 'compass-outline',
 		},
 	];
 	constructor(private menuService : MenuService) { }

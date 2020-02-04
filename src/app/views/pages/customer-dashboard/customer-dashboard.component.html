@@ -13,7 +13,7 @@
 			<mat-card class="dashboard-card wallet-card">
 			  <mat-card-header class="wallet-card-header">
 				<mat-card-title>Το πορτοφόλι μου</mat-card-title>
-				<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png">
+				<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png" (click)="openQrcode()">
 			  </mat-card-header>
 			  <mat-card-content>
 					<!--begin::Content-->
@@ -21,7 +21,7 @@
 						<div class="single row wallet-row">
 							<div class="col-sm-9 single-content">
 								<span class="wallet-img">
-									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
+									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
 								</span>
 								<div class="">
 									<div class="single-title">Synergey Πόντοι</div>
@@ -75,4 +75,11 @@
 		<span aria-hidden="true">&times;</span>
 	</button>
 	<app-card-microcredit [microcredit]="microcredit"></app-card-microcredit>
+</ng-template>
+
+<ng-template #qrcode let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+
 </ng-template>

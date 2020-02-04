@@ -1,3 +1,15 @@
+/*@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); 
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(/assets/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+    url(/assets/MaterialIcons-Regular.woff) format('woff'),
+    url(/assets/MaterialIcons-Regular.ttf) format('truetype');
+}*/
+
 html, body { height: 100%; }
 body { 
 	margin: 0; 
@@ -11,20 +23,63 @@ body {
 			color: #37aba7;
 		}
 	}
+	.heading {
+		font-size: 1.6rem;
+		margin-bottom: 20px;
+	}
 	.section-heading {
 		margin-bottom: 20px;
 	}
 	&.menu-overlay {
 		background-color: rgba(0,0,0,0.4);
 	}
+	
+	
+	/*.material-icons {
+	  font-family: 'Material Icons';
+	  font-weight: normal;
+	  font-style: normal;
+	  font-size: 24px;  
+	  display: inline-block;
+	  line-height: 1;
+	  text-transform: none;
+	  letter-spacing: normal;
+	  word-wrap: normal;
+	  white-space: nowrap;
+	  direction: ltr;
+
+	  -webkit-font-smoothing: antialiased;
+
+	  text-rendering: optimizeLegibility;
+
+	  -moz-osx-font-smoothing: grayscale;
+	  font-feature-settings: 'liga';
+	}*/
+	
+	//Bootstrap
 	.btn-primary {
 		background-color: #37aba7;
 		border-color: #37aba7;
-		&:hover {
+		&:hover, &:active {
 			background-color: #368f8c;
 			border-color: #368f8c;
 		}
 	}
+	.btn-success {
+		color: #fff;
+		background-color: #faa635;
+		border-color: #faa635;
+		&:hover, &:active {
+			background-color: #e49326;
+			border-color: #e49326;
+		}
+	}
+	.dropdown-menu {
+		border: none;
+		box-shadow: 0 0 40px 0 rgba(40,70,120,.15);
+	}
+	
+	//Material Design
 	.mat-card:not([class*=mat-elevation-z]) {
 		box-shadow: 0 6px 21px -2px #d1cbcb;
 		border-radius: 9px;
@@ -32,7 +87,7 @@ body {
 	
 	// Slider
 	swiper.swiper-wrapper {
-		margin-bottom: 50px;
+		//margin-bottom: -50px;
 	}
 	.swiper-button-next, .swiper-button-prev {
 		top: 22%;
@@ -62,5 +117,17 @@ body {
 .auth-page {
 	background-color: #0c1a33;
 }
+//Settings Module
+.settings {
+	label {
+		font-size: 18px;
+	}
+}
 
-
+@media (min-width:992px) {
+	body {
+		.mat-card {
+			padding: 25px;
+		}
+	}
+}

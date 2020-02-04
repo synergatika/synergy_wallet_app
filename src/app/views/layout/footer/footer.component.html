@@ -1,26 +1,11 @@
 <div class="footer-wrapper">
 	<div class="footer-content">
-		<div class="footer-icon">
-			<a href="">
-				<img src="../../../assets/media/images/wallet.png" alt="wallet" />
+		<div *ngFor="let item of menu" [ngClass]="getItemCssClasses(item.link)">
+			<a [routerLink]="['/'+item.link]">
+				<!--<img src={{item.icon}} alt="{{item.title}}" />-->
+				<span class="mdi mdi-{{item.icon}}"></span>
 				<div>
-					Πορτοφόλι
-				</div>
-			</a>
-		</div>
-		<div class="footer-icon">
-			<a href="">
-				<img src="../../../assets/media/images/compass.png" alt="compass" />
-					<div>
-				Ανακάλυψε
-				</div>
-			</a>
-		</div>
-		<div class="footer-icon">
-			<a href="">
-				<img src="../../../assets/media/images/handshake.png" alt="handshake" />
-				<div>
-					Υποστήριξε
+					{{item.title}}
 				</div>
 			</a>
 		</div>

@@ -5,10 +5,16 @@
 	color: #aaa;
 	display: block;
 	transition: color 0.3s;
+	.mdi {
+		margin-right: 20px;
+	}
 }
 
 .nav a:hover {
 	color: #f1f1f1;
+	.mdi {
+		color: #37aba7;
+	}
 }
 
 .closebtn {

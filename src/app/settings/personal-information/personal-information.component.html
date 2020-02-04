@@ -1,162 +1,159 @@
+
 <div *ngIf="access === 'merchant'">
+	<div class="grid__item grid__item--fluid wizard-v3__wrapper">
+		<form class="form" id="kt_form">
+			<div class="heading">Setup Your Personal Information</div>
+			<div class="form__section form__section--first">
+				<div class="wizard-v3__form">
+					<div class="form-group">
+						<label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
+						<div class="col-lg-9 col-xl-6">
+							<div class="avatar avatar--outline" id="kt_merchat_avatar">
+								<img class="avatar-holder" [src]="previewUrl">
+								<label class="avatar-upload" data-toggle="tooltip" title=""
+									data-original-title="Change avatar">
+									<i class="fa fa-pen"></i>
+									<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+										accept=".png, .jpg, .jpeg">
+								</label>
+								<span *ngIf="!originalImage" class="avatar-cancel" (click)="onImageCancel()"
+									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+									<i class="fa fa-times"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Name</label>
+						<input type="text" class="form-control" name="name" [(ngModel)]="merchant.name"
+							placeholder="Name" value="Name">
+						<span class="form-text text-muted">Please enter your Name.</span>
+					</div>
+					<div class="form-group">
+						<label>Address</label>
+						<input type="text" class="form-control" name="address" [(ngModel)]="merchant.address.street"
+							placeholder="Address Line" value="Address Line">
+						<span class="form-text text-muted">Please enter your Address.</span>
+					</div>
+					<div class="row">
+						<div class="col-xl-6">
+							<div class="form-group">
+								<label>Postcode</label>
+								<input type="text" class="form-control" name="postcode"
+									[(ngModel)]="merchant.address.postCode" placeholder="Postcode" value="3000">
+								<span class="form-text text-muted">Please enter your Postcode.</span>
+							</div>
+						</div>
+						<div class="col-xl-6">
+							<div class="form-group">
+								<label>City</label>
+								<input type="text" class="form-control" name="city" [(ngModel)]="merchant.address.city"
+									placeholder="City" value="Athens">
+								<span class="form-text text-muted">Please enter your City.</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-6">
+							<div class="form-group">
+								<label>Phone</label>
+								<input type="text" class="form-control" name="phone"
+									[(ngModel)]="merchant.contact.phone" placeholder="Phone" value="VIC">
+								<span class="form-text text-muted">Please enter your Phone.</span>
+							</div>
+						</div>
+						<div class="col-xl-6">
+							<div class="form-group">
+								<label>Website</label>
+								<input type="text" class="form-control" name="web"
+									[(ngModel)]="merchant.contact.websiteURL" placeholder="Webpage" value="VIC">
+								<span class="form-text text-muted">Please enter your Webpage.</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="form-group">
+								<label>Sector</label>
+								<select name="sector" [(ngModel)]="merchant.sector" class="form-control">
+									<option value="0">{{'FIELDS.SECTOR_CHOICES._' | translate}}</option>
+									<option value="1">{{'FIELDS.SECTOR_CHOICES.A' | translate}}
+									</option>
+									<option value="2">{{'FIELDS.SECTOR_CHOICES.B' | translate}}</option>
+									<option value="3">{{'FIELDS.SECTOR_CHOICES.C' | translate}}</option>
+									<option value="4">{{'FIELDS.SECTOR_CHOICES.D' | translate}}</option>
+									<option value="5">{{'FIELDS.SECTOR_CHOICES.E' | translate}}</option>
+									<option value="6">{{'FIELDS.SECTOR_CHOICES.F' | translate}}</option>
+									<option value="7">{{'FIELDS.SECTOR_CHOICES.G' | translate}}</option>
+								</select>
+								<span class="form-text text-muted">Please enter your sector.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
+			<!--begin: Form Actions -->
+			<div class="form__actions">
 
-    <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
-        <form class="kt-form" id="kt_form">
-            <div class="kt-heading kt-heading--md">Setup Your Personal Information</div>
-            <div class="kt-form__section kt-form__section--first">
-                <div class="kt-wizard-v3__form">
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar">
-                                <!-- <div class="kt-avatar__holder" [ngStyle]="{ 'background-image': 'url(' + customer.imageURL + ')'}">
-                    </div> -->
-                                <img class="kt-avatar__holder" [src]="previewUrl">
-                                <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
-                                    data-original-title="Change avatar">
-                                    <i class="fa fa-pen"></i>
-                                    <input type="file" (change)="fileProgress($event)" name="profile_avatar"
-                                        accept=".png, .jpg, .jpeg">
-                                </label>
-                                <span *ngIf="!originalImage" class="kt-avatar__cancel" (click)="onImageCancel()"
-                                    data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                                    <i class="fa fa-times"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="name" [(ngModel)]="merchant.name"
-                            placeholder="Name" value="Name">
-                        <span class="form-text text-muted">Please enter your Name.</span>
-                    </div>
-                    <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control" name="address" [(ngModel)]="merchant.address.street"
-                            placeholder="Address Line" value="Address Line">
-                        <span class="form-text text-muted">Please enter your Address.</span>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>Postcode</label>
-                                <input type="text" class="form-control" name="postcode"
-                                    [(ngModel)]="merchant.address.postCode" placeholder="Postcode" value="3000">
-                                <span class="form-text text-muted">Please enter your Postcode.</span>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>City</label>
-                                <input type="text" class="form-control" name="city" [(ngModel)]="merchant.address.city"
-                                    placeholder="City" value="Athens">
-                                <span class="form-text text-muted">Please enter your City.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" name="phone"
-                                    [(ngModel)]="merchant.contact.phone" placeholder="Phone" value="VIC">
-                                <span class="form-text text-muted">Please enter your Phone.</span>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>Website</label>
-                                <input type="text" class="form-control" name="web"
-                                    [(ngModel)]="merchant.contact.websiteURL" placeholder="Webpage" value="VIC">
-                                <span class="form-text text-muted">Please enter your Webpage.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label>Sector</label>
-                                <select name="sector" [(ngModel)]="merchant.sector" class="form-control">
-                                    <option value="0">{{'FIELDS.SECTOR_CHOICES._' | translate}}</option>
-                                    <option value="1">{{'FIELDS.SECTOR_CHOICES.A' | translate}}
-                                    </option>
-                                    <option value="2">{{'FIELDS.SECTOR_CHOICES.B' | translate}}</option>
-                                    <option value="3">{{'FIELDS.SECTOR_CHOICES.C' | translate}}</option>
-                                    <option value="4">{{'FIELDS.SECTOR_CHOICES.D' | translate}}</option>
-                                    <option value="5">{{'FIELDS.SECTOR_CHOICES.E' | translate}}</option>
-                                    <option value="6">{{'FIELDS.SECTOR_CHOICES.F' | translate}}</option>
-                                    <option value="7">{{'FIELDS.SECTOR_CHOICES.G' | translate}}</option>
-                                </select>
-                                <span class="form-text text-muted">Please enter your sector.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+				<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+					class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+					data-ktwizard-type="action-submit">
+					{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+				</div>
 
-            <!--begin: Form Actions -->
-            <div class="kt-form__actions">
-
-                <div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-                    class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
-                    data-ktwizard-type="action-submit">
-                    {{ 'FORM.BUTTONS.SUBMIT' | translate }}
-                </div>
-
-            </div>
-            <!--end: Form Actions -->
-        </form>
-    </div>
+			</div>
+			<!--end: Form Actions -->
+		</form>
+	</div>
 </div>
 
 
 
 <div *ngIf="access !== 'merchant'">
-    <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
-        <form class="kt-form" id="kt_form">
-            <div class="kt-heading kt-heading--md">Setup Your Personal Information</div>
-            <div class="kt-form__section kt-form__section--first">
-                <div class="kt-wizard-v3__form">
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
-                        <div class="col-lg-9 col-xl-6">
-                            <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar">
-                                <img class="kt-avatar__holder" [src]="previewUrl">
-                                <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
-                                    data-original-title="Change avatar">
-                                    <i class="fa fa-pen"></i>
-                                    <input type="file" (change)="fileProgress($event)" name="profile_avatar"
-                                        accept=".png, .jpg, .jpeg">
-                                </label>
-                                <span *ngIf="!originalImage" class="kt-avatar__cancel" (click)="onImageCancel()"
-                                    data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                                    <i class="fa fa-times"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="name" [(ngModel)]="customer.name"
-                            placeholder="Name" value="Name">
-                        <span class="form-text text-muted">Please enter your Name.</span>
-                    </div>
-                </div>
-            </div>
+	<div class="grid__item grid__item--fluid wizard-v3__wrapper">
+		<form class="form" id="kt_form">
+			<div class="heading heading--md">Setup Your Personal Information</div>
+			<div class="form__section form__section--first">
+				<div class="wizard-v3__form">
+					<div class="form-group">
+						<label class="">Avatar</label>
+						<div class="">
+							<div class="avatar avatar--outline" id="kt_user_avatar">
+								<img class="avatar-holder" [src]="previewUrl">
+								<label class="avatar-upload" data-toggle="tooltip" title=""
+									data-original-title="Change avatar">
+									<i class="fa fa-pen"></i>
+									<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+										accept=".png, .jpg, .jpeg">
+								</label>
+								<span *ngIf="!originalImage" class="avatar-cancel" (click)="onImageCancel()"
+									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+									<i class="fa fa-times"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Name</label>
+						<input type="text" class="form-control" name="name" [(ngModel)]="customer.name"
+							placeholder="Name" value="Name">
+						<span class="form-text text-muted">Please enter your Name.</span>
+					</div>
+				</div>
+			</div>
 
-            <!--begin: Form Actions -->
-            <div class="kt-form__actions">
+			<!--begin: Form Actions -->
+			<div class="form__actions">
 
-                <div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-                    class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
-                    data-ktwizard-type="action-submit">
-                    {{ 'FORM.BUTTONS.SUBMIT' | translate }}
-                </div>
+				<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+					class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+					data-ktwizard-type="action-submit">
+					{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+				</div>
 
-            </div>
-            <!--end: Form Actions -->
-        </form>
-    </div>
+			</div>
+			<!--end: Form Actions -->
+		</form>
+	</div>
 </div>

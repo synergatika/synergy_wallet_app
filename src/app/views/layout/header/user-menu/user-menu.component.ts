@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MenuService } from '../../../../core/services/menu.service';
+// RxJS
+import { Observable } from 'rxjs';
+import { AuthenticationService } from '../../../../core/services/authentication.service';
+// Models
+import { AuthUser } from '../../../../core/models/user.model';
 
 @Component({
   selector: 'app-user-menu',
@@ -8,10 +13,16 @@ import { MenuService } from '../../../../core/services/menu.service';
 })
 export class UserMenuComponent implements OnInit {
 	icon: string = './assets/media/images/menu.svg' ;
+	user: any;
+	userAvatar: string;
 	
-	constructor(private menuService : MenuService) { }
+	constructor(private menuService : MenuService,private authenticationService: AuthenticationService, private cDRef: ChangeDetectorRef) { }
 
-	ngOnInit() {
+	ngOnInit(): void {
+		this.user = this.authenticationService.currentUserValue.user;
+		console.log(this.user);
+		this.userAvatar = this.user.imageURL || '../../../../assets/media/users/default.jpg';
+		this.cDRef.markForCheck();			
 	}
 	
 	openNav() {
@@ -20,5 +31,10 @@ export class UserMenuComponent implements OnInit {
 		document.getElementById("main").style.marginLeft = "250px";
 		//document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 		document.body.classList.add("menu-overlay");*/
+	}
+	
+	logout() {
+		console.log('logout');
+		this.authenticationService.logout();
 	}
 }

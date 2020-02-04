@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-personal-information',
   templateUrl: './personal-information.component.html',
-  styleUrls: ['./personal-information.component.sass']
+  styleUrls: ['./personal-information.component.scss']
 })
 export class PersonalInformationComponent implements OnInit, OnDestroy {
 
@@ -89,7 +89,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
             data => {
               this.merchant = Object.assign({}, this.merchant, data);
               this.merchant.sector = (this.sectorsArray.indexOf(this.merchant.sector)).toString();
-              this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.jpg';
+              this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.png';
             },
             error => {
               Swal.fire(
