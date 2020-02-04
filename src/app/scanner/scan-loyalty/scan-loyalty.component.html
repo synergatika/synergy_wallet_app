@@ -31,7 +31,6 @@
         <button type="button" awPreviousStep>Previous Step</button>
     </aw-wizard-step>
     <aw-wizard-step stepTitle="Final">
-        <button type="button" awPreviousStep>Previous Step</button>
-        <button type="button" (click)="finishFunction()">Exit</button>
+        <app-sub-final-step (finalize)="onFinalStep($event)" [type]=false></app-sub-final-step>
     </aw-wizard-step>
 </aw-wizard>

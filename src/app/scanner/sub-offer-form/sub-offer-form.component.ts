@@ -44,7 +44,7 @@ export class SubOfferFormComponent implements OnInit {
 
   onNextStep() {
     // if (this.submitted) return;
-    this.submitted = true;
+    // this.submitted = true;
 
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {

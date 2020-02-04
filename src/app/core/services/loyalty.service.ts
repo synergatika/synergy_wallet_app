@@ -47,13 +47,6 @@ export class LoyaltyService {
       }));
   }
 
-  checkByEmail(email: string) {
-    return this.http.get<any>(`${environment.apiUrl}/auth/check/email/${email}`)
-      .pipe(map(data => {
-        return data;
-      }));
-  }
-
   memberBalance(_to: string) {
     return this.http.get<any>(`${environment.apiUrl}/loyalty/points/${_to}`)
       .pipe(map(data => {

@@ -1,0 +1,11 @@
+<div *ngIf='!type'>
+    <p>Transaction Amount: {{transaction.final_amount}}</p>
+    <p>Points Redeem: {{transaction.discount_points}}</p>
+    <button type="button" (click)="onNextStep()">Final</button>
+</div>
+
+<div *ngIf='type'>
+    <p>Points Redeem: {{transaction.discount_points}}</p>
+    <p>Quantity: {{transaction.quantity}}</p>
+    <button type="button" (click)="onNextStep()">Final</button>
+</div>

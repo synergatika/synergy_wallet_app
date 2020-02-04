@@ -4,9 +4,22 @@ export interface MicrocreditCampaign {
     merchant_name: string;
     merchant_imageURL: string;
 
-    offer_id: string;
-    description: string;
-    cost: number;
-    expiresAt: number;
-    createdAt: string;
+    campaign_id: string,
+    campaign_imageURL: string,
+    title: string,
+    terms: string,
+    description: string,
+    category: string,
+    access: string,
+
+    quantitative: boolean,
+    minAllowed: number,
+    maxAllowed: number,
+    maxAmount: number,
+
+    redeemStarts: number,
+    redeemEnds: number,
+    expiresAt: number,
+
+    createdAt: string
 }

@@ -24,7 +24,7 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  conversionRatiο = 100;
+  conversionRatiο = 0.01;
 
   submitted: boolean = false;
   submitForm: FormGroup;
@@ -41,10 +41,16 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
+	/**
+	 * On init
+	 */
   ngOnInit() {
     this.initForm();
   }
 
+	/**
+	 * On destroy
+	 */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -67,8 +73,11 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   fetchBalanceData() {
     this.initForm();
 
+    let search_by = (['110100', '111100'].includes(this.actions.registration)) ?
+      this.user.email : (this.user.identifier_scan || this.user.identifier_form);
+
     if (this.transaction.amount >= 5) {
-      this.loyaltyService.memberBalance((this.user.identifier_scan || this.user.identifier_form).toLowerCase())
+      this.loyaltyService.memberBalance((search_by).toLowerCase())
         .pipe(
           tap(
             data => {
@@ -144,6 +153,7 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
       return;
     };
 
+    console.log(this.transaction);
     this.loyaltyLocalService.changeActions(this.actions);
     this.loyaltyLocalService.changePointsTransaction(this.transaction);
 

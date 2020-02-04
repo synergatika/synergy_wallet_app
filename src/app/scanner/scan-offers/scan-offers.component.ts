@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -103,7 +103,30 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
   }
 
   onSubmitOfferForm(event: number) {
-    console.log(this.transaction);
+    const identifier = this.user.identifier_scan || this.user.identifier_form;
+    const redeemPoints = {
+      _to: (identifier).toLowerCase(),
+      _points: this.transaction.discount_points,
+      password: 'all_ok'
+    };
+
+    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
+      .pipe(
+        tap(
+          data => {
+            this.onNextStep();
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
   }
 
   onShowIdentifierFormChange() {
@@ -118,32 +141,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  finalize() {
-    if (this.submitted) return;
-    this.submitted = true;
-
-    const identifier = this.user.identifier_scan || this.user.identifier_form;
-    const redeemPoints = {
-      _to: (identifier).toLowerCase(),
-      _points: this.transaction.discount_points,
-      password: 'my_password'//controls.password.value
-    };
-
-    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
-      .pipe(
-        tap(
-          data => {
-            console.log(data);
-          },
-          error => {
-            console.log(error);
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
+  onFinalStep(event) {
+    this.dialogRef.close();
   }
 }

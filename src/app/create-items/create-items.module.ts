@@ -11,6 +11,7 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { NewEventComponent } from './new-event/new-event.component';
 import { NewMicrocreditCampaignComponent } from './new-microcredit-campaign/new-microcredit-campaign.component';
 import { NewMicrofundingCampaignComponent } from './new-microfunding-campaign/new-microfunding-campaign.component';
+import { EditMicrocreditCampaignComponent } from './edit-microcredit-campaign/edit-microcredit-campaign.component';
 
 const routes: Routes = [
     {
@@ -72,7 +73,8 @@ const routes: Routes = [
         NewPostComponent,
         NewEventComponent,
         NewMicrocreditCampaignComponent,
-        NewMicrofundingCampaignComponent
+        NewMicrofundingCampaignComponent,
+        EditMicrocreditCampaignComponent
     ],
     entryComponents: [
     ]

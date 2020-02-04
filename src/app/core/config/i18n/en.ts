@@ -119,21 +119,7 @@ export const locale = {
             }
         },
         FIELDS: {
-            NAME: {
-                TITLE: 'Name',
-                PLACEHOLDER: 'Name',
-                DESC: 'Please, enter your name'
-            },
-            COMPANY_NAME: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
-            EMAIL: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
+
             PASSWORD: {
                 TITLE: '',
                 PLACEHOLDER: 'Name',
@@ -154,75 +140,191 @@ export const locale = {
                 PLACEHOLDER: 'Name',
                 DESC: ''
             },
-            IMAGE: {
 
-            },
-            PHONE: {
+            CUSTOMER_PROFILE: {
+                NAME: {
+                    TITLE: 'Name',
+                    PLACEHOLDER: 'Name',
+                    DESC: 'Please, enter your name'
+                },
+                IMAGE: {
 
-            },
-            WEBSITE: {
-
-            },
-            ADDRESS: {
-
-            },
-            POSTCODE: {
-
-            },
-            CITY: {
-
-            },
-            SECTOR: {
-
+                },
             },
 
-            SECTOR_CHOICES: {
-                _: 'None',
-                A: 'B2B Services & Other Goods and Services',
-                B: 'Durables',
-                C: 'Durables (Technology)',
-                D: 'Education',
-                E: 'Food',
-                F: 'Hotels, Cafes and Restaurants',
-                G: 'Recreation and Culture'
+            MERCHANT_PROFILE: {
+                NAME: {
+                    TITLE: '',
+                    PLACEHOLDER: 'Name',
+                    DESC: ''
+                },
+                EMAIL: {
+                    TITLE: '',
+                    PLACEHOLDER: 'Name',
+                    DESC: ''
+                },
+                IMAGE: {
+
+                },
+                PHONE: {
+
+                },
+                WEBSITE: {
+
+                },
+                ADDRESS: {
+
+                },
+                POSTCODE: {
+
+                },
+                CITY: {
+
+                },
+                SECTOR: {
+
+                },
+
+                SECTOR_CHOICES: {
+                    _: 'None',
+                    A: 'B2B Services & Other Goods and Services',
+                    B: 'Durables',
+                    C: 'Durables (Technology)',
+                    D: 'Education',
+                    E: 'Food',
+                    F: 'Hotels, Cafes and Restaurants',
+                    G: 'Recreation and Culture'
+                }
             },
 
-            OFFER_TITLE: {
-                TITLE: 'Offer\'s Title',
-                PLACEHOLDER: 'Title',
-                DESC: 'Please, enter Offer\'s Title.'
-            },
-            OFFER_DESCRIPTION: {
-                TITLE: 'Offer\'s Description',
-                PLACEHOLDER: 'Description',
-                DESC: 'Please, enter Offer\'s Description.'
-            },
-            OFFER_EXPIRATION: {
-                TITLE: 'Expiration Date',
-                PLACEHOLDER: 'Date',
-                DESC: 'Please, enter when your Offer will be expired.'
-            },
-            OFFER_COST: {
-                TITLE: 'Cost in points',
-                PLACEHOLDER: 'Points',
-                DESC: 'Please enter offer\'s required points.'
-            },
-            EXPIRATION_CHOICES: {
-                A: 'In one Week',
-                B: 'In one Month',
-                C: 'In three Months',
-                D: 'In six Months'
+            OFFER: {
+                TITLE: {
+                    TITLE: 'Offer\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Offer\'s Title.'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Offer\'s Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Offer\'s Description.'
+                },
+                COST: {
+                    TITLE: 'Cost in points',
+                    PLACEHOLDER: 'Points',
+                    DESC: 'Please enter offer\'s required points.'
+                },
+                EXPIRATION: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Offer will be expired.'
+                },
+                EXPIRATION_CHOICES: {
+                    A: 'In one Week',
+                    B: 'In one Month',
+                    C: 'In three Months',
+                    D: 'In six Months'
+                },
             },
 
-            POST_CONTENT: {
+            POST: {
+                TITLE: {
+                    TITLE: 'Post\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Post\'s Title'
+                },
+                CONTENT: {
+                    TITLE: 'Post\'s Content',
+                    PLACEHOLDER: 'Content',
+                    DESC: 'Please, enter Post\'s Content.'
+                },
+                IMAGE: {
+                    TITLE: 'Post\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Post\'s Image.'
+                },
+                ACCESS: {
+                    TITLE: 'Post\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, choose Post\'s Access.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Public to all',
+                    B: 'Only for registred Users',
+                    C: 'Only for Coops'
+                }
+            },
+
+            EVENT: {
 
             },
-            POST_TYPE: {
 
+            MICROCREDIT_CAMPAIGN: {
+                TITLE: {
+                    TITLE: 'Campaign\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Campaign\'s Title.'
+                },
+                TERMS: {
+                    TITLE: 'Campaign\'s Terms',
+                    PLACEHOLDER: 'Terms',
+                    DESC: 'Please, enter Campaign\'s Terms.'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Campaign\'s Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Campaign\'s Description.'
+                },
+                IMAGE: {
+                    TITLE: 'Campaign\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Campaign\'s Image.'
+                },
+                CATEGORY: {
+                    TITLE: 'Campaign\'s Category',
+                    PLACEHOLDER: 'Category',
+                    DESC: 'Please, enter Campaign\'s Category.'
+                },
+                MIN_ALLOWED: {
+                    TITLE: 'Min allowed',
+                    PLACEHOLDER: 'Min',
+                    DESC: 'Please, enter Min Allowed.'
+                },
+                MAX_ALLOWED: {
+                    TITLE: 'Max allowed',
+                    PLACEHOLDER: 'Max',
+                    DESC: 'Please, enter Max Allowed.'
+                },
+                MAX_AMOUNT: {
+                    TITLE: 'Max Amount',
+                    PLACEHOLDER: 'Max',
+                    DESC: 'Please, enter Max Amount.'
+                },
+                ACCESS: {
+                    TITLE: 'Campaign\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, choose Campaign\'s Access.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Public to all',
+                    B: 'Only for registred Users',
+                    C: 'Only for Coops'
+                },
+                EXPIRATION: {
+                    TITLE: 'Campaign\'s Expiration',
+                    PLACEHOLDER: 'Expiration',
+                    DESC: 'Please, enter Campaign\'s Expiration.'
+                },
+                REDEEM_STARTS: {
+                    TITLE: 'Campaign\'s When redeem will start',
+                    PLACEHOLDER: 'Start',
+                    DESC: 'Please, enter Campaign\'s Starting Redeem Date.'
+                },
+                REDEEM_ENDS: {
+                    TITLE: 'Campaign\'s When redeem will end',
+                    PLACEHOLDER: 'End',
+                    DESC: 'Please, enter Campaign\'s Ending Redeem Date.'
+                }
             },
-            POST_ACCESS: {
-
-            }
         },
         FORM: {
             BUTTONS: {
