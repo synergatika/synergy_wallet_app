@@ -40,7 +40,7 @@ export class LoyaltyService {
   }
 
 
-  linkEmail(email: string, card: string, ) {
+  linkEmail(email: string, card: string) {
     return this.http.put<any>(`${environment.apiUrl}/auth/link_email/${card}`, { email: email })
       .pipe(map(data => {
         return data;
@@ -48,7 +48,7 @@ export class LoyaltyService {
   }
 
   memberBalance(_to: string) {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/points/${_to}`)
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/balance/${_to}`)
       .pipe(map(data => {
         return data;
       }));

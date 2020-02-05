@@ -150,4 +150,12 @@ export class ItemsService {
         return response;
       }));
   }
+
+  readCampaign(merchant_id: string, campaign_id: string): Observable<MicrocreditCampaign> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
 }

@@ -38,6 +38,10 @@ const routes: Routes = [
                 path: 'microfunding',
                 component: NewMicrofundingCampaignComponent,
             },
+            {
+                path: 'edit/microcredit',
+                component: EditMicrocreditCampaignComponent,
+            }
         ]
     }
 ];
