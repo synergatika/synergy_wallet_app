@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HistoryComponent } from './history.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { BasketComponent } from './basket/basket.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const routes: Routes = [
     {
@@ -43,7 +44,8 @@ const routes: Routes = [
         MatFormFieldModule,
         MatCheckboxModule,
         TranslateModule.forChild(),
-        MatDialogModule
+        MatDialogModule,
+		NgxPaginationModule
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],

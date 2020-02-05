@@ -30,6 +30,16 @@ export class SettingsComponent implements OnInit {
 			link: 'email-settings',
 			icon: '',
 		},
+		{
+			title: 'Basket',
+			link: 'history/basket',
+			icon: '',
+		},
+		{
+			title: 'Transactions',
+			link: 'history/transactions',
+			icon: '',
+		},
 	];
 	
 	constructor(private router: Router,private cdr: ChangeDetectorRef) { }

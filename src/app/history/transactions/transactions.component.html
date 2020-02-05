@@ -1,44 +1,59 @@
-<div *ngIf="access !== 'merchant'">
-    <div>
-        <ng-container *ngFor="let item of transactions">
-            <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
-        </ng-container>
-    </div>
+<div class="transaction">
+	<h1 class="heading">Your Recent Transactions</h1>
 
-    <ng-template #itemTemplate let-item="item">
-        <div class="kt-widget1__item">
-            <div class="kt-widget1__info">
-                <h3 class="kt-widget1__title">Store: {{item.info.from_name}}</h3>
-                <span class="kt-widget1__desc">Receipt: {{item.tx}} <br> {{item.createdAt | date:'medium' }}</span>
-            </div>
+	<div *ngIf="access !== 'merchant'">
+		<div>
+			<table>	
+				<ng-container *ngFor="let item of transactions | paginate: { id: 'tr_paginator', itemsPerPage: 10, currentPage: p }">
+					<ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
+				</ng-container>		
+			</table>
+			<div class="pagination-wrapper">
+				<pagination-controls autoHide="true" id='tr_paginator' (pageChange)="p=$event"></pagination-controls>
+			</div>
+		</div>
+		
+		<ng-template #itemTemplate let-item="item">
+			<tr class="transaction-receipt">
+				<td colspan="3">				
+					<span class="transaction-desc">Receipt: {{item.tx}}</span>
+				</td>
+			</tr>
+			<tr class="transaction-details">
+				<td class="transaction-info">
+					<span class="transaction-title">{{item.createdAt | date:'medium' }}</span>
+				</td>
+				<td class="transaction-info">
+					<span class="transaction-title">Store: {{item.info.from_name}}</span>
+				</td>
+				<td class="transaction-number"
+					[ngClass]="(item.type==='EarnPoints') ? 'font-success' : 'font-danger'">
+					{{ (item.type==='EarnPoints') ? '+' : '-' }}
+					{{item.info.points}} points
+				</td>
+			</tr>
+		</ng-template>		
+	</div>
 
-            <span class="kt-widget1__number"
-                [ngClass]="(item.type==='EarnPoints') ? 'kt-font-success' : 'kt-font-danger'">
-                {{ (item.type==='EarnPoints') ? '+' : '-' }}
-                {{item.info.points}} points
-            </span>
-        </div>
-    </ng-template>
-</div>
+	<div *ngIf="access === 'merchant'">
+		<div>
+			<ng-container *ngFor="let item of transactions">
+				<ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
+			</ng-container>
+		</div>
 
-<div *ngIf="access === 'merchant'">
-    <div>
-        <ng-container *ngFor="let item of transactions">
-            <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
-        </ng-container>
-    </div>
+		<ng-template #itemTemplate let-item="item">
+			<div class="transaction-item">
+				<div class="transaction-info">
+					<h3 class="transaction-title">Customer: {{item.info.to_email}}</h3>
+					<span class="transaction-desc">Receipt: {{item.tx}} <br> {{item.createdAt | date:'medium' }}</span>
+				</div>
 
-    <ng-template #itemTemplate let-item="item">
-        <div class="kt-widget1__item">
-            <div class="kt-widget1__info">
-                <h3 class="kt-widget1__title">Customer: {{item.info.to_email}}</h3>
-                <span class="kt-widget1__desc">Receipt: {{item.tx}} <br> {{item.createdAt | date:'medium' }}</span>
-            </div>
-
-            <span class="kt-widget1__number" [ngClass]="(item.type==='EarnPoints') ? 'kt-font-info' : 'kt-font-focus'">
-                <!--{{ (item.type==='EarnPoints') ? '-' : '+' }}-->
-                {{item.info.points}} points
-            </span>
-        </div>
-    </ng-template>
+				<span class="transaction-number" [ngClass]="(item.type==='EarnPoints') ? 'font-info' : 'font-focus'">
+					<!--{{ (item.type==='EarnPoints') ? '-' : '+' }}-->
+					{{item.info.points}} points
+				</span>
+			</div>
+		</ng-template>
+	</div>
 </div>

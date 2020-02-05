@@ -12,13 +12,13 @@ import { LoyaltyService } from '../../core/services/loyalty.service';
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.sass']
+  styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
 
   access: string = '';
   transactions = [];
-
+  p: number = 1;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 

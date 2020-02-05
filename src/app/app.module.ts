@@ -35,6 +35,9 @@ import { CardOfferComponent } from './views/layout/card-offer/card-offer.compone
 import { CardCoopComponent } from './views/layout/card-coop/card-coop.component';
 import { CardPostComponent } from './views/layout/card-post/card-post.component';
 import { CardMicrocreditComponent } from './views/layout/card-microcredit/card-microcredit.component';
+import { NotFoundComponent } from './views/pages/not-found/not-found.component';
+
+//import { HistoryModule } from './history/history.module';
 
 import { MenuService } from './core/services/menu.service';
 
@@ -69,7 +72,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	CardOfferComponent,
 	CardCoopComponent,
 	CardPostComponent,
-	CardMicrocreditComponent
+	CardMicrocreditComponent,
+	NotFoundComponent,
   ],
   imports: [
     QRCodeModule,
@@ -84,7 +88,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	MatInputModule,
 	SwiperModule,
 	NgbModalModule,
-	NgbDropdownModule
+	NgbDropdownModule,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

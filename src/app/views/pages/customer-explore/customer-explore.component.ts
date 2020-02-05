@@ -16,6 +16,23 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	config: any = {
 		// Optional parameters
 		loop: true,
+		preventClicks: false,
+		// If we need pagination
+		pagination: {
+		  el: '.swiper-pagination',
+		  clickable: true
+		},
+
+		// Navigation arrows
+		navigation: {
+		  nextEl: '.swiper-button-next',
+		  prevEl: '.swiper-button-prev',
+		},
+
+	};/*
+		config: any = {
+		// Optional parameters
+		loop: true,
 
 		// If we need pagination
 		pagination: {
@@ -30,6 +47,23 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		},
 
 	};
+	config: any = {
+		// Optional parameters
+		loop: true,
+
+		// If we need pagination
+		pagination: {
+		  el: '.swiper-pagination',
+		  clickable: true
+		},
+
+		// Navigation arrows
+		navigation: {
+		  nextEl: '.swiper-button-next',
+		  prevEl: '.swiper-button-prev',
+		},
+
+	};*/
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 

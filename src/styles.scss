@@ -124,6 +124,18 @@ body {
 	}
 }
 
+//Paginator
+.pagination-wrapper {
+	text-align: center;
+	ul {
+		display: inline;
+		margin: 10px 0;
+		.current {
+			background-color: #0c1a33;
+		}
+	}
+}
+	
 @media (min-width:992px) {
 	body {
 		.mat-card {

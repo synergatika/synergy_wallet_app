@@ -1,0 +1,32 @@
+.transaction {
+	table {
+		width: 100%;
+	}
+	&-receipt {
+		td {
+			padding: 15px 0 9px;
+			
+			span {
+				font-size: 15px;
+			}
+		}
+	}
+	&-details {
+		td {
+			padding-bottom: 20px;
+			border-bottom: 1px solid rgba(0,0,0,.12);
+		}
+	}
+	&-number {
+		font-weight: 500;
+	}
+	.font {		
+		&-danger {
+			color: #faa635;
+		}
+		&-success {
+			color: #37aba7;
+		}
+	}
+
+}
