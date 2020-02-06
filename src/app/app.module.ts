@@ -19,7 +19,7 @@ import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { QRCodeModule } from 'angularx-qrcode';
 
 import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
-import { InvitationComponent } from './invitation/invitation.component';
+import { InvitationComponent } from './views/pages/invitation/invitation.component';
 import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
 import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
 import { CustomerSupportComponent } from './views/pages/customer-support/customer-support.component';
@@ -46,6 +46,12 @@ import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
 import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+//for Owl Carousel!
+//import { RouterModule, Routes } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { SlickModule } from 'ngx-slick';
+import { ShareIconComponent } from './views/widgets/share-icon/share-icon.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -74,6 +80,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	CardPostComponent,
 	CardMicrocreditComponent,
 	NotFoundComponent,
+	ShareIconComponent,
   ],
   imports: [
     QRCodeModule,
@@ -89,7 +96,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	SwiperModule,
 	NgbModalModule,
 	NgbDropdownModule,
-
+	//RouterModule, 
+	BrowserAnimationsModule,
+	CarouselModule,
+	SlickModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

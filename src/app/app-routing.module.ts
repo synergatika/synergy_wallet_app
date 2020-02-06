@@ -4,7 +4,7 @@ import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
 import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
 import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
-import { InvitationComponent } from './invitation/invitation.component';
+import { InvitationComponent } from './views/pages/invitation/invitation.component';
 import { LayoutComponent } from './views/layout/layout.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
 
@@ -40,15 +40,15 @@ const routes: Routes = [
 			{
 			path: 'invitation', component: InvitationComponent
 			},
-			{
+			/*{
 				path: '**', component: NotFoundComponent
-			},
+			},*/
 		]
 	},
 	{ path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
 	{ path: '', redirectTo: 'create', pathMatch: 'full' },
 	//{ path: '**', redirectTo: 'qr-code', pathMatch: 'full' },
-	{path: '**', component: NotFoundComponent},
+	{ path: '**', component: NotFoundComponent },
 ]
 
 @NgModule({

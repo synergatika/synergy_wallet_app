@@ -33,7 +33,17 @@ body {
 	&.menu-overlay {
 		background-color: rgba(0,0,0,0.4);
 	}
-	
+	mat-card {
+		.mdi.share-icon {
+			color: #b6c1c9;
+			font-size: 54px;
+		}
+		.mdi {
+			color: #368f8c;
+			font-size: 18px;
+			margin-right: 5px;
+		}
+	}
 	
 	/*.material-icons {
 	  font-family: 'Material Icons';
@@ -78,6 +88,7 @@ body {
 		border: none;
 		box-shadow: 0 0 40px 0 rgba(40,70,120,.15);
 	}
+
 	
 	//Material Design
 	.mat-card:not([class*=mat-elevation-z]) {
@@ -95,6 +106,32 @@ body {
 	.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
 		bottom: 80px;
 	}
+	
+	//Owl carousel
+	.owl-theme {
+		.owl-nav {
+			position: absolute;
+			bottom: 60%;
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			pointer-events: none;
+		}
+		.owl-prev {
+			pointer-events: all;
+			&:before {
+				content:"\f97b";
+				font-family: "Material Design Icons";
+			}
+		}
+		.owl-next {
+			pointer-events: all;
+			&:before {
+				content:"\f96c";
+				font-family: "Material Design Icons";
+			}
+		}
+	}
 	//Modal
 	.close-btn {
 		position: absolute;
@@ -109,6 +146,17 @@ body {
 		span {
 			position: relative;
 			top: -6px;
+		}
+	}
+	.fullscrenn-backdrop {
+		background-color: #fff;
+		&.modal-backdrop.show {
+			opacity: 1;
+		}
+	}
+	.fullscrenn-modal {
+		.modal-content {
+			border: none;
 		}
 	}
 
@@ -140,6 +188,10 @@ body {
 	body {
 		.mat-card {
 			padding: 25px;
+			.row {
+				margin-right: -25px;
+				margin-left: -25px;
+			}
 		}
 	}
 }

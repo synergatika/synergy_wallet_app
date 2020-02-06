@@ -22,12 +22,10 @@
 					</div>
 					<div class="post-info">
 						<div class="">
-							<div class="post-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />{{post.merchant_name}}</div>
-							<div class="post-subtitle"><img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />{{post.merchant_name}}</div>
+							<div class="post-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>{{post.merchant_name}}</div>
+							<div class="post-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span class="mdi mdi-pin"></span>{{post.merchant_name}}</div>
 						</div>
-						<div class="share">
-							<img src="../../../assets/media/images/Share.png" alt="share" />
-						</div>
+						<app-share-icon></app-share-icon>
 					</div>
 				</div>
 			</div>

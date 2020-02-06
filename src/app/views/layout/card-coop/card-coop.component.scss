@@ -65,6 +65,7 @@
 				position: relative;
 				top: -2px;
 				margin-right: 5px;
+				max-width: fit-content;
 			}
 		}
 		&-info{
@@ -78,14 +79,16 @@
 	}
 }
 @media (min-width: 768px) {
-	.coop {
-		&-details {
-			padding-right: 30px;
-			padding-left: 30px;
-		}
-		padding-bottom: 15px;
-		&-sector {
-			right: -30px;
+	.coop-card {
+		.coop {
+			&-details {
+				padding-right: 30px;
+				padding-left: 30px;
+			}
+			padding-bottom: 15px;
+			&-sector {
+				right: -30px;
+			}
 		}
 	}
 }
