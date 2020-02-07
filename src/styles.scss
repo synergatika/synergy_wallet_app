@@ -24,7 +24,8 @@ body {
 		}
 	}
 	.heading {
-		font-size: 1.6rem;
+		font-size: 1.4rem;
+		font-weight: normal;
 		margin-bottom: 20px;
 	}
 	.section-heading {
@@ -37,6 +38,7 @@ body {
 		.mdi.share-icon {
 			color: #b6c1c9;
 			font-size: 54px;
+			cursor: pointer;
 		}
 		.mdi {
 			color: #368f8c;
@@ -165,12 +167,7 @@ body {
 .auth-page {
 	background-color: #0c1a33;
 }
-//Settings Module
-.settings {
-	label {
-		font-size: 18px;
-	}
-}
+
 
 //Paginator
 .pagination-wrapper {

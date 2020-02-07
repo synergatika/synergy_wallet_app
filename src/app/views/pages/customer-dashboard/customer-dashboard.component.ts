@@ -79,6 +79,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	
 	@ViewChild('microcredit_item', {static: false}) microcreditItem;
 	@ViewChild('qrcode', {static: false}) qrcode;
+	@ViewChild('wallet', {static: false}) wallet;
 
   /**
  * Component constructor
@@ -176,4 +177,15 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
         });*/
 		const modalRef = this.modalService.open(QrCodeComponent);
   }
+  
+  openWallet() {
+		this.modalService.open(this.wallet).result.then((result) => {
+			console.log('closed');
+
+			}, (reason) => {
+				console.log('dismissed');
+
+        });
+  }
+  
 }

@@ -52,6 +52,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SlickModule } from 'ngx-slick';
 import { ShareIconComponent } from './views/widgets/share-icon/share-icon.component';
+import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops.component';
+import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
+import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -81,6 +85,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	CardMicrocreditComponent,
 	NotFoundComponent,
 	ShareIconComponent,
+	ArchiveCoopsComponent,
+	ArchiveOffersComponent,
+	ArchivePostsComponent,
   ],
   imports: [
     QRCodeModule,
@@ -99,7 +106,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	//RouterModule, 
 	BrowserAnimationsModule,
 	CarouselModule,
-	SlickModule.forRoot()
+	//SlickModule.forRoot(),
+	InfiniteScrollModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

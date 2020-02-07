@@ -210,7 +210,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	}
 
 	ngAfterViewInit() {
-		const interval = setInterval(() => {
+		/*const interval = setInterval(() => {
 			const condition = this.elRef.nativeElement.querySelector('.swiper-slide');
 			console.log('-');
 			if (condition) {
@@ -218,7 +218,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			  console.log('added!!!!!!!!');
 			  clearInterval(interval) 
 			}
-		  }, 100); 
+		  }, 100); */
 	}
 
 

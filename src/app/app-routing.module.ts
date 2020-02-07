@@ -5,6 +5,9 @@ import { CustomerDashboardComponent } from './views/pages/customer-dashboard/cus
 import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
 import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
+import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops.component';
+import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
+import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 import { LayoutComponent } from './views/layout/layout.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
 
@@ -21,13 +24,13 @@ const routes: Routes = [
 			path: 'qr-code', component: QrCodeComponent
 			},*/
 			{
-			path: 'dashboard', component: CustomerDashboardComponent
+				path: 'dashboard', component: CustomerDashboardComponent
 			},
 			{
-			path: 'explore', component: CustomerExploreComponent
+				path: 'explore', component: CustomerExploreComponent
 			},
 			{
-			path: 'explore-one/:_id', component: CustomerExploreOneComponent
+				path: 'explore-one/:_id', component: CustomerExploreOneComponent
 			},
 
 			
@@ -36,9 +39,17 @@ const routes: Routes = [
 			{ path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
 			//{ path: 'history', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
 			//{ path: 'settings', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
-
 			{
-			path: 'invitation', component: InvitationComponent
+				path: 'coops', component: ArchiveCoopsComponent
+			},
+			{
+				path: 'offers', component: ArchiveOffersComponent
+			},
+			{
+				path: 'posts', component: ArchivePostsComponent
+			},
+			{
+				path: 'invitation', component: InvitationComponent
 			},
 			/*{
 				path: '**', component: NotFoundComponent

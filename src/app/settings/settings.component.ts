@@ -15,26 +15,27 @@ export class SettingsComponent implements OnInit {
 			link: 'profile',
 			icon: '',
 		},
+
+		{
+			title: 'Account settings',
+			link: 'account-settings',
+			icon: '',
+		},
+		/*{
+			title: 'Email settings',
+			link: 'email-settings',
+			icon: '',
+		},
 		{
 			title: 'Change password',
 			link: 'change-password',
 			icon: '',
 		},
 		{
-			title: 'Account settings',
-			link: 'account-settings',
-			icon: '',
-		},
-		{
-			title: 'Email settings',
-			link: 'email-settings',
-			icon: '',
-		},
-		{
 			title: 'Basket',
 			link: 'history/basket',
 			icon: '',
-		},
+		},*/
 		{
 			title: 'Transactions',
 			link: 'history/transactions',
