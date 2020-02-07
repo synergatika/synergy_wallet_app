@@ -7,7 +7,7 @@ export interface Event {
     event_id: string;
     event_imageURL: string;
     title: string;
-    content: string;
+    description: string;
     location: string;
     dateTime: string;
     access: number;

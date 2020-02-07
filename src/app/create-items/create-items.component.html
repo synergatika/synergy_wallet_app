@@ -1,4 +1,4 @@
-<router-outlet></router-outlet>
+<h1> Create </h1>
 
 <main id="logout-button-holder">
     <button mat-raised-button><a [routerLink]="['offer']">Create Offer</a></button>
@@ -12,3 +12,12 @@
 <main id="logout-button-holder">
     <button mat-raised-button><a [routerLink]="['microcredit']">Create Microcredit Campaign</a></button>
 </main>
+
+<h1> Edit </h1>
+<main id="logout-button-holder">
+    <button *ngFor="let campaign of campaigns" mat-raised-button id="logout-button"
+        routerLink="edit/microcredit/{{campaign.campaign_id}}">Edit Microcredit Campaign:
+        {{campaign.title}}</button>
+</main>
+
+<router-outlet></router-outlet>

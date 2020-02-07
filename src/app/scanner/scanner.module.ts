@@ -18,9 +18,10 @@ import { SubEmailFormComponent } from './sub-email-form/sub-email-form.component
 import { SubDiscountFormComponent } from './sub-discount-form/sub-discount-form.component';
 import { SubOfferFormComponent } from './sub-offer-form/sub-offer-form.component';
 
-import { LoyaltyLocalService } from './loyaltyLocal.service';
+import { ScannerService } from './_scanner.service';
 import { SubIdentifierFormComponent } from './sub-identifier-form/sub-identifier-form.component';
 import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component';
+import { SubMicrocreditFormComponent } from './sub-microcredit-form/sub-microcredit-form.component';
 
 const routes: Routes = [
     {
@@ -63,7 +64,7 @@ const routes: Routes = [
         // EffectsModule.forFeature([AuthEffects]),
     ],
     providers: [
-        LoyaltyLocalService
+        ScannerService
         // InterceptService,
         // {
         //     provide: HTTP_INTERCEPTORS,
@@ -83,7 +84,8 @@ const routes: Routes = [
         SubDiscountFormComponent,
         SubOfferFormComponent,
         SubIdentifierFormComponent,
-        SubFinalStepComponent
+        SubFinalStepComponent,
+        SubMicrocreditFormComponent
     ],
     entryComponents: [
     ]

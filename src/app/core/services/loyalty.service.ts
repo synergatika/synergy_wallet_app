@@ -31,7 +31,6 @@ export class LoyaltyService {
       }));
   }
 
-
   linkCard(email: string, card: string) {
     return this.http.put<any>(`${environment.apiUrl}/auth/link_card/${email}`, { card: card })
       .pipe(map(data => {
@@ -39,16 +38,8 @@ export class LoyaltyService {
       }));
   }
 
-
   linkEmail(email: string, card: string) {
     return this.http.put<any>(`${environment.apiUrl}/auth/link_email/${card}`, { email: email })
-      .pipe(map(data => {
-        return data;
-      }));
-  }
-
-  memberBalance(_to: string) {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/balance/${_to}`)
       .pipe(map(data => {
         return data;
       }));
@@ -58,6 +49,27 @@ export class LoyaltyService {
     return this.http.get<any>(`${environment.apiUrl}/loyalty/balance`)
       .pipe(map(response => {
         return response.data;
+      }));
+  }
+
+  memberBalance(_to: string) {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/balance/${_to}`)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  readBadge(): Observable<Points> {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/badge`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
+  memberBadge(_to: string) {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/badge/${_to}`)
+      .pipe(map(response => {
+        return response;
       }));
   }
 

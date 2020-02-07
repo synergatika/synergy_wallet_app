@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { LoyaltyLocalService } from "../loyaltyLocal.service";
-import { LoyaltyLocalInterface } from "../loyaltyLocal.interface";
+import { ScannerService } from "../_scanner.service";
+import { ScannerInterface } from "../_scanner.interface";
 
 @Component({
   selector: 'app-sub-email-form',
@@ -18,13 +18,13 @@ export class SubEmailFormComponent implements OnInit {
   submitForm: FormGroup;
   submitted: boolean = false;
 
-  user: LoyaltyLocalInterface["User"];
+  user: ScannerInterface["User"];
 
   constructor(
     private fb: FormBuilder,
-    private loyaltyLocalService: LoyaltyLocalService
+    private scannerService: ScannerService
   ) {
-    this.loyaltyLocalService.user.subscribe(user => this.user = user)
+    this.scannerService.user.subscribe(user => this.user = user)
   }
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class SubEmailFormComponent implements OnInit {
     };
     console.log("2");
     this.user.email = controls.email.value;
-    this.loyaltyLocalService.changeUser(this.user);
+    this.scannerService.changeUser(this.user);
     this.add_email.emit(this.user.email);
   }
 

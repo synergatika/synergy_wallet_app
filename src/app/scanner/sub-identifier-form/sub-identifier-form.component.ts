@@ -2,8 +2,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { LoyaltyLocalService } from "../loyaltyLocal.service";
-import { LoyaltyLocalInterface } from "../loyaltyLocal.interface";
+import { ScannerService } from "../_scanner.service";
+import { ScannerInterface } from "../_scanner.interface";
 
 @Component({
   selector: 'app-sub-identifier-form',
@@ -16,16 +16,16 @@ export class SubIdentifierFormComponent implements OnInit {
   add_identifier: EventEmitter<string> = new EventEmitter<string>();
 
   scanned: boolean = false;
-  user: LoyaltyLocalInterface["User"];
+  user: ScannerInterface["User"];
 
   submitted: boolean = false;
   submitForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private loyaltyLocalService: LoyaltyLocalService
+    private scannerService: ScannerService
   ) {
-    this.loyaltyLocalService.user.subscribe(user => this.user = user)
+    this.scannerService.user.subscribe(user => this.user = user)
   }
 
 
@@ -67,7 +67,7 @@ export class SubIdentifierFormComponent implements OnInit {
 
 
     this.user.identifier_form = controls.identifier.value;
-    this.loyaltyLocalService.changeUser(this.user);
+    this.scannerService.changeUser(this.user);
     this.add_identifier.emit(controls.identifier.value);
   }
 

@@ -14,8 +14,8 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { SubDiscountFormComponent } from "../sub-discount-form/sub-discount-form.component";
-import { LoyaltyLocalService } from "../loyaltyLocal.service";
-import { LoyaltyLocalInterface } from "../loyaltyLocal.interface";
+import { ScannerService } from "../_scanner.service";
+import { ScannerInterface } from "../_scanner.interface";
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -41,9 +41,9 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   showIdentifierForm = false;
   showCardScanner = false;
 
-  public user: LoyaltyLocalInterface["User"];
-  public transaction: LoyaltyLocalInterface["PointsTransaction"];
-  public actions: LoyaltyLocalInterface["Actions"];
+  public user: ScannerInterface["User"];
+  public transaction: ScannerInterface["PointsTransaction"];
+  public actions: ScannerInterface["Actions"];
 
   messages = {
     stepB: '',
@@ -55,12 +55,12 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService,
-    private loyaltyLocalService: LoyaltyLocalService,
+    private scannerService: ScannerService,
     public dialogRef: MatDialogRef<ScanLoyaltyComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.loyaltyLocalService.user.subscribe(user => this.user = user);
-    this.loyaltyLocalService.pointsTransaction.subscribe(transaction => this.transaction = transaction);
-    this.loyaltyLocalService.actions.subscribe(actions => this.actions = actions);
+    this.scannerService.user.subscribe(user => this.user = user);
+    this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction);
+    this.scannerService.actions.subscribe(actions => this.actions = actions);
     this.unsubscribe = new Subject();
   }
 
@@ -137,7 +137,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
               // Cannot Be Happened!
             }
             this.actions.registration = action;
-            this.loyaltyLocalService.changeActions(this.actions);
+            this.scannerService.changeActions(this.actions);
           },
           error => {
             console.log(error);
@@ -191,7 +191,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
               // Cannot Be Happened!
             }
             this.actions.registration = action;
-            this.loyaltyLocalService.changeActions(this.actions);
+            this.scannerService.changeActions(this.actions);
           },
           error => {
             console.log(error);
@@ -231,7 +231,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
                 // Cannot Be Happened!
               }
               this.actions.registration = action;
-              this.loyaltyLocalService.changeActions(this.actions);
+              this.scannerService.changeActions(this.actions);
             },
             error => {
               console.log(error);
@@ -246,7 +246,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     } else {
       action = '00' + this.actions.registration.substr(2, 4);
       this.actions.registration = action;
-      this.loyaltyLocalService.changeActions(this.actions);
+      this.scannerService.changeActions(this.actions);
     }
     this.onNextStep();
   }

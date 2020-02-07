@@ -8,10 +8,10 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { LoyaltyService } from '../../core/services/loyalty.service';
 
 // Local Services
-import { LoyaltyLocalService } from '../loyaltyLocal.service';
+import { ScannerService } from '../_scanner.service';
 
 // Local Models & Interfaces
-import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
+import { ScannerInterface } from '../_scanner.interface';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WizardComponent } from 'angular-archwizard';
@@ -31,9 +31,9 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  user: LoyaltyLocalInterface["User"];
-  offers: LoyaltyLocalInterface["Offer"][];
-  transaction: LoyaltyLocalInterface["OfferTransaction"];
+  user: ScannerInterface["User"];
+  offers: ScannerInterface["Offer"][];
+  transaction: ScannerInterface["OfferTransaction"];
 
   submitted: boolean = false;
 
@@ -43,13 +43,13 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private loyaltyService: LoyaltyService,
-    private loyaltyLocalService: LoyaltyLocalService,
+    private scannerService: ScannerService,
     public dialogRef: MatDialogRef<ScanOffersComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.offer_id = this.data.offer_id;
-    this.loyaltyLocalService.offers.subscribe(offers => this.offers = offers);
-    this.loyaltyLocalService.offerTransaction.subscribe(transaction => this.transaction = transaction);
-    this.loyaltyLocalService.user.subscribe(user => this.user = user);
+    this.scannerService.offers.subscribe(offers => this.offers = offers);
+    this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction);
+    this.scannerService.user.subscribe(user => this.user = user);
     this.unsubscribe = new Subject();
   }
 
@@ -67,7 +67,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     const currentOffer = this.offers[this.offers.map(function (e) { return e.offer_id; }).indexOf(this.offer_id)];
     this.transaction.offer_id = currentOffer.offer_id;
     this.transaction.cost = currentOffer.cost;
-    this.loyaltyLocalService.changeOfferTransaction(this.transaction);
+    this.scannerService.changeOfferTransaction(this.transaction);
   }
 
   fetchBalanceData() {
@@ -79,7 +79,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
             console.log(parseInt(data.data.points, 16));
             this.transaction.points = parseInt(data.data.points, 16);
             this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
-            this.loyaltyLocalService.changeOfferTransaction(this.transaction);
+            this.scannerService.changeOfferTransaction(this.transaction);
             this.onNextStep();
           },
           error => {

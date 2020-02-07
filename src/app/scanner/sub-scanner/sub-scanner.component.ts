@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { LoyaltyLocalService } from "../loyaltyLocal.service";
-import { LoyaltyLocalInterface } from "../loyaltyLocal.interface";
+import { ScannerService } from "../_scanner.service";
+import { ScannerInterface } from "../_scanner.interface";
 
 @Component({
   selector: 'app-sub-scanner',
@@ -13,12 +13,12 @@ export class SubScannerComponent implements OnInit {
   scan_identifier: EventEmitter<string> = new EventEmitter<string>();
 
   scanned: boolean = false;
-  user: LoyaltyLocalInterface["User"];
+  user: ScannerInterface["User"];
 
   constructor(
-    private loyaltyLocalService: LoyaltyLocalService
+    private scannerService: ScannerService
   ) {
-    this.loyaltyLocalService.user.subscribe(user => this.user = user)
+    this.scannerService.user.subscribe(user => this.user = user)
   }
 
 
@@ -27,7 +27,7 @@ export class SubScannerComponent implements OnInit {
     this.scanned = true;
 
     this.user.identifier_scan = result;
-    this.loyaltyLocalService.changeUser(this.user);
+    this.scannerService.changeUser(this.user);
     this.scan_identifier.emit(result);
   }
 

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
-import { LoyaltyLocalInterface } from './loyaltyLocal.interface';
+import { ScannerInterface } from './_scanner.interface';
 
 @Injectable()
-export class LoyaltyLocalService {
+export class ScannerService {
 
     //loyaltyLocalInterface: LoyaltyLocalInterface;
 
@@ -44,25 +44,45 @@ export class LoyaltyLocalService {
     });
     offerTransaction = this.offerTransactionSource.asObservable();
 
+    private microcreditSource = new BehaviorSubject([]);
+    microcredit = this.microcreditSource.asObservable();
+
+    private microcreditTransactionSource = new BehaviorSubject({
+        campaign_id: '',
+        initial_tokens: 0,
+        redeemed_tokens: 0,
+        possible_tokens: 0,
+        discount_tokens: 0
+    });
+    microcreditTransaction = this.microcreditTransactionSource.asObservable();
+
     constructor() { }
 
-    changeUser(user: LoyaltyLocalInterface["User"]) {
+    changeUser(user: ScannerInterface["User"]) {
         this.userSource.next(user);
     };
 
-    changePointsTransaction(transaction: LoyaltyLocalInterface["PointsTransaction"]) {
+    changePointsTransaction(transaction: ScannerInterface["PointsTransaction"]) {
         this.pointsTransactionSource.next(transaction);
     };
 
-    changeActions(actions: LoyaltyLocalInterface["Actions"]) {
+    changeActions(actions: ScannerInterface["Actions"]) {
         this.actionsSource.next(actions);
     }
 
-    changeOffers(offers: LoyaltyLocalInterface["Offer"][]) {
+    changeOffers(offers: ScannerInterface["Offer"][]) {
         this.offersSource.next(offers);
     }
 
-    changeOfferTransaction(transaction: LoyaltyLocalInterface["OfferTransaction"]) {
+    changeOfferTransaction(transaction: ScannerInterface["OfferTransaction"]) {
         this.offerTransactionSource.next(transaction);
     };
+
+    changeMicrocreditCampaigns(microcredit: ScannerInterface["MicrocreditCampaign"][]) {
+        this.microcreditSource.next(microcredit);
+    }
+
+    changeMicrocreditTransaction(transaction: ScannerInterface["MicrocreditTransaction"]) {
+        this.microcreditTransactionSource.next(transaction);
+    }
 }

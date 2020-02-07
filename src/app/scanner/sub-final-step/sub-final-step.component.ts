@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
-import { LoyaltyLocalService } from '../loyaltyLocal.service';
-import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
+import { ScannerService } from '../_scanner.service';
+import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-final-step',
@@ -11,14 +11,14 @@ import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
 export class SubFinalStepComponent implements OnInit {
 
   @Input()
-  type: boolean;
+  type: number;
   @Output()
   finalize: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  transaction: LoyaltyLocalInterface["PointsTransaction"] | LoyaltyLocalInterface["OfferTransaction"];
+  transaction: ScannerInterface["PointsTransaction"] | ScannerInterface["OfferTransaction"] | ScannerInterface["MicrocreditTransaction"];
 
   constructor(
-    private loyaltyLocalService: LoyaltyLocalService
+    private scannerService: ScannerService
   ) {
   }
 
@@ -26,10 +26,12 @@ export class SubFinalStepComponent implements OnInit {
 	 * On init
 	 */
   ngOnInit() {
-    if (this.type) {
-      this.loyaltyLocalService.offerTransaction.subscribe(transaction => this.transaction = transaction)
-    } else {
-      this.loyaltyLocalService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
+    if (this.type === 1) {
+      this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
+    } else if (this.type === 2) {
+      this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction)
+    } else if (this.type === 3) {
+      this.scannerService.microcreditTransaction.subscribe(transaction => this.transaction = transaction)
     }
   }
 

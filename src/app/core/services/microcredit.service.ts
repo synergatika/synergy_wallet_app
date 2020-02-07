@@ -40,22 +40,29 @@ export class MicrocreditService {
       }));
   }
 
-  createBacker(merchant_id: string, campaign_id: string, amount: number): Observable<Message[]> {
+  createBacker(merchant_id: string, campaign_id: string, amount: number): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/backers/${merchant_id}/${campaign_id}`, { amount: amount })
       .pipe(map(response => {
         return response;
       }));
   }
 
-  createCustomerBacker(merchant_id: string, campaign_id: string, identifier: string, amount: number): Observable<Message[]> {
+  createCustomerBacker(merchant_id: string, campaign_id: string, identifier: string, amount: number): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/backers/${merchant_id}/${campaign_id}/${identifier}`, { amount: amount })
       .pipe(map(response => {
         return response;
       }));
   }
 
-  confirmBacker(merchant_id: string, campaign_id: string, payment_id: string[]): Observable<Message[]> {
+  confirmBacker(merchant_id: string, campaign_id: string, payment_id: string[]): Observable<Message> {
     return this.http.put<any>(`${environment.apiUrl}/microcredit/backers/${merchant_id}/${campaign_id}`, { payment_id: payment_id })
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  redeemTokens(merchant_id: string, campaign_id: string, _to: string, _points: number, password: string): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/microcredit/redeem/${merchant_id}/${campaign_id}`, { _to, _points, password })
       .pipe(map(response => {
         return response;
       }));

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { LoyaltyLocalService } from '../loyaltyLocal.service';
-import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
+import { ScannerService } from '../_scanner.service';
+import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-offer-form',
@@ -13,18 +13,16 @@ export class SubOfferFormComponent implements OnInit {
   @Output()
   add_offer: EventEmitter<number> = new EventEmitter<number>();
 
-  transaction: LoyaltyLocalInterface["OfferTransaction"];
+  transaction: ScannerInterface["OfferTransaction"];
 
   submitted: boolean = false;
   submitForm: FormGroup;
 
-  possibleQuantity: number = 0;
-
   constructor(
     private fb: FormBuilder,
-    private loyaltyLocalService: LoyaltyLocalService
+    private scannerService: ScannerService
   ) {
-    this.loyaltyLocalService.offerTransaction.subscribe(transaction => this.transaction = transaction);
+    this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction);
   }
 
   ngOnInit() {
@@ -56,7 +54,7 @@ export class SubOfferFormComponent implements OnInit {
 
     this.transaction.quantity = controls.quantity.value;
     this.transaction.discount_points = this.transaction.cost * this.transaction.quantity;
-    this.loyaltyLocalService.changeOfferTransaction(this.transaction);
+    this.scannerService.changeOfferTransaction(this.transaction);
     this.add_offer.emit(controls.quantity.value);
   }
 

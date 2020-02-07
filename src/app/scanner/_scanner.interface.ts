@@ -37,10 +37,31 @@ interface OfferTransaction {
     quantity: number;
 }
 
-export interface LoyaltyLocalInterface {
+interface MicrocreditCampaign {
+    merchant_id: string;
+    merchant_name: string;
+    merchant_imageURL: string;
+    campaign_id: string;
+    terms: string;
+    description: string;
+    expiresAt: number;
+    createdAt: string;
+}
+
+interface MicrocreditTransaction {
+    campaign_id: string;
+    initial_tokens: number;
+    redeemed_tokens: number;
+    possible_tokens: number;
+    discount_tokens: number;
+}
+
+export interface ScannerInterface {
     User: User;
     PointsTransaction: PointsTransaction;
     Actions: Actions;
     Offer: Offer;
     OfferTransaction: OfferTransaction;
+    MicrocreditCampaign: MicrocreditCampaign;
+    MicrocreditTransaction: MicrocreditTransaction;
 }

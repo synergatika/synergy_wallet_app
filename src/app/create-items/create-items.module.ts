@@ -39,7 +39,7 @@ const routes: Routes = [
                 component: NewMicrofundingCampaignComponent,
             },
             {
-                path: 'edit/microcredit',
+                path: 'edit/microcredit/:_id',
                 component: EditMicrocreditCampaignComponent,
             }
         ]

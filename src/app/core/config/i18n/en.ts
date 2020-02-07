@@ -255,7 +255,41 @@ export const locale = {
             },
 
             EVENT: {
-
+                TITLE: {
+                    TITLE: 'Event\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Event\'s Title'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Event\'s Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Event\'s Description.'
+                },
+                IMAGE: {
+                    TITLE: 'Event\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Event\'s Image.'
+                },
+                ACCESS: {
+                    TITLE: 'Event\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, choose Event\'s Access.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Public to all',
+                    B: 'Only for registred Users',
+                    C: 'Only for Coops'
+                },
+                LOCATION: {
+                    TITLE: 'Event\'s Location',
+                    PLACEHOLDER: 'Location',
+                    DESC: 'Please, choose Event\'s Location.'
+                },
+                DATETIME: {
+                    TITLE: 'Event\'s Datetime',
+                    PLACEHOLDER: 'Datetime',
+                    DESC: 'Please, choose Event\'s Datetime.'
+                }
             },
 
             MICROCREDIT_CAMPAIGN: {
@@ -346,7 +380,6 @@ export const locale = {
                 HAVE_ACCOUNT: 'Don\'t have an account yet?',
                 ALREADY_VALIDATED: 'Do you have already validated your email address?',
                 ALREADY_UPDATED: 'Do you have already updated your password?',
-
             },
             GENERAL: {
                 OR: 'Or',
@@ -421,6 +454,6 @@ export const locale = {
                 MAX_LENGTH_FIELD: 'Maximum field length:',
                 INVALID_FIELD: 'Field is not valid',
             }
-        },
+        }
     }
 };

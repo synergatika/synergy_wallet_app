@@ -1,21 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ScannerService } from '../_scanner.service';
 import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
-  selector: 'app-sub-amount-form',
-  templateUrl: './sub-amount-form.component.html',
-  styleUrls: ['./sub-amount-form.component.sass']
+  selector: 'app-sub-microcredit-form',
+  templateUrl: './sub-microcredit-form.component.html',
+  styleUrls: ['./sub-microcredit-form.component.sass']
 })
-export class SubAmountFormComponent implements OnInit {
+export class SubMicrocreditFormComponent implements OnInit {
 
   @Output()
-  add_amount: EventEmitter<number> = new EventEmitter<number>();
+  add_microcredit: EventEmitter<number> = new EventEmitter<number>();
 
-  transaction: ScannerInterface["PointsTransaction"];
+  transaction: ScannerInterface["MicrocreditTransaction"];
 
   submitted: boolean = false;
   submitForm: FormGroup;
@@ -24,20 +22,19 @@ export class SubAmountFormComponent implements OnInit {
     private fb: FormBuilder,
     private scannerService: ScannerService
   ) {
-    this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
+    this.scannerService.microcreditTransaction.subscribe(transaction => this.transaction = transaction);
   }
 
-	/**
-	 * On init
-	 */
   ngOnInit() {
     this.initForm();
   }
 
   initForm() {
     this.submitForm = this.fb.group({
-      amount: ['', Validators.compose([
+      tokens: [0, Validators.compose([
         Validators.required,
+        Validators.min(1),
+        (control: AbstractControl) => Validators.max(this.transaction.possible_tokens)(control)
       ])
       ]
     });
@@ -55,10 +52,9 @@ export class SubAmountFormComponent implements OnInit {
       return;
     };
 
-    this.transaction.amount = controls.amount.value;
-    this.transaction.final_amount = controls.amount.value;
-    this.scannerService.changePointsTransaction(this.transaction);
-    this.add_amount.emit(controls.amount.value);
+    this.transaction.discount_tokens = controls.tokens.value;
+    this.scannerService.changeMicrocreditTransaction(this.transaction);
+    this.add_microcredit.emit(controls.tokens.value);
   }
 
   /**

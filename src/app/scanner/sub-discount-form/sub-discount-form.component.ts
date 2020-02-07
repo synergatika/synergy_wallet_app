@@ -4,8 +4,8 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 import { LoyaltyService } from '../../core/services/loyalty.service';
-import { LoyaltyLocalService } from '../loyaltyLocal.service';
-import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
+import { ScannerService } from '../_scanner.service';
+import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-discount-form',
@@ -17,9 +17,9 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   @Output()
   add_discount: EventEmitter<object> = new EventEmitter<object>();
 
-  user: LoyaltyLocalInterface["User"];
-  transaction: LoyaltyLocalInterface["PointsTransaction"];
-  actions: LoyaltyLocalInterface["Actions"];
+  user: ScannerInterface["User"];
+  transaction: ScannerInterface["PointsTransaction"];
+  actions: ScannerInterface["Actions"];
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -33,11 +33,11 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
-    private loyaltyLocalService: LoyaltyLocalService
+    private scannerService: ScannerService
   ) {
-    this.loyaltyLocalService.user.subscribe(user => this.user = user)
-    this.loyaltyLocalService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
-    this.loyaltyLocalService.actions.subscribe(actions => this.actions = actions)
+    this.scannerService.user.subscribe(user => this.user = user)
+    this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
+    this.scannerService.actions.subscribe(actions => this.actions = actions)
     this.unsubscribe = new Subject();
   }
 
@@ -154,8 +154,8 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     };
 
     console.log(this.transaction);
-    this.loyaltyLocalService.changeActions(this.actions);
-    this.loyaltyLocalService.changePointsTransaction(this.transaction);
+    this.scannerService.changeActions(this.actions);
+    this.scannerService.changePointsTransaction(this.transaction);
 
     this.add_discount.emit({
       final_amount: this.transaction.final_amount,

@@ -14,6 +14,7 @@ import { LoyaltyService } from '../core/services/loyalty.service';
 export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
   balance: number = 0;
+  badge: any;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -38,6 +39,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
   */
   ngOnInit() {
     this.fetchBalanceData();
+    this.fetchBadgeData();
   }
 
 
@@ -48,6 +50,24 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
+  }
+
+  fetchBadgeData() {
+    this.loyaltyService.readBadge()
+      .pipe(
+        tap(
+          data => {
+            this.badge = parseInt(data.points, 16);
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
   }
 
   fetchBalanceData() {

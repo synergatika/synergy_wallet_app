@@ -25,7 +25,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
       minLength: 3,
       maxLenth: 250
     },
-    content: {
+    description: {
       minLength: 3,
       maxLenth: 2500
     },
@@ -86,10 +86,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      content: ['', Validators.compose([
+      description: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.content.minLength),
-        Validators.maxLength(this.validator.content.maxLength)
+        Validators.minLength(this.validator.description.minLength),
+        Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
       access: ['public', Validators.compose([
@@ -158,7 +158,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
-    formData.append('content', controls.content.value);
+    formData.append('description', controls.description.value);
     formData.append('access', controls.access.value);
     formData.append('location', controls.location.value);
     formData.append('dateTime', controls.dateTime.value);

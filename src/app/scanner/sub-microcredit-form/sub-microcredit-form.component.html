@@ -1,0 +1,37 @@
+<p>sub-microcredit-form works!</p>
+
+<p>ID: {{transaction.campaign_id}}</p>
+<p>Initial: {{transaction.initial_tokens}}</p>
+<p>Redeemed: {{transaction.redeemed_tokens}}</p>
+<p>Remaining: {{transaction.possible_tokens}}</p>
+
+<div *ngIf='!transaction.possible_tokens'>
+    <p>
+        Not enough tokens
+    </p>
+</div>
+<form *ngIf='transaction.possible_tokens' [formGroup]="submitForm">
+    <!--begin: Form Wizard Step 1-->
+    <div class="col-xl-6">
+        <h5>Transaction's Tokens</h5>
+        <div class="form-group">
+            <label>Tokens</label>
+            <div class="input-group">
+                <span class="input-group-text"></span>
+                <input type="number" class="form-control" name="tokens" formControlName="tokens" placeholder="Tokens"
+                    value="0">
+            </div>
+            <span *ngIf="isControlHasError('tokens','required')"
+                class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+            <span *ngIf="isControlHasError('tokens','min')"
+                class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
+                {{ '1' }}</span>
+            <span *ngIf="isControlHasError('tokens','max')"
+                class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
+                {{ transaction.possible_tokens }}</span>
+            <span class="form-text text-muted">Please enter
+                transaction's tokens.</span>
+        </div>
+    </div>
+</form>
+<button type="button" (click)="onNextStep()">Go to next step</button>

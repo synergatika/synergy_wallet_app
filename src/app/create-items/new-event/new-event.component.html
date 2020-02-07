@@ -17,18 +17,18 @@
                     <span class="form-text text-muted">Please enter post's/event's Title.</span>
                 </div>
                 <div class="form-group">
-                    <label>Content</label>
-                    <textarea type="text" class="form-control" formControlName="content" placeholder="Content"
-                        value="content"> </textarea>
-                    <span *ngIf="isControlHasError('content','required')"
+                    <label>Description</label>
+                    <textarea type="text" class="form-control" formControlName="description" placeholder="Description"
+                        value="description"> </textarea>
+                    <span *ngIf="isControlHasError('description','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span *ngIf="isControlHasError('content','minlength')"
+                    <span *ngIf="isControlHasError('description','minlength')"
                         class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-                        {{validator.content.minLength}}</span>
-                    <span *ngIf="isControlHasError('content','maxlength')"
+                        {{validator.description.minLength}}</span>
+                    <span *ngIf="isControlHasError('description','maxlength')"
                         class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-                        {{validator.content.maxLength}}</span>
-                    <span class="form-text text-muted">Please enter post's/event's Content.</span>
+                        {{validator.description.maxLength}}</span>
+                    <span class="form-text text-muted">Please enter post's/event's Description.</span>
                 </div>
                 <div class="form-group">
                     <label>Access</label>
