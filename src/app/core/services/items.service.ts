@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 
 // Models
 import { Offer } from '../models/offer.model';
+import { PostEvent } from '../models/post_event.model';
 import { Post } from '../models/post.model';
 import { Event } from '../models/event.model';
 import { Message } from '../models/message.model';
@@ -54,33 +55,33 @@ export class ItemsService {
   /** 
     * Events
     */
-  readAllPrivateEvents(): Observable<Event[]> {
-    return this.http.get<any>(`${environment.apiUrl}/events/private/`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readAllPrivateEvents(): Observable<Event[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/events/private/`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
-  readAllPublicEvents(): Observable<Event[]> {
-    return this.http.get<any>(`${environment.apiUrl}/events/public/`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readAllPublicEvents(): Observable<Event[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/events/public/`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
-  readPrivateEventsByStore(merchant_id: string): Observable<Event[]> {
-    return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readPrivateEventsByStore(merchant_id: string): Observable<Event[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
-  readPublicEventsByStore(merchant_id: string): Observable<Event[]> {
-    return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readPublicEventsByStore(merchant_id: string): Observable<Event[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
   createEvent(formData: FormData): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/events`, formData)
@@ -92,38 +93,70 @@ export class ItemsService {
   /** 
     * Posts
     */
-  readAllPrivatePosts(): Observable<Post[]> {
-    return this.http.get<any>(`${environment.apiUrl}/posts/private/`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readAllPrivatePosts(): Observable<Post[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/posts/private/`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
-  readAllPublicPosts(): Observable<Post[]> {
-    return this.http.get<any>(`${environment.apiUrl}/posts/public/`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readAllPublicPosts(): Observable<Post[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/posts/public/`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
-  readPrivatePostsByStore(merchant_id: string): Observable<Post[]> {
-    return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readPrivatePostsByStore(merchant_id: string): Observable<Post[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
-  readPublicPostsByStore(merchant_id: string): Observable<Post[]> {
-    return this.http.get<any>(`${environment.apiUrl}/posts/public/${merchant_id}`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
+  // readPublicPostsByStore(merchant_id: string): Observable<Post[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/posts/public/${merchant_id}`)
+  //     .pipe(map(response => {
+  //       return response.data;
+  //     }));
+  // }
 
   createPost(formData: FormData): Observable<Message[]> {
     return this.http.post<any>(`${environment.apiUrl}/posts`, formData)
       .pipe(map(response => {
         return response;
+      }));
+  }
+
+  /** 
+    * Posts & Events
+    */
+
+  readAllPrivatePostsEvents(): Observable<PostEvent[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/private/`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
+  readAllPublicPostsEvents(): Observable<PostEvent[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/public/`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
+  readPrivatePostsEventsByStore(merchant_id: string): Observable<PostEvent[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
+  readPublicPostsEventsByStore(merchant_id: string): Observable<PostEvent[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/public/${merchant_id}`)
+      .pipe(map(response => {
+        return response.data;
       }));
   }
 

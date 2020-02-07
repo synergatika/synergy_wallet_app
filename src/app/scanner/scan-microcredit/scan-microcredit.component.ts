@@ -35,6 +35,7 @@ export class ScanMicrocreditComponent implements OnInit {
   user: ScannerInterface["User"];
   campaigns: ScannerInterface["MicrocreditCampaign"][];
   transaction: ScannerInterface["MicrocreditTransaction"];
+  orders: ScannerInterface["MicrocreditOrder"][];
 
   submitted: boolean = false;
 
@@ -51,6 +52,7 @@ export class ScanMicrocreditComponent implements OnInit {
     this.campaign_id = this.data.campaign_id;
     this.scannerService.microcredit.subscribe(campaigns => this.campaigns = campaigns);
     this.scannerService.microcreditTransaction.subscribe(transaction => this.transaction = transaction);
+    this.scannerService.orders.subscribe(orders => this.orders = orders);
     this.scannerService.user.subscribe(user => this.user = user);
     this.unsubscribe = new Subject();
   }
@@ -67,7 +69,6 @@ export class ScanMicrocreditComponent implements OnInit {
 
   initializeCampaignData() {
     const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
-    console.log(currentCampaign);
     this.transaction.campaign_id = currentCampaign.campaign_id;
     this.scannerService.changeMicrocreditTransaction(this.transaction);
   }
@@ -78,11 +79,16 @@ export class ScanMicrocreditComponent implements OnInit {
       .pipe(
         tap(
           data => {
-            console.log(data);
-            this.transaction.initial_tokens = data.initialTokens;
-            this.transaction.redeemed_tokens = data.redeemedTokens;
-            this.transaction.possible_tokens = (this.transaction.initial_tokens - this.transaction.redeemed_tokens);
-            this.scannerService.changeMicrocreditTransaction(this.transaction);
+            this.orders = data;
+            this.scannerService.changeMicrocreditOrders(this.orders);
+            const currentOrder = this.orders.find(order => order.initialTokens - order.redeemedTokens > 0);
+            if (currentOrder) {
+              this.transaction.support_id = currentOrder.support_id;
+              this.transaction.initial_tokens = currentOrder.initialTokens;
+              this.transaction.redeemed_tokens = currentOrder.redeemedTokens;
+              this.transaction.possible_tokens = (this.transaction.initial_tokens - this.transaction.redeemed_tokens);
+              this.scannerService.changeMicrocreditTransaction(this.transaction);
+            }
             this.onNextStep();
           },
           error => {
@@ -111,13 +117,14 @@ export class ScanMicrocreditComponent implements OnInit {
 
   onSubmitMicrocreditForm(event: number) {
     const identifier = this.user.identifier_scan || this.user.identifier_form;
-    const redeemPoints = {
+    const redeemTokens = {
       _to: (identifier).toLowerCase(),
       _points: this.transaction.discount_tokens,
-      password: 'all_ok'
+      password: 'all_ok',
+      support_id: this.transaction.support_id
     };
 
-    this.microcreditService.redeemTokens(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, redeemPoints._to, redeemPoints._points, redeemPoints.password)
+    this.microcreditService.redeemTokens(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, redeemTokens._to, redeemTokens._points, redeemTokens.password, redeemTokens.support_id)
       .pipe(
         tap(
           data => {

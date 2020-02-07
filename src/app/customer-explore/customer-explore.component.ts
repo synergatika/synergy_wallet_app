@@ -9,8 +9,7 @@ import { ItemsService } from '../core/services/items.service';
 // Models
 import { Merchant } from '../core/models/merchant.model';
 import { Offer } from '../core/models/offer.model';
-import { Post } from '../core/models/post.model';
-import { Event } from '../core/models/event.model';
+import { PostEvent } from '../core/models/post_event.model';
 
 @Component({
   selector: 'app-customer-explore',
@@ -23,9 +22,8 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
 
   merchants: Merchant[];
-  posts: Post[];
   offers: Offer[];
-  events: Event[];
+  posts_events: PostEvent[];
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -41,8 +39,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchMerchantsData();
     this.fetchOffersData();
-    this.fetchPostsData();
-    this.fetchEventsData();
+    this.fetchPostsEventsData();
   }
 
   /**
@@ -92,32 +89,13 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  fetchPostsData() {
-    this.itemsService.readAllPrivatePosts()
+  fetchPostsEventsData() {
+    this.itemsService.readAllPrivatePostsEvents()
       .pipe(
         tap(
           data => {
-            this.posts = data;
-            console.log(this.posts)
-          },
-          error => {
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-
-  fetchEventsData() {
-    this.itemsService.readAllPrivateEvents()
-      .pipe(
-        tap(
-          data => {
-            this.events = data;
-            console.log(this.events);
+            this.posts_events = data;
+            console.log(this.posts_events)
           },
           error => {
           }),

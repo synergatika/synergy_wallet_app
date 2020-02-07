@@ -2,6 +2,7 @@ interface Address {
     street: string;
     city: string;
     postCode: string;
+    coordinates: string[];
 }
 
 interface Contact {

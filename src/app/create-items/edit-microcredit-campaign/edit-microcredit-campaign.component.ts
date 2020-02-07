@@ -65,23 +65,23 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  }
 
-  // this.microcreditService.readCustomerBacker(this.authenticationService.currentUserValue.user["_id"], '5e3ad9295b7b5c133e306475', 'demo@email.com')
-  //   .pipe(
-  //     tap(
-  //       data => {
-  //         console.log(data);
-  //       },
-  //       error => {
-  //       }),
-  //     takeUntil(this.unsubscribe),
-  //     finalize(() => {
-  //       this.loading = false;
-  //       this.cdRef.markForCheck();
-  //     })
-  //   )
-  //   .subscribe();
+    // this.microcreditService.createCustomerBacker(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'demo@email.com', 250)
+    //   .pipe(
+    //     tap(
+    //       data => {
+    //         console.log(data);
+    //       },
+    //       error => {
+    //       }),
+    //     takeUntil(this.unsubscribe),
+    //     finalize(() => {
+    //       this.loading = false;
+    //       this.cdRef.markForCheck();
+    //     })
+    //   )
+    //   .subscribe();
+  }
 
   // this.microcreditService.createCustomerBacker(this.authenticationService.currentUserValue.user["_id"], '5e3c092e778887047c4ee847', 'demo@email.com', 450)
   //   .pipe(
@@ -115,4 +115,19 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   //   )
   //   .subscribe();
 
+  // this.microcreditService.readCustomerBacker(this.authenticationService.currentUserValue.user["_id"], '5e3ad9295b7b5c133e306475', 'demo@email.com')
+  //   .pipe(
+  //     tap(
+  //       data => {
+  //         console.log(data);
+  //       },
+  //       error => {
+  //       }),
+  //     takeUntil(this.unsubscribe),
+  //     finalize(() => {
+  //       this.loading = false;
+  //       this.cdRef.markForCheck();
+  //     })
+  //   )
+  //   .subscribe();
 }

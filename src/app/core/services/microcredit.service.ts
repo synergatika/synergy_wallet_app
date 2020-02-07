@@ -33,7 +33,7 @@ export class MicrocreditService {
       }));
   }
 
-  readCustomerBacker(merchant_id: string, campaign_id: string, identifier: string): Observable<MicrocreditBacker> {
+  readCustomerBacker(merchant_id: string, campaign_id: string, identifier: string): Observable<MicrocreditBacker[]> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/backers/${merchant_id}/${campaign_id}/${identifier}`)
       .pipe(map(response => {
         return response.data;
@@ -61,8 +61,8 @@ export class MicrocreditService {
       }));
   }
 
-  redeemTokens(merchant_id: string, campaign_id: string, _to: string, _points: number, password: string): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/microcredit/redeem/${merchant_id}/${campaign_id}`, { _to, _points, password })
+  redeemTokens(merchant_id: string, campaign_id: string, _to: string, _points: number, password: string, support_id: string): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/microcredit/redeem/${merchant_id}/${campaign_id}`, { _to, _points, password, support_id })
       .pipe(map(response => {
         return response;
       }));

@@ -1,3 +1,4 @@
+<button (click)=onFinalStep()>X</button>
 <aw-wizard>
     <aw-wizard-step stepTitle="Scan Or Add">
         <app-sub-scanner *ngIf="!showIdentifierForm" (scan_identifier)="onSuccessScanIdentifier($event)">

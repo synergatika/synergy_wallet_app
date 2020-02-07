@@ -58,8 +58,8 @@ const routes: Routes = [
         MatInputModule,
         MatFormFieldModule,
         MatCheckboxModule,
-        TranslateModule.forChild(),
-        MatDialogModule
+        MatDialogModule,
+        TranslateModule.forChild()
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],

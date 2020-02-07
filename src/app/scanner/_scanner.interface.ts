@@ -37,6 +37,15 @@ interface OfferTransaction {
     quantity: number;
 }
 
+interface MicrocreditOrder {
+    campaign_id: string;
+    support_id: string;
+    backer_id: string;
+    initialTokens: number;
+    redeemedTokens: number;
+    status: boolean;
+}
+
 interface MicrocreditCampaign {
     merchant_id: string;
     merchant_name: string;
@@ -50,6 +59,7 @@ interface MicrocreditCampaign {
 
 interface MicrocreditTransaction {
     campaign_id: string;
+    support_id: string;
     initial_tokens: number;
     redeemed_tokens: number;
     possible_tokens: number;
@@ -62,6 +72,7 @@ export interface ScannerInterface {
     Actions: Actions;
     Offer: Offer;
     OfferTransaction: OfferTransaction;
+    MicrocreditOrder: MicrocreditOrder;
     MicrocreditCampaign: MicrocreditCampaign;
     MicrocreditTransaction: MicrocreditTransaction;
 }

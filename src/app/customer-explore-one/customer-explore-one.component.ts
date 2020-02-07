@@ -7,6 +7,11 @@ import { ActivatedRoute } from '@angular/router';
 import { MerchantsService } from '../core/services/merchants.service';
 import { ItemsService } from '../core/services/items.service';
 
+// Models
+import { Merchant } from '../core/models/merchant.model';
+import { Offer } from '../core/models/offer.model';
+import { PostEvent } from '../core/models/post_event.model';
+
 @Component({
   selector: 'app-customer-explore-one',
   templateUrl: './customer-explore-one.component.html',
@@ -15,10 +20,10 @@ import { ItemsService } from '../core/services/items.service';
 export class CustomerExploreOneComponent implements OnInit, OnDestroy {
 
   merchant_id: string = '';
-  merchant: any;
-  offers: any;
-  posts: any;
-  events: any;
+
+  merchant: Merchant;
+  offers: Offer[];
+  posts_events: PostEvent[];
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -42,8 +47,7 @@ export class CustomerExploreOneComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchMerchantData();
     this.fetchOffersData();
-    this.fetchPostsData();
-    this.fetchEventsData();
+    this.fetchPostsEventsData();
   }
 
   /**
@@ -94,32 +98,13 @@ export class CustomerExploreOneComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  fetchPostsData() {
-    this.itemsService.readPrivatePostsByStore(this.merchant_id)
+  fetchPostsEventsData() {
+    this.itemsService.readPrivatePostsEventsByStore(this.merchant_id)
       .pipe(
         tap(
           data => {
             console.log(data);
-            this.posts = data;
-          },
-          error => {
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-
-  fetchEventsData() {
-    this.itemsService.readPrivateEventsByStore(this.merchant_id)
-      .pipe(
-        tap(
-          data => {
-            console.log(data);
-            this.events = data;
+            this.posts_events = data;
           },
           error => {
           }),
