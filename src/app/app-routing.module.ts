@@ -4,6 +4,7 @@ import { QrCodeComponent } from './qr-code/qr-code.component';
 import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 import { CustomerExploreComponent } from './customer-explore/customer-explore.component';
 import { CustomerExploreOneComponent } from './customer-explore-one/customer-explore-one.component';
+
 import { InvitationComponent } from './invitation/invitation.component';
 
 const routes: Routes = [
@@ -20,6 +21,8 @@ const routes: Routes = [
   {
     path: 'explore-one/:_id', component: CustomerExploreOneComponent
   },
+
+  { path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(m => m.CustomerSupportModule) },
 
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
   { path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },

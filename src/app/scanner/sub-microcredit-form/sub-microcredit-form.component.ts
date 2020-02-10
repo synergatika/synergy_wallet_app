@@ -15,7 +15,7 @@ export class SubMicrocreditFormComponent implements OnInit {
   add_microcredit: EventEmitter<number> = new EventEmitter<number>();
 
   transaction: ScannerInterface["MicrocreditTransaction"];
-  orders: ScannerInterface["MicrocreditOrder"][];
+  supports: ScannerInterface["MicrocreditSupport"][];
 
   submitted: boolean = false;
   submitForm: FormGroup;
@@ -25,16 +25,16 @@ export class SubMicrocreditFormComponent implements OnInit {
     private scannerService: ScannerService
   ) {
     this.scannerService.microcreditTransaction.subscribe(transaction => this.transaction = transaction);
-    this.scannerService.orders.subscribe(orders => this.orders = orders);
+    this.scannerService.microcreditSupports.subscribe(orders => this.supports = orders);
   }
 
   ngOnInit() {
-    console.log(this.orders);
+    console.log(this.supports);
     this.initForm();
   }
 
   onRadioButtonChange(support_id: string) {
-    const currentOrder = this.orders[this.orders.map(function (e) { return e.support_id; }).indexOf(support_id)];
+    const currentOrder = this.supports[this.supports.map(function (e) { return e.support_id; }).indexOf(support_id)];
     this.transaction.initial_tokens = currentOrder.initialTokens;
     this.transaction.redeemed_tokens = currentOrder.redeemedTokens;
     this.transaction.possible_tokens = (this.transaction.initial_tokens - this.transaction.redeemed_tokens);

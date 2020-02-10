@@ -1,4 +1,4 @@
-export interface MicrocreditBacker {
+export interface MicrocreditSupport {
 
     campaign_id: string;
     support_id: string;

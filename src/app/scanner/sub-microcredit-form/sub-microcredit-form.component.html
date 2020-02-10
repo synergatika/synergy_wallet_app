@@ -5,7 +5,7 @@
 <p>Redeemed: {{transaction.redeemed_tokens}}</p>
 <p>Remaining: {{transaction.possible_tokens}}</p>
 
-<div *ngFor="let item of orders">
+<div *ngFor="let item of supports">
     <label>
         <input [value]='item.support_id' type="radio" name="item.support_id"
             [checked]="item.support_id === transaction.support_id"

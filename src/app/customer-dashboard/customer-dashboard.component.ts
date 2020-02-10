@@ -5,6 +5,10 @@ import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 // Services
 import { AuthenticationService } from '../core/services/authentication.service';
 import { LoyaltyService } from '../core/services/loyalty.service';
+import { MicrocreditService } from '../core/services/microcredit.service';
+
+// Models
+import { MicrocreditSupport } from '../core/models/microcredit-support.model';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -15,6 +19,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
   balance: number = 0;
   badge: any;
+  supports: MicrocreditSupport[];
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -29,7 +34,8 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private cdRef: ChangeDetectorRef,
     private authenticationService: AuthenticationService,
-    private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService,
+    private microcreditService: MicrocreditService
   ) {
     this.unsubscribe = new Subject();
   }
@@ -40,6 +46,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchBalanceData();
     this.fetchBadgeData();
+    this.fetchSupportsData();
   }
 
 
@@ -76,6 +83,25 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.balance = parseInt(data.points, 16);
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
+  fetchSupportsData() {
+    this.microcreditService.readAllSuports()
+      .pipe(
+        tap(
+          data => {
+            this.supports = data;
+            console.log(this.supports);
           },
           error => {
           }),

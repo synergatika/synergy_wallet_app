@@ -42,7 +42,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     address: {
       street: '',
       postCode: '',
-      city: ''
+      city: '',
+      coordinates: ['', '']
     }
   };
 

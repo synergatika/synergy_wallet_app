@@ -72,7 +72,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   fetchBalanceData() {
     const identifier = this.user.identifier_scan || this.user.identifier_form;
-    this.loyaltyService.memberBalance((identifier).toLowerCase())
+    this.loyaltyService.readBalanceByMerchant((identifier).toLowerCase())
       .pipe(
         tap(
           data => {

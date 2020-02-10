@@ -17,6 +17,7 @@ import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 
 import { QRCodeModule } from 'angularx-qrcode';
+import { ArchwizardModule } from 'angular-archwizard';
 
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { InvitationComponent } from './invitation/invitation.component';
@@ -24,6 +25,7 @@ import { CustomerDashboardComponent } from './customer-dashboard/customer-dashbo
 import { CustomerExploreComponent } from './customer-explore/customer-explore.component';
 import { CustomerSupportComponent } from './customer-support/customer-support.component';
 import { CustomerExploreOneComponent } from './customer-explore-one/customer-explore-one.component';
+import { SupportMicrocreditComponent } from './customer-support/support-microcredit/support-microcredit.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,12 @@ import { CustomerExploreOneComponent } from './customer-explore-one/customer-exp
     InvitationComponent,
     CustomerDashboardComponent,
     CustomerExploreComponent,
-    CustomerSupportComponent,
     CustomerExploreOneComponent,
 
   ],
   imports: [
     QRCodeModule,
+    ArchwizardModule,
 
     BrowserModule,
     AppRoutingModule,

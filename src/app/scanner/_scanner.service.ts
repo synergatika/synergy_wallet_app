@@ -47,7 +47,7 @@ export class ScannerService {
     private microcreditSource = new BehaviorSubject([]);
     microcredit = this.microcreditSource.asObservable();
 
-    private ordersSource = new BehaviorSubject([
+    private microcreditSupportsSource = new BehaviorSubject([
         {
             campaign_id: '0',
             support_id: '0',
@@ -57,7 +57,7 @@ export class ScannerService {
             status: true
         }
     ]);
-    orders = this.ordersSource.asObservable();
+    microcreditSupports = this.microcreditSupportsSource.asObservable();
 
     private microcreditTransactionSource = new BehaviorSubject({
         campaign_id: '0',
@@ -91,8 +91,8 @@ export class ScannerService {
         this.offerTransactionSource.next(transaction);
     };
 
-    changeMicrocreditOrders(orders: ScannerInterface["MicrocreditOrder"][]) {
-        this.ordersSource.next(orders);
+    changeMicrocreditSupports(supports: ScannerInterface["MicrocreditSupport"][]) {
+        this.microcreditSupportsSource.next(supports);
     }
 
     changeMicrocreditCampaigns(microcredit: ScannerInterface["MicrocreditCampaign"][]) {

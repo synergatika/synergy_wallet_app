@@ -8,7 +8,8 @@ import { ItemsService } from '../../core/services/items.service';
 import { MicrocreditService } from '../../core/services/microcredit.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 // Models
-import { MicrocreditCampaign } from '../../core/models/microcredit_campaigns.model';
+import { MicrocreditCampaign } from '../../core/models/microcredit-campaign.model';
+import { MicrocreditSupport } from 'src/app/core/models/microcredit-support.model';
 
 @Component({
   selector: 'app-edit-microcredit-campaign',
@@ -21,8 +22,11 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
 
   campaign_id: string;
-
+  unpaidSupports: MicrocreditSupport[];
+  paidSupports: MicrocreditSupport[];
   campaign: MicrocreditCampaign;
+  to_pay: string[] = [];
+  to_unpay: string[] = [];
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -48,13 +52,74 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  onToPayCheckBoxChange(backer) {
+    if (this.to_pay.indexOf(backer) < 0) {
+      this.to_pay.push(backer);
+    } else {
+      this.to_pay.splice(this.to_pay.indexOf(backer), 1);
+    }
+    console.log(this.to_pay);
+  }
+
+  onToUnpayCheckBoxChange(backer) {
+    if (this.to_unpay.indexOf(backer) < 0) {
+      this.to_unpay.push(backer);
+    } else {
+      this.to_unpay.splice(this.to_unpay.indexOf(backer), 1);
+    }
+    console.log(this.to_unpay);
+  }
+
+  groupBy(arr, property) {
+    return arr.reduce(function (memo, x) {
+      if (!memo[x[property]]) { memo[x[property]] = []; }
+      memo[x[property]].push(x);
+      return memo;
+    }, {});
+  }
+
   fetchCampaignData() {
     this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
       .pipe(
         tap(
           data => {
             this.campaign = data;
-            console.log(this.campaign);
+            const groupedSupports = this.groupBy(this.campaign.backers, 'status'); // => {orange:[...], banana:[...]}
+            this.paidSupports = groupedSupports.confirmation;
+            this.unpaidSupports = groupedSupports.order;
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+  // this.microcreditService.earnTokensByMerchant(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'demo@email.com', 250)
+  //   .pipe(
+  //     tap(
+  //       data => {
+  //         console.log(data);
+  //       },
+  //       error => {
+  //       }),
+  //     takeUntil(this.unsubscribe),
+  //     finalize(() => {
+  //       this.loading = false;
+  //       this.cdRef.markForCheck();
+  //     })
+  //   )
+  //   .subscribe();
+
+  onSubmit() {
+    this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'pay', this.to_pay)
+      .pipe(
+        tap(
+          data => {
+            console.log(data);
           },
           error => {
           }),
@@ -66,68 +131,20 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    // this.microcreditService.createCustomerBacker(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'demo@email.com', 250)
-    //   .pipe(
-    //     tap(
-    //       data => {
-    //         console.log(data);
-    //       },
-    //       error => {
-    //       }),
-    //     takeUntil(this.unsubscribe),
-    //     finalize(() => {
-    //       this.loading = false;
-    //       this.cdRef.markForCheck();
-    //     })
-    //   )
-    //   .subscribe();
+    this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'unpay', this.to_unpay)
+      .pipe(
+        tap(
+          data => {
+            console.log(data);
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
   }
-
-  // this.microcreditService.createCustomerBacker(this.authenticationService.currentUserValue.user["_id"], '5e3c092e778887047c4ee847', 'demo@email.com', 450)
-  //   .pipe(
-  //     tap(
-  //       data => {
-  //         console.log(data);
-  //       },
-  //       error => {
-  //       }),
-  //     takeUntil(this.unsubscribe),
-  //     finalize(() => {
-  //       this.loading = false;
-  //       this.cdRef.markForCheck();
-  //     })
-  //   )
-  //   .subscribe();
-
-  // this.microcreditService.confirmBacker(this.authenticationService.currentUserValue.user["_id"], '5e3ad9295b7b5c133e306475', ['10', '12'])
-  //   .pipe(
-  //     tap(
-  //       data => {
-  //         console.log(data);
-  //       },
-  //       error => {
-  //       }),
-  //     takeUntil(this.unsubscribe),
-  //     finalize(() => {
-  //       this.loading = false;
-  //       this.cdRef.markForCheck();
-  //     })
-  //   )
-  //   .subscribe();
-
-  // this.microcreditService.readCustomerBacker(this.authenticationService.currentUserValue.user["_id"], '5e3ad9295b7b5c133e306475', 'demo@email.com')
-  //   .pipe(
-  //     tap(
-  //       data => {
-  //         console.log(data);
-  //       },
-  //       error => {
-  //       }),
-  //     takeUntil(this.unsubscribe),
-  //     finalize(() => {
-  //       this.loading = false;
-  //       this.cdRef.markForCheck();
-  //     })
-  //   )
-  //   .subscribe();
 }

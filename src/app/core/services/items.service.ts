@@ -16,8 +16,8 @@ import { Offer } from '../models/offer.model';
 import { PostEvent } from '../models/post_event.model';
 import { Post } from '../models/post.model';
 import { Event } from '../models/event.model';
+import { MicrocreditCampaign } from '../models/microcredit-campaign.model';
 import { Message } from '../models/message.model';
-import { MicrocreditCampaign } from '../models/microcredit_campaigns.model';
 
 @Injectable({
   providedIn: 'root'

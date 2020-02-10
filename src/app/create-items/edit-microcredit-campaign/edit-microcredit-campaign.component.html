@@ -1,6 +1,21 @@
 <p>edit-microcredit-campaign works!</p>
-<div *ngFor='let item of campaign.backers'>
-    <p> Initial Tokens {{item.initialTokens}} || Payment ID {{item.payment_id}} </p>
-    <input type="checkbox" name="selectedFruits[]" value="{{fruitName}}" ng-checked="selection.indexOf(fruitName) > -1"
-        ng-click="toggleSelection(fruitName)"> {{fruitName}}
+
+<h4> Paid Supports </h4>
+<div *ngFor='let item of paidSupports'>
+    <p> Initial Tokens {{item.initialTokens}} </p>
+    <p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
+    <input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
+        (change)="onToUnpayCheckBoxChange(item._id)">
+    <p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
 </div>
+
+<h4> Unpaid Supports </h4>
+<div *ngFor='let item of unpaidSupports'>
+    <p> Initial Tokens {{item.initialTokens}} </p>
+    <p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
+    <input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
+        (change)="onToPayCheckBoxChange(item._id)">
+    <p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
+</div>
+
+<button (click)="onSubmit()"> Submit </button>

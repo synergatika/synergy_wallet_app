@@ -37,7 +37,7 @@ interface OfferTransaction {
     quantity: number;
 }
 
-interface MicrocreditOrder {
+interface MicrocreditSupport {
     campaign_id: string;
     support_id: string;
     backer_id: string;
@@ -54,7 +54,7 @@ interface MicrocreditCampaign {
     terms: string;
     description: string;
     expiresAt: number;
-    createdAt: string;
+    createdAt: Date;
 }
 
 interface MicrocreditTransaction {
@@ -72,7 +72,7 @@ export interface ScannerInterface {
     Actions: Actions;
     Offer: Offer;
     OfferTransaction: OfferTransaction;
-    MicrocreditOrder: MicrocreditOrder;
+    MicrocreditSupport: MicrocreditSupport;
     MicrocreditCampaign: MicrocreditCampaign;
     MicrocreditTransaction: MicrocreditTransaction;
 }

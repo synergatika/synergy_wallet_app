@@ -25,8 +25,9 @@ export interface MicrocreditCampaign {
         _id: string,
         backer_id: string,
         initialTokens: number,
-        remainingToken: number,
+        redeemedTokens: number,
         payment_id: string
+        status: boolean
     },
-    createdAt: string
+    createdAt: Date
 }
