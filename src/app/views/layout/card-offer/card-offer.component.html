@@ -21,9 +21,9 @@
 						{{offer.description}}
 					</div>
 					<div class="offer-info">
-						<div class="">
-							<div class="offer-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>{{offer.merchant_name}}</div>
-							<div class="offer-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Map" />--><span class="mdi mdi-pin"></span>{{offer.expiresAt}}</div>
+						<div class="" >
+							<div class="offer-subtitle" *ngIf="type!='single'"><span class="mdi mdi-shopping"></span>{{offer.merchant_name}}</div>
+							<div class="offer-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{offer.expiresAt}}</div>
 						</div>
 						<app-share-icon></app-share-icon>
 					</div>

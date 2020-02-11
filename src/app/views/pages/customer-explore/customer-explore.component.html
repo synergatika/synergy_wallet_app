@@ -12,7 +12,7 @@
 			<h3 class="section-heading">Συνεργατικά Εγχειρήματα</h3>
 				<owl-carousel-o [options]="customOptions">
 					<ng-template carouselSlide *ngFor="let coop of (merchants)" >
-						<app-card-coop [coop]="coop" (mousedown)="mousedown()" (mousemove)="mousemove()" (mouseup)="mouseup(coop)"></app-card-coop>
+						<app-card-coop [coop]="coop" (mousedown)="mousedown()" (mousemove)="mousemove()" (mouseup)="mouseup(coop, 'coop')"></app-card-coop>
 					</ng-template>
 				</owl-carousel-o>
 			<!--<ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
@@ -36,7 +36,7 @@
 			<h3 class="section-heading">Προσφορές</h3>
 				<owl-carousel-o [options]="customOptions">
 					<ng-template carouselSlide *ngFor="let offer of (offers)" >
-						<app-card-offer [offer]="offer"></app-card-offer>
+						<app-card-offer [offer]="offer" type="all"></app-card-offer>
 					</ng-template>
 				</owl-carousel-o>
 			<!--<swiper [config]="config2" class="swiper-wrapper">
@@ -52,7 +52,7 @@
 			<h3 class="section-heading">Εκδηλώσεις και Νέα</h3>
 			<owl-carousel-o [options]="customOptions">
 				<ng-template carouselSlide *ngFor="let post of (posts)" >
-					<app-card-post [post]="post"></app-card-post>
+					<app-card-post [post]="post"(mousedown)="mousedown()" (mousemove)="mousemove()" (mouseup)="mouseup(post, 'post')"></app-card-post>
 				</ng-template>
 			</owl-carousel-o>
 			<!--<swiper [config]="config3" class="swiper-wrapper">
@@ -71,28 +71,88 @@
 	</button>
 	<div class="wallet_singleCoop_wrapper">
 		<div class="singleCoop row" >
+			<div class="col-lg-12">
+				<div class="singleCoop-title">{{singleCoop.name}}</div>
+			</div>
 			<div class="col-sm-12 singleCoop-img-container">
 				<div class="singleCoop-img">
-					<img src={{singleCoop.imageURL}} alt={{singleCoop.name}} />
-					
+					<img src={{singleCoop.imageURL}} alt={{singleCoop.name}} />				
 				</div>
 				
 			</div>
 			<div class="col-sm-12 singleCoop-details">
-				<div class="singleCoop-heading">
-					<div class="singleCoop-title">{{singleCoop.name}}</div>
-					<div class="singleCoop-sector">{{singleCoop.sector}}</div>
+				<div class="info-container">
+					<div class="singleCoop-info">
+						<div class="singleCoop-sector">{{singleCoop.sector}}</div>
+						<div class="info-row"><span class="mdi mdi-pin"></span>{{singleCoop.contact.address.street}}, {{singleCoop.contact.address.city}}</div>				
+						<div class="info-row"><span class="mdi mdi-phone"></span>{{singleCoop.contact.phone}}</div>
+						<div class="info-row"><span class="mdi mdi-email"></span>{{singleCoop.email}}</div>
+						<div class="info-row"><span class="mdi mdi-web"></span><a target="_blank" href="{{singleCoop.contact.websiteURL}}">{{singleCoop.contact.websiteURL}}</a></div>
+					</div>
+					<div class="hours"> 
+						<div *ngFor="let hour of (hours)">
+							{{hour}}
+						</div>
+					</div>
 				</div>
 				<div class="singleCoop-description">
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Justo nec ultrices dui sapien eget. Sodales ut etiam sit amet. Gravida quis blandit turpis cursus in hac. Adipiscing tristique risus nec feugiat in. Ullamcorper eget nulla facilisi etiam. Nunc lobortis mattis aliquam faucibus purus in massa tempor nec. Feugiat scelerisque varius morbi enim nunc faucibus. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Urna cursus eget nunc scelerisque viverra mauris.
+					</p>
+					<p>
+						Convallis posuere morbi leo urna molestie at elementum eu facilisis. Dignissim enim sit amet venenatis urna cursus eget nunc. Ac placerat vestibulum lectus mauris ultrices eros. Ligula ullamcorper malesuada proin libero nunc consequat interdum. Adipiscing enim eu turpis egestas pretium. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Est lorem ipsum dolor sit amet consectetur adipiscing. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam. Quis ipsum suspendisse ultrices gravida dictum fusce ut. Dictum non consectetur a erat nam at lectus urna duis. Nisl pretium fusce id velit ut tortor.
+					</p>
+				</div>
+			</div>
+					
+			<div class="col-md-6 col-lg-12" *ngIf="singleOffers">
+				<h3 class="section-heading">Προσφορές</h3>
+				<owl-carousel-o [options]="customOptionsSingle">
+					<ng-template carouselSlide *ngFor="let offer of (singleOffers);" >
+						<app-card-offer [offer]="offer" type="single"></app-card-offer>
+					</ng-template>
+				</owl-carousel-o>			
+			</div>
+			<div class="col-md-6 col-lg-12" *ngIf="singleMicrocredit">
+				<h3 class="section-heading">Καμπάνιες</h3>
+				<owl-carousel-o [options]="customOptionsSingle">
+					<ng-template carouselSlide *ngFor="let microcredit of (singleMicrocredit)" >
+						<app-card-microcredit [microcredit]="microcredit" type="single"></app-card-microcredit>
+					</ng-template>
+				</owl-carousel-o>			
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #postModal let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<div class="wallet_singlePost_wrapper">
+		<div class="singlePost row" >
+			<div class="col-sm-12 singlePost-img-container">
+				<div class="singlePost-img">
+					<img src={{singlePost.merchant_imageURL}} alt={{singlePost.name}} />
+					
+				</div>
+				
+			</div>
+			<div class="col-sm-12 singlePost-details">
+				<div class="singlePost-heading">
+					<div class="singlePost-title">{{singlePost.content}}</div>
+					<div class="singlePost-type">{{singlePost.type}}</div>
+				</div>
+				<div class="singlePost-description">
 					<p>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Justo nec ultrices dui sapien eget. Sodales ut etiam sit amet. Gravida quis blandit turpis cursus in hac. Adipiscing tristique risus nec feugiat in. Ullamcorper eget nulla facilisi etiam. Nunc lobortis mattis aliquam faucibus purus in massa tempor nec. Feugiat scelerisque varius morbi enim nunc faucibus. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Urna cursus eget nunc scelerisque viverra mauris.
 
 						Convallis posuere morbi leo urna molestie at elementum eu facilisis. Dignissim enim sit amet venenatis urna cursus eget nunc. Ac placerat vestibulum lectus mauris ultrices eros. Ligula ullamcorper malesuada proin libero nunc consequat interdum. Adipiscing enim eu turpis egestas pretium. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Est lorem ipsum dolor sit amet consectetur adipiscing. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam. Quis ipsum suspendisse ultrices gravida dictum fusce ut. Dictum non consectetur a erat nam at lectus urna duis. Nisl pretium fusce id velit ut tortor.
 					</p>
 				</div>
-				<div class="singleCoop-info">
+				<div class="singlePost-info">
 					<div class="">
-						<div class="singleCoop-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span class="mdi mdi-pin"></span>{{singleCoop.contact.address.street}}, {{singleCoop.contact.address.city}}</div>
+						<div class="singlePost-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span class="mdi mdi-pin"></span>{{singlePost.merchant_name}}</div>
 					</div>
 					<div class="share">
 						<span class="mdi mdi-share-variant share-icon"></span>

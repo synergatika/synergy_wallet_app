@@ -11,6 +11,8 @@ export class CardCoopComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit() {
+
 	}
+
 
 }
