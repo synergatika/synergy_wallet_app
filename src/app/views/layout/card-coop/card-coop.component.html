@@ -1,0 +1,35 @@
+<mat-card class="dashboard-card coop-card" *ngIf="coop">
+	<mat-card-content>
+		<!--begin::Content-->
+		<div class="wallet_coop_wrapper">
+			<div class="coop row">
+				<div class="col-sm-12 coop-img-container">
+					<div class="coop-img">
+						<img src={{coop.imageURL}} alt={{coop.name}} />
+
+					</div>
+
+				</div>
+				<div class="col-sm-12 coop-details">
+					<div class="coop-heading">
+						<div class="coop-title">{{coop.name}}</div>
+						<div class="coop-sector">{{coop.sector}}</div>
+					</div>
+					<div class="coop-description">
+						{{coop.name}}
+					</div>
+					<div class="coop-info">
+						<div class="">
+							<div class="coop-subtitle">
+								<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span
+									class="mdi mdi-pin"></span>{{coop.contact.address.street}},
+								{{coop.contact.address.city}}</div>
+						</div>
+						<app-share-icon></app-share-icon>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end::Content-->
+	</mat-card-content>
+</mat-card>

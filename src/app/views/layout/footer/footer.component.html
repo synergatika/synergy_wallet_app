@@ -1,0 +1,13 @@
+<div class="footer-wrapper">
+	<div class="footer-content">
+		<div *ngFor="let item of menu" [ngClass]="getItemCssClasses(item.link)">
+			<a [routerLink]="['/'+item.link]">
+				<!--<img src={{item.icon}} alt="{{item.title}}" />-->
+				<span class="mdi mdi-{{item.icon}}"></span>
+				<div>
+					{{item.title}}
+				</div>
+			</a>
+		</div>
+	</div>
+</div>

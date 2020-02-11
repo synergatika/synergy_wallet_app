@@ -1,0 +1,45 @@
+.footer-wrapper {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #fff;
+	width: 100%;
+	padding: 18px;
+	z-index: 1000;
+	.footer-content {
+		max-width: 400px;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		margin: 0 auto;
+		img {
+			max-width: 45px;
+			margin: 5px auto;
+		}
+		a {
+			text-align: center;
+			display: block;
+			font-weight: 600;
+			color: #000;
+			.mdi {
+				font-size: 56px;
+				line-height: 1;
+			}
+		}
+		.footer-menu-item {
+			opacity: 0.5;
+			margin: 2px 0;
+			transition: opacity 0.3s;
+			&-active {
+				opacity: 1;
+				a {
+					color: #0c1a33;
+				}
+			}
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+}

@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-personal-information',
   templateUrl: './personal-information.component.html',
-  styleUrls: ['./personal-information.component.sass']
+  styleUrls: ['./personal-information.component.scss']
 })
 export class PersonalInformationComponent implements OnInit, OnDestroy {
 
@@ -38,13 +38,14 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     contact: {
       phone: '',
       websiteURL: '',
+      address: {
+        street: '',
+        postCode: '',
+        city: '',
+        coordinates: []
+      }
     },
-    address: {
-      street: '',
-      postCode: '',
-      city: '',
-      coordinates: ['', '']
-    }
+
   };
 
   submitted = false;
@@ -80,23 +81,6 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {
     this.unsubscribe = new Subject();
-    this.access = this.authenticationService.currentUserValue.user["access"];
-  }
-
-	/**
-	 * On init
-	 */
-  ngOnInit() {
-    this.initForm();
-  }
-
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
   }
 
   initForm() {
@@ -107,7 +91,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
             data => {
               this.merchant = Object.assign({}, this.merchant, data);
               this.merchant.sector = (this.sectorsArray.indexOf(this.merchant.sector)).toString();
-              this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.jpg';
+              this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.png';
             },
             error => {
               Swal.fire(
@@ -183,9 +167,17 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
-  /**
-	 * On Form Submit
-	 */
+  ngOnInit() {
+    this.access = this.authenticationService.currentUserValue.user["access"];
+    this.initForm();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
+
   onSubmit() {
     if (this.submitted) return;
 
@@ -200,9 +192,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
           return;
         }
       }
-
       this.submitted = true;
-      this.loading = true;
 
       const formData = new FormData();
       formData.append('imageURL', this.fileData);
@@ -210,9 +200,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       formData.append('sector', this.sectorsArray[this.merchant.sector]);
       formData.append('phone', this.merchant.contact.phone);
       formData.append('websiteURL', this.merchant.contact.websiteURL);
-      formData.append('street', this.merchant.address.street);
-      formData.append('postCode', this.merchant.address.postCode);
-      formData.append('city', this.merchant.address.city);
+      formData.append('street', this.merchant.contact.address.street);
+      formData.append('postCode', this.merchant.contact.address.postCode);
+      formData.append('city', this.merchant.contact.address.city);
 
       this.merchantsService.updateMerchantInfo(this.authenticationService.currentUserValue.user["_id"], formData)
         .pipe(first())
@@ -247,9 +237,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
           return;
         }
       }
-
       this.submitted = true;
-      this.loading = true;
 
       const formData = new FormData();
       formData.append('imageURL', this.fileData);

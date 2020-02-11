@@ -1,0 +1,29 @@
+.nav a {
+	padding: 8px 8px 8px 32px;
+	min-width: 240px;
+	text-decoration: none;
+	font-size: 24px;
+	color: #aaa;
+	display: block;
+	transition: color 0.3s;
+	.mdi {
+		margin-right: 20px;
+	}
+}
+
+.nav a:hover {
+	color: #f1f1f1;
+	.mdi {
+		color: #37aba7;
+	}
+}
+
+.closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+	color: #f1f1f1;
+	text-decoration: none;
+}

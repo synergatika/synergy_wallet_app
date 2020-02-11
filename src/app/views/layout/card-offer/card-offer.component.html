@@ -1,0 +1,39 @@
+<mat-card class="dashboard-card offer-card" *ngIf="offer">
+	<mat-card-content>
+		<!--begin::Content-->
+		<div class="wallet_offer_wrapper">
+			<div class="offer row">
+				<div class="col-sm-12 offer-img-container">
+					<div class="offer-img">
+						<img src={{offer.merchant_imageURL}} alt={{offer.title}} />
+						<div class="offer-expires">έως {{offer.expiresAt | date: 'd.M'}}</div>
+					</div>
+
+				</div>
+				<div class="col-sm-12 offer-amount">
+					<div class="offer-heading">
+						<div class="offer-title">{{offer.description}}</div>
+						<div>
+							<span class="points">{{offer.cost}} points</span>
+						</div>
+					</div>
+					<div class="offer-description">
+						{{offer.description}}
+					</div>
+					<div class="offer-info">
+						<div class="">
+							<div class="offer-subtitle">
+								<!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span
+									class="mdi mdi-shopping"></span>{{offer.merchant_name}}</div>
+							<div class="offer-subtitle">
+								<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Map" />--><span
+									class="mdi mdi-pin"></span>{{offer.expiresAt}}</div>
+						</div>
+						<app-share-icon></app-share-icon>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end::Content-->
+	</mat-card-content>
+</mat-card>

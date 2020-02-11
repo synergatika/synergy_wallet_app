@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.sass']
+  styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
 
@@ -32,7 +32,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     verPassword: ''
   }
   submitForm: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -50,22 +50,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {
     this.unsubscribe = new Subject();
-  }
-
-	/**
-	 * On init
-	 */
-  ngOnInit() {
-    this.initForm();
-  }
-
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
   }
 
   initForm() {
@@ -93,9 +77,10 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-	 * On Form Submit
-	 */
+  ngOnInit() {
+    this.initForm();
+  }
+
   onSubmit() {
     if (this.submitted) return;
 
@@ -107,9 +92,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       );
       return;
     }
-
     this.submitted = true;
-    this.loading = true;
 
     const authData = {
       oldPassword: controls.oldPassword.value,
@@ -142,6 +125,12 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
   }
 
   /**

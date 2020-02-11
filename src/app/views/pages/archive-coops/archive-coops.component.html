@@ -1,0 +1,11 @@
+<div class="row" 
+	infiniteScroll
+	[infiniteScrollDistance]="2"
+	[infiniteScrollThrottle]="50"
+	(scrolled)="onScroll()"
+	*ngIf="merchants"
+>
+	<div class="col-md-4" *ngFor="let coop of (merchants)" >
+		<app-card-coop [coop]="coop"></app-card-coop>
+	</div>
+</div>

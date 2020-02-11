@@ -12,13 +12,13 @@ import { LoyaltyService } from '../../core/services/loyalty.service';
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.sass']
+  styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
 
   access: string = '';
   transactions = [];
-
+  p: number = 1;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -27,27 +27,12 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService
   ) {
-    this.access = this.authenticationService.currentUserValue.user["access"];
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On init
-	 */
   ngOnInit() {
-    this.fetchTransactionsData();
-  }
+    this.access = this.authenticationService.currentUserValue.user["access"];
 
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
-
-  fetchTransactionsData() {
     this.loyaltyService.readTransactions()
       .pipe(
         tap(
@@ -66,5 +51,11 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
   }
 }

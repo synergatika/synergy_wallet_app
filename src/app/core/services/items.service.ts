@@ -55,12 +55,13 @@ export class ItemsService {
   /** 
     * Events
     */
-  // readAllPrivateEvents(): Observable<Event[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/events/private/`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
+  readAllPrivateEvents(): Observable<Event[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/private/`)
+      //    return this.http.get<any>(`${environment.apiUrl}/events/private/`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
 
   // readAllPublicEvents(): Observable<Event[]> {
   //   return this.http.get<any>(`${environment.apiUrl}/events/public/`)
@@ -69,12 +70,13 @@ export class ItemsService {
   //     }));
   // }
 
-  // readPrivateEventsByStore(merchant_id: string): Observable<Event[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
+  readPrivateEventsByStore(merchant_id: string): Observable<Event[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
+      // return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
 
   // readPublicEventsByStore(merchant_id: string): Observable<Event[]> {
   //   return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}`)
@@ -93,12 +95,13 @@ export class ItemsService {
   /** 
     * Posts
     */
-  // readAllPrivatePosts(): Observable<Post[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/posts/private/`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
+  readAllPrivatePosts(): Observable<Post[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/private/`)
+      //return this.http.get<any>(`${environment.apiUrl}/posts/private/`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
 
   // readAllPublicPosts(): Observable<Post[]> {
   //   return this.http.get<any>(`${environment.apiUrl}/posts/public/`)
@@ -107,12 +110,13 @@ export class ItemsService {
   //     }));
   // }
 
-  // readPrivatePostsByStore(merchant_id: string): Observable<Post[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
+  readPrivatePostsByStore(merchant_id: string): Observable<Post[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
+      // return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
 
   // readPublicPostsByStore(merchant_id: string): Observable<Post[]> {
   //   return this.http.get<any>(`${environment.apiUrl}/posts/public/${merchant_id}`)

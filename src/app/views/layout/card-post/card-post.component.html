@@ -1,0 +1,35 @@
+<mat-card class="dashboard-card post-card" *ngIf="post">
+  <mat-card-content>
+		<!--begin::Content-->
+		<div class="wallet_post_wrapper">
+			<div class="post row" >
+				<div class="col-sm-12 post-img-container">
+					<div class="post-img">
+						<img src={{post.merchant_imageURL}} alt={{post.title}} />
+						<div class="post-expires">έως {{post.expiresAt | date: 'd.M'}}</div>
+					</div>
+					
+				</div>
+				<div class="col-sm-12 post-amount">
+					<div class="post-heading">
+						<div class="post-title">{{post.description}}</div>
+						<div>
+							<span class="points">{{post.cost | currency:'EUR'}}</span>
+						</div>
+					</div>
+					<div class="post-description">
+						{{post.content}}
+					</div>
+					<div class="post-info">
+						<div class="">
+							<div class="post-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>{{post.merchant_name}}</div>
+							<div class="post-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span class="mdi mdi-pin"></span>{{post.merchant_name}}</div>
+						</div>
+						<app-share-icon></app-share-icon>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end::Content-->
+  </mat-card-content>
+</mat-card>
