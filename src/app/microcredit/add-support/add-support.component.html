@@ -1,0 +1,20 @@
+<button (click)=onFinalStep()>X</button>
+<aw-wizard>
+    <aw-wizard-step stepTitle="Scan Or Add">
+        <app-sub-scanner *ngIf="!showIdentifierForm" (scan_identifier)="onSuccessScanIdentifier($event)">
+        </app-sub-scanner>
+        <button type="button" (click)="onShowIdentifierFormChange()">Identifier Form</button>
+        <div *ngIf="showIdentifierForm">
+            <app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
+            </app-sub-identifier-form>
+        </div>
+    </aw-wizard-step>
+    <aw-wizard-step stepTitle="Amount" awOptionalStep>
+        <app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
+        </app-sub-amount-form>
+        <button type="button" awPreviousStep>Previous Step</button>
+    </aw-wizard-step>
+    <aw-wizard-step stepTitle="Final">
+        <app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
+    </aw-wizard-step>
+</aw-wizard>

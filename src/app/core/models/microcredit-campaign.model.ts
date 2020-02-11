@@ -21,7 +21,7 @@ export interface MicrocreditCampaign {
     redeemEnds: number,
     expiresAt: number,
 
-    backers: {
+    supports: {
         _id: string,
         backer_id: string,
         initialTokens: number,

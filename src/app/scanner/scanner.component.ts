@@ -35,6 +35,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
   ) {
     this.scannerService.offers.subscribe(offers => this.offers = offers)
+    this.scannerService.microcredit.subscribe(microcredit => this.microcredit = microcredit)
     this.unsubscribe = new Subject();
   }
 

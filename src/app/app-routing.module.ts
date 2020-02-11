@@ -33,6 +33,7 @@ const routes: Routes = [
 				path: 'explore-one/:_id', component: CustomerExploreOneComponent
 			},
 
+			{ path: 'microcredit', loadChildren: () => import('./microcredit/microcredit.module').then(m => m.MicrocreditModule) },
 			{ path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(m => m.CustomerSupportModule) },
 
 			{ path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },
