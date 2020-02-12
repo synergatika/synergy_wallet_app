@@ -1,54 +1,28 @@
 <mat-card class="dashboard-card offer-card" *ngIf="offer">
-<<<<<<< HEAD
 	<mat-card-content>
 		<!--begin::Content-->
 		<div class="wallet_offer_wrapper">
 			<div class="offer row">
-=======
-  <mat-card-content>
-		<!--begin::Content-->
-		<div class="wallet_offer_wrapper">
-			<div class="offer row" >
->>>>>>> origin/kel
 				<div class="col-sm-12 offer-img-container">
 					<div class="offer-img">
 						<img src={{offer.merchant_imageURL}} alt={{offer.title}} />
 						<div class="offer-expires">έως {{offer.expiresAt | date: 'd.M'}}</div>
 					</div>
-<<<<<<< HEAD
-
-=======
-					
->>>>>>> origin/kel
 				</div>
 				<div class="col-sm-12 offer-amount">
 					<div class="offer-heading">
 						<div class="offer-title">{{offer.description}}</div>
 						<div>
-<<<<<<< HEAD
 							<span class="points">{{offer.cost}} points</span>
-=======
-							<span class="points">{{offer.cost | currency:'EUR'}}</span>
->>>>>>> origin/kel
 						</div>
 					</div>
 					<div class="offer-description">
 						{{offer.description}}
 					</div>
 					<div class="offer-info">
-<<<<<<< HEAD
-						<div class="">
-							<div class="offer-subtitle">
-								<!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span
-									class="mdi mdi-shopping"></span>{{offer.merchant_name}}</div>
-							<div class="offer-subtitle">
-								<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Map" />--><span
-									class="mdi mdi-pin"></span>{{offer.expiresAt}}</div>
-=======
 						<div class="" >
 							<div class="offer-subtitle" *ngIf="type!='single'"><span class="mdi mdi-shopping"></span>{{offer.merchant_name}}</div>
 							<div class="offer-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{offer.expiresAt}}</div>
->>>>>>> origin/kel
 						</div>
 						<app-share-icon></app-share-icon>
 					</div>
@@ -56,10 +30,5 @@
 			</div>
 		</div>
 		<!--end::Content-->
-<<<<<<< HEAD
 	</mat-card-content>
 </mat-card>
-=======
-  </mat-card-content>
-</mat-card>
->>>>>>> origin/kel

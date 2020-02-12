@@ -40,12 +40,6 @@ import { CardCoopComponent } from './views/layout/card-coop/card-coop.component'
 import { CardPostComponent } from './views/layout/card-post/card-post.component';
 import { CardMicrocreditComponent } from './views/layout/card-microcredit/card-microcredit.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
-
-<<<<<<< HEAD
-=======
-//import { HistoryModule } from './history/history.module';
-
->>>>>>> origin/kel
 import { MenuService } from './core/services/menu.service';
 
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -78,8 +72,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CustomerDashboardComponent,
     CustomerExploreComponent,
     CustomerExploreOneComponent,
-<<<<<<< HEAD
-
     MenuComponent,
     LayoutComponent,
     HeaderComponent,
@@ -95,24 +87,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ArchiveCoopsComponent,
     ArchiveOffersComponent,
     ArchivePostsComponent,
-=======
-	
-	MenuComponent,
-    LayoutComponent,
-    HeaderComponent,
-    TopbarComponent,
-	UserMenuComponent,
-	FooterComponent,
-	CardOfferComponent,
-	CardCoopComponent,
-	CardPostComponent,
-	CardMicrocreditComponent,
-	NotFoundComponent,
-	ShareIconComponent,
-	ArchiveCoopsComponent,
-	ArchiveOffersComponent,
-	ArchivePostsComponent,
->>>>>>> origin/kel
+
   ],
   imports: [
     QRCodeModule,
@@ -124,7 +99,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NoopAnimationsModule,
     MatDialogModule,
     TranslateModule.forRoot(),
-<<<<<<< HEAD
     MatCardModule,
     MatInputModule,
     SwiperModule,
@@ -135,23 +109,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CarouselModule,
     //SlickModule.forRoot(),
     InfiniteScrollModule
-=======
-	MatCardModule,
-	MatInputModule,
-	SwiperModule,
-	NgbModalModule,
-	NgbDropdownModule,
-	//RouterModule, 
-	BrowserAnimationsModule,
-	CarouselModule,
-	//SlickModule.forRoot(),
-	InfiniteScrollModule
->>>>>>> origin/kel
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-<<<<<<< HEAD
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
@@ -159,15 +120,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MenuService
   ],
   entryComponents: [QrCodeComponent],
-=======
-	{
-      provide: SWIPER_CONFIG,
-      useValue: DEFAULT_SWIPER_CONFIG
-    },
-	MenuService
-  ],
-  entryComponents: [QrCodeComponent], 
->>>>>>> origin/kel
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,10 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardMicrocreditComponent implements OnInit {
 	@Input() microcredit: any;
-<<<<<<< HEAD
-=======
 	@Input() type: any;
->>>>>>> origin/kel
 	
 	constructor() { }
 

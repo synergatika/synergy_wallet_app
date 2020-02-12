@@ -9,26 +9,16 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
-<<<<<<< HEAD
 	selector: 'app-customer-explore',
 	templateUrl: './customer-explore.component.html',
 	styleUrls: ['./customer-explore.component.scss']
-=======
-  selector: 'app-customer-explore',
-  templateUrl: './customer-explore.component.html',
-  styleUrls: ['./customer-explore.component.scss']
->>>>>>> origin/kel
 })
 export class CustomerExploreComponent implements OnInit, OnDestroy {
 	moved;
 	singleCoop: any;
-<<<<<<< HEAD
-	@ViewChild('myname', { static: false }) elem: ElementRef;
-=======
 	singlePost: any;
 	@ViewChild('myname',  {static: false}) elem:ElementRef;	
-	hours = ["Δευτέρα, Τρίτη, Πέμπτη, Παρασκευή 9.00-21.00","Τετάρτη 9.00-16.00","Σάββατο 10.00-16.00"];
->>>>>>> origin/kel
+	hours = ["Δευτέρα, Τρίτη, Πέμπτη, Παρασκευή 9.00-21.00","Τετάρτη 9.00-16.00","Σάββατο 10.00-16.00"];l
 	customOptions: OwlOptions = {
 		loop: true,
 		mouseDrag: true,
@@ -38,19 +28,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		navSpeed: 700,
 		navText: ['', ''],
 		responsive: {
-<<<<<<< HEAD
-			0: {
-				items: 1
-			},
-			940: {
-				items: 2
-			}
-		},
-		margin: 30,
-		nav: true
-	}
-
-=======
 		  0: {
 			items: 1
 		  },
@@ -112,7 +89,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			phone: '2103606333'
 		},
 	];	
->>>>>>> origin/kel
 	/*config: any = {
 		// Optional parameters
 		loop: true,
@@ -161,26 +137,17 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	posts: any;
 	offers: any;
 	events: any;
-<<<<<<< HEAD
-	@ViewChild('coopModal', { static: false }) coopModal;
-
-=======
 	singleOffers: any;
 	singleMicrocredit: any;
 	@ViewChild('coopModal', {static: false}) coopModal;
 	@ViewChild('postModal', {static: false}) postModal;
 	
->>>>>>> origin/kel
 	constructor(
 		private cdRef: ChangeDetectorRef,
 		private merchantsService: MerchantsService,
 		private itemsService: ItemsService,
 		private modalService: NgbModal,
-<<<<<<< HEAD
 		private elRef: ElementRef
-=======
-		private elRef:ElementRef
->>>>>>> origin/kel
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -199,23 +166,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 
 	fetchMerchantsData() {
 		this.merchantsService.readMerchants()
-<<<<<<< HEAD
-			.pipe(
-				tap(
-					data => {
-						this.merchants = data;
-						console.log(this.merchants)
-					},
-					error => {
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-=======
 		  .pipe(
 			tap(
 			  data => {
@@ -232,30 +182,10 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			})
 		  )
 		  .subscribe();
->>>>>>> origin/kel
 	}
 
 	fetchPostsData() {
 		this.itemsService.readAllPrivatePosts()
-<<<<<<< HEAD
-			.pipe(
-				tap(
-					data => {
-						this.posts = data;
-						console.log("posts");
-						console.log(this.posts)
-
-					},
-					error => {
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-=======
 		  .pipe(
 			tap(
 			  data => {
@@ -273,27 +203,10 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			})
 		  )
 		  .subscribe();
->>>>>>> origin/kel
 	}
 
 	fetchEventsData() {
 		this.itemsService.readAllPrivateEvents()
-<<<<<<< HEAD
-			.pipe(
-				tap(
-					data => {
-						this.events = data;
-					},
-					error => {
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-=======
 		  .pipe(
 			tap(
 			  data => {
@@ -308,40 +221,10 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			})
 		  )
 		  .subscribe();
->>>>>>> origin/kel
 	}
 
 	fetchOffersData() {
 		this.itemsService.readAllOffers()
-<<<<<<< HEAD
-			.pipe(
-				tap(
-					data => {
-						this.offers = data;
-						console.log(this.offers)
-
-					},
-					error => {
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-	}
-
-	openCoop(coop) {
-		console.log('coop modal');
-		//console.log(coop);
-		this.singleCoop = coop;
-		this.modalService.open(
-			this.coopModal,
-			{
-				ariaLabelledBy: 'modal-basic-title',
-				size: 'lg',
-=======
 		  .pipe(
 			tap(
 			  data => {
@@ -413,7 +296,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			{
 				ariaLabelledBy: 'modal-basic-title', 
 				size: 'lg', 
->>>>>>> origin/kel
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
 				windowClass: 'fullscrenn-modal',
@@ -421,19 +303,12 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		).result.then((result) => {
 			console.log('closed');
 
-<<<<<<< HEAD
-		}, (reason) => {
-			console.log('dismissed');
-=======
 			}, (reason) => {
 				console.log('dismissed');
->>>>>>> origin/kel
 
 		});
 	}
 
-<<<<<<< HEAD
-=======
 	openPost(post) {	  
 		console.log('post modal');
 		console.log(post);
@@ -456,7 +331,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		});
 	}
 	
->>>>>>> origin/kel
 	ngAfterViewInit() {
 		/*const interval = setInterval(() => {
 			const condition = this.elRef.nativeElement.querySelector('.swiper-slide');
@@ -471,15 +345,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 
 
 	mousedown() {
-<<<<<<< HEAD
-		this.moved = false;
-	}
-	mousemove() {
-		this.moved = true;
-	}
 
-	mouseup(coop) {
-=======
 	  this.moved = false;
 	}
 	mousemove() {
@@ -487,18 +353,10 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	}
 
 	mouseup(data, type) {
->>>>>>> origin/kel
 		if (this.moved) {
 			console.log('moved')
 		} else {
 			console.log('not moved');
-<<<<<<< HEAD
-			this.openCoop(coop);
-		}
-		this.moved = false;
-	}
-
-=======
 			if(type == "coop") {
 				this.openCoop(data);
 			} else {
@@ -507,7 +365,5 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		}
 		this.moved = false;
 	}
-	
-  
->>>>>>> origin/kel
+
 }

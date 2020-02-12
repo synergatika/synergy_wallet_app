@@ -1,10 +1,6 @@
 <div class="explore">
 	<div class="row">
-<<<<<<< HEAD
 		<!--<div class="fffffds">red More</div>		
-=======
-	<!--<div class="fffffds">red More</div>		
->>>>>>> origin/kel
 	<div id="owl-carousel" class="owl-carousel owl-theme" #myname>
 		<div class="item"><h4>1</h4></div>
 		<div class="item"><h4>2</h4></div>
@@ -14,20 +10,11 @@
 	</div>-->
 		<div class="col-md-6 col-lg-12" *ngIf="merchants">
 			<h3 class="section-heading">Συνεργατικά Εγχειρήματα</h3>
-<<<<<<< HEAD
-			<owl-carousel-o [options]="customOptions">
-				<ng-template carouselSlide *ngFor="let coop of (merchants)">
-					<app-card-coop [coop]="coop" (mousedown)="mousedown()" (mousemove)="mousemove()"
-						(mouseup)="mouseup(coop)"></app-card-coop>
-				</ng-template>
-			</owl-carousel-o>
-=======
 				<owl-carousel-o [options]="customOptions">
 					<ng-template carouselSlide *ngFor="let coop of (merchants)" >
 						<app-card-coop [coop]="coop" (mousedown)="mousedown()" (mousemove)="mousemove()" (mouseup)="mouseup(coop, 'coop')"></app-card-coop>
 					</ng-template>
 				</owl-carousel-o>
->>>>>>> origin/kel
 			<!--<ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
 				<div ngxSlickItem *ngFor="let slide of slides" class="slide" (click)="openCoop(coop)">
 					  <img class="slide" src="{{ slide.img }}" alt="" width="100%">
@@ -47,28 +34,16 @@
 		</div>
 		<div class="col-md-6 col-lg-12" *ngIf="offers">
 			<h3 class="section-heading">Προσφορές</h3>
-<<<<<<< HEAD
-			<owl-carousel-o [options]="customOptions">
-				<ng-template carouselSlide *ngFor="let offer of (offers)">
-					<app-card-offer [offer]="offer"></app-card-offer>
-				</ng-template>
-			</owl-carousel-o>
-=======
 				<owl-carousel-o [options]="customOptions">
 					<ng-template carouselSlide *ngFor="let offer of (offers)" >
 						<app-card-offer [offer]="offer" type="all"></app-card-offer>
 					</ng-template>
 				</owl-carousel-o>
->>>>>>> origin/kel
 			<!--<swiper [config]="config2" class="swiper-wrapper">
 				<div class="swiper-slide" *ngFor="let offer of (offers)">
 					<app-card-offer [offer]="offer"></app-card-offer>
 				</div>
-<<<<<<< HEAD
-			</swiper>-->
-=======
 			</swiper>-->			
->>>>>>> origin/kel
 			<div class="swipper-footer"><a [routerLink]="['/offers']">Όλες οι προσφορές</a></div>
 		</div>
 	</div>
@@ -76,13 +51,8 @@
 		<div class="col-md-6 col-lg-12" *ngIf="posts">
 			<h3 class="section-heading">Εκδηλώσεις και Νέα</h3>
 			<owl-carousel-o [options]="customOptions">
-<<<<<<< HEAD
-				<ng-template carouselSlide *ngFor="let post of (posts)">
-					<app-card-post [post]="post"></app-card-post>
-=======
 				<ng-template carouselSlide *ngFor="let post of (posts)" >
 					<app-card-post [post]="post"(mousedown)="mousedown()" (mousemove)="mousemove()" (mouseup)="mouseup(post, 'post')"></app-card-post>
->>>>>>> origin/kel
 				</ng-template>
 			</owl-carousel-o>
 			<!--<swiper [config]="config3" class="swiper-wrapper">
@@ -100,46 +70,6 @@
 		<span aria-hidden="true">&times;</span>
 	</button>
 	<div class="wallet_singleCoop_wrapper">
-<<<<<<< HEAD
-		<div class="singleCoop row">
-			<div class="col-sm-12 singleCoop-img-container">
-				<div class="singleCoop-img">
-					<img src={{singleCoop.imageURL}} alt={{singleCoop.name}} />
-
-				</div>
-
-			</div>
-			<div class="col-sm-12 singleCoop-details">
-				<div class="singleCoop-heading">
-					<div class="singleCoop-title">{{singleCoop.name}}</div>
-					<div class="singleCoop-sector">{{singleCoop.sector}}</div>
-				</div>
-				<div class="singleCoop-description">
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua. Justo nec ultrices dui sapien eget. Sodales ut etiam sit amet.
-						Gravida quis blandit turpis cursus in hac. Adipiscing tristique risus nec feugiat in.
-						Ullamcorper eget nulla facilisi etiam. Nunc lobortis mattis aliquam faucibus purus in massa
-						tempor nec. Feugiat scelerisque varius morbi enim nunc faucibus. Egestas egestas fringilla
-						phasellus faucibus scelerisque eleifend donec. Rhoncus aenean vel elit scelerisque mauris
-						pellentesque pulvinar. Urna cursus eget nunc scelerisque viverra mauris.
-
-						Convallis posuere morbi leo urna molestie at elementum eu facilisis. Dignissim enim sit amet
-						venenatis urna cursus eget nunc. Ac placerat vestibulum lectus mauris ultrices eros. Ligula
-						ullamcorper malesuada proin libero nunc consequat interdum. Adipiscing enim eu turpis egestas
-						pretium. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Est lorem ipsum dolor
-						sit amet consectetur adipiscing. Suspendisse interdum consectetur libero id faucibus nisl
-						tincidunt eget nullam. Quis ipsum suspendisse ultrices gravida dictum fusce ut. Dictum non
-						consectetur a erat nam at lectus urna duis. Nisl pretium fusce id velit ut tortor.
-					</p>
-				</div>
-				<div class="singleCoop-info">
-					<div class="">
-						<div class="singleCoop-subtitle">
-							<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span
-								class="mdi mdi-pin"></span>{{singleCoop.contact.address.street}},
-							{{singleCoop.contact.address.city}}</div>
-=======
 		<div class="singleCoop row" >
 			<div class="col-lg-12">
 				<div class="singleCoop-title">{{singleCoop.name}}</div>
@@ -223,7 +153,6 @@
 				<div class="singlePost-info">
 					<div class="">
 						<div class="singlePost-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span class="mdi mdi-pin"></span>{{singlePost.merchant_name}}</div>
->>>>>>> origin/kel
 					</div>
 					<div class="share">
 						<span class="mdi mdi-share-variant share-icon"></span>
