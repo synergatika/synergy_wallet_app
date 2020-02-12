@@ -9,14 +9,26 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
+<<<<<<< HEAD
 	selector: 'app-customer-explore',
 	templateUrl: './customer-explore.component.html',
 	styleUrls: ['./customer-explore.component.scss']
+=======
+  selector: 'app-customer-explore',
+  templateUrl: './customer-explore.component.html',
+  styleUrls: ['./customer-explore.component.scss']
+>>>>>>> origin/kel
 })
 export class CustomerExploreComponent implements OnInit, OnDestroy {
 	moved;
 	singleCoop: any;
+<<<<<<< HEAD
 	@ViewChild('myname', { static: false }) elem: ElementRef;
+=======
+	singlePost: any;
+	@ViewChild('myname',  {static: false}) elem:ElementRef;	
+	hours = ["Δευτέρα, Τρίτη, Πέμπτη, Παρασκευή 9.00-21.00","Τετάρτη 9.00-16.00","Σάββατο 10.00-16.00"];
+>>>>>>> origin/kel
 	customOptions: OwlOptions = {
 		loop: true,
 		mouseDrag: true,
@@ -26,6 +38,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		navSpeed: 700,
 		navText: ['', ''],
 		responsive: {
+<<<<<<< HEAD
 			0: {
 				items: 1
 			},
@@ -37,6 +50,69 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		nav: true
 	}
 
+=======
+		  0: {
+			items: 1
+		  },
+		  940: {
+			items: 3
+		  }
+		},
+		margin:30,
+		nav: true
+	}
+	customOptionsSingle: OwlOptions = {
+		loop: true,
+		mouseDrag: true,
+		touchDrag: false,
+		pullDrag: false,
+		dots: true,
+		navSpeed: 700,
+		navText: ['', ''],
+		responsive: {
+		  0: {
+			items: 1
+		  },
+		  740: {
+			items: 2
+		  }
+		},
+		margin:30,
+		nav: true
+	}
+	list = [
+		{
+			id: "Commonspace34533",
+			title: "Ζαπατίστικος Καφές",
+			desc: "Έχοντας προαγοράσει Ζαπατίστικο Καφέ μας βοηθάς να τον εισάγουμε απευθείας από την Τσιάπας χωρίς μεσάζοντες.",
+			coop_id: "5e1148f4752f39d6d493740b",
+			begins: "1.5.2020",
+			expires: "4.6.2020",
+			points: "50",
+			price_reduced: "160",
+			price_initial: "200",
+			img: './assets/media/images/syballis-micro-humbnail.jpg',
+			microcredit_num: '3767',
+			address: 'Nileos 35, 11851, Athens',
+			op_hours: '09:00-15:00',
+			phone: '2103606333'
+		},
+		{
+			id: "Ekdoseis3d76r3",
+			title: "Ετήσια Βιβλιοσυνδρομή",
+			coop_id: "5e11406b752f391bb4937407",
+			expires: "March 15, 2020",
+			points: "55",
+			price_reduced: "80",
+			price_initial: "140",
+			img: './assets/media/images/ekdoseis.png',
+			microcredit_num: '3768',
+			address: 'Akakiou 1 - 3 & Ipeirou 60, 10439, Athens',
+			op_hours: '09:00-19:00',
+			phone: '2103606333'
+		},
+	];	
+>>>>>>> origin/kel
 	/*config: any = {
 		// Optional parameters
 		loop: true,
@@ -85,14 +161,26 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	posts: any;
 	offers: any;
 	events: any;
+<<<<<<< HEAD
 	@ViewChild('coopModal', { static: false }) coopModal;
 
+=======
+	singleOffers: any;
+	singleMicrocredit: any;
+	@ViewChild('coopModal', {static: false}) coopModal;
+	@ViewChild('postModal', {static: false}) postModal;
+	
+>>>>>>> origin/kel
 	constructor(
 		private cdRef: ChangeDetectorRef,
 		private merchantsService: MerchantsService,
 		private itemsService: ItemsService,
 		private modalService: NgbModal,
+<<<<<<< HEAD
 		private elRef: ElementRef
+=======
+		private elRef:ElementRef
+>>>>>>> origin/kel
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -111,6 +199,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 
 	fetchMerchantsData() {
 		this.merchantsService.readMerchants()
+<<<<<<< HEAD
 			.pipe(
 				tap(
 					data => {
@@ -126,10 +215,29 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 				})
 			)
 			.subscribe();
+=======
+		  .pipe(
+			tap(
+			  data => {
+				this.merchants = data;
+				console.log("all merchants");
+				console.log(this.merchants);
+			  },
+			  error => {
+			  }),
+			takeUntil(this.unsubscribe),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
+>>>>>>> origin/kel
 	}
 
 	fetchPostsData() {
 		this.itemsService.readAllPrivatePosts()
+<<<<<<< HEAD
 			.pipe(
 				tap(
 					data => {
@@ -147,10 +255,30 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 				})
 			)
 			.subscribe();
+=======
+		  .pipe(
+			tap(
+			  data => {
+				this.posts = data;
+				console.log("all posts");
+				console.log(this.posts)
+
+			  },
+			  error => {
+			  }),
+			takeUntil(this.unsubscribe),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
+>>>>>>> origin/kel
 	}
 
 	fetchEventsData() {
 		this.itemsService.readAllPrivateEvents()
+<<<<<<< HEAD
 			.pipe(
 				tap(
 					data => {
@@ -165,10 +293,27 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 				})
 			)
 			.subscribe();
+=======
+		  .pipe(
+			tap(
+			  data => {
+				this.events = data;
+			  },
+			  error => {
+			  }),
+			takeUntil(this.unsubscribe),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
+>>>>>>> origin/kel
 	}
 
 	fetchOffersData() {
 		this.itemsService.readAllOffers()
+<<<<<<< HEAD
 			.pipe(
 				tap(
 					data => {
@@ -196,6 +341,79 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			{
 				ariaLabelledBy: 'modal-basic-title',
 				size: 'lg',
+=======
+		  .pipe(
+			tap(
+			  data => {
+				this.offers = data;
+				console.log("all offers");
+				console.log(this.offers);
+			  },
+			  error => {
+			  }),
+			takeUntil(this.unsubscribe),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
+	}
+	
+		
+	fetchSingleOffersData(merchant_id) {
+		this.singleOffers = null;
+		this.itemsService.readOffersByStore(merchant_id)
+		  .pipe(
+			tap(
+			  data => {
+				console.log("single offers");
+				console.log(data);
+				this.singleOffers = data;
+			  },
+			  error => {
+			  }),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
+	}
+
+	fetchSinglePostsData(merchant_id) {
+		this.itemsService.readPrivatePostsByStore(merchant_id)
+		  .pipe(
+			tap(
+			  data => {
+				console.log(data);
+				this.posts = data;
+			  },
+			  error => {
+			  }),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
+	}
+	
+
+	openCoop( coop) {	  
+		console.log('coop modal');
+		//console.log(coop);
+		this.singleCoop = coop;
+		this.fetchSingleOffersData(coop._id);
+		//this.singleMicrocredit = [this.list.find(x => x.coop_id === coop._id)];
+		this.singleMicrocredit = this.list;
+		console.log(this.singleMicrocredit);
+		this.modalService.open(
+			this.coopModal, 
+			{
+				ariaLabelledBy: 'modal-basic-title', 
+				size: 'lg', 
+>>>>>>> origin/kel
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
 				windowClass: 'fullscrenn-modal',
@@ -203,12 +421,42 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		).result.then((result) => {
 			console.log('closed');
 
+<<<<<<< HEAD
 		}, (reason) => {
 			console.log('dismissed');
+=======
+			}, (reason) => {
+				console.log('dismissed');
+>>>>>>> origin/kel
 
 		});
 	}
 
+<<<<<<< HEAD
+=======
+	openPost(post) {	  
+		console.log('post modal');
+		console.log(post);
+		this.singlePost = post;
+		this.modalService.open(
+			this.postModal, 
+			{
+				ariaLabelledBy: 'modal-basic-title', 
+				size: 'lg', 
+				backdropClass: 'fullscrenn-backdrop',
+				//backdrop: 'static',
+				windowClass: 'fullscrenn-modal',
+			}
+		).result.then((result) => {
+			console.log('closed');
+
+			}, (reason) => {
+				console.log('dismissed');
+
+		});
+	}
+	
+>>>>>>> origin/kel
 	ngAfterViewInit() {
 		/*const interval = setInterval(() => {
 			const condition = this.elRef.nativeElement.querySelector('.swiper-slide');
@@ -223,6 +471,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 
 
 	mousedown() {
+<<<<<<< HEAD
 		this.moved = false;
 	}
 	mousemove() {
@@ -230,13 +479,35 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	}
 
 	mouseup(coop) {
+=======
+	  this.moved = false;
+	}
+	mousemove() {
+	  this.moved = true;
+	}
+
+	mouseup(data, type) {
+>>>>>>> origin/kel
 		if (this.moved) {
 			console.log('moved')
 		} else {
 			console.log('not moved');
+<<<<<<< HEAD
 			this.openCoop(coop);
 		}
 		this.moved = false;
 	}
 
+=======
+			if(type == "coop") {
+				this.openCoop(data);
+			} else {
+				this.openPost(data);
+			}
+		}
+		this.moved = false;
+	}
+	
+  
+>>>>>>> origin/kel
 }

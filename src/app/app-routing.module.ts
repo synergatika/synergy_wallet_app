@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { QrCodeComponent } from './qr-code/qr-code.component';
 import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
 import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
@@ -32,7 +31,6 @@ const routes: Routes = [
 			{
 				path: 'explore-one/:_id', component: CustomerExploreOneComponent
 			},
-
 			{ path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(m => m.CustomerSupportModule) },
 
 			{ path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },

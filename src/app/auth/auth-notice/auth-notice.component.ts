@@ -7,7 +7,7 @@ import { AuthNotice } from '../../core/helpers/auth-notice/auth-notice.interface
 import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service'
 
 @Component({
-	selector: 'kt-auth-notice',
+	selector: 'auth-notice',
 	templateUrl: './auth-notice.component.html',
 })
 export class AuthNoticeComponent implements OnInit, OnDestroy {

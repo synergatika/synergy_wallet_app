@@ -1,14 +1,14 @@
 <!--begin::Body-->
-<div class="kt-login__body">
+<div class="login__body">
 	<!--begin::Register-->
-	<div class="kt-login__form">
-		<div class="kt-login__title">
+	<div class="login__form">
+		<div class="login__title">
 			<h3>{{ 'AUTH.REGISTER.TITLE' | translate }}</h3>
 		</div>
 
-		<kt-auth-notice></kt-auth-notice>
+		<auth-notice></auth-notice>
 
-		<form class="kt-login__form kt-form" [formGroup]="registerForm" autocomplete="off">
+		<form class="login__form form" [formGroup]="registerForm" autocomplete="off">
 			<div class="form-group">
 				<mat-form-field>
 					<mat-label>Fullname</mat-label>
@@ -94,17 +94,17 @@
 			</div>
 
 			<!--begin::Action-->
-			<div class="kt-login__actions">
-				<a href="javascript:;" routerLink="/auth/forgot-password" class="kt-link kt-login__link-forgot">
+			<div class="login__actions">
+				<a href="javascript:;" routerLink="/auth/forgot-password" class="login__link-forgot mr-2">
 					{{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
 				</a>
-				<a href="javascript:;" routerLink="/" class="kt-link kt-login__link-forgot">
+				<a href="javascript:;" routerLink="/" class="link login__link-forgot">
 				</a>
 				<button routerLink="/auth/login" type="button" [disabled]="loading" id="kt_login_signup_cancel"
-					class="btn btn-secondary btn-elevate kt-login__btn-secondary">{{ 'AUTH.GENERAL.BACK_BUTTON' | translate }}</button>
+					class="btn btn-secondary btn-elevate mr-2">{{ 'AUTH.GENERAL.BACK_BUTTON' | translate }}</button>
 				<button (click)="submit()" (keyup.enter)="submit()" id="kt_login_signin_submit"
-					class="btn btn-primary btn-elevate kt-login__btn-primary"
-					[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">{{ 'AUTH.REGISTER.BUTTON' | translate }}</button>
+					class="btn btn-primary btn-elevate login__btn-primary"
+					[ngClass]="{'spinner spinner--right spinner--md spinner--light': loading}">{{ 'AUTH.REGISTER.BUTTON' | translate }}</button>
 			</div>
 			<!--end::Action-->
 		</form>

@@ -27,8 +27,13 @@
 									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
 								</span>
 								<div class="">
+<<<<<<< HEAD
 									<div class="single-title">Synergey Πόντοι</div>
 									<div class="single-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />όλο το δίκτυο</div>
+=======
+									<div class="single-title">Synergy Πόντοι</div>
+									<div class="single-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>όλο το δίκτυο</div>
+>>>>>>> origin/kel
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
@@ -45,7 +50,11 @@
 								<div class="">
 
 									<div class="single-title">{{single.title}}</div>
+<<<<<<< HEAD
 									<div class="single-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />{{coops[single.coop_id]['name']}}</div>
+=======
+									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{coops[single.coop_id]['name']}}</div>
+>>>>>>> origin/kel
 									<div class="single-subtitle">εώς {{single.expires}}</div>
 								</div>
 							</div>
@@ -68,7 +77,11 @@
 	</div>
 	<div class="row" *ngIf="offers">
 		<div class="col-md-6" *ngFor="let offer of (offers)">
+<<<<<<< HEAD
 			<app-card-offer [offer]="offer"></app-card-offer>
+=======
+			<app-card-offer [offer]="offer" type="all"></app-card-offer>
+>>>>>>> origin/kel
 		</div>
 	</div>
 </div>
@@ -77,6 +90,7 @@
 	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 		<span aria-hidden="true">&times;</span>
 	</button>
+<<<<<<< HEAD
 	<app-card-microcredit [microcredit]="microcredit"></app-card-microcredit>
 </ng-template>
 <ng-template #wallet let-c="close" let-d="dismiss">
@@ -84,6 +98,36 @@
 		<span aria-hidden="true">&times;</span>
 	</button>
 Κάτι πράγματα για τους πόντους
+=======
+	<app-card-microcredit [microcredit]="microcredit" [type]="all"></app-card-microcredit>
+</ng-template>
+
+<ng-template #wallet let-c="close" let-d="dismiss">
+	<div class="container wallet-popup">
+		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<div class="single row-flex">
+			<div class="">
+				<span class="wallet-img">
+					<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
+				</span>
+				
+			</div>
+			<div class="">
+				<div class="single-title">Synergy Πόντοι</div>
+			</div>
+			<div class="single-amount">
+				<div>
+					<span class="points">{{balance}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="text-center mt-3">
+			Κάτι πράγματα για τους πόντους
+		</div>
+	</div>
+>>>>>>> origin/kel
 </ng-template>
 
 <ng-template #qrcode let-c="close" let-d="dismiss">

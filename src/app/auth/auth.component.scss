@@ -1,16 +1,30 @@
-// import login css
-// @import "sass/pages/login/login-1";
+.login {
+	margin-top: 20px;
+	.auth-logo {
+		margin-bottom: 20px;
+		text-align: center;
+	}
+	height: 100%;
+	.page-wrapper {
+		max-width: 700px;
+		margin: 0 auto;
+	}
+	.mat-form-field {
+	width: 100%;
+	}
+	.auth-card {
+		padding: 40px;
+		text-align: center;
+		&-header {
+			.mat-card-header-text {
+				margin: 0 auto;
+				.mat-card-title {
+					font-size: 2rem;
+				}
+			}		
+		}
+	}
+  
 
-kt-auth,
-.kt-login {
-  height: 100%;
 
-  .mat-form-field {
-    width: 100%;
-  }
-
-  // add extra right padding when displaying spinner in button
-  .kt-spinner {
-    padding-right: 3rem !important;
-  }
 }

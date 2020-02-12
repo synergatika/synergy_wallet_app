@@ -7,6 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardOfferComponent implements OnInit {
 	@Input() offer: any;
+<<<<<<< HEAD
+=======
+	@Input() type: any;
+>>>>>>> origin/kel
 	
 	constructor() { }
 
