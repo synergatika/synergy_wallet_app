@@ -27,8 +27,8 @@
 									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
 								</span>
 								<div class="">
-									<div class="single-title">Synergey Πόντοι</div>
-									<div class="single-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />όλο το δίκτυο</div>
+									<div class="single-title">Synergy Πόντοι</div>
+									<div class="single-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>όλο το δίκτυο</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
@@ -45,7 +45,7 @@
 								<div class="">
 
 									<div class="single-title">{{single.title}}</div>
-									<div class="single-subtitle"><img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />{{coops[single.coop_id]['name']}}</div>
+									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{coops[single.coop_id]['name']}}</div>
 									<div class="single-subtitle">εώς {{single.expires}}</div>
 								</div>
 							</div>
@@ -79,11 +79,32 @@
 	</button>
 	<app-card-microcredit [microcredit]="microcredit" [type]="all"></app-card-microcredit>
 </ng-template>
+
 <ng-template #wallet let-c="close" let-d="dismiss">
-	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-		<span aria-hidden="true">&times;</span>
-	</button>
-Κάτι πράγματα για τους πόντους
+	<div class="container wallet-popup">
+		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<div class="single row-flex">
+			<div class="">
+				<span class="wallet-img">
+					<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
+				</span>
+				
+			</div>
+			<div class="">
+				<div class="single-title">Synergy Πόντοι</div>
+			</div>
+			<div class="single-amount">
+				<div>
+					<span class="points">{{balance}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="text-center mt-3">
+			Κάτι πράγματα για τους πόντους
+		</div>
+	</div>
 </ng-template>
 
 <ng-template #qrcode let-c="close" let-d="dismiss">
