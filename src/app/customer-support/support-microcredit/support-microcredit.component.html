@@ -1,6 +1,6 @@
 <button (click)=onFinalStep()>X</button>
 <aw-wizard>
-    <aw-wizard-step stepTitle="Amount" awOptionalStep>
+    <aw-wizard-step stepTitle="Amount">
         <app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
         </app-sub-amount-form>
         <button type="button" awPreviousStep>Previous Step</button>

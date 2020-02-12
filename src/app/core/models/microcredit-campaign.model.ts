@@ -28,6 +28,18 @@ export interface MicrocreditCampaign {
         redeemedTokens: number,
         payment_id: string
         status: boolean
+    }[],
+
+    confirmationTokens: {
+        _id: string,
+        initialTokens: number,
+        redeemedTokens: number
     },
+    orderedTokens: {
+        _id: string,
+        initialTokens: number,
+        redeemedTokens: number
+    },
+
     createdAt: Date
 }

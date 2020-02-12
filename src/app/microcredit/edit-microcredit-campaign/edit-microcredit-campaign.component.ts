@@ -102,11 +102,13 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
 
   fetchCampaignData() {
+
     this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
       .pipe(
         tap(
           data => {
             this.campaign = data;
+            console.log(this.campaign);
             this.supportService.changeMicrocreditCampaign(this.campaign);
             const groupedSupports = this.groupBy(this.campaign.supports, 'status'); // => {orange:[...], banana:[...]}
             this.paidSupports = groupedSupports.confirmation;
