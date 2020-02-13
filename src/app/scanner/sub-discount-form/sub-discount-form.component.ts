@@ -4,8 +4,8 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 import { LoyaltyService } from '../../core/services/loyalty.service';
-import { LoyaltyLocalService } from '../loyaltyLocal.service';
-import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
+import { ScannerService } from '../_scanner.service';
+import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-discount-form',
@@ -17,14 +17,14 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   @Output()
   add_discount: EventEmitter<object> = new EventEmitter<object>();
 
-  user: LoyaltyLocalInterface["User"];
-  transaction: LoyaltyLocalInterface["PointsTransaction"];
-  actions: LoyaltyLocalInterface["Actions"];
+  user: ScannerInterface["User"];
+  transaction: ScannerInterface["PointsTransaction"];
+  actions: ScannerInterface["Actions"];
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  conversionRatiο = 100;
+  conversionRatiο = 0.01;
 
   submitted: boolean = false;
   submitForm: FormGroup;
@@ -33,18 +33,24 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
-    private loyaltyLocalService: LoyaltyLocalService
+    private scannerService: ScannerService
   ) {
-    this.loyaltyLocalService.user.subscribe(user => this.user = user)
-    this.loyaltyLocalService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
-    this.loyaltyLocalService.actions.subscribe(actions => this.actions = actions)
+    this.scannerService.user.subscribe(user => this.user = user)
+    this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
+    this.scannerService.actions.subscribe(actions => this.actions = actions)
     this.unsubscribe = new Subject();
   }
 
+	/**
+	 * On init
+	 */
   ngOnInit() {
     this.initForm();
   }
 
+	/**
+	 * On destroy
+	 */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -67,12 +73,19 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   fetchBalanceData() {
     this.initForm();
 
+    let search_by = (['110100', '111100'].includes(this.actions.registration)) ?
+      this.user.email : (this.user.identifier_scan || this.user.identifier_form);
+
     if (this.transaction.amount >= 5) {
-      this.loyaltyService.memberBalance((this.user.identifier || this.user.email).toLowerCase())
+      this.loyaltyService.readBalanceByMerchant((search_by).toLowerCase())
         .pipe(
           tap(
             data => {
-              this.transaction.points = parseInt(data.data.points, 16);
+              if (data.data) {
+                this.transaction.points = parseInt(data.data.points, 16);
+              } else {
+                this.transaction.points = 0;
+              }
               this.initializeDiscountAmount();
             },
             error => {
@@ -108,22 +121,19 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   canRedeem() {
     const controls = this.submitForm.controls;
     controls["wantRedeem"].enable();
-    this.actions.want_redeem = true;
-    this.actions.can_redeem = true;
+    this.actions.redeem = '10';
   }
 
   cannotRedeem() {
     const controls = this.submitForm.controls;
     controls["wantRedeem"].disable();
-    this.actions.want_redeem = false;
-    this.actions.can_redeem = false;
+    this.actions.redeem = '00';
   }
 
   onWantRedeemCheckboxChange() {
     const controls = this.submitForm.controls;
-    this.actions.want_redeem = controls.wantRedeem.value;
-    console.log(this.actions.want_redeem);
-    if (!this.actions.want_redeem) {
+    this.actions.redeem = '1' + ((controls.wantRedeem.value) ? '1' : '0');
+    if (this.actions.redeem !== '11') {
       this.transaction.final_amount = this.transaction.amount - this.transaction.discount_amount;
     } else {
       this.transaction.final_amount = this.transaction.amount;
@@ -132,8 +142,8 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   }
 
   onNextStep() {
-    if (this.submitted) return;
-    this.submitted = true;
+    // if (this.submitted) return;
+    // this.submitted = true;
 
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {
@@ -143,12 +153,13 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
       return;
     };
 
-    this.loyaltyLocalService.changeActions(this.actions);
-    this.loyaltyLocalService.changePointsTransaction(this.transaction);
+    console.log(this.transaction);
+    this.scannerService.changeActions(this.actions);
+    this.scannerService.changePointsTransaction(this.transaction);
 
     this.add_discount.emit({
       final_amount: this.transaction.final_amount,
-      points: (this.actions.want_redeem) ? this.transaction.discount_amount * this.conversionRatiο : 0
+      points: (this.actions.redeem === '11') ? this.transaction.discount_amount * this.conversionRatiο : 0
     });
   }
 

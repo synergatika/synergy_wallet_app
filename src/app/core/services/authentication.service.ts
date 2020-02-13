@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 // Common
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+
 // Rxjs
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,7 +21,6 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-	private router: Router,
   ) {
     this.currentUserSubject = new BehaviorSubject<AuthUser>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -68,7 +67,14 @@ export class AuthenticationService {
       }));
   }
 
-  register_without_pass(access: string, name: string, email: string, sector?: string) {
+  register_customer(email?: string, card?: string) {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/customer`, { email: email, card: card })
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  register_merchant(access: string, name: string, email: string, sector?: string) {
     return this.http.post<any>(`${environment.apiUrl}/auth/register/${access}`, { name, email, sector })
       .pipe(map(data => {
         return data;
@@ -136,6 +142,5 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-	this.router.navigateByUrl('/auth/login');
   }
 }
