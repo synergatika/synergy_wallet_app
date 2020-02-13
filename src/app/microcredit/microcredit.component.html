@@ -1,0 +1,12 @@
+<p>microcredit works!</p>
+
+
+<h1> Edit </h1>
+<main id="logout-button-holder">
+    <button *ngFor="let campaign of campaigns" mat-raised-button id="logout-button"
+        routerLink="edit/{{campaign.campaign_id}}">
+        Edit Microcredit Campaign:
+        {{campaign.title}}</button>
+</main>
+
+<router-outlet></router-outlet>

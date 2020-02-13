@@ -21,13 +21,25 @@ export interface MicrocreditCampaign {
     redeemEnds: number,
     expiresAt: number,
 
-    backers: {
+    supports: {
         _id: string,
         backer_id: string,
         initialTokens: number,
         redeemedTokens: number,
         payment_id: string
         status: boolean
+    }[],
+
+    confirmationTokens: {
+        _id: string,
+        initialTokens: number,
+        redeemedTokens: number
     },
+    orderedTokens: {
+        _id: string,
+        initialTokens: number,
+        redeemedTokens: number
+    },
+
     createdAt: Date
 }

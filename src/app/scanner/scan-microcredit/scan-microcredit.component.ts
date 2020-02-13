@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './scan-microcredit.component.html',
   styleUrls: ['./scan-microcredit.component.sass']
 })
-export class ScanMicrocreditComponent implements OnInit {
+export class ScanMicrocreditComponent implements OnInit, OnDestroy {
 
   constructor() { }
 

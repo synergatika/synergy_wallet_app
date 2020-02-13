@@ -77,7 +77,7 @@ const routes: Routes = [
         NewPostComponent,
         NewEventComponent,
         NewMicrocreditCampaignComponent,
-        NewMicrofundingCampaignComponent
+        NewMicrofundingCampaignComponent,
     ],
     entryComponents: [
     ]

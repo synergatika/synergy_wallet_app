@@ -39,6 +39,7 @@ export class SubMicrocreditFormComponent implements OnInit {
     this.transaction.redeemed_tokens = currentOrder.redeemedTokens;
     this.transaction.possible_tokens = (this.transaction.initial_tokens - this.transaction.redeemed_tokens);
     this.transaction.support_id = currentOrder.support_id;
+    console.log(this.transaction);
     this.scannerService.changeMicrocreditTransaction(this.transaction);
   }
 

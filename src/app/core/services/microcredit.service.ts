@@ -61,8 +61,8 @@ export class MicrocreditService {
       }));
   }
 
-  earnTokensByMerchant(merchant_id: string, campaign_id: string, identifier: string, _amount: number): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}/${identifier}`, { _amount: _amount })
+  earnTokensByMerchant(merchant_id: string, campaign_id: string, identifier: string, _amount: number, paid: boolean): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}/${identifier}`, { _amount: _amount, paid: paid })
       .pipe(map(response => {
         return response;
       }));
