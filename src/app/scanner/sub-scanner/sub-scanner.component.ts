@@ -5,7 +5,7 @@ import { ScannerInterface } from "../_scanner.interface";
 @Component({
   selector: 'app-sub-scanner',
   templateUrl: './sub-scanner.component.html',
-  styleUrls: ['./sub-scanner.component.sass']
+  styleUrls: ['./sub-scanner.component.scss']
 })
 export class SubScannerComponent implements OnInit {
 

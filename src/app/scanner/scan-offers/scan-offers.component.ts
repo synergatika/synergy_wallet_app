@@ -18,7 +18,7 @@ import { WizardComponent } from 'angular-archwizard';
 @Component({
   selector: 'app-scan-offers',
   templateUrl: './scan-offers.component.html',
-  styleUrls: ['./scan-offers.component.sass'],
+  styleUrls: ['./scan-offers.component.scss'],
   // providers: [LoyaltyLocalService]
 })
 export class ScanOffersComponent implements OnInit, OnDestroy {

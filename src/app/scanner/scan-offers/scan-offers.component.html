@@ -1,20 +1,33 @@
-<button (click)=onFinalStep()>X</button>
-<aw-wizard>
-    <aw-wizard-step stepTitle="Scan Or Add">
-        <app-sub-scanner *ngIf="!showIdentifierForm" (scan_identifier)="onSuccessScanIdentifier($event)">
-        </app-sub-scanner>
-        <button type="button" (click)="onShowIdentifierFormChange()">Identifier Form</button>
-        <div *ngIf="showIdentifierForm">
-            <app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
-            </app-sub-identifier-form>
-        </div>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Offer" awOptionalStep>
-        <app-sub-offer-form (add_offer)="onSubmitOfferForm($event)">
-        </app-sub-offer-form>
-        <button type="button" awPreviousStep>Previous Step</button>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Final">
-        <app-sub-final-step (finalize)="onFinalStep($event)" [type]=2></app-sub-final-step>
-    </aw-wizard-step>
-</aw-wizard>
+<div class="scan-modal-container">
+	<button type="button" class="close-btn" aria-label="Close" (click)="onFinalStep()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<aw-wizard>
+		<aw-wizard-step stepTitle="Scan Or Add--">
+			<div class="step-container row justify-content-md-center">
+				<div class="col-xl-6 ">
+					<app-sub-scanner *ngIf="!showIdentifierForm" (scan_identifier)="onSuccessScanIdentifier($event)">
+					</app-sub-scanner>
+					<button class="btn btn-primary" type="button" [ngClass]="{'identifier-active': showIdentifierForm}" (click)="onShowIdentifierFormChange()">
+						<span *ngIf="!showIdentifierForm; else back_to_scanner">Identifier Form</span>
+						<ng-template #back_to_scanner>
+							<span>Back to Scanner</span>
+						</ng-template>
+					</button>
+					<div *ngIf="showIdentifierForm">
+						<app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
+						</app-sub-identifier-form>
+					</div>
+				</div>
+			</div>
+		</aw-wizard-step>
+		<aw-wizard-step stepTitle="Offer" awOptionalStep>
+			<app-sub-offer-form (add_offer)="onSubmitOfferForm($event)">
+			</app-sub-offer-form>
+			<button type="button" awPreviousStep>Previous Step</button>
+		</aw-wizard-step>
+		<aw-wizard-step stepTitle="Final">
+			<app-sub-final-step (finalize)="onFinalStep($event)" [type]=2></app-sub-final-step>
+		</aw-wizard-step>
+	</aw-wizard>
+</div>

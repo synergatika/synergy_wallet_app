@@ -1,37 +1,51 @@
-<button (click)=onFinalStep()>X</button>
-<aw-wizard>
-    <aw-wizard-step stepTitle="Scan Or Add">
-        <div *ngIf="!showIdentifierForm">
-            <p>Scan a new Card, Scan User's App, Scan User's Card </p>
-            <app-sub-scanner (scan_identifier)="onSuccessScanIdentifier($event)">
-            </app-sub-scanner>
-        </div>
-        <button type="button" (click)="onShowIdentifierFormChange()">
-            Enter new Email,Enter a new Card, Enter User's Email, Enter User's Card</button>
-        <div *ngIf="showIdentifierForm">
-            <app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
-            </app-sub-identifier-form>
-            <!-- <button type="button" awPreviousStep>Go to previous step</button> -->
-        </div>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Email" awOptionalStep>
-        <p>{{this.messages.stepB}}</p>
-        <app-sub-email-form (add_email)="onSubmitEmailForm($event)">
-        </app-sub-email-form>
-        <button type="button" awPreviousStep>Previous Step</button>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Amount" awOptionalStep>
-        <p>{{this.messages.stepC}}</p>
-        <app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
-        </app-sub-amount-form>
-        <button type="button" awPreviousStep>Previous Step</button>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Discount">
-        <app-sub-discount-form (add_discount)="onSubmitDiscountForm($event)">
-        </app-sub-discount-form>
-        <button type="button" awPreviousStep>Previous Step</button>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Final">
-        <app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
-    </aw-wizard-step>
-</aw-wizard>
+<div class="scan-modal-container">
+	<button type="button" class="close-btn" aria-label="Close" (click)="onFinalStep()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<aw-wizard>
+		<aw-wizard-step stepTitle="Scan Or Add">
+			<div class="step-container row justify-content-md-center">
+				<div class="col-md-12">
+					<div *ngIf="!showIdentifierForm">
+						<p>Scan a new Card, Scan User's App, Scan User's Card </p>
+						<app-sub-scanner (scan_identifier)="onSuccessScanIdentifier($event)">
+						</app-sub-scanner>
+					</div>
+					<button class="btn btn-primary"  type="button" (click)="onShowIdentifierFormChange()">
+						<span *ngIf="!showIdentifierForm; else back_to_scanner">
+							Enter new Email,Enter a new Card, Enter User's Email, Enter User's Card
+						</span>
+						<ng-template #back_to_scanner>
+							<span>Back to Scanner</span>
+						</ng-template>
+					</button>
+					<div *ngIf="showIdentifierForm">
+						<app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
+						</app-sub-identifier-form>
+						<!-- <button type="button" awPreviousStep>Go to previous step</button> -->
+					</div>
+				</div>
+			</div>
+		</aw-wizard-step>
+		<aw-wizard-step stepTitle="Email" awOptionalStep>
+			<p>{{this.messages.stepB}}</p>
+			<app-sub-email-form (add_email)="onSubmitEmailForm($event)">
+			</app-sub-email-form>
+			<button type="button" awPreviousStep>Previous Step</button>
+		</aw-wizard-step>
+		<aw-wizard-step stepTitle="Amount" awOptionalStep>
+			<p>{{this.messages.stepC}}</p>
+			<app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
+			</app-sub-amount-form>
+			<button type="button" awPreviousStep>Previous Step</button>
+		</aw-wizard-step>
+		<aw-wizard-step stepTitle="Discount">
+			<app-sub-discount-form (add_discount)="onSubmitDiscountForm($event)">
+			</app-sub-discount-form>
+			<button type="button" awPreviousStep>Previous Step</button>
+		</aw-wizard-step>
+		<aw-wizard-step stepTitle="Final">
+			<app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
+		</aw-wizard-step>
+	</aw-wizard>
+</div>

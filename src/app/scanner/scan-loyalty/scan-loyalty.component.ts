@@ -22,7 +22,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-scan-loyalty',
   templateUrl: './scan-loyalty.component.html',
-  styleUrls: ['./scan-loyalty.component.sass'],
+  styleUrls: ['./scan-loyalty.component.scss'],
   // providers: [LoyaltyLocalService]
 })
 export class ScanLoyaltyComponent implements OnInit, OnDestroy {

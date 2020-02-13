@@ -8,7 +8,7 @@ import { ScannerInterface } from "../_scanner.interface";
 @Component({
   selector: 'app-sub-identifier-form',
   templateUrl: './sub-identifier-form.component.html',
-  styleUrls: ['./sub-identifier-form.component.sass']
+  styleUrls: ['./sub-identifier-form.component.scss']
 })
 export class SubIdentifierFormComponent implements OnInit {
 

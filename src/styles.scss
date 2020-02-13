@@ -34,6 +34,9 @@ body {
 	&.menu-overlay {
 		background-color: rgba(0,0,0,0.4);
 	}
+	button:focus {
+		outline:0;
+	}
 	mat-card {
 		.mdi.share-icon {
 			color: #b6c1c9;
@@ -75,7 +78,7 @@ body {
 	.btn-primary {
 		background-color: #37aba7;
 		border-color: #37aba7;
-		&:hover, &:active {
+		&:hover, &:active, &:not(:disabled):not(.disabled):active, &:focus {
 			background-color: #368f8c;
 			border-color: #368f8c;
 		}
@@ -183,7 +186,28 @@ body {
 		}
 	}
 }
-	
+
+//Scan Modal
+.scan-modal-container {
+	position: relative;
+}
+.step-container {
+	text-align: center;
+	button {
+		margin: 0 auto;
+	}
+}
+
+//aw-wizard
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
+	&.current .step-indicator {
+		background-color: #37aba7;
+	}
+	&.optional .step-indicator {
+		background-color: #e6db91;
+	}
+}
+
 @media (min-width:992px) {
 	body {
 		.mat-card {

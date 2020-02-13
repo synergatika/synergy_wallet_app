@@ -16,7 +16,7 @@ import { ScanMicrocreditComponent } from './scan-microcredit/scan-microcredit.co
 @Component({
   selector: 'app-scanner',
   templateUrl: './scanner.component.html',
-  styleUrls: ['./scanner.component.sass'],
+  styleUrls: ['./scanner.component.scss'],
   // providers: [LoyaltyLocalService]
 })
 export class ScannerComponent implements OnInit, OnDestroy {
@@ -91,12 +91,14 @@ export class ScannerComponent implements OnInit, OnDestroy {
   }
 
   fetchCampaignsData() {
+	console.log('this.microcredit');
     this.itemsService.readPublicMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"])
       .pipe(
         tap(
           data => {
             this.microcredit = data;
-            console.log(this.microcredit)
+			
+            console.log(this.microcredit);
             this.scannerService.changeMicrocreditCampaigns(this.microcredit);
           },
           error => {

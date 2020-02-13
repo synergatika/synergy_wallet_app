@@ -35,22 +35,34 @@
 
 	<div *ngIf="access === 'merchant'">
 		<div>
-			<ng-container *ngFor="let item of transactions">
+			<ng-container *ngFor="let item of transactions | paginate: { id: 'mr_paginator', itemsPerPage: 10, currentPage: p }">
 				<ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
 			</ng-container>
 		</div>
+		<div class="pagination-wrapper">
+			<pagination-controls autoHide="true" id='mr_paginator' (pageChange)="p=$event"></pagination-controls>
+		</div>
 
 		<ng-template #itemTemplate let-item="item">
-			<div class="transaction-item">
-				<div class="transaction-info">
-					<h3 class="transaction-title">Customer: {{item.info.to_email}}</h3>
-					<span class="transaction-desc">Receipt: {{item.tx}} <br> {{item.createdAt | date:'medium' }}</span>
+			<div class="transaction-item transaction-receipt row">
+				<div class="transaction-info col">
+					<span class="transaction-desc">Receipt: {{item.tx}} <br> </span>
 				</div>
-
-				<span class="transaction-number" [ngClass]="(item.type==='EarnPoints') ? 'font-info' : 'font-focus'">
-					<!--{{ (item.type==='EarnPoints') ? '-' : '+' }}-->
-					{{item.info.points}} points
-				</span>
+			</div>
+			
+			<div class="transaction-details row">
+				<div class="transaction-info col">
+					<span class="transaction-title">{{item.createdAt | date:'medium' }}</span>
+				</div>
+				<div class="transaction-info col">
+					<span class="transaction-title"><span class="title">Customer:</span> {{item.info.to_email}}</span>
+				</div>
+				<div class="transaction-info col">
+					<span class="transaction-number" [ngClass]="(item.type==='EarnPoints') ? 'font-info' : 'font-focus'">
+						<!--{{ (item.type==='EarnPoints') ? '-' : '+' }}-->
+						{{item.info.points}} points
+					</span>
+				</div>
 			</div>
 		</ng-template>
 	</div>

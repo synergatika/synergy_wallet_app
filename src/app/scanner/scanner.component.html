@@ -1,16 +1,26 @@
-<p>scanner works!</p>
-<main id="logout-button-holder">
-    <button mat-raised-button id="logout-button" (click)="openModalA()">Scan for Points</button>
-</main>
-
-<main id="logout-button-holder">
-    <button *ngFor="let item of offers" mat-raised-button id="logout-button" (click)="openModalB(item.offer_id)">Scan
-        for Offer: {{item.title}}</button>
-</main>
-
-
-<main id="logout-button-holder">
-    <button *ngFor="let item of microcredit" mat-raised-button id="logout-button"
-        (click)="openModalC(item.campaign_id)">Scan
-        for Campaigns: {{item.title}}</button>
-</main>
+<div class="scanner">
+	<div>
+		<button mat-raised-button  (click)="openModalA()">Scan for Points</button>
+	</div>
+	<div class="row" *ngIf="offers">
+		<h2 class="col-md-12 section-heading">Scan for Offers</h2>
+		<div class="offer-wrapper item-wrapper col-md-4" *ngFor="let offer of offers">
+		<mat-card class="offer-card">
+		  <mat-card-content>
+			<div class="offer-expires">έως {{offer.expiresAt | date: 'd.M'}}</div>
+			<div class="offer-title">{{offer.description}}</div>
+			<div class="mb-3">
+				<span class="points">{{offer.cost | currency:'EUR'}}</span>
+			</div>
+			<button mat-raised-button (click)="openModalB(offer.offer_id)">Scan for Offer: {{offer.title}}</button>
+		  </mat-card-content>
+		</mat-card>
+		</div>
+	</div>
+	<div class="row" *ngIf="microcredit">
+		<h2 class="col-md-12 section-heading">Scan for Campaigns</h2>
+		<div>
+			<button *ngFor="let item of microcredit" mat-raised-button (click)="openModalC(item.campaign_id)">Scan for Campaigns: {{item.title}}</button>
+		</div>
+	</div>
+</div>
