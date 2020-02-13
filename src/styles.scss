@@ -1,1 +1,197 @@
-/* You can add global styles to this file, and also import other style files */
+/*@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); 
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(/assets/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+    url(/assets/MaterialIcons-Regular.woff) format('woff'),
+    url(/assets/MaterialIcons-Regular.ttf) format('truetype');
+}*/
+
+html, body { height: 100%; }
+body { 
+	margin: 0px; 
+	//padding-top: 20px;
+	background-color: #f2f3f8;
+	font-family: "Noto Sans", "Helvetica Neue", sans-serif; 
+	a {
+		color: #368f8c;
+		transition: color 0.3s;
+		&:hover {
+			color: #37aba7;
+		}
+	}
+	.heading {
+		font-size: 1.4rem;
+		font-weight: normal;
+		margin-bottom: 20px;
+	}
+	.section-heading {
+		margin-bottom: 20px;
+	}
+	&.menu-overlay {
+		background-color: rgba(0,0,0,0.4);
+	}
+	mat-card {
+		.mdi.share-icon {
+			color: #b6c1c9;
+			font-size: 54px;
+			cursor: pointer;
+		}
+		.mdi {
+			color: #368f8c;
+			font-size: 18px;
+			margin-right: 5px;
+			&.white {
+				color: #fff;
+			}
+		}
+	}
+	
+	/*.material-icons {
+	  font-family: 'Material Icons';
+	  font-weight: normal;
+	  font-style: normal;
+	  font-size: 24px;  
+	  display: inline-block;
+	  line-height: 1;
+	  text-transform: none;
+	  letter-spacing: normal;
+	  word-wrap: normal;
+	  white-space: nowrap;
+	  direction: ltr;
+
+	  -webkit-font-smoothing: antialiased;
+
+	  text-rendering: optimizeLegibility;
+
+	  -moz-osx-font-smoothing: grayscale;
+	  font-feature-settings: 'liga';
+	}*/
+	
+	//Bootstrap
+	.btn-primary {
+		background-color: #37aba7;
+		border-color: #37aba7;
+		&:hover, &:active {
+			background-color: #368f8c;
+			border-color: #368f8c;
+		}
+	}
+	.btn-success {
+		color: #fff;
+		background-color: #faa635;
+		border-color: #faa635;
+		&:hover, &:active {
+			background-color: #e49326;
+			border-color: #e49326;
+		}
+	}
+	.dropdown-menu {
+		border: none;
+		box-shadow: 0 0 40px 0 rgba(40,70,120,.15);
+	}
+
+	
+	//Material Design
+	.mat-card:not([class*=mat-elevation-z]) {
+		box-shadow: 0 6px 21px -2px #d1cbcb;
+		border-radius: 9px;
+	}
+	
+	// Slider
+	swiper.swiper-wrapper {
+		//margin-bottom: -50px;
+	}
+	.swiper-button-next, .swiper-button-prev {
+		top: 22%;
+	}
+	.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+		bottom: 80px;
+	}
+	
+	//Owl carousel
+	.owl-theme {
+		.owl-nav {
+			position: absolute;
+			bottom: 60%;
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			pointer-events: none;
+		}
+		.owl-prev {
+			pointer-events: all;
+			&:before {
+				content:"\f97b";
+				font-family: "Material Design Icons";
+			}
+		}
+		.owl-next {
+			pointer-events: all;
+			&:before {
+				content:"\f96c";
+				font-family: "Material Design Icons";
+			}
+		}
+	}
+	//Modal
+	.close-btn {
+		position: absolute;
+		right: -10px;
+		top: -10px;
+		border-radius: 50%;
+		border: 1px solid transparent;
+		width: 35px;
+		height: 35px;
+		font-size: 30px;
+		z-index: 1;
+		span {
+			position: relative;
+			top: -6px;
+		}
+	}
+	.fullscrenn-backdrop {
+		background-color: #fff;
+		&.modal-backdrop.show {
+			opacity: 1;
+		}
+	}
+	.fullscrenn-modal {
+		.modal-content {
+			border: none;
+		}
+	}
+
+}
+
+.auth-page {
+	background-color: #0c1a33;
+}
+
+
+//Paginator
+.pagination-wrapper {
+	text-align: center;
+	ul {
+		display: inline;
+		margin: 10px 0;
+		.current {
+			background-color: #0c1a33;
+		}
+	}
+}
+	
+@media (min-width:992px) {
+	body {
+		.mat-card {
+			padding: 25px;
+			.row {
+				margin-right: -25px;
+				margin-left: -25px;
+			}
+		}
+	}
+}
