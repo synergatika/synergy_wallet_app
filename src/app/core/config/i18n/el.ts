@@ -184,11 +184,6 @@ export const locale = {
                 G: 'Αναψυχή και Πολιτισμός'
             },
 
-            OFFER_TITLE: {
-                TITLE: 'Tίτλος Προσφοράς',
-                PLACEHOLDER: 'Τίτλος',
-                DESC: 'Παρακαλώ, εισάγεται τίτλο για την Προσφορά.'
-            },
             OFFER_DESCRIPTION: {
                 TITLE: 'Περιγραφή Προσφοράς',
                 PLACEHOLDER: 'Περιγραφή',

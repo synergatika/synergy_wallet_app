@@ -4,23 +4,9 @@
         <div class="kt-form__section kt-form__section--first">
             <div class="kt-wizard-v3__form">
                 <div class="form-group">
-                    <label>{{'FIELDS.OFFER.TITLE.TITLE' | translate}}</label>
-                    <input type="text" class="form-control" name="Title" formControlName="title"
-                        placeholder="{{'FIELDS.OFFER.TITLE.PLACEHOLDER' | translate}}" value="title">
-                    <span *ngIf="isControlHasError('title','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span *ngIf="isControlHasError('title','minlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-                        {{validator.title.minLength}}</span>
-                    <span *ngIf="isControlHasError('title','maxlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-                        {{validator.title.maxLength}}</span>
-                    <span class="form-text text-muted">{{'FIELDS.OFFER.TITLE.DESC' | translate}}</span>
-                </div>
-                <div class="form-group">
-                    <label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</label>
+                    <label>{{'FIELDS.OFFER_DESCRIPTION.TITLE' | translate}}</label>
                     <input type="text" class="form-control" name="Description" formControlName="description"
-                        placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}" value="description">
+                        placeholder="{{'FIELDS.OFFER_DESCRIPTION.PLACEHOLDER' | translate}}" value="description">
                     <span *ngIf="isControlHasError('description','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
                     <span *ngIf="isControlHasError('description','minlength')"
@@ -29,24 +15,24 @@
                     <span *ngIf="isControlHasError('description','maxlength')"
                         class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
                         {{validator.description.maxLength}}</span>
-                    <span class="form-text text-muted">{{'FIELDS.OFFER.DESCRIPTION.DESC' | translate}}</span>
+                    <span class="form-text text-muted">{{'FIELDS.OFFER_DESCRIPTION.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{'FIELDS.OFFER.EXPIRATION.TITLE' | translate}}</label>
+                    <label>{{'FIELDS.OFFER_EXPIRATION.TITLE' | translate}}</label>
                     <select name="expiresAt" formControlName="expiration" class="form-control">
-                        <option value="1">{{'FIELDS.OFFER.EXPIRATION_CHOICES.A' | translate}}</option>
-                        <option value="2">{{'FIELDS.OFFER.EXPIRATION_CHOICES.B' | translate}}</option>
-                        <option value="3">{{'FIELDS.OFFER.EXPIRATION_CHOICES.C' | translate}}</option>
-                        <option value="4">{{'FIELDS.OFFER.EXPIRATION_CHOICES.D' | translate}}</option>
+                        <option value="1">{{'FIELDS.EXPIRATION_CHOICES.A' | translate}}</option>
+                        <option value="2">{{'FIELDS.EXPIRATION_CHOICES.B' | translate}}</option>
+                        <option value="3">{{'FIELDS.EXPIRATION_CHOICES.C' | translate}}</option>
+                        <option value="4">{{'FIELDS.EXPIRATION_CHOICES.D' | translate}}</option>
                     </select>
                     <span *ngIf="isControlHasError('expiration','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span class="form-text text-muted">{{'FIELDS.OFFER.EXPIRATION.DESC' | translate}}</span>
+                    <span class="form-text text-muted">{{'FIELDS.OFFER_EXPIRATION.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{'FIELDS.OFFER.COST.TITLE' | translate}}</label>
+                    <label>{{'FIELDS.OFFER_COST.TITLE' | translate}}</label>
                     <input type="number" class="form-control" name="points" formControlName="cost"
-                        placeholder="{{'FIELDS.OFFER.COST.PLACEHOLDER' | translate}}" value="points">
+                        placeholder="{{'FIELDS.OFFER_COST.PLACEHOLDER' | translate}}" value="points">
                     <span *ngIf="isControlHasError('cost','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
                     <span *ngIf="isControlHasError('cost','min')"
@@ -55,7 +41,7 @@
                     <span *ngIf="isControlHasError('cost','max')"
                         class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
                         {{validator.cost.maxValue}}</span>
-                    <span class="form-text text-muted">{{'FIELDS.OFFER.COST.DESC' | translate}}</span>
+                    <span class="form-text text-muted">{{'FIELDS.OFFER_COST.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
                     <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>

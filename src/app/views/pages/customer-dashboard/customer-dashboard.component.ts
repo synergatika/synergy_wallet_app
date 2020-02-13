@@ -5,26 +5,22 @@ import { Subject, Subscriber } from 'rxjs';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { LoyaltyService } from '../../../core/services/loyalty.service';
 import { ItemsService } from '../../../core/services/items.service';
-import { MicrocreditService } from '../../../core/services/microcredit.service';
 import { QrCodeComponent } from '../../../views/pages/qr-code/qr-code.component';
 
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { MicrocreditSupport } from '../../../core/models/microcredit-support.model';
 
 @Component({
-	selector: 'app-customer-dashboard',
-	templateUrl: './customer-dashboard.component.html',
-	styleUrls: ['./customer-dashboard.component.scss']
+  selector: 'app-customer-dashboard',
+  templateUrl: './customer-dashboard.component.html',
+  styleUrls: ['./customer-dashboard.component.scss']
 })
 export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
-	balance: number = 0;
-	offers: any;
-	supports: MicrocreditSupport[];
-
-	loading: boolean = false;
-	private unsubscribe: Subject<any>;
-	list = [
+  balance: number = 0;
+  offers: any;
+  loading: boolean = false;
+  private unsubscribe: Subject<any>;
+  list = [
 		{
 			id: "Commonspace34533",
 			title: "Ζαπατίστικος Καφές",
@@ -56,6 +52,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			phone: '2103606333'
 		},
 	];
+	
 	coops = {
 		"Synallois14234562456" : {
 			"id":"Synallois14234562456",
@@ -79,116 +76,98 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		},
 	};
 	microcredit: any;
-	@ViewChild('microcredit_item', { static: false }) microcreditItem;
-	@ViewChild('qrcode', { static: false }) qrcode;
-	@ViewChild('wallet', { static: false }) wallet;
-
-	/**
-   * Component constructor
-   *
-   * @param cdRef: ChangeDetectorRef
-   * @param authenticationService: AuthenticationService
-   * @param loyaltyService: LoyaltyService
-   */
-	constructor(
-		private cdRef: ChangeDetectorRef,
-		private authenticationService: AuthenticationService,
-		private loyaltyService: LoyaltyService,
-		private itemsService: ItemsService,
-		private microcreditService: MicrocreditService,
-		private modalService: NgbModal
-	) {
-		this.unsubscribe = new Subject();
-	}
-
-	/**
-	* On init
-	*/
-	ngOnInit() {
-		this.fetchBalanceData();
-		this.fetchOffersData();
-	}
-
-
-	/**
-	 * On destroy
-	 */
-	ngOnDestroy(): void {
-		this.unsubscribe.next();
-		this.unsubscribe.complete();
-		this.loading = false;
-	}
-
-	fetchBalanceData() {
-		this.loyaltyService.readBalance()
-			.pipe(
-				tap(
-					data => {
-						this.balance = parseInt(data.points, 16);
-					},
-					error => {
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-	}
-
-	fetchOffersData() {
-		this.itemsService.readAllOffers()
-			.pipe(
-				tap(
-					data => {
-						this.offers = data;
-						console.log(this.offers)
-
-					},
-					error => {
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-	}
-
-	fetchSupportsData() {
-		this.microcreditService.readAllSuports()
-			.pipe(
-				tap(
-					data => {
-						this.supports = data;
-						console.log(this.supports);
-					},
-					error => {
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-	}
 	
-	openCoop(singleId) {
+	@ViewChild('microcredit_item', {static: false}) microcreditItem;
+	@ViewChild('qrcode', {static: false}) qrcode;
+	@ViewChild('wallet', {static: false}) wallet;
+
+  /**
+ * Component constructor
+ *
+ * @param cdRef: ChangeDetectorRef
+ * @param authenticationService: AuthenticationService
+ * @param loyaltyService: LoyaltyService
+ */
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private authenticationService: AuthenticationService,
+    private loyaltyService: LoyaltyService,
+	private itemsService: ItemsService,
+	private modalService: NgbModal
+  ) {
+    this.unsubscribe = new Subject();
+  }
+
+  /**
+  * On init
+  */
+  ngOnInit() {
+    this.fetchBalanceData();
+	this.fetchOffersData();
+  }
+
+
+  /**
+   * On destroy
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
+
+  fetchBalanceData() {
+    this.loyaltyService.readBalance()
+      .pipe(
+        tap(
+          data => {
+            this.balance = parseInt(data.points, 16);
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+  
+  fetchOffersData() {
+    this.itemsService.readAllOffers()
+      .pipe(
+        tap(
+          data => {
+            this.offers = data;
+            console.log(this.offers)
+
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+  
+  openCoop(singleId) {
 		this.microcredit = this.list.find(x => x.id === singleId);
 		console.log(this.microcredit);
 		console.log(singleId);
 		this.modalService.open(this.microcreditItem).result.then((result) => {
 			console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
 
-		});
-	}
+			}, (reason) => {
+				console.log('dismissed');
 
-	openQrcode() {
+        });
+  }
+  
+  openQrcode() {
 		/*this.modalService.open(this.qrcode).result.then((result) => {
 			console.log('closed');
 
@@ -197,15 +176,16 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
         });*/
 		const modalRef = this.modalService.open(QrCodeComponent);
-	}
-
-	openWallet() {
+  }
+  
+  openWallet() {
 		this.modalService.open(this.wallet).result.then((result) => {
 			console.log('closed');
 
-		}, (reason) => {
-			console.log('dismissed');
+			}, (reason) => {
+				console.log('dismissed');
 
-		});
-	}
+        });
+  }
+  
 }

@@ -12,6 +12,7 @@ import { LayoutComponent } from './views/layout/layout.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
 
 const routes: Routes = [
+  // Customer Zone
 	{
 		path: '',
 		component: LayoutComponent,
@@ -31,8 +32,8 @@ const routes: Routes = [
 			{
 				path: 'explore-one/:_id', component: CustomerExploreOneComponent
 			},
-			{ path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(m => m.CustomerSupportModule) },
 
+			
 			{ path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },
 			{ path: 'scanner', loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule) },
 			{ path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
@@ -62,7 +63,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

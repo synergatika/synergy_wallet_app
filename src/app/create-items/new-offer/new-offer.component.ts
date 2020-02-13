@@ -21,10 +21,6 @@ import { ItemsService } from '../../core/services/items.service';
 export class NewOfferComponent implements OnInit, OnDestroy {
 
   public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 150
-    },
     description: {
       minLength: 3,
       maxLenth: 150
@@ -35,12 +31,8 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     }
   };
 
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = false;
-
   submitForm: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -57,35 +49,11 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private itemsService: ItemsService,
     private fb: FormBuilder,
-    private translate: TranslateService
-  ) {
-    this.unsubscribe = new Subject();
-  }
-
-	/**
-	 * On init
-	 */
-  ngOnInit() {
-    this.initForm();
-  }
-
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
+    private translate: TranslateService,
+  ) { }
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(this.validator.title.minLength),
-        Validators.maxLength(this.validator.title.maxLength)
-      ])
-      ],
       description: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
@@ -105,36 +73,10 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     });
   }
 
-  fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
+  ngOnInit() {
+    this.initForm();
   }
 
-  preview() {
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
-
-  onImageCancel() {
-    this.previewUrl = null;
-    this.fileData = null;
-    this.originalImage = true;
-  }
-
-  /**
-	 * On Form Submit
-	 */
   onSubmit() {
     if (this.submitted) return;
 
@@ -146,7 +88,6 @@ export class NewOfferComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    this.loading = true;
     this.submitted = true;
 
     var _date = new Date();
@@ -168,13 +109,13 @@ export class NewOfferComponent implements OnInit, OnDestroy {
         var _newDate = _date.setDate(_date.getDate() + 7);
     }
 
-    const formData = new FormData();
-    formData.append('imageURL', this.fileData);
-    formData.append('cost', controls.cost.value);
-    formData.append('description', controls.description.value);
-    formData.append('expiresAt', _newDate.toString());
+    const offerData = {
+      description: controls.description.value,
+      cost: controls.cost.value,
+      expiresAt: _newDate.toString()
+    };
 
-    this.itemsService.createOffer(formData)
+    this.itemsService.createOffer(offerData.description, offerData.cost, offerData.expiresAt)
       .pipe(
         tap(
           data => {
@@ -201,12 +142,18 @@ export class NewOfferComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
+
   /**
-   * Checking control validation
-   *
-   * @param controlName: string => Equals to formControlName
-   * @param validationType: string => Equals to valitors name
-   */
+ * Checking control validation
+ *
+ * @param controlName: string => Equals to formControlName
+ * @param validationType: string => Equals to valitors name
+ */
   isControlHasError(controlName: string, validationType: string): boolean {
     const control = this.submitForm.controls[controlName];
     if (!control) {

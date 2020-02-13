@@ -1,13 +1,14 @@
 <mat-card class="dashboard-card coop-card" *ngIf="coop">
-	<mat-card-content>
+  <mat-card-content>
 		<!--begin::Content-->
 		<div class="wallet_coop_wrapper">
-			<div class="coop row">
+			<div class="coop row" >
 				<div class="col-sm-12 coop-img-container">
 					<div class="coop-img">
 						<img src={{coop.imageURL}} alt={{coop.name}} />
-
+						
 					</div>
+					
 				</div>
 				<div class="col-sm-12 coop-details">
 					<div class="coop-heading">
@@ -26,6 +27,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<!--end::Content-->
-	</mat-card-content>
+  </mat-card-content>
 </mat-card>

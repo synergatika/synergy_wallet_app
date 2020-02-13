@@ -125,6 +125,7 @@
 								<label class="avatar-upload" data-toggle="tooltip" title=""
 									data-original-title="Change avatar">
 									<i class="fa fa-pen"></i>
+									
 									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										accept=".png, .jpg, .jpeg" id="profile_avatar_file" #fileInput>
 								</label>
@@ -138,9 +139,8 @@
 					<div class="form-group">
 						<mat-form-field>
 							<mat-label>Name</mat-label>
-							<input matInput type="text" name="name" [(ngModel)]="customer.name" placeholder="Name"
-								value="Name">
-
+							<input matInput type="text" name="name" [(ngModel)]="customer.name"
+								placeholder="Name" value="Name">
 							<mat-hint class="form-text text-muted">Please enter your Name.</mat-hint>
 						</mat-form-field>
 					</div>

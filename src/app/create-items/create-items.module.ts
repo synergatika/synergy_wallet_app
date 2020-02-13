@@ -11,13 +11,17 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { NewEventComponent } from './new-event/new-event.component';
 import { NewMicrocreditCampaignComponent } from './new-microcredit-campaign/new-microcredit-campaign.component';
 import { NewMicrofundingCampaignComponent } from './new-microfunding-campaign/new-microfunding-campaign.component';
-import { EditMicrocreditCampaignComponent } from './edit-microcredit-campaign/edit-microcredit-campaign.component';
 
 const routes: Routes = [
     {
         path: '',
         component: CreateItemsComponent,
         children: [
+            {
+                path: '',
+                redirectTo: 'offer',
+                pathMatch: 'full'
+            },
             {
                 path: 'offer',
                 component: NewOfferComponent,
@@ -38,10 +42,6 @@ const routes: Routes = [
                 path: 'microfunding',
                 component: NewMicrofundingCampaignComponent,
             },
-            {
-                path: 'edit/microcredit/:_id',
-                component: EditMicrocreditCampaignComponent,
-            }
         ]
     }
 ];
@@ -77,8 +77,7 @@ const routes: Routes = [
         NewPostComponent,
         NewEventComponent,
         NewMicrocreditCampaignComponent,
-        NewMicrofundingCampaignComponent,
-        EditMicrocreditCampaignComponent
+        NewMicrofundingCampaignComponent
     ],
     entryComponents: [
     ]

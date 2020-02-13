@@ -1,4 +1,4 @@
-export interface Offer {
+export interface MicrocreditCampaign {
 
     merchant_id: string;
     merchant_name: string;

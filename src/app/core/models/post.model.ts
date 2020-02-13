@@ -5,9 +5,8 @@ export interface Post {
     merchant_imageURL: string;
 
     post_id: string;
-    post_imageURL: string;
-    title: string;
     content: string;
+    type: number;
     access: number;
     createdAt: string;
 }

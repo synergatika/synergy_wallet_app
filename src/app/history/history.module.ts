@@ -45,7 +45,7 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-        NgxPaginationModule
+		NgxPaginationModule
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],

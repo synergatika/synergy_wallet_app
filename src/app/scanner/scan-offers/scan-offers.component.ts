@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -8,13 +8,12 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { LoyaltyService } from '../../core/services/loyalty.service';
 
 // Local Services
-import { ScannerService } from '../_scanner.service';
+import { LoyaltyLocalService } from '../loyaltyLocal.service';
 
 // Local Models & Interfaces
-import { ScannerInterface } from '../_scanner.interface';
+import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { WizardComponent } from 'angular-archwizard';
 @Component({
   selector: 'app-scan-offers',
   templateUrl: './scan-offers.component.html',
@@ -23,33 +22,30 @@ import { WizardComponent } from 'angular-archwizard';
 })
 export class ScanOffersComponent implements OnInit, OnDestroy {
 
-  @ViewChild(WizardComponent, { static: true })
-  public wizard: WizardComponent;
-
   offer_id: string;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  user: ScannerInterface["User"];
-  offers: ScannerInterface["Offer"][];
-  transaction: ScannerInterface["OfferTransaction"];
+  user: LoyaltyLocalInterface["User"];
+  offers: LoyaltyLocalInterface["Offer"][];
+  transaction: LoyaltyLocalInterface["OfferTransaction"];
 
   submitted: boolean = false;
 
-  showIdentifierForm = false;
+  showEmailForm = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private loyaltyService: LoyaltyService,
-    private scannerService: ScannerService,
+    private loyaltyLocalService: LoyaltyLocalService,
     public dialogRef: MatDialogRef<ScanOffersComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.offer_id = this.data.offer_id;
-    this.scannerService.offers.subscribe(offers => this.offers = offers);
-    this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction);
-    this.scannerService.user.subscribe(user => this.user = user);
+    this.loyaltyLocalService.offers.subscribe(offers => this.offers = offers);
+    this.loyaltyLocalService.offerTransaction.subscribe(transaction => this.transaction = transaction);
+    this.loyaltyLocalService.user.subscribe(user => this.user = user);
     this.unsubscribe = new Subject();
   }
 
@@ -67,54 +63,18 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     const currentOffer = this.offers[this.offers.map(function (e) { return e.offer_id; }).indexOf(this.offer_id)];
     this.transaction.offer_id = currentOffer.offer_id;
     this.transaction.cost = currentOffer.cost;
-    this.scannerService.changeOfferTransaction(this.transaction);
+    this.loyaltyLocalService.changeOfferTransaction(this.transaction);
   }
 
   fetchBalanceData() {
-    const identifier = this.user.identifier_scan || this.user.identifier_form;
-    this.loyaltyService.readBalanceByMerchant((identifier).toLowerCase())
+    const identifier = this.user.identifier || this.user.email;
+    this.loyaltyService.memberBalance((identifier).toLowerCase())
       .pipe(
         tap(
           data => {
             console.log(parseInt(data.data.points, 16));
             this.transaction.points = parseInt(data.data.points, 16);
-            this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
-            this.scannerService.changeOfferTransaction(this.transaction);
-            this.onNextStep();
-          },
-          error => {
-            console.log(error);
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-
-  onSuccessScanIdentifier(event: string) {
-    this.fetchBalanceData();
-  }
-
-  onSubmitIdentifierForm(event: string) {
-    this.fetchBalanceData();
-  }
-
-  onSubmitOfferForm(event: number) {
-    const identifier = this.user.identifier_scan || this.user.identifier_form;
-    const redeemPoints = {
-      _to: (identifier).toLowerCase(),
-      _points: this.transaction.discount_points,
-      password: 'all_ok'
-    };
-
-    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
-      .pipe(
-        tap(
-          data => {
-            this.onNextStep();
+            this.loyaltyLocalService.changeOfferTransaction(this.transaction);
             console.log(data);
           },
           error => {
@@ -129,19 +89,48 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  onShowIdentifierFormChange() {
-    this.showIdentifierForm = !this.showIdentifierForm;
+  onSuccessScan(event: string) {
+    this.fetchBalanceData();
   }
 
-  onNextStep() {
-    this.wizard.goToNextStep();
+  onSubmitEmailForm(event: string) {
+    this.fetchBalanceData();
   }
 
-  onPreviousStep() {
-    this.wizard.goToPreviousStep();
+  onSubmitOfferForm(event: number) {
+
   }
 
-  onFinalStep(event) {
-    this.dialogRef.close();
+  onShowEmailFormChange() {
+    this.showEmailForm = !this.showEmailForm;
+  }
+
+  finalize() {
+    if (this.submitted) return;
+    this.submitted = true;
+
+    const identifier = this.user.identifier || this.user.email;
+    const redeemPoints = {
+      _to: (identifier).toLowerCase(),
+      _points: this.transaction.discount_points,
+      password: 'my_password'//controls.password.value
+    };
+
+    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
+      .pipe(
+        tap(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
   }
 }

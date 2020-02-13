@@ -4,17 +4,16 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-	selector: 'app-archive-posts',
-	templateUrl: './archive-posts.component.html',
-	styleUrls: ['./archive-posts.component.scss']
+  selector: 'app-archive-posts',
+  templateUrl: './archive-posts.component.html',
+  styleUrls: ['./archive-posts.component.scss']
 })
 export class ArchivePostsComponent implements OnInit {
 	posts: any;
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
-
-	constructor(private cdRef: ChangeDetectorRef, private itemsService: ItemsService, ) {
-
+	
+	constructor(private cdRef: ChangeDetectorRef, private itemsService: ItemsService,) {
 		this.unsubscribe = new Subject();
 	}
 
@@ -48,7 +47,7 @@ export class ArchivePostsComponent implements OnInit {
 		this.unsubscribe.complete();
 		this.loading = false;
 	}
-
+	
 	onScroll() {
 		console.log('scrolled!!');
 		this.posts = this.posts.concat(this.posts);

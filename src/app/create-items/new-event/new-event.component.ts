@@ -21,26 +21,14 @@ import { ItemsService } from '../../core/services/items.service';
 export class NewEventComponent implements OnInit, OnDestroy {
 
   public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 250
-    },
-    description: {
+    content: {
       minLength: 3,
       maxLenth: 2500
-    },
-    location: {
-      minLength: 3,
-      maxLenth: 250
     }
   };
 
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = false;
-
   submitForm: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -58,88 +46,31 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
-  ) {
-    this.unsubscribe = new Subject();
-  }
-
-	/**
-	 * On init
-	 */
-  ngOnInit() {
-    this.initForm();
-  }
-
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
+  ) { }
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: ['', Validators.compose([
+      Content: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.title.minLength),
-        Validators.maxLength(this.validator.title.maxLength)
+        Validators.minLength(this.validator.content.minLength),
+        Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
-      description: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(this.validator.description.minLength),
-        Validators.maxLength(this.validator.description.maxLength)
-      ])
-      ],
-      access: ['public', Validators.compose([
+      Access: ['public', Validators.compose([
         Validators.required
       ])
       ],
-      location: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(this.validator.location.minLength),
-        Validators.maxLength(this.validator.location.maxLength)
-      ])
-      ],
-      dateTime: ['', Validators.compose([
+      Type: ['post', Validators.compose([
         Validators.required
       ])
       ],
     });
   }
 
-  fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
+  ngOnInit() {
+    this.initForm();
   }
 
-  preview() {
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
-
-  onImageCancel() {
-    this.previewUrl = null;
-    this.fileData = null;
-    this.originalImage = true;
-  }
-
-
-	/**
-	 * On Form Submit
-	 */
   onSubmit() {
     if (this.submitted) return;
 
@@ -151,19 +82,15 @@ export class NewEventComponent implements OnInit, OnDestroy {
       );
       return;
     }
-
     this.submitted = true;
-    this.loading = true;
 
-    const formData = new FormData();
-    formData.append('imageURL', this.fileData);
-    formData.append('title', controls.title.value);
-    formData.append('description', controls.description.value);
-    formData.append('access', controls.access.value);
-    formData.append('location', controls.location.value);
-    formData.append('dateTime', controls.dateTime.value);
+    const eventData = {
+      content: controls.Content.value,
+      type: controls.Type.value,
+      access: controls.Access.value,
+    };
 
-    this.itemsService.createEvent(formData)
+    this.itemsService.createEvent(eventData.content, eventData.type, eventData.access)
       .pipe(
         tap(
           data => {
@@ -188,6 +115,12 @@ export class NewEventComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
   }
 
   /**

@@ -1,27 +1,16 @@
-<button (click)=onFinalStep()>X</button>
 <aw-wizard>
     <aw-wizard-step stepTitle="Scan Or Add">
-        <div *ngIf="!showIdentifierForm">
-            <p>Scan a new Card, Scan User's App, Scan User's Card </p>
-            <app-sub-scanner (scan_identifier)="onSuccessScanIdentifier($event)">
-            </app-sub-scanner>
+        <app-sub-scanner *ngIf="!showEmailForm" (scan_results)="onSuccessScan($event)">
+        </app-sub-scanner>
+        <button type="button" (click)="onShowEmailFormChange()">Email Register</button>
+        <div *ngIf="showEmailForm">
+            <app-sub-email-form (add_email)="onSubmitEmailForm($event)">
+            </app-sub-email-form>
+            <button type="button" awPreviousStep>Go to previous step</button>
+            <button type="button" awNextStep>Go to next step</button>
         </div>
-        <button type="button" (click)="onShowIdentifierFormChange()">
-            Enter new Email,Enter a new Card, Enter User's Email, Enter User's Card</button>
-        <div *ngIf="showIdentifierForm">
-            <app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
-            </app-sub-identifier-form>
-            <!-- <button type="button" awPreviousStep>Go to previous step</button> -->
-        </div>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Email" awOptionalStep>
-        <p>{{this.messages.stepB}}</p>
-        <app-sub-email-form (add_email)="onSubmitEmailForm($event)">
-        </app-sub-email-form>
-        <button type="button" awPreviousStep>Previous Step</button>
     </aw-wizard-step>
     <aw-wizard-step stepTitle="Amount" awOptionalStep>
-        <p>{{this.messages.stepC}}</p>
         <app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
         </app-sub-amount-form>
         <button type="button" awPreviousStep>Previous Step</button>
@@ -32,6 +21,7 @@
         <button type="button" awPreviousStep>Previous Step</button>
     </aw-wizard-step>
     <aw-wizard-step stepTitle="Final">
-        <app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
+        <button type="button" awPreviousStep>Previous Step</button>
+        <button type="button" (click)="finishFunction()">Finish</button>
     </aw-wizard-step>
 </aw-wizard>

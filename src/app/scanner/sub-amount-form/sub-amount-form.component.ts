@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { ScannerService } from '../_scanner.service';
-import { ScannerInterface } from '../_scanner.interface';
+import { LoyaltyLocalService } from '../loyaltyLocal.service';
+import { LoyaltyLocalInterface } from '../loyaltyLocal.interface';
 
 @Component({
   selector: 'app-sub-amount-form',
@@ -15,21 +15,18 @@ export class SubAmountFormComponent implements OnInit {
   @Output()
   add_amount: EventEmitter<number> = new EventEmitter<number>();
 
-  transaction: ScannerInterface["PointsTransaction"];
+  transaction: LoyaltyLocalInterface["PointsTransaction"];
 
   submitted: boolean = false;
   submitForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private scannerService: ScannerService
+    private loyaltyLocalService: LoyaltyLocalService
   ) {
-    this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
+    this.loyaltyLocalService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
   }
 
-	/**
-	 * On init
-	 */
   ngOnInit() {
     this.initForm();
   }
@@ -44,8 +41,8 @@ export class SubAmountFormComponent implements OnInit {
   }
 
   onNextStep() {
-    // if (this.submitted) return;
-    // this.submitted = true;
+    if (this.submitted) return;
+    this.submitted = true;
 
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {
@@ -57,7 +54,7 @@ export class SubAmountFormComponent implements OnInit {
 
     this.transaction.amount = controls.amount.value;
     this.transaction.final_amount = controls.amount.value;
-    this.scannerService.changePointsTransaction(this.transaction);
+    this.loyaltyLocalService.changePointsTransaction(this.transaction);
     this.add_amount.emit(controls.amount.value);
   }
 

@@ -21,22 +21,14 @@ import { ItemsService } from '../../core/services/items.service';
 export class NewPostComponent implements OnInit, OnDestroy {
 
   public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 250
-    },
     content: {
       minLength: 3,
       maxLenth: 2500
     }
   };
 
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = false;
-
   submitForm: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -54,77 +46,31 @@ export class NewPostComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
-  ) {
-    this.unsubscribe = new Subject();
-  }
-
-	/**
-	 * On init
-	 */
-  ngOnInit() {
-    this.initForm();
-  }
-
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
+  ) { }
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(this.validator.title.minLength),
-        Validators.maxLength(this.validator.title.maxLength)
-      ])
-      ],
-      content: ['', Validators.compose([
+      Content: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.content.minLength),
         Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
-      access: ['public', Validators.compose([
+      Access: ['public', Validators.compose([
+        Validators.required
+      ])
+      ],
+      Type: ['post', Validators.compose([
         Validators.required
       ])
       ],
     });
   }
 
-  fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
+  ngOnInit() {
+    this.initForm();
   }
 
-  preview() {
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
-
-  onImageCancel() {
-    this.previewUrl = null;
-    this.fileData = null;
-    this.originalImage = true;
-  }
-
-	/**
-	 * On Form Submit
-	 */
   onSubmit() {
     if (this.submitted) return;
 
@@ -136,16 +82,15 @@ export class NewPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    this.loading = true;
     this.submitted = true;
 
-    const formData = new FormData();
-    formData.append('imageURL', this.fileData);
-    formData.append('title', controls.title.value);
-    formData.append('content', controls.content.value);
-    formData.append('access', controls.access.value);
+    const postData = {
+      content: controls.Content.value,
+      type: controls.Type.value,
+      access: controls.Access.value,
+    };
 
-    this.itemsService.createPost(formData)
+    this.itemsService.createPost(postData.content, postData.type, postData.access)
       .pipe(
         tap(
           data => {
@@ -170,6 +115,12 @@ export class NewPostComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
   }
 
   /**

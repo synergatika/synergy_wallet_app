@@ -17,17 +17,13 @@ import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 
 import { QRCodeModule } from 'angularx-qrcode';
-import { ArchwizardModule } from 'angular-archwizard';
 
 import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
 import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
 import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
-import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
-
 import { CustomerSupportComponent } from './views/pages/customer-support/customer-support.component';
-import { SupportMicrocreditComponent } from './customer-support/support-microcredit/support-microcredit.component';
-
+import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { HeaderComponent } from './views/layout/header/header.component';
@@ -40,6 +36,9 @@ import { CardCoopComponent } from './views/layout/card-coop/card-coop.component'
 import { CardPostComponent } from './views/layout/card-post/card-post.component';
 import { CardMicrocreditComponent } from './views/layout/card-microcredit/card-microcredit.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
+
+//import { HistoryModule } from './history/history.module';
+
 import { MenuService } from './core/services/menu.service';
 
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -71,27 +70,27 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     InvitationComponent,
     CustomerDashboardComponent,
     CustomerExploreComponent,
+    CustomerSupportComponent,
     CustomerExploreOneComponent,
-    MenuComponent,
+	
+	MenuComponent,
     LayoutComponent,
     HeaderComponent,
     TopbarComponent,
-    UserMenuComponent,
-    FooterComponent,
-    CardOfferComponent,
-    CardCoopComponent,
-    CardPostComponent,
-    CardMicrocreditComponent,
-    NotFoundComponent,
-    ShareIconComponent,
-    ArchiveCoopsComponent,
-    ArchiveOffersComponent,
-    ArchivePostsComponent,
-
+	UserMenuComponent,
+	FooterComponent,
+	CardOfferComponent,
+	CardCoopComponent,
+	CardPostComponent,
+	CardMicrocreditComponent,
+	NotFoundComponent,
+	ShareIconComponent,
+	ArchiveCoopsComponent,
+	ArchiveOffersComponent,
+	ArchivePostsComponent,
   ],
   imports: [
     QRCodeModule,
-    ArchwizardModule,
 
     BrowserModule,
     AppRoutingModule,
@@ -99,28 +98,27 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NoopAnimationsModule,
     MatDialogModule,
     TranslateModule.forRoot(),
-    MatCardModule,
-    MatInputModule,
-    SwiperModule,
-    NgbModalModule,
-    NgbDropdownModule,
-    //RouterModule,
-    BrowserAnimationsModule,
-    CarouselModule,
-    //SlickModule.forRoot(),
-    InfiniteScrollModule
+	MatCardModule,
+	MatInputModule,
+	SwiperModule,
+	NgbModalModule,
+	NgbDropdownModule,
+	//RouterModule, 
+	BrowserAnimationsModule,
+	CarouselModule,
+	//SlickModule.forRoot(),
+	InfiniteScrollModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    {
+	{
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
     },
-    MenuService
+	MenuService
   ],
-  entryComponents: [QrCodeComponent],
-
+  entryComponents: [QrCodeComponent], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

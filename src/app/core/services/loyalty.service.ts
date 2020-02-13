@@ -12,7 +12,6 @@ import { map } from 'rxjs/internal/operators/map';
 import { environment } from '../../../environments/environment';
 
 // Models
-import { Message } from '../models/message.model';
 import { Points } from '../models/points.model';
 import { Transaction } from '../models/transaction.model';
 
@@ -25,22 +24,22 @@ export class LoyaltyService {
     private http: HttpClient
   ) { }
 
-  checkIdentifier(identifier: string) {
-    return this.http.get<any>(`${environment.apiUrl}/auth/check_identifier/${identifier}`)
+  checkByIdentifier(identifier: string) {
+    return this.http.get<any>(`${environment.apiUrl}/auth/check/identifier/${identifier}`)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  linkCard(email: string, card: string) {
-    return this.http.put<any>(`${environment.apiUrl}/auth/link_card/${email}`, { card: card })
+  checkByEmail(email: string) {
+    return this.http.get<any>(`${environment.apiUrl}/auth/check/email/${email}`)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  linkEmail(email: string, card: string) {
-    return this.http.put<any>(`${environment.apiUrl}/auth/link_email/${card}`, { email: email })
+  memberBalance(_to: string) {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/points/${_to}`)
       .pipe(map(data => {
         return data;
       }));
@@ -53,27 +52,6 @@ export class LoyaltyService {
       }));
   }
 
-  readBadge(): Observable<Points> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/badge`)
-      .pipe(map(response => {
-        return response.data;
-      }));
-  }
-
-  readBalanceByMerchant(_to: string) {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/balance/${_to}`)
-      .pipe(map(response => {
-        return response;
-      }));
-  }
-
-  readBadgeByMerchant(_to: string) {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/badge/${_to}`)
-      .pipe(map(response => {
-        return response;
-      }));
-  }
-
   readTransactions(): Observable<Transaction[]> {
     return this.http.get<any>(`${environment.apiUrl}/loyalty/transactions`)
       .pipe(map(response => {
@@ -81,14 +59,14 @@ export class LoyaltyService {
       }));
   }
 
-  earnPoints(_to: string, _amount: number, password: string): Observable<Message> {
+  earnPoints(_to: string, _amount: number, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/loyalty/earn`, { _to, _amount, password })
       .pipe(map(data => {
         return data;
       }));
   }
 
-  redeemPoints(_to: string, _points: number, password: string): Observable<Message> {
+  redeemPoints(_to: string, _points: number, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/loyalty/redeem`, { _to, _points, password })
       .pipe(map(data => {
         return data;

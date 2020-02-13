@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,10 +14,8 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { SubDiscountFormComponent } from "../sub-discount-form/sub-discount-form.component";
-import { ScannerService } from "../_scanner.service";
-import { ScannerInterface } from "../_scanner.interface";
-
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { LoyaltyLocalService } from "../loyaltyLocal.service";
+import { LoyaltyLocalInterface } from "../loyaltyLocal.interface";
 
 @Component({
   selector: 'app-scan-loyalty',
@@ -35,50 +33,39 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  // submitted: boolean = false;
-  // submitForm: FormGroup;
+  submitted: boolean = false;
+  submitForm: FormGroup;
 
-  showIdentifierForm = false;
+  showEmailForm = false;
   showCardScanner = false;
 
-  public user: ScannerInterface["User"];
-  public transaction: ScannerInterface["PointsTransaction"];
-  public actions: ScannerInterface["Actions"];
+  public user: LoyaltyLocalInterface["User"];
+  public transaction: LoyaltyLocalInterface["PointsTransaction"];
+  public action: LoyaltyLocalInterface["Actions"];
 
-  messages = {
-    stepB: '',
-    stepC: ''
-  }
 
+  state: string = '11';
   constructor(
     private cdRef: ChangeDetectorRef,
-    private translate: TranslateService,
-    private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService,
-    private scannerService: ScannerService,
-    public dialogRef: MatDialogRef<ScanLoyaltyComponent>, @Inject(MAT_DIALOG_DATA) public data: any
+    private loyaltyLocalService: LoyaltyLocalService
   ) {
-    this.scannerService.user.subscribe(user => this.user = user);
-    this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction);
-    this.scannerService.actions.subscribe(actions => this.actions = actions);
+    this.loyaltyLocalService.user.subscribe(user => this.user = user);
+    this.loyaltyLocalService.pointsTransaction.subscribe(transaction => this.transaction = transaction);
+    this.loyaltyLocalService.actions.subscribe(action => this.action = action);
     this.unsubscribe = new Subject();
   }
+  // constructor(
+  //   private router: Router,
+  //   private loyaltyService: LoyaltyService,
+  //   private authenticationService: AuthenticationService,
+  //   private cdRef: ChangeDetectorRef,
+  //   private fb: FormBuilder,
+  //   private translate: TranslateService
+  // ) {
+  //   
+  // }
 
-	/**
-	 * On init
-	 */
-  ngOnInit() {
-    this.initForm();
-  }
-
-	/**
-	 * On destroy
-	 */
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
 
   /**
    * States: 
@@ -99,45 +86,29 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
    * user_exists_B: 1
    */
 
-  onSuccessScanIdentifier(event: string) {
-
-    let action: string = '';
-
-    // 'a': 'Identifier OR Form',
-    // 'b': 'Was Email OR Card',
-    // 'c': Is Email Registered,
-    // 'd': Is Card Registered,
-
-    this.loyaltyService.checkIdentifier((this.user.identifier_scan).toLowerCase())
+  onSuccessScan(event: string) {
+    this.loyaltyService.checkByIdentifier((this.user.identifier).toLowerCase())
       .pipe(
         tap(
           data => {
-            if (data.message === 'email_both') {
-              // Ok!
-              action = 'xx0011'; // No action
-              this.onAfterNextStep(3);
-            } else if (data.message === 'email_none') {
-              action = 'xx0000'; // Cannot Be Happened!
-            } else if (data.message === 'email_no_card') {
-              // Ok! Maybe ask card???
-              action = 'xx0010'; // No action
-              this.onAfterNextStep(3);
-            } else if (data.message === 'card_both') {
-              action = 'xx0111'; // No action
-              this.onAfterNextStep(3);
-            } else if (data.message === 'card_none') {
-              action = 'xx0100'; // OR action = '0100' // Full Registration OR Link Card
-              this.messages.stepB = 'New Card. If user is regitered enter email to link! If not ask email to register! Or procced and create a card account';
+            if (data.message === 'user_not_exists') {
+              this.state = '11';
+              this.showEmailForm = true;
+            } else if (data.message === 'user_no_email') {
+              // User is registred No Email & Only Card - Ask Email
+              this.state = '10';
+              this.showEmailForm = true;
+            } else if (data.message === 'user_no_card') {
+              // User is registred Only Email & No Card - Go to Step 2
+              this.state = '01';
               this.onNextStep();
-            } else if (data.message === 'card_no_email') {
-              action = 'xx0101'; // OR action = '0000' // Link Email OR No Action
-              this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
+            } else if (data.data) {
+              // User is registred with Email & Card - Go to Step 2
+              this.state = '00';
               this.onNextStep();
-            } else {
-              // Cannot Be Happened!
             }
-            this.actions.registration = action;
-            this.scannerService.changeActions(this.actions);
+
+            console.log(data);//this.balance = parseInt(data.points, 16);
           },
           error => {
             console.log(error);
@@ -149,89 +120,38 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+
+    // State 00: All Good -> User Account has Email & Card Number - No action
+    // State 01: Half Good -> User Account has Email but No Card Number - Nothing to Do
+    // State 10: Half Good -> User Account has Card Number but No Email - Add email - Message About it.
+    // State 11: No Good -> User Account has No Email & No Card Number - Add email - Message about it.
   }
 
-  onSubmitIdentifierForm(event: string) {
-
-    let action: string = '0000';
-
-    // 'a': 'Identifier OR Form',
-    // 'b': 'Was Email OR Card',
-    // 'c': Is Email Registered,
-    // 'd': Is Card Registered,
-
-    this.loyaltyService.checkIdentifier((this.user.identifier_form).toLowerCase())
-      .pipe(
-        tap(
-          data => {
-
-            if (data.message === 'email_both') {
-              action = 'xx1011'; // No action
-              this.onAfterNextStep(2);
-            } else if (data.message === 'email_none') {
-              action = 'xx1000'; // Need Registration
-              this.messages.stepC = 'User would be created';
-              this.onAfterNextStep(2);
-            } else if (data.message === 'email_no_card') {
-              action = 'xx1010'; // No Action
-              this.onAfterNextStep(2);
-            } else if (data.message === 'card_both') {
-              action = 'xx1111'; // No Action
-              this.onAfterNextStep(2);
-            } else if (data.message === 'card_none') {
-              this.messages.stepB = 'New Card. If user is regitered enter email to link! If not ask email to register! Or procced and create a card account';
-              action = 'xx1100'; // OR action = '0101' // Full Registration OR Link Card
-              this.onNextStep();
-            } else if (data.message === 'card_no_email') {
-              // Πληκτρολόγησε την κάρτα, Ζήτα Email
-              action = 'xx1101'; // OR action = '0000' // Link Email OR No Action
-              this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
-              this.onNextStep();
-            } else {
-              // Cannot Be Happened!
-            }
-            this.actions.registration = action;
-            this.scannerService.changeActions(this.actions);
-          },
-          error => {
-            console.log(error);
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-
-  onSubmitEmailForm(event) {
-    let action: string = '00';
-
-    // 'a': Form has Email
-    // 'b': Mail Exist?
-
-    // έρχεται εδώ όταν
-    // υπαρχουσα καρτα δεν έχει email
-    // νέα καρτα
+  onSubmitEmailForm(event: string) {
     if (event) {
-      this.loyaltyService.checkIdentifier((this.user.email).toLowerCase())
+      this.loyaltyService.checkByEmail((this.user.email).toLowerCase())
         .pipe(
           tap(
             data => {
-              if (data.message === 'email_both') {
-
-              } else if (data.message === 'email_none') {
-                this.messages.stepC = 'Your Email Will Link With Card';
-                action = '10' + this.actions.registration.substr(2, 4);
-              } else if (data.message === 'email_no_card') {
-                this.messages.stepC = 'Card Will Link With Your Email';
-                action = '11' + this.actions.registration.substr(2, 4);
-              } else {
-                // Cannot Be Happened!
+              if (data.msg === 'user_not_exists') {
+                if (this.user.identifier && this.state === '11') {
+                  this.action.need_full_registration = true;
+                }
+                else if (this.user.identifier && this.state === '10') {
+                  this.action.need_email_update = true;
+                }
+                else {
+                  this.action.need_email_registration = true;
+                }
+                this.loyaltyLocalService.changeActions(this.action);
+                this.onNextStep();
+              } else if (data.data) {
+                if (this.user.identifier) {
+                  this.action.need_card_update = true;
+                  this.loyaltyLocalService.changeActions(this.action);
+                }
+                this.onNextStep();
               }
-              this.actions.registration = action;
-              this.scannerService.changeActions(this.actions);
             },
             error => {
               console.log(error);
@@ -244,11 +164,14 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         )
         .subscribe();
     } else {
-      action = '00' + this.actions.registration.substr(2, 4);
-      this.actions.registration = action;
-      this.scannerService.changeActions(this.actions);
+      if (this.user.identifier) {
+        this.action.need_card_registration = true;
+        this.loyaltyLocalService.changeActions(this.action);
+        this.onNextStep();
+      } else {
+        console.log("Mail or Scan!");
+      }
     }
-    this.onNextStep();
   }
 
   onSubmitAmountForm(event: number) {
@@ -257,20 +180,23 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   onSubmitDiscountForm(event: any) {
+    const earnPoints = {
+      _to: '',
+      _amount: event.final_amount,
+      password: 'all_ok'
+    };
+    const redeemPoints = {
+      _to: '',
+      _points: event.points,
+      password: 'all_ok'
+    }
 
-    console.log('Actions');
-    console.log("Registration: " + this.actions.registration);
-    console.log("Redeem: " + this.actions.redeem);
-
-    this.actionsHandler();
-    //this.onNextStep();
-  }
-
-  onAfterNextStep(step: number) {
-    this.wizard.goToStep(step);
+    //this.earnPoints(earnPoints, redeemPoints);
+    this.onNextStep();
   }
 
   onNextStep() {
+    console.log("On Next Step");
     this.wizard.goToNextStep();
   }
 
@@ -278,171 +204,30 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onShowIdentifierFormChange() {
-    this.showIdentifierForm = !this.showIdentifierForm;
+
+
+  onShowEmailFormChange() {
+    this.showEmailForm = !this.showEmailForm;
+    //amountForm.initializeComponent();
   }
 
   initForm() {
 
   }
 
-  actionsHandler() {
-    const user = {
-      identifier: this.user.identifier_scan || this.user.identifier_form,
-      email: this.user.email
-    }
-
-    let authData = {
-      email: '',
-      card: ''
-    };
-    // 'a': Form has Email
-    // 'b': Mail Exist?
-    // 'a': 'Identifier OR Form',
-    // 'b': 'Was Email OR Card',
-    // 'c': Is Email Registered,
-    // 'd': Is Card Registered,
-
-    // All States!!!
-    // xx0011, xx0000, xx0010, xx0111, 
-    // 100100, 110100, 000100 // New Card
-    // 100101, 110101, 000101 // Card No Email
-    // xx1011, xx1000, xx1010, xx1111, 
-    // 101100, 111100, 001100 // New Card
-    // 101101, 111101, 001101 // Card No Email
-
-    console.log("Code: ");
-    console.log(this.actions.registration);
-
-    const states = {
-      do_nothing: {
-        has_both: ['xx0011', 'xx1011', 'xx0111', 'xx1111'],
-        do_not_want_to_link_email: ['000101', '001101'],
-        could_link_card: ['xx0010', 'xx1010'],
-      },
-      registration: {
-        only_email: ['xx0000', 'xx1000'],
-        only_card: ['000100', '001100'],
-        email_card: ['100100', '101100'],
-        need_merge: ['110101', '111101'] // This is a merge situation!!!
-      },
-      link: {
-        email: ['100101', '101101'],
-        card: ['110100', '111100']
-      }
-    }
-
-    if (Array.prototype.concat.apply([],
-      [states.registration.only_email, states.registration.only_card, states.registration.email_card])
-      .includes(this.actions.registration)) {
-      console.log('Action: Registration');
-      if ((states.registration.only_email).includes(this.actions.registration)) {
-        console.log('A');
-        authData.email = user.identifier;
-      } else if ([...states.registration.only_card, ...states.registration.email_card].includes(this.actions.registration)) {
-        console.log('B');
-        authData.email = user.email;
-        authData.card = user.identifier;
-      }
-
-      this.authenticationService.register_customer(authData.email, authData.card)
-        .pipe(
-          tap(
-            data => {
-              this.earnPoints(authData.email || authData.card);
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-
-    } else if ((states.link.card).includes(this.actions.registration)) {
-
-      authData.email = user.email;
-      authData.card = user.identifier;
-      console.log('Action: Link A Card');
-
-      this.loyaltyService.linkCard(authData.email, authData.card)
-        .pipe(
-          tap(
-            data => {
-              this.earnPoints(authData.email);
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-    } else if ((states.link.email).includes(this.actions.registration)) {
-      authData.email = user.email;
-      authData.card = user.identifier;
-      console.log('Action: Link An Email');
-
-      this.loyaltyService.linkEmail(authData.email, authData.card)
-        .pipe(
-          tap(
-            data => {
-              this.earnPoints(authData.card);
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-    } else {
-      this.earnPoints(user.identifier);
-    }
+  ngOnInit() {
+    this.initForm();
   }
 
-  earnPoints(_to: string) {
-    console.log('Send to: ' + _to);
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
 
-    let earnPoints = {
-      _to: _to,
-      _amount: this.transaction.final_amount,
-      password: 'all_ok'
-    };
-
-    this.loyaltyService.earnPoints(earnPoints._to, earnPoints._amount, earnPoints.password)
-      .pipe(
-        tap(
-          data => {
-            console.log(data);
-            if (this.actions.redeem === '11') {
-              console.log("Will Redeem");
-              this.redeemPoints(_to);
-            } else {
-              console.log("Will Not Redeem");
-              this.onNextStep();
-            }
-          },
-          error => {
-            console.log(error);
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-
+  earnPoints(earnPoints, redeemPoints) {
+    console.log(earnPoints);
+    console.log(redeemPoints);
     // this.loyaltyService.earnPoints(earnPoints._to, earnPoints._amount, earnPoints.password)
     //   .pipe(first())
     //   .subscribe(
@@ -467,31 +252,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     //     });
   }
 
-  redeemPoints(_to: string) {
-
-    let redeemPoints = {
-      _to: _to,
-      _points: this.transaction.discount_points,
-      password: 'all_ok'
-    }
-
-    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
-      .pipe(
-        tap(
-          data => {
-            this.onNextStep();
-          },
-          error => {
-            console.log(error);
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-
+  redeemPoints(earnPoints, redeemPoints) {
     // this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
     //   .pipe(first())
     //   .subscribe(
@@ -512,7 +273,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     //     })
   }
 
-  onFinalStep(event) {
-    this.dialogRef.close();
+  finalize() {
+
   }
 }

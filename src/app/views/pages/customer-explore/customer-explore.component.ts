@@ -9,16 +9,16 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
-	selector: 'app-customer-explore',
-	templateUrl: './customer-explore.component.html',
-	styleUrls: ['./customer-explore.component.scss']
+  selector: 'app-customer-explore',
+  templateUrl: './customer-explore.component.html',
+  styleUrls: ['./customer-explore.component.scss']
 })
 export class CustomerExploreComponent implements OnInit, OnDestroy {
 	moved;
 	singleCoop: any;
 	singlePost: any;
 	@ViewChild('myname',  {static: false}) elem:ElementRef;	
-	hours = ["Δευτέρα, Τρίτη, Πέμπτη, Παρασκευή 9.00-21.00","Τετάρτη 9.00-16.00","Σάββατο 10.00-16.00"];l
+	hours = ["Δευτέρα, Τρίτη, Πέμπτη, Παρασκευή 9.00-21.00","Τετάρτη 9.00-16.00","Σάββατο 10.00-16.00"];
 	customOptions: OwlOptions = {
 		loop: true,
 		mouseDrag: true,
@@ -147,7 +147,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		private merchantsService: MerchantsService,
 		private itemsService: ItemsService,
 		private modalService: NgbModal,
-		private elRef: ElementRef
+		private elRef:ElementRef
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -345,7 +345,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 
 
 	mousedown() {
-
 	  this.moved = false;
 	}
 	mousemove() {
@@ -365,5 +364,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		}
 		this.moved = false;
 	}
-
+	
+  
 }
