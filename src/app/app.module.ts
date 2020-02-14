@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule, MatCardModule } from "@angular/material";
+import { MatButtonModule, MatInputModule, MatCardModule } from "@angular/material";
 // Interceptors
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
@@ -98,6 +98,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NoopAnimationsModule,
     MatDialogModule,
     TranslateModule.forRoot(),
+	MatButtonModule,
 	MatCardModule,
 	MatInputModule,
 	SwiperModule,

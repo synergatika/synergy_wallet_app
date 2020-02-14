@@ -84,10 +84,10 @@
 				<div class="info-container">
 					<div class="singleCoop-info">
 						<div class="singleCoop-sector">{{singleCoop.sector}}</div>
-						<div class="info-row"><span class="mdi mdi-pin"></span>{{singleCoop.contact.address.street}}, {{singleCoop.contact.address.city}}</div>				
-						<div class="info-row"><span class="mdi mdi-phone"></span>{{singleCoop.contact.phone}}</div>
+						<div class="info-row"><span class="mdi mdi-pin"></span>{{singleCoop.address.street}}, {{singleCoop.address.city}}</div>				
+						<div class="info-row"><span class="mdi mdi-phone"></span>{{singleCoop.phone}}</div>
 						<div class="info-row"><span class="mdi mdi-email"></span>{{singleCoop.email}}</div>
-						<div class="info-row"><span class="mdi mdi-web"></span><a target="_blank" href="{{singleCoop.contact.websiteURL}}">{{singleCoop.contact.websiteURL}}</a></div>
+						<div class="info-row"><span class="mdi mdi-web"></span><a target="_blank" href="{{singleCoop.websiteURL}}">{{singleCoop.websiteURL}}</a></div>
 					</div>
 					<div class="hours"> 
 						<div *ngFor="let hour of (hours)">

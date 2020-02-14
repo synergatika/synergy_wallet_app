@@ -7,7 +7,7 @@
 			<div class="step-container row justify-content-md-center">
 				<div class="col-md-12">
 					<div *ngIf="!showIdentifierForm">
-						<p>Scan a new Card, Scan User's App, Scan User's Card </p>
+						<h3 class="heading">Scan a new Card, Scan User's App, Scan User's Card </h3>
 						<app-sub-scanner (scan_identifier)="onSuccessScanIdentifier($event)">
 						</app-sub-scanner>
 					</div>
