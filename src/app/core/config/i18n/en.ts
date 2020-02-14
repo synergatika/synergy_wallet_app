@@ -79,7 +79,7 @@ export const locale = {
             }
         },
         PAGES: {
-            COMMUNITY: {
+            DASHBOARD: {
                 OUR_COMMUNITY: 'Our Community!',
                 CURRENT_OFFERS: 'Current offers!',
                 LATEST_POSTS: 'Latest Posts & Upcoming Events!',
@@ -176,15 +176,49 @@ export const locale = {
 
             },
 
-            SECTOR_CHOICES: {
-                _: 'None',
-                A: 'B2B Services & Other Goods and Services',
-                B: 'Durables',
-                C: 'Durables (Technology)',
-                D: 'Education',
-                E: 'Food',
-                F: 'Hotels, Cafes and Restaurants',
-                G: 'Recreation and Culture'
+            SCAN: {
+
+            },
+
+
+
+            SUPPORT: {
+                PAYMENT_CHOICES: {
+                    A: 'Paypal',
+                    B: 'National Bank',
+                    C: 'Eurobank',
+                    D: 'AlphaBank',
+                    E: 'Pireaus Bank'
+                },
+            },
+
+            OFFER: {
+                TITLE: {
+                    TITLE: 'Offer\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Offer\'s Title.'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Offer\'s Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Offer\'s Description.'
+                },
+                COST: {
+                    TITLE: 'Cost in points',
+                    PLACEHOLDER: 'Points',
+                    DESC: 'Please enter offer\'s required points.'
+                },
+                EXPIRATION: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Offer will be expired.'
+                },
+                EXPIRATION_CHOICES: {
+                    A: 'In one Week',
+                    B: 'In one Month',
+                    C: 'In three Months',
+                    D: 'In six Months'
+                },
             },
 
             OFFER_DESCRIPTION: {

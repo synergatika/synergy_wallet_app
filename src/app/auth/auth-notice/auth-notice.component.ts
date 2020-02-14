@@ -1,5 +1,5 @@
 // Angular
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, ChangeDetectorRef } from '@angular/core';
 // RxJS
 import { Subscription } from 'rxjs';
 // Auth

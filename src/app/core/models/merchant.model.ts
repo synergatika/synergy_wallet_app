@@ -2,6 +2,7 @@ interface Address {
     street: string;
     city: string;
     postCode: string;
+    coordinates: string[];
 }
 
 interface Contact {
@@ -17,8 +18,8 @@ export interface Merchant {
     imageURL: string;
     sector: string;
 
-    contact: Contact
-    address: Address
+    contact: Contact;
+    address: Address;
 
     createdAt?: Date;
 }

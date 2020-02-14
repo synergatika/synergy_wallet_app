@@ -42,7 +42,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     address: {
       street: '',
       postCode: '',
-      city: ''
+      city: '',
+      coordinates: []
     }
   };
 
@@ -133,9 +134,11 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.originalImage = false;
-    this.preview();
+    if (fileInput) {
+      this.fileData = <File>fileInput.target.files[0];
+      this.originalImage = false;
+      this.preview();
+    }
   }
 
   preview() {

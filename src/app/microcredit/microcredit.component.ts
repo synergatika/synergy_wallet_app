@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AuthenticationService } from '../core/services/authentication.service';
-import { ItemsService } from '../core/services/items.service';
 import { takeUntil, tap, finalize } from 'rxjs/operators';
 
+import { AuthenticationService } from '../core/services/authentication.service';
+import { ItemsService } from '../core/services/items.service';
+
+import { SupportService } from './_support.service';
+
 import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
+
 
 @Component({
   selector: 'app-microcredit',
@@ -22,7 +26,9 @@ export class MicrocreditComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
+    private supportService: SupportService
   ) {
+    this.supportService.microcreditCampaigns.subscribe(campaigns => this.campaigns = campaigns)
     this.unsubscribe = new Subject();
   }
 
@@ -42,6 +48,7 @@ export class MicrocreditComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.campaigns = data;
+            this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {
           }),

@@ -13,13 +13,31 @@
                 class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
             <span *ngIf="isControlHasError('amount','min')"
                 class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
-                {{ support.minAmount | currency: 'EUR'}}</span>
+                {{ campaign.minAllowed | currency: 'EUR'}}</span>
             <span *ngIf="isControlHasError('amount','max')"
                 class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
-                {{ support.maxAmount | currency: 'EUR'}}</span>
+                {{ campaign.maxAllowed | currency: 'EUR'}}</span>
             <span class="form-text text-muted">Please enter
                 transaction's
                 amount.</span>
+        </div>
+        <div class="form-group">
+            <label>Payment Method</label>
+            <select name="method" formControlName="method" class="form-control">
+                <option *ngIf="campaign.merchant_payment.Paypal" value="Paypal">
+                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.A' | translate}}</option>
+                <option *ngIf="campaign.merchant_payment.NationalBank" value="NationalBank">
+                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.B' | translate}}</option>
+                <option *ngIf="campaign.merchant_payment.Eurobank" value="Eurobank">
+                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.C' | translate}}</option>
+                <option *ngIf="campaign.merchant_payment.AlphaBank" value="AlphaBank">
+                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.D' | translate}}</option>
+                <option *ngIf="campaign.merchant_payment.PiraeusBank" value="PiraeusBank">
+                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.E' | translate}}</option>
+            </select>
+            <span *ngIf="isControlHasError('method','required')"
+                class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+            <span class="form-text text-muted">Please enter your payment method.</span>
         </div>
     </div>
 </form>

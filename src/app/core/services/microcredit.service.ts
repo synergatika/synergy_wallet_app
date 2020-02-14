@@ -26,14 +26,21 @@ export class MicrocreditService {
   ) { }
 
 
-  readAllSuports(): Observable<MicrocreditSupport[]> {
+  readAllBackerSupports(): Observable<MicrocreditSupport[]> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/supports`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  readSupportsByMicrocreditCampaign(merchant_id: string, campaign_id: string, identifier: string): Observable<MicrocreditSupport[]> {
+  readAllSupportsByMicrocreditCampaign(merchant_id: string, campaign_id: string): Observable<MicrocreditSupport[]> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/supports/${merchant_id}/${campaign_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
+  readBackerSupportsByMicrocreditCampaign(merchant_id: string, campaign_id: string, identifier: string): Observable<MicrocreditSupport[]> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/supports/${merchant_id}/${campaign_id}/${identifier}`)
       .pipe(map(response => {
         return response.data;
@@ -54,15 +61,15 @@ export class MicrocreditService {
       }));
   }
 
-  earnTokens(merchant_id: string, campaign_id: string, _amount: number) {
-    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}`, { _amount: _amount })
+  earnTokens(merchant_id: string, campaign_id: string, _amount: number, method: string) {
+    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}`, { _amount: _amount, method: method })
       .pipe(map(response => {
         return response;
       }));
   }
 
-  earnTokensByMerchant(merchant_id: string, campaign_id: string, identifier: string, _amount: number, paid: boolean): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}/${identifier}`, { _amount: _amount, paid: paid })
+  earnTokensByMerchant(merchant_id: string, campaign_id: string, identifier: string, _amount: number, method: string, paid: boolean): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}/${identifier}`, { _amount: _amount, method: method, paid: paid })
       .pipe(map(response => {
         return response;
       }));
