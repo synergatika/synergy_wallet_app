@@ -179,7 +179,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
               action = 'xx1111'; // No Action
               this.onAfterNextStep(2);
             } else if (data.message === 'card_none') {
-              this.messages.stepB = 'New Card. If user is regitered enter email to link! If not ask email to register! Or procced and create a card account';
+              this.messages.stepB = '<span class="message-highlight"><span class="mdi mdi-account-card-details"></span> New Card</span><br>If user is registered enter email to link! If not, ask email to register!<br>Or procced and create a card account';
               action = 'xx1100'; // OR action = '0101' // Full Registration OR Link Card
               this.onNextStep();
             } else if (data.message === 'card_no_email') {

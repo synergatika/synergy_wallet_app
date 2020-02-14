@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-sub-amount-form',
   templateUrl: './sub-amount-form.component.html',
-  styleUrls: ['./sub-amount-form.component.sass']
+  styleUrls: ['./sub-amount-form.component.scss']
 })
 export class SubAmountFormComponent implements OnInit {
 
@@ -33,6 +33,7 @@ export class SubAmountFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+	console.log(this.campaign);
   }
 
   initForm() {

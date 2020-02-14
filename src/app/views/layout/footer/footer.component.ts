@@ -23,7 +23,7 @@ export class FooterComponent implements OnInit {
 		},
 		{
 			title: 'Υποστήριξε',
-			link: '/settings/account-settings',
+			link: 'support',
 			icon: 'handshake',
 		},
 	];

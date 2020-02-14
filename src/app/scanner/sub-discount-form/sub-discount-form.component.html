@@ -19,16 +19,15 @@
                 <h4> You can have a discount of
                     <span class="discount">{{transaction.discount_amount | currency:'EUR'}}</span>.
                 </h4>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <mat-checkbox (click)="onWantRedeemCheckboxChange()" type="checkbox" class="form-check-input"
-                            name="redeem" formControlName="wantRedeem" value="false">
-                            Check to Redeem discount
-                        </mat-checkbox>
-                    </label>
+                <div class="">
+					<mat-checkbox (click)="onWantRedeemCheckboxChange()" type="checkbox"
+						name="redeem" formControlName="wantRedeem" value="false">
+						Check to Redeem discount
+					</mat-checkbox>
                 </div>
             </div>
         </div>
     </div>
 </form>
-<button type="button" (click)="onNextStep()">Go to next step</button>
+<button class="mr-2" mat-raised-button type="button" awPreviousStep>Previous Step</button>
+<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>

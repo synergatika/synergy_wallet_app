@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CreateItemsComponent } from './create-items.component';
@@ -48,6 +48,7 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+		MatCardModule,
         RouterModule.forChild(routes),
         MatInputModule,
         MatFormFieldModule,

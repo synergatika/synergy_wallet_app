@@ -1,17 +1,19 @@
 <form [formGroup]="submitForm">
     <!--begin: Form Wizard Step 1-->
-    <div class="col-xl-6">
+    <div>
         <h5>Scan your barcode or enter a customer's e-mail</h5>
         <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" formControlName="email" placeholder="Email" value="@">
-            <span *ngIf="isControlHasError('email','email')"
-                class="error text-danger">{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</span>
-            <span *ngIf="isControlHasError('email','email')"
-                class="error text-danger">{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</span>
-            <span class="form-text text-muted">Please enter client's email address.</span>
+		<mat-form-field>
+		<mat-label>Email</mat-label>
+            <input matInput type="email" name="email" formControlName="email" placeholder="Email">
+            <mat-error *ngIf="isControlHasError('email','email')"
+                class="error text-danger">{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</mat-error>
+            <mat-error *ngIf="isControlHasError('email','email')"
+                class="error text-danger">{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</mat-error>
+            <mat-hint class="form-text text-muted">Please enter client's email address.</mat-hint>
+			</mat-form-field>
         </div>
     </div>
 </form>
-
-<button type="button" (click)="onNextStep()">Go to next step</button>
+<button class="mr-2" mat-raised-button type="button" awPreviousStep>Previous Step</button>
+<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>

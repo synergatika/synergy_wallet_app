@@ -200,12 +200,35 @@ body {
 
 //aw-wizard
 aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
-	&.current .step-indicator {
-		background-color: #37aba7;
+	&.current {
+		.step-indicator {
+			background-color: #37aba7;
+			top: -19px;
+			left: calc(50% - 12px);
+			width: 24px;
+			height: 24px;
+			line-height: 24px;
+		}
+		.label {
+			color: #222;
+		}
 	}
 	&.optional .step-indicator {
 		background-color: #e6db91;
 	}
+}
+aw-wizard-navigation-bar ul.steps-indicator li a {
+	.label {
+		font-weight: 400;
+		font-size: 12px;
+	}
+}
+.message-highlight {
+	font-size: 24px;
+	color: #37aba7;
+}
+.scan-modal-container form {
+	padding-bottom: 20px;
 }
 
 @media (min-width:992px) {

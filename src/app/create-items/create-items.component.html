@@ -1,5 +1,5 @@
-<h1> Create </h1>
-
+<h1 class="heading"> Create </h1>
+<!--
 <main id="logout-button-holder">
     <button mat-raised-button><a [routerLink]="['offer']">Create Offer</a></button>
 </main>
@@ -11,7 +11,24 @@
 </main>
 <main id="logout-button-holder">
     <button mat-raised-button><a [routerLink]="['microcredit']">Create Microcredit Campaign</a></button>
-</main>
-
-
-<router-outlet></router-outlet>
+</main>-->
+<div class="row create">
+	<div class="col-md-3 sidebar">
+		<mat-card class="setings-card">
+			<mat-card-content>
+				<ul class="nav flex-column">
+					<li *ngFor="let item of menu" [ngClass]="getItemCssClasses('/create/'+item.link)">
+						<a class="nav-link" [routerLink]="['/create/'+item.link]">{{item.title}}</a>
+					</li>
+				</ul>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="col-md-9">
+		<mat-card class="setings-card">
+			<mat-card-content>
+				<router-outlet></router-outlet>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>

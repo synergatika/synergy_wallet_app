@@ -1,7 +1,7 @@
 <form [formGroup]="submitForm">
     <!--begin: Form Wizard Step 1-->
-    <div class="col-xl-6">
-        <h5>Transaction's amount</h5>
+    <div>
+        <h5>Transaction amount</h5>
         <div class="form-group">
             <label>Amount</label>
             <div class="input-group">
@@ -9,16 +9,16 @@
                 <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="Amount"
                     value="0">
             </div>
+
+			  
             <span *ngIf="isControlHasError('amount','required')"
                 class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
             <span *ngIf="isControlHasError('amount','min')"
                 class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
                 {{ '1' | currency: 'EUR'}}</span>
-            <span class="form-text text-muted">Please enter
-                transaction's
-                amount.</span>
+            <span class="form-text text-muted">Please enter transaction amount.</span>
         </div>
     </div>
 </form>
-
-<button type="button" (click)="onNextStep()">Go to next step</button>
+<button class="mr-2" mat-raised-button type="button" awPreviousStep>Previous Step</button>
+<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
