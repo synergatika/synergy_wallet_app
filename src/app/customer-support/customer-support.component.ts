@@ -19,7 +19,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  microcredit: MicrocreditCampaign[];
+  campaigns: MicrocreditCampaign[];
 
   constructor(
     public matDialog: MatDialog,
@@ -27,7 +27,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private supportService: SupportService
   ) {
-    this.supportService.microcredit.subscribe(microcredit => this.microcredit = microcredit)
+    this.supportService.microcreditCampaigns.subscribe(campaigns => this.campaigns = campaigns)
     this.unsubscribe = new Subject();
   }
 
@@ -41,7 +41,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  openModal(campaign_id: string) {
+  openModal(merchant_id: string, campaign_id: string) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -49,6 +49,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {
+      merchant_id: merchant_id,
       campaign_id: campaign_id
     };
     const modalDialog = this.matDialog.open(SupportMicrocreditComponent, dialogConfig);
@@ -59,8 +60,8 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.microcredit = data;
-            this.supportService.changeMicrocreditCampaigns(this.microcredit);
+            this.campaigns = data;
+            this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {
           }),

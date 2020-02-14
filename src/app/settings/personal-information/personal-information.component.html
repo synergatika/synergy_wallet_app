@@ -30,9 +30,8 @@
 					</div>
 					<div class="form-group">
 						<label>Address</label>
-						<input type="text" class="form-control" name="address"
-							[(ngModel)]="merchant.contact.address.street" placeholder="Address Line"
-							value="Address Line">
+						<input type="text" class="form-control" name="address" [(ngModel)]="merchant.address.street"
+							placeholder="Address Line" value="Address Line">
 						<span class="form-text text-muted">Please enter your Address.</span>
 					</div>
 					<div class="row">
@@ -40,15 +39,15 @@
 							<div class="form-group">
 								<label>Postcode</label>
 								<input type="text" class="form-control" name="postcode"
-									[(ngModel)]="merchant.contact.address.postCode" placeholder="Postcode" value="3000">
+									[(ngModel)]="merchant.address.postCode" placeholder="Postcode" value="3000">
 								<span class="form-text text-muted">Please enter your Postcode.</span>
 							</div>
 						</div>
 						<div class="col-xl-6">
 							<div class="form-group">
 								<label>City</label>
-								<input type="text" class="form-control" name="city"
-									[(ngModel)]="merchant.contact.address.city" placeholder="City" value="Athens">
+								<input type="text" class="form-control" name="city" [(ngModel)]="merchant.address.city"
+									placeholder="City" value="Athens">
 								<span class="form-text text-muted">Please enter your City.</span>
 							</div>
 						</div>
@@ -76,15 +75,22 @@
 							<div class="form-group">
 								<label>Sector</label>
 								<select name="sector" [(ngModel)]="merchant.sector" class="form-control">
-									<option value="0">{{'FIELDS.SECTOR_CHOICES._' | translate}}</option>
-									<option value="1">{{'FIELDS.SECTOR_CHOICES.A' | translate}}
+									<option value="0">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES._' | translate}}
 									</option>
-									<option value="2">{{'FIELDS.SECTOR_CHOICES.B' | translate}}</option>
-									<option value="3">{{'FIELDS.SECTOR_CHOICES.C' | translate}}</option>
-									<option value="4">{{'FIELDS.SECTOR_CHOICES.D' | translate}}</option>
-									<option value="5">{{'FIELDS.SECTOR_CHOICES.E' | translate}}</option>
-									<option value="6">{{'FIELDS.SECTOR_CHOICES.F' | translate}}</option>
-									<option value="7">{{'FIELDS.SECTOR_CHOICES.G' | translate}}</option>
+									<option value="1">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.A' | translate}}
+									</option>
+									<option value="2">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.B' | translate}}
+									</option>
+									<option value="3">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.C' | translate}}
+									</option>
+									<option value="4">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.D' | translate}}
+									</option>
+									<option value="5">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.E' | translate}}
+									</option>
+									<option value="6">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.F' | translate}}
+									</option>
+									<option value="7">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.G' | translate}}
+									</option>
 								</select>
 								<span class="form-text text-muted">Please enter your sector.</span>
 							</div>

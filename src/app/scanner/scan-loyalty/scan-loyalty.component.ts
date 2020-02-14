@@ -191,6 +191,8 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
               // Cannot Be Happened!
             }
             this.actions.registration = action;
+            console.log("Action on Identifier")
+            console.log(this.actions.registration);
             this.scannerService.changeActions(this.actions);
           },
           error => {
@@ -219,18 +221,27 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         .pipe(
           tap(
             data => {
+              console.log("On Email Message")
+              console.log(data.message);
               if (data.message === 'email_both') {
+                this.messages.stepC = 'Your Email Has already a card. If you continue the card will be replaced';
+                action = '11' + this.actions.registration.substr(2, 4);
 
               } else if (data.message === 'email_none') {
                 this.messages.stepC = 'Your Email Will Link With Card';
                 action = '10' + this.actions.registration.substr(2, 4);
+                console.log("2")
               } else if (data.message === 'email_no_card') {
                 this.messages.stepC = 'Card Will Link With Your Email';
                 action = '11' + this.actions.registration.substr(2, 4);
+                console.log("3")
               } else {
+                console.log("4")
                 // Cannot Be Happened!
               }
               this.actions.registration = action;
+              console.log("Action on Email")
+              console.log(this.actions.registration);
               this.scannerService.changeActions(this.actions);
             },
             error => {
@@ -248,6 +259,8 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       this.actions.registration = action;
       this.scannerService.changeActions(this.actions);
     }
+    console.log("Action on Email")
+    console.log(this.actions.registration);
     this.onNextStep();
   }
 
@@ -290,7 +303,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     const user = {
       identifier: this.user.identifier_scan || this.user.identifier_form,
       email: this.user.email
-    }
+    };
 
     let authData = {
       email: '',
@@ -418,7 +431,8 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       _amount: this.transaction.final_amount,
       password: 'all_ok'
     };
-
+    console.log("Redeem")
+    console.log(this.actions.redeem);
     this.loyaltyService.earnPoints(earnPoints._to, earnPoints._amount, earnPoints.password)
       .pipe(
         tap(

@@ -52,38 +52,18 @@ export class AddSupportComponent implements OnInit, OnDestroy {
   ) {
     this.campaign_id = this.data.campaign_id;
     this.supportService.microcreditSupport.subscribe(support => this.support = support);
+    this.supportService.microcreditCurrent.subscribe(campaign => this.campaign = campaign);
     this.supportService.user.subscribe(user => this.user = user);
     this.unsubscribe = new Subject();
   }
 
   ngOnInit() {
-    this.fetchCampaignData();
-    this.initializeSupportData();
   }
 
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
-  }
-
-  fetchCampaignData() {
-    this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
-      .pipe(
-        tap(
-          data => {
-            this.campaign = data;
-            this.supportService.changeMicrocreditCampaign(this.campaign);
-          },
-          error => {
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
   }
 
   initializeSupportData() {
@@ -112,7 +92,7 @@ export class AddSupportComponent implements OnInit, OnDestroy {
       _amount: this.support.amount,
     };
 
-    this.microcreditService.earnTokensByMerchant(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, earnTokens._to, earnTokens._amount, this.support.paid)
+    this.microcreditService.earnTokensByMerchant(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, earnTokens._to, earnTokens._amount, (this.support.paid) ? 'atStore' : 'none', this.support.paid)
       .pipe(
         tap(
           data => {

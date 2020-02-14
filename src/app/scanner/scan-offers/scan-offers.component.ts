@@ -76,11 +76,16 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            console.log(parseInt(data.data.points, 16));
-            this.transaction.points = parseInt(data.data.points, 16);
-            this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
-            this.scannerService.changeOfferTransaction(this.transaction);
-            this.onNextStep();
+            if (data.data) {
+              console.log(parseInt(data.data.points, 16));
+              this.transaction.points = parseInt(data.data.points, 16);
+              this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
+              this.scannerService.changeOfferTransaction(this.transaction);
+              this.onNextStep();
+            } else {
+              console.log("User not exist");
+            }
+
           },
           error => {
             console.log(error);

@@ -29,7 +29,8 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   campaign_id: string;
   unpaidSupports: MicrocreditSupport[];
   paidSupports: MicrocreditSupport[];
-  campaign: MicrocreditCampaign;
+  campaigns: MicrocreditCampaign[];
+  current: MicrocreditCampaign;
 
   to_pay: string[] = [];
   to_unpay: string[] = [];
@@ -43,22 +44,50 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private supportService: SupportService
   ) {
-    console.log("HERE");
     this.activatedRoute.params.subscribe(params => {
       this.campaign_id = params['_id'];
-      console.log(this.campaign_id);
     });
+    this.supportService.microcreditCampaigns.subscribe(campaigns => this.campaigns = campaigns);
+    this.supportService.microcreditCurrent.subscribe(current => this.current = current);
     this.unsubscribe = new Subject();
   }
 
   ngOnInit() {
-    this.fetchCampaignData();
+    this.initializeCurrentCampaignData();
+    this.fetchSupportsData();
   }
 
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
+  }
+
+  fetchSupportsData() {
+    this.microcreditService.readAllSupportsByMicrocreditCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
+      .pipe(
+        tap(
+          data => {
+            const groupedSupports = this.groupBy(data, 'status'); // => {orange:[...], banana:[...]}
+            this.paidSupports = groupedSupports.confirmation;
+            this.unpaidSupports = groupedSupports.order;
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+
+  }
+
+  initializeCurrentCampaignData() {
+    const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
+    this.current = currentCampaign;
+    this.supportService.changeMicrocreditCurrent(this.current);
   }
 
   onToPayCheckBoxChange(backer) {
@@ -100,45 +129,6 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(AddSupportComponent, dialogConfig);
   }
-
-  fetchCampaignData() {
-
-    this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
-      .pipe(
-        tap(
-          data => {
-            this.campaign = data;
-            console.log(this.campaign);
-            this.supportService.changeMicrocreditCampaign(this.campaign);
-            const groupedSupports = this.groupBy(this.campaign.supports, 'status'); // => {orange:[...], banana:[...]}
-            this.paidSupports = groupedSupports.confirmation;
-            this.unpaidSupports = groupedSupports.order;
-          },
-          error => {
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-  // this.microcreditService.earnTokensByMerchant(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'demo@email.com', 250)
-  //   .pipe(
-  //     tap(
-  //       data => {
-  //         console.log(data);
-  //       },
-  //       error => {
-  //       }),
-  //     takeUntil(this.unsubscribe),
-  //     finalize(() => {
-  //       this.loading = false;
-  //       this.cdRef.markForCheck();
-  //     })
-  //   )
-  //   .subscribe();
 
   onSubmit() {
     this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'pay', this.to_pay)

@@ -38,14 +38,13 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     contact: {
       phone: '',
       websiteURL: '',
-      address: {
-        street: '',
-        postCode: '',
-        city: '',
-        coordinates: []
-      }
     },
-
+    address: {
+      street: '',
+      postCode: '',
+      city: '',
+      coordinates: []
+    }
   };
 
   submitted = false;
@@ -135,9 +134,11 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.originalImage = false;
-    this.preview();
+    if (fileInput) {
+      this.fileData = <File>fileInput.target.files[0];
+      this.originalImage = false;
+      this.preview();
+    }
   }
 
   preview() {
@@ -200,9 +201,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       formData.append('sector', this.sectorsArray[this.merchant.sector]);
       formData.append('phone', this.merchant.contact.phone);
       formData.append('websiteURL', this.merchant.contact.websiteURL);
-      formData.append('street', this.merchant.contact.address.street);
-      formData.append('postCode', this.merchant.contact.address.postCode);
-      formData.append('city', this.merchant.contact.address.city);
+      formData.append('street', this.merchant.address.street);
+      formData.append('postCode', this.merchant.address.postCode);
+      formData.append('city', this.merchant.address.city);
 
       this.merchantsService.updateMerchantInfo(this.authenticationService.currentUserValue.user["_id"], formData)
         .pipe(first())

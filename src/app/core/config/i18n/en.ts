@@ -79,7 +79,7 @@ export const locale = {
             }
         },
         PAGES: {
-            COMMUNITY: {
+            DASHBOARD: {
                 OUR_COMMUNITY: 'Our Community!',
                 CURRENT_OFFERS: 'Current offers!',
                 LATEST_POSTS: 'Latest Posts & Upcoming Events!',
@@ -195,6 +195,22 @@ export const locale = {
                     F: 'Hotels, Cafes and Restaurants',
                     G: 'Recreation and Culture'
                 }
+            },
+
+            SCAN: {
+
+            },
+
+
+
+            SUPPORT: {
+                PAYMENT_CHOICES: {
+                    A: 'Paypal',
+                    B: 'National Bank',
+                    C: 'Eurobank',
+                    D: 'AlphaBank',
+                    E: 'Pireaus Bank'
+                },
             },
 
             OFFER: {

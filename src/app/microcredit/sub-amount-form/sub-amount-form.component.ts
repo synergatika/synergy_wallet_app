@@ -24,7 +24,7 @@ export class SubAmountFormComponent implements OnInit {
     private supportService: SupportService
   ) {
     this.supportService.microcreditSupport.subscribe(support => this.support = support)
-    this.supportService.microcredit.subscribe(campaign => this.campaign = campaign)
+    this.supportService.microcreditCurrent.subscribe(campaign => this.campaign = campaign)
   }
 
   ngOnInit() {

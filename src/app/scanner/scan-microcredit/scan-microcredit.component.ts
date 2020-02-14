@@ -75,7 +75,7 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
 
   fetchBackerData() {
     const identifier = this.user.identifier_scan || this.user.identifier_form;
-    this.microcreditService.readSupportsByMicrocreditCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, (identifier).toLowerCase())
+    this.microcreditService.readBackerSupportsByMicrocreditCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, (identifier).toLowerCase())
       .pipe(
         tap(
           data => {

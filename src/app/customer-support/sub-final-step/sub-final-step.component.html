@@ -1,5 +1,6 @@
 <div *ngIf='type===1'>
     <p>Transaction Amount: {{support.amount}}</p>
+    <p>Transaction Method: {{support.method}}</p>
     <p>Payment ID: {{support.payment}}</p>
     <button type="button" (click)="onNextStep()">Final</button>
 </div>

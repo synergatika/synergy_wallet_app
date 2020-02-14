@@ -3,6 +3,13 @@ export interface MicrocreditCampaign {
     merchant_id: string;
     merchant_name: string;
     merchant_imageURL: string;
+    merchant_payment: {
+        Paypal: string,
+        NationalBank: string,
+        Eurobank: string,
+        AlphaBank: string,
+        PireausBank: string
+    },
 
     campaign_id: string,
     campaign_imageURL: string,
@@ -27,7 +34,7 @@ export interface MicrocreditCampaign {
         initialTokens: number,
         redeemedTokens: number,
         payment_id: string
-        status: boolean
+        status: string
     }[],
 
     confirmationTokens: {

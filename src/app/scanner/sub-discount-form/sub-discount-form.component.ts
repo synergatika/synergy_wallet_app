@@ -72,10 +72,12 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
 
   fetchBalanceData() {
     this.initForm();
-
+    console.log("Action")
+    console.log(this.actions.registration);
     let search_by = (['110100', '111100'].includes(this.actions.registration)) ?
       this.user.email : (this.user.identifier_scan || this.user.identifier_form);
-
+    console.log("Search By")
+    console.log(search_by);
     if (this.transaction.amount >= 5) {
       this.loyaltyService.readBalanceByMerchant((search_by).toLowerCase())
         .pipe(
@@ -132,8 +134,9 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
 
   onWantRedeemCheckboxChange() {
     const controls = this.submitForm.controls;
-    this.actions.redeem = '1' + ((controls.wantRedeem.value) ? '1' : '0');
-    if (this.actions.redeem !== '11') {
+    this.actions.redeem = '1' + ((controls.wantRedeem.value) ? '0' : '1');
+    console.log(this.actions.redeem);
+    if (this.actions.redeem === '11') {
       this.transaction.final_amount = this.transaction.amount - this.transaction.discount_amount;
     } else {
       this.transaction.final_amount = this.transaction.amount;
