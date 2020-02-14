@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
   templateUrl: './new-microcredit-campaign.component.html',
   styleUrls: ['./new-microcredit-campaign.component.sass']
 })
+
 export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
 
   public validator: any = {
