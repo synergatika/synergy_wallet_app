@@ -24,6 +24,10 @@
         <div class="form-group">
             <label>Payment Method</label>
             <select name="method" formControlName="method" class="form-control">
+                <option value="Paypal">
+                    Paypal</option>
+            </select>
+            <!-- <select name="method" formControlName="method" class="form-control">
                 <option *ngIf="campaign.merchant_payment.Paypal" value="Paypal">
                     {{'FIELDS.SUPPORT.PAYMENT_CHOICES.A' | translate}}</option>
                 <option *ngIf="campaign.merchant_payment.NationalBank" value="NationalBank">
@@ -34,7 +38,7 @@
                     {{'FIELDS.SUPPORT.PAYMENT_CHOICES.D' | translate}}</option>
                 <option *ngIf="campaign.merchant_payment.PiraeusBank" value="PiraeusBank">
                     {{'FIELDS.SUPPORT.PAYMENT_CHOICES.E' | translate}}</option>
-            </select>
+            </select> -->
             <span *ngIf="isControlHasError('method','required')"
                 class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
             <span class="form-text text-muted">Please enter your payment method.</span>

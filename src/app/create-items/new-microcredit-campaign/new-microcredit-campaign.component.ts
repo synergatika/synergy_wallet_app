@@ -170,7 +170,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
  * On Form Submit
  */
   onSubmit() {
-    if (this.submitted) return;
+    // if (this.submitted) return;
 
     const controls = this.submitForm.controls;
     /** check form */
@@ -181,7 +181,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
       return;
     }
     this.loading = true;
-    this.submitted = true;
+    //this.submitted = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);

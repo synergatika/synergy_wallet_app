@@ -193,6 +193,7 @@ export const locale = {
             },
 
             OFFER: {
+                DESC: 'Create a new Offer',
                 TITLE: {
                     TITLE: 'Offer\'s Title',
                     PLACEHOLDER: 'Title',
@@ -221,37 +222,149 @@ export const locale = {
                 },
             },
 
-            OFFER_DESCRIPTION: {
-                TITLE: 'Offer\'s Description',
-                PLACEHOLDER: 'Description',
-                DESC: 'Please, enter Offer\'s Description.'
-            },
-            OFFER_EXPIRATION: {
-                TITLE: 'Expiration Date',
-                PLACEHOLDER: 'Date',
-                DESC: 'Please, enter when your Offer will be expired.'
-            },
-            OFFER_COST: {
-                TITLE: 'Cost in points',
-                PLACEHOLDER: 'Points',
-                DESC: 'Please enter offer\'s required points.'
-            },
-            EXPIRATION_CHOICES: {
-                A: 'In one Week',
-                B: 'In one Month',
-                C: 'In three Months',
-                D: 'In six Months'
+            POST: {
+                DESC: 'Create a new Post',
+                TITLE: {
+                    TITLE: 'Post\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Post\'s Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Post\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Post\'s Iamge.'
+                },
+                CONTENT: {
+                    TITLE: 'Post\'s Contents',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Post\'s Content.'
+                },
+                ACCESS: {
+                    TITLE: 'Post\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter Post\'s Access.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Open to all',
+                    B: 'Only registered members',
+                    C: 'Only merchants'
+                }
             },
 
-            POST_CONTENT: {
-
+            EVENT: {
+                DESC: 'Create a new Event',
+                TITLE: {
+                    TITLE: 'Event\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Event\'s Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Event\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Event\'s Imamge.'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Event\'s Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Event\'s Description.'
+                },
+                ACCESS: {
+                    TITLE: 'Event\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter Event\'s Access.'
+                },
+                LOCATION: {
+                    TITLE: 'Event\'s Location',
+                    PLACEHOLDER: 'Location',
+                    DESC: 'Please, enter Event\'s Location.'
+                },
+                DATETIME: {
+                    TITLE: 'Event\'s Datetime',
+                    PLACEHOLDER: 'Datetime',
+                    DESC: 'Please, enter Event\'s Datetime.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Open to all',
+                    B: 'Only registered members',
+                    C: 'Only merchants'
+                }
             },
-            POST_TYPE: {
 
+            MICROCREDIT_CAMPAIGN: {
+                DESC: 'Create a new Microcredit Campaign',
+                TITLE: {
+                    TITLE: 'Campaign\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Campaign\'s Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Campaign\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Campaign\'s Imamge.'
+                },
+                TERMS: {
+                    TITLE: 'Campaign\'s Terms',
+                    PLACEHOLDER: 'Terms',
+                    DESC: 'Please, enter Campaign\'s Terms.'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Campaign\'s Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Campaign\'s Description.'
+                },
+                CATEGORY: {
+                    TITLE: 'Campaign\'s Category',
+                    PLACEHOLDER: 'Category',
+                    DESC: 'Please, enter Campaign\'s Category.'
+                },
+                QUANTITATIVE: {
+                    TITLE: 'Quantitative',
+                    PLACEHOLDER: 'Quantitative',
+                    DESC: 'Quantitative'
+                },
+                MIN_ALLOWED: {
+                    TITLE: 'Min Allowed Support',
+                    PLACEHOLDER: 'Minimum',
+                    DESC: 'Enter minimum allowed amount per support.'
+                },
+                MAX_ALLOWED: {
+                    TITLE: 'Max Allowed Support',
+                    PLACEHOLDER: 'Maximum',
+                    DESC: 'Enter maximum allowed amount per support.'
+                },
+                MAX_AMOUNT: {
+                    TITLE: 'Max Sum Amount',
+                    PLACEHOLDER: 'Amount',
+                    DESC: 'Enter up limit.'
+                },
+                ACCESS: {
+                    TITLE: 'Campaign\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter who can see your Campaign.'
+                },
+                REDEEM_STARTS: {
+                    TITLE: 'Redeem Starting Date',
+                    PLACEHOLDER: 'Redeem Starting',
+                    DESC: 'Please, enter when your Campaign will be collectible.'
+                },
+                REDEEM_ENDS: {
+                    TITLE: 'Redeem Ending Date',
+                    PLACEHOLDER: 'Redeem Ending',
+                    DESC: 'Please, enter when your Campaign will be stop being collectible.'
+                },
+                EXPIRES: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Camapign Expiring',
+                    DESC: 'Please, enter when your Campaign will be expired.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Open to all',
+                    B: 'Only registered members',
+                    C: 'Only merchants'
+                }
             },
-            POST_ACCESS: {
 
-            }
+
         },
         FORM: {
             BUTTONS: {

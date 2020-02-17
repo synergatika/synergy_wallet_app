@@ -1,11 +1,12 @@
 <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
     <form class="kt-form" [formGroup]="submitForm" id="kt_form">
-        <div class="kt-heading kt-heading--md">Create a new Post / Event</div>
+        <div class="kt-heading kt-heading--md">{{'FIELDS.EVENT.DESC' | translate}}</div>
         <div class="kt-form__section kt-form__section--first">
             <div class="kt-wizard-v3__form">
                 <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" class="form-control" formControlName="title" placeholder="Title" value="title">
+                    <label>{{'FIELDS.EVENT.TITLE.TITLE' | translate}}</label>
+                    <input type="text" class="form-control" formControlName="title"
+                        placeholder="{{'FIELDS.EVENT.TITLE.PLACEHOLDER' | translate}}" value="title">
                     <span *ngIf="isControlHasError('title','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
                     <span *ngIf="isControlHasError('title','minlength')"
@@ -14,11 +15,12 @@
                     <span *ngIf="isControlHasError('title','maxlength')"
                         class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
                         {{validator.title.maxLength}}</span>
-                    <span class="form-text text-muted">Please enter post's/event's Title.</span>
+                    <span class="form-text text-muted">{{'FIELDS.EVENT.TITLE.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
-                    <textarea type="text" class="form-control" formControlName="description" placeholder="Description"
+                    <label>{{'FIELDS.EVENT.DESCRIPTION.TITLE' | translate}}</label>
+                    <textarea type="text" class="form-control" formControlName="description"
+                        placeholder="{{'FIELDS.EVENT.DESCRIPTION.PLACEHOLDER' | translate}}"
                         value="description"> </textarea>
                     <span *ngIf="isControlHasError('description','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
@@ -28,21 +30,21 @@
                     <span *ngIf="isControlHasError('description','maxlength')"
                         class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
                         {{validator.description.maxLength}}</span>
-                    <span class="form-text text-muted">Please enter post's/event's Description.</span>
+                    <span class="form-text text-muted">{{'FIELDS.EVENT.DESCRIPTION.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
-                    <label>Access</label>
+                    <label>{{'FIELDS.EVENT.ACCESS.TITLE' | translate}}</label>
                     <select name="access" class="form-control" formControlName="access">
-                        <option value="public">Public to All</option>
-                        <option value="private">Only for registered Members</option>
-                        <option value="partners">Only for Coops</option>
+                        <option value="public">{{'FIELDS.EVENT.ACCESS_CHOICES.A' | translate}}</option>
+                        <option value="private">{{'FIELDS.EVENT.ACCESS_CHOICES.B' | translate}}</option>
+                        <option value="partners">{{'FIELDS.EVENT.ACCESS_CHOICES.C' | translate}}</option>
                     </select>
-                    <span *ngIf="isControlHasError('Access','required')"
+                    <span *ngIf="isControlHasError('access','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span class="form-text text-muted">Please enter post's/events's access.</span>
+                    <span class="form-text text-muted">{{'FIELDS.EVENT.ACCESS.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
-                    <label>Location</label>
+                    <label>{{'FIELDS.EVENT.LOCATION.TITLE' | translate}}</label>
                     <input type="text" class="form-control" formControlName="location" placeholder="Location"
                         value="location">
                     <span *ngIf="isControlHasError('location','required')"
@@ -53,18 +55,18 @@
                     <span *ngIf="isControlHasError('location','maxlength')"
                         class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
                         {{validator.location.maxLength}}</span>
-                    <span class="form-text text-muted">Please enter post's/events's location.</span>
+                    <span class="form-text text-muted">{{'FIELDS.EVENT.LOCATION.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
-                    <label>Date and Time</label>
+                    <label>{{'FIELDS.EVENT.DATETIME.TITLE' | translate}}</label>
                     <input type="text" class="form-control" formControlName="dateTime" placeholder="DateTime"
                         value="dateTime">
-                    <span *ngIf="isControlHasError('Access','required')"
+                    <span *ngIf="isControlHasError('dateTime','required')"
                         class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span class="form-text text-muted">Please enter post's/events's date time.</span>
+                    <span class="form-text text-muted">{{'FIELDS.EVENT.DATETIME.DESC' | translate}}</span>
                 </div>
                 <div class="form-group">
-                    <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
+                    <label class="col-xl-3 col-lg-3 col-form-label">{{'FIELDS.EVENT.IMAGE.TITLE' | translate}}</label>
                     <div class="col-lg-9 col-xl-6">
                         <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar">
                             <img class="kt-avatar__holder" [src]="previewUrl">

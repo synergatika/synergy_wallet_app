@@ -8,7 +8,7 @@
     <p> Initial Tokens {{item.initialTokens}} </p>
     <p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
     <input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
-        (change)="onToUnpayCheckBoxChange(item._id)">
+        (change)="onToUnpayCheckBoxChange(item.support_id)">
     <p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
 </div>
 
@@ -17,7 +17,7 @@
     <p> Initial Tokens {{item.initialTokens}} </p>
     <p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
     <input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
-        (change)="onToPayCheckBoxChange(item._id)">
+        (change)="onToPayCheckBoxChange(item.support_id)">
     <p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
 </div>
 

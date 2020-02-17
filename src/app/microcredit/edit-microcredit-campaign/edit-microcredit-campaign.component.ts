@@ -68,6 +68,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
+            console.log(data);
             const groupedSupports = this.groupBy(data, 'status'); // => {orange:[...], banana:[...]}
             this.paidSupports = groupedSupports.confirmation;
             this.unpaidSupports = groupedSupports.order;

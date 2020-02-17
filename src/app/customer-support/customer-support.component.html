@@ -1,7 +1,5 @@
 <p>customer-support works!</p>
 
-<main id="logout-button-holder">
-    <button *ngFor="let item of microcredit" mat-raised-button id="logout-button"
-        (click)="openModal(item.merchant_id, item.campaign_id)">Scan
-        for Campaigns: {{item.title}}</button>
-</main>
+<button *ngFor="let item of campaigns" mat-raised-button id="logout-button"
+    (click)="openModal(item.merchant_id, item.campaign_id)">Scan
+    for Campaigns: {{item.title}}</button>

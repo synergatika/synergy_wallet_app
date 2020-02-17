@@ -40,8 +40,8 @@ export class SubAmountFormComponent implements OnInit {
       amount: [0, Validators.compose([
         Validators.required,
         Validators.min(1),
-        (control: AbstractControl) => Validators.min(this.campaign.minAllowed)(control),
-        (control: AbstractControl) => Validators.max(this.campaign.maxAllowed)(control)
+        //  (control: AbstractControl) => Validators.min(this.campaign.minAllowed)(control),
+        //  (control: AbstractControl) => Validators.max(this.campaign.maxAllowed)(control)
       ])
       ],
       method: ['', Validators.compose([
