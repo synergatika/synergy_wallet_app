@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MenuService } from '../../../../core/services/menu.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu',
@@ -7,36 +9,39 @@ import { MenuService } from '../../../../core/services/menu.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+	currentRouteUrl: string = '';
 	menu = [
 		{
 			title: 'Home',
-			link: '/',
+			link: 'scanner',
 			icon: 'home-roof',
 		},
 		{
-			title: 'Dashboard',
+			title: 'Offers',
 			link: 'dashboard',
 			icon: 'wallet-outline',
 		},
 		{
-			title: 'Profile',
-			link: 'settings',
+			title: 'Campaigns',
+			link: 'microcredit',
 			icon: 'settings',
 		},
 		{
-			title: 'QR code',
-			link: 'qr-code',
+			title: 'Posts',
+			link: 'microcredit',
 			icon: 'qrcode',
-		},
-		{
-			title: 'Explore',
-			link: 'explore',
-			icon: 'compass-outline',
-		},
+		}
 	];
-	constructor(private menuService : MenuService) { }
+	constructor(private menuService : MenuService, private router: Router, private cdr: ChangeDetectorRef) { }
 
 	ngOnInit() {
+		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
+		this.router.events
+			.pipe(filter(event => event instanceof NavigationEnd))
+			.subscribe(event => {
+				this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
+				this.cdr.markForCheck();
+			});
 	}
 	
 	openNav() {
@@ -56,6 +61,24 @@ export class MenuComponent implements OnInit {
 		//document.body.classList.replace("menu-overlay", "");
 		document.body.classList.remove("menu-overlay");
 		*/
+	}
+	
+	toggleNav() {
+		this.menuService.toggleNav();
+		/*
+		document.getElementById("mySidenav").style.width = "0";
+		document.getElementById("main").style.marginLeft = "0";
+		//document.body.classList.replace("menu-overlay", "");
+		document.body.classList.remove("menu-overlay");
+		*/
+	}
+	
+	getItemCssClasses(item) {
+		let classes = '';
+		if (this.currentRouteUrl.indexOf(item) !== -1) {
+			classes = 'side-menu-item-active';
+		}
+		return classes;
 	}
 
 }

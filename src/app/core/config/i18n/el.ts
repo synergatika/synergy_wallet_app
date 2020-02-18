@@ -78,6 +78,9 @@ export const locale = {
                 DESC: ''
             }
         },
+		HEADER: {
+			MESSAGE: 'Καλώς ήρθες'
+		},
         PAGES: {
             COMMUNITY: {
                 OUR_COMMUNITY: 'Η Κοινότητά μας!',
@@ -312,5 +315,16 @@ export const locale = {
                 INVALID_FIELD: 'Field is not valid',
             }
         },
+		MERCHANT: {
+			SCANNER: {
+				LOYALTY_TITLE: 'Πληρωμή με Loyalty'
+			}
+		},
+		OFFER: {
+			TITLE: 'ΠΡΟΣΦΟΡΑ'
+		},
+		CAMPAIGN: {
+			TITLE: 'ΚΑΜΠΑΝΙΑ'
+		},
     }
 };

@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 // RxJS
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../../../core/services/authentication.service';
@@ -12,7 +13,7 @@ import { AuthenticationService } from '../../../../core/services/authentication.
 export class TopbarComponent implements OnInit {
 	user: any;
 	
-	constructor(private authenticationService: AuthenticationService, private cDRef: ChangeDetectorRef) { }
+	constructor(private translate: TranslateService, private authenticationService: AuthenticationService, private cDRef: ChangeDetectorRef) { }
 
 	ngOnInit() {
 		this.user = this.authenticationService.currentUserValue.user;

@@ -36,6 +36,7 @@ import { CardCoopComponent } from './views/layout/card-coop/card-coop.component'
 import { CardPostComponent } from './views/layout/card-post/card-post.component';
 import { CardMicrocreditComponent } from './views/layout/card-microcredit/card-microcredit.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
+import { LanguageSwitcherComponent } from './views/layout/header/language-switcher/language-switcher.component';
 
 //import { HistoryModule } from './history/history.module';
 
@@ -88,6 +89,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	ArchiveCoopsComponent,
 	ArchiveOffersComponent,
 	ArchivePostsComponent,
+	LanguageSwitcherComponent,
   ],
   imports: [
     QRCodeModule,

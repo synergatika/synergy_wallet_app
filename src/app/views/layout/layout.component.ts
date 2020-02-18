@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../core/services/menu.service';
+import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,10 +8,12 @@ import { MenuService } from '../../core/services/menu.service';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
-
-	constructor(private menuService : MenuService) { }
+	user: any;
+	
+	constructor(private menuService : MenuService, private authenticationService: AuthenticationService) { }
 
 	ngOnInit() {
+		this.user = this.authenticationService.currentUserValue.user;
 	}
   
 	openNav() {

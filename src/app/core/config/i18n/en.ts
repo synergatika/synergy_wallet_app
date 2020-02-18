@@ -78,6 +78,9 @@ export const locale = {
                 DESC: ''
             }
         },
+		HEADER: {
+			MESSAGE: 'Welcome'
+		},
         PAGES: {
             DASHBOARD: {
                 OUR_COMMUNITY: 'Our Community!',
@@ -349,5 +352,16 @@ export const locale = {
                 INVALID_FIELD: 'Field is not valid',
             }
         },
+		MERCHANT: {
+			SCANNER: {
+				LOYALTY_TITLE: 'Scan for Points'
+			}
+		},
+		OFFER: {
+			TITLE: 'OFFER'
+		},
+		CAMPAIGN: {
+			TITLE: 'CAMPAIGN'
+		},
     }
 };

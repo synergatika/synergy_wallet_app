@@ -1,72 +1,75 @@
 <div class="scanner">
-	<div>
-		<button mat-raised-button  (click)="openModalA()">Scan for Points</button>
-	</div>
-	<div class="row" *ngIf="offers">
-		<h2 class="col-md-12 section-heading">Scan for Offers</h2>
-		<div class="item item-wrapper col-md-4" *ngFor="let item of offers">
-			<mat-card class="item-card">
-			  <mat-card-content>
-				<div class="col-sm-12 item-img-container">
-					<div class="item-img">
-						<img src={{item.offer_imageURL}} alt={{item.title}} />	
-						<div class="item-expires">έως {{item.expiresAt | date: 'd.M'}}</div>					
-					</div>				
-				</div>
-				<div class="col-sm-12 item-details">				
-					<div class="item-heading">
-						<div class="item-title">{{item.title}}</div>
-						<div>
-							<span class="points">{{item.cost}}</span>
-						</div>
-					</div>
-					<div class="item-description">
-						{{item.description}}
-					</div>
-					<div class="item-info">
-						<div class="" >
-							<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-shopping"></span>{{item.merchant_name}}</div>
-							<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{item.expiresAt}}</div>
-						</div>
-					</div>
-					<button mat-raised-button (click)="openModalB(item.offer_id)">Scan for offer</button>
-				</div>
-				
-			  </mat-card-content>
+	<h2 class="col-md-12 section-heading">Scan</h2>
+	<div class="row">	
+		<div class="item item-wrapper col-md-4" (click)="openModalA()">
+			<mat-card class="item-card loyalty-item-card">
+			 <mat-card-content>
+				<div class="loyalty-item">Scan for Points</div>
+			 </mat-card-content>
 			</mat-card>
 		</div>
-	</div>
-	<div class="row" *ngIf="microcredit">
-		<h2 class="col-md-12 section-heading">Scan for Campaigns</h2>
-		<div class="item item-wrapper col-md-4" *ngFor="let item of microcredit">			
-			<mat-card class="item-card">
-			  <mat-card-content>
-				<div class="col-sm-12 item-img-container">
-					<div class="item-img">
-						<img src={{item.campaign_imageURL}} alt={{item.title}} />
-						<div class="item-expires">έως {{item.expiresAt | date: 'd.M'}}</div>
-					</div>				
-				</div>
-				<div class="col-sm-12 item-details">					
-					<div class="item-heading">
-						<div class="item-title">{{item.title}}</div>
-						<div>
-							<span class="points">{{item.category}}</span>
+		<ng-container *ngIf="offers">
+			<div class="item item-wrapper col-md-4" *ngFor="let item of offers" (click)="openModalB(item.offer_id)">
+				<mat-card class="item-card">
+				  <mat-card-content>
+					<div class="col-sm-12 item-img-container">
+						<div class="item-img">
+							<img src={{item.offer_imageURL}} alt={{item.title}} />	
+							<div class="item-expires">έως {{item.expiresAt | date: 'd.M'}}</div>
+							<div class="item-type offer">{{ 'OFFER.TITLE' | translate }}</div>							
+						</div>				
+					</div>
+					<div class="col-sm-12 item-details">				
+						<div class="item-heading">
+							<div class="item-title">{{item.title}}</div>
+							<div>
+								<span class="points">{{item.cost}}</span>
+							</div>
+						</div>
+						<div class="item-description">
+							{{item.description}}
+						</div>
+						<div class="item-info">
+							<div class="" >
+								<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{item.expiresAt}}</div>
+							</div>
 						</div>
 					</div>
-					<div class="item-description">
-						{{item.description}}
+					
+				  </mat-card-content>
+				</mat-card>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="microcredit">	
+			<div class="item item-wrapper col-md-4" *ngFor="let item of microcredit" (click)="openModalC(item.campaign_id)">			
+				<mat-card class="item-card">
+				  <mat-card-content>
+					<div class="col-sm-12 item-img-container">
+						<div class="item-img">
+							<img src={{item.campaign_imageURL}} alt={{item.title}} />
+							<div class="item-expires">έως {{item.expiresAt | date: 'd.M'}}</div>
+							<div class="item-type campaign">{{ 'CAMPAIGN.TITLE' | translate }}</div>	
+						</div>				
 					</div>
-					<div class="item-info">
-						<div class="" >
-							<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-shopping"></span>{{item.merchant_name}}</div>
-							<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{item.expiresAt}}</div>
+					<div class="col-sm-12 item-details">					
+						<div class="item-heading">
+							<div class="item-title">{{item.title}}</div>
+							<div>
+								<span class="points">{{item.category}}</span>
+							</div>
+						</div>
+						<div class="item-description">
+							{{item.description}}
+						</div>
+						<div class="item-info">
+							<div class="" >
+								<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{item.expiresAt}}</div>
+							</div>
 						</div>
 					</div>
-					<button mat-raised-button (click)="openModalC(item.campaign_id)">Scan for campaign</button>
-				</div>
-			  </mat-card-content>
-			</mat-card>
-		</div>
+				  </mat-card-content>
+				</mat-card>
+			</div>
+		</ng-container>
 	</div>
 </div>

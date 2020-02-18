@@ -1,8 +1,8 @@
-<div id="mySidenav" class="sidenav">
-  <!--<app-menu></app-menu>-->
+<div *ngIf="user.access=='merchant'" id="mySidenav" class="sidenav">
+  <app-menu ></app-menu>
 </div>
 
-<div id="main">
+<div [attr.id]="user.access === 'merchant' ? 'main' : null">
 	<app-header></app-header>
 	<div class="app-layout container">
 		<div class="row">

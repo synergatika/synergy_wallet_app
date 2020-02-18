@@ -34,6 +34,10 @@ body {
 	&.menu-overlay {
 		background-color: rgba(0,0,0,0.4);
 	}
+	.nav a {
+		padding: 8px 8px 8px 32px;
+	}
+ 
 	button:focus {
 		outline:0;
 	}
@@ -94,7 +98,12 @@ body {
 	}
 	.dropdown-menu {
 		border: none;
-		box-shadow: 0 0 40px 0 rgba(40,70,120,.15);
+		box-shadow: 0 0 40px 0 rgba(40,70,120,.15);		
+	}
+	.dropdown-toggle {
+		&:after {
+			content: none;
+		}
 	}
 
 	
@@ -261,6 +270,19 @@ aw-wizard-navigation-bar ul.steps-indicator li a {
 				margin-right: -25px;
 				margin-left: -25px;
 			}
+		}
+	}
+}
+@media screen and (min-width: 1025px) {
+	.menu-toggled {
+		.nav a {
+			padding-left: 20px;
+		}
+		.menu-text {
+			opacity: 0;
+		}
+		.togglebtn {
+			transform: rotate(180deg);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-//import { MenuService } from '../../../../core/services/menu.service';
+import { MenuService } from '../../../../core/services/menu.service';
 // RxJS
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../../../core/services/authentication.service';
@@ -16,7 +16,7 @@ export class UserMenuComponent implements OnInit {
 	user: any;
 	userAvatar: string;
 	
-	constructor(/*private menuService : MenuService,*/private authenticationService: AuthenticationService, private cDRef: ChangeDetectorRef) { }
+	constructor(private menuService : MenuService, private authenticationService: AuthenticationService, private cDRef: ChangeDetectorRef) { }
 
 	ngOnInit(): void {
 		this.user = this.authenticationService.currentUserValue.user;
@@ -25,9 +25,9 @@ export class UserMenuComponent implements OnInit {
 		this.cDRef.markForCheck();			
 	}
 	
-	/*openNav() {
+	openNav() {
 		this.menuService.openNav();
-	}*/
+	}
 	
 	logout() {
 		console.log('logout');
