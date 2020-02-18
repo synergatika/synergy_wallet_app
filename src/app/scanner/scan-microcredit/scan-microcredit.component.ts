@@ -20,7 +20,7 @@ import { WizardComponent } from 'angular-archwizard';
 @Component({
   selector: 'app-scan-microcredit',
   templateUrl: './scan-microcredit.component.html',
-  styleUrls: ['./scan-microcredit.component.sass']
+  styleUrls: ['./scan-microcredit.component.scss']
 })
 export class ScanMicrocreditComponent implements OnInit, OnDestroy {
 

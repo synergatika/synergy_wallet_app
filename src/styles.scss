@@ -103,7 +103,12 @@ body {
 		box-shadow: 0 6px 21px -2px #d1cbcb;
 		border-radius: 9px;
 	}
-	
+	.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+		background-color: #e6c615;
+	}
+	.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+		border-color: #e6c615;
+	}
 	// Slider
 	swiper.swiper-wrapper {
 		//margin-bottom: -50px;
@@ -167,6 +172,12 @@ body {
 			border: none;
 		}
 	}
+	
+	//Merchant Forms
+	.merchant-alert {
+		color: #f14551;
+		font-weight: 600;
+	}
 
 }
 
@@ -216,7 +227,18 @@ aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
 	&.optional .step-indicator {
 		background-color: #e6db91;
 	}
+	&.done .step-indicator {
+		background-color: #a4cfce;
+	}
+	&.navigable.done a:hover .step-indicator {
+		background-color: #37aba7;
+	}
 }
+// TEMPORARY
+aw-wizard-navigation-bar ul.steps-indicator li {
+    pointer-events: auto;
+}
+// -------
 aw-wizard-navigation-bar ul.steps-indicator li a {
 	.label {
 		font-weight: 400;

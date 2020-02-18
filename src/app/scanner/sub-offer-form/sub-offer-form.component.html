@@ -1,18 +1,17 @@
-<p>sub-offer-form works!</p>
-
-<p>ID: {{transaction.offer_id}}</p>
-<p>Cost: {{transaction.cost}}</p>
-<p>Customer's Points: {{transaction.points}}</p>
-
+<div>
+	<p>ID: {{transaction.offer_id}}</p>
+	<p>Cost: {{transaction.cost}}</p>
+	<p>Customer Points: {{transaction.points}}</p>
+</div>
 <div *ngIf='!transaction.possible_quantity'>
-    <p>
+    <p class="merchant-alert">
         Not enough points
     </p>
 </div>
 <form *ngIf='transaction.possible_quantity' [formGroup]="submitForm">
     <!--begin: Form Wizard Step 1-->
     <div class="col-xl-6">
-        <h5>Transaction's quantity</h5>
+        <h5>Transaction quantity</h5>
         <div class="form-group">
             <label>Quantity</label>
             <div class="input-group">
@@ -34,4 +33,5 @@
         </div>
     </div>
 </form>
-<button type="button" (click)="onNextStep()">Go to next step</button>
+<button mat-raised-button class="mr-2" type="button" awPreviousStep>Previous Step</button>
+<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>

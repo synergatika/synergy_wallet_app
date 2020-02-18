@@ -19,7 +19,7 @@ import { SupportInterface } from '../_support.interface';
 @Component({
   selector: 'app-edit-microcredit-campaign',
   templateUrl: './edit-microcredit-campaign.component.html',
-  styleUrls: ['./edit-microcredit-campaign.component.sass']
+  styleUrls: ['./edit-microcredit-campaign.component.scss']
 })
 export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
 

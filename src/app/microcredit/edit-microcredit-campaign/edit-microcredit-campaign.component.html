@@ -1,24 +1,34 @@
-<p>edit-microcredit-campaign works!</p>
+<p>edit microcredit campaign</p>
 
-<button (click)="openModal()"> Add Support </button>
+<button mat-raised-button (click)="openModal()"> Add Support </button>
 
-
-<h4> Paid Supports </h4>
-<div *ngFor='let item of paidSupports'>
-    <p> Initial Tokens {{item.initialTokens}} </p>
-    <p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
-    <input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
-        (change)="onToUnpayCheckBoxChange(item._id)">
-    <p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
+<div>
+	<h4> Paid Supports </h4>
+	<div class="" *ngIf="paidSupports; else no_paid">
+		<div *ngFor='let item of paidSupports'>
+			<p> Initial Tokens {{item.initialTokens}} </p>
+			<p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
+			<input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
+				(change)="onToUnpayCheckBoxChange(item._id)">
+			<p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
+		</div>
+		
+	</div>
+	<ng-template #no_paid>
+		<span>No paid Supports</span>
+	</ng-template>
+	<h4> Unpaid Supports </h4>
+	<div class="" *ngIf="unpaidSupports; else no_unpaid">
+		<div *ngFor='let item of unpaidSupports'>
+			<p> Initial Tokens {{item.initialTokens}} </p>
+			<p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
+			<input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
+				(change)="onToPayCheckBoxChange(item._id)">
+			<p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
+		</div>
+	</div>
+	<ng-template #no_unpaid>
+		<span>No unpaid Supports</span>
+	</ng-template>
+	<button mat-raised-button (click)="onSubmit()"> Submit </button>
 </div>
-
-<h4> Unpaid Supports </h4>
-<div *ngFor='let item of unpaidSupports'>
-    <p> Initial Tokens {{item.initialTokens}} </p>
-    <p>Payment ID {{item.backer_id}} -- {{item.status}}</p>
-    <input type="checkbox" name="" value="{{item.status}}" [checked]="item.status==='confirmation'"
-        (change)="onToPayCheckBoxChange(item._id)">
-    <p> ----- ----- ----- ----- ----- ----- ----- ----- </p>
-</div>
-
-<button (click)="onSubmit()"> Submit </button>

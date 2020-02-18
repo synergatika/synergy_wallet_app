@@ -17,6 +17,11 @@ const routes: Routes = [
         path: '',
         component: CreateItemsComponent,
         children: [
+			{
+                path: '',
+                redirectTo: 'offer',
+                pathMatch: 'full'
+            },
             {
                 path: 'offer',
                 component: NewOfferComponent,

@@ -1,12 +1,40 @@
-<p>microcredit works!</p>
+<div class="microcredit">
+	<p>microcredit</p>
 
-
-<h1> Edit </h1>
-<main id="logout-button-holder">
-    <button *ngFor="let campaign of campaigns" mat-raised-button id="logout-button"
-        routerLink="edit/{{campaign.campaign_id}}">
-        Edit Microcredit Campaign:
-        {{campaign.title}}</button>
-</main>
-
-<router-outlet></router-outlet>
+	<div class="row" *ngIf="campaigns">
+		<h2 class="col-md-12 section-heading"> Edit </h2>
+		<div class="item item-wrapper col-md-4" *ngFor="let item of campaigns" >
+		<mat-card class="item-card">
+			<mat-card-content>
+				<div class="col-sm-12 item-img-container">
+					<div class="item-img">
+						<img *ngIf="item.campaign_imageURL" src={{item.campaign_imageURL}} alt={{item.title}} />	
+						<div class="item-expires">έως {{item.expiresAt | date: 'd.M'}}</div>					
+					</div>				
+				</div>
+				<div class="col-sm-12 item-details">				
+					<div class="item-heading">
+						<div class="item-title">{{item.title}}</div>
+						<div>
+							<span class="points">{{item.cost}}</span>
+						</div>
+					</div>
+					<div class="item-description">
+						{{item.description}}
+					</div>
+					<div class="item-info">
+						<div class="" >
+							<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-shopping"></span>{{item.merchant_name}}</div>
+							<div class="item-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{item.expiresAt}}</div>
+						</div>
+					</div>
+					<button mat-raised-button routerLink="edit/{{item.campaign_id}}"> Edit Microcredit Campaign: {{item.title}}</button>
+				</div>
+				
+			
+			</mat-card-content>
+		</mat-card>
+		</div>
+	</div>
+</div>
+	<router-outlet></router-outlet>

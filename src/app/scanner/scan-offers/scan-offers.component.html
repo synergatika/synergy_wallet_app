@@ -5,11 +5,11 @@
 	<aw-wizard>
 		<aw-wizard-step stepTitle="Scan Or Add--">
 			<div class="step-container row justify-content-md-center">
-				<div class="col-xl-6 ">
+				<div class="col-xl-6">
 					<app-sub-scanner *ngIf="!showIdentifierForm" (scan_identifier)="onSuccessScanIdentifier($event)">
 					</app-sub-scanner>
 					<button class="btn btn-primary" type="button" [ngClass]="{'identifier-active': showIdentifierForm}" (click)="onShowIdentifierFormChange()">
-						<span *ngIf="!showIdentifierForm; else back_to_scanner">Identifier Form</span>
+						<span *ngIf="!showIdentifierForm; else back_to_scanner">Identifier</span>
 						<ng-template #back_to_scanner>
 							<span>Back to Scanner</span>
 						</ng-template>
@@ -22,12 +22,16 @@
 			</div>
 		</aw-wizard-step>
 		<aw-wizard-step stepTitle="Offer">
-			<app-sub-offer-form (add_offer)="onSubmitOfferForm($event)">
-			</app-sub-offer-form>
-			<button type="button" awPreviousStep>Previous Step</button>
+			<div class="step-container row justify-content-md-center">
+				<app-sub-offer-form (add_offer)="onSubmitOfferForm($event)">
+				</app-sub-offer-form>
+				<!--<button type="button" awPreviousStep>Previous Step</button>-->
+			</div>
 		</aw-wizard-step>
 		<aw-wizard-step stepTitle="Final">
-			<app-sub-final-step (finalize)="onFinalStep($event)" [type]=2></app-sub-final-step>
+			<div class="step-container row justify-content-md-center">
+				<app-sub-final-step (finalize)="onFinalStep($event)" [type]=2></app-sub-final-step>
+			</div>
 		</aw-wizard-step>
 	</aw-wizard>
 </div>

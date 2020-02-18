@@ -1,15 +1,19 @@
-<button (click)=onFinalStep()>X</button>
-<aw-wizard>
-    <aw-wizard-step stepTitle="Amount">
-		<div class="step-container row justify-content-md-center">
-			<app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
-			</app-sub-amount-form>
-			<!--<button type="button" awPreviousStep>Previous Step</button>-->
-		</div>
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Final">
-		<div class="step-container row justify-content-md-center">
-			<app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
-		</div>
-    </aw-wizard-step>
-</aw-wizard>
+<div class="scan-modal-container">
+	<button type="button" class="close-btn" aria-label="Close" (click)="onFinalStep()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<aw-wizard>
+		<aw-wizard-step stepTitle="Amount">
+			<div class="step-container row justify-content-md-center">
+				<app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
+				</app-sub-amount-form>
+				<!--<button type="button" awPreviousStep>Previous Step</button>-->
+			</div>
+		</aw-wizard-step>
+		<aw-wizard-step stepTitle="Final">
+			<div class="step-container row justify-content-md-center">
+				<app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
+			</div>
+		</aw-wizard-step>
+	</aw-wizard>
+	</div>
