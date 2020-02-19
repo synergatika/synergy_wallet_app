@@ -11,7 +11,7 @@
 						<app-sub-scanner (scan_identifier)="onSuccessScanIdentifier($event)">
 						</app-sub-scanner>
 					</div>
-					<button class="btn btn-primary"  type="button" (click)="onShowIdentifierFormChange()">
+					<button class="btn btn-primary" type="button" (click)="onShowIdentifierFormChange()">
 						<span *ngIf="!showIdentifierForm; else back_to_scanner">
 							Enter new Email,Enter a new Card, Enter User's Email, Enter User's Card
 						</span>
@@ -28,24 +28,29 @@
 			</div>
 		</aw-wizard-step>
 		<aw-wizard-step stepTitle="Email" awOptionalStep>
-			<p>{{this.messages.stepB}}</p>
-			<app-sub-email-form (add_email)="onSubmitEmailForm($event)">
-			</app-sub-email-form>
-			<button type="button" awPreviousStep>Previous Step</button>
+			<div class="step-container row justify-content-md-center">
+				<p [innerHTML]="messages.stepB"></p>
+				<app-sub-email-form (add_email)="onSubmitEmailForm($event)">
+				</app-sub-email-form>				
+			</div>
 		</aw-wizard-step>
 		<aw-wizard-step stepTitle="Amount" awOptionalStep>
-			<p>{{this.messages.stepC}}</p>
-			<app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
-			</app-sub-amount-form>
-			<button type="button" awPreviousStep>Previous Step</button>
+			<div class="step-container">
+				<p>{{this.messages.stepC}}</p>
+				<app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
+				</app-sub-amount-form>
+			</div>
 		</aw-wizard-step>
 		<aw-wizard-step stepTitle="Discount">
-			<app-sub-discount-form (add_discount)="onSubmitDiscountForm($event)">
-			</app-sub-discount-form>
-			<button type="button" awPreviousStep>Previous Step</button>
+			<div class="step-container row justify-content-md-center">
+				<app-sub-discount-form (add_discount)="onSubmitDiscountForm($event)">
+				</app-sub-discount-form>
+			</div>
 		</aw-wizard-step>
 		<aw-wizard-step stepTitle="Final">
-			<app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
+			<div class="step-container row justify-content-md-center">
+				<app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
+			</div>
 		</aw-wizard-step>
 	</aw-wizard>
 </div>

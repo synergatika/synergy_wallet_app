@@ -51,7 +51,14 @@ export class ItemsService {
         return data;
       }));
   }
-
+  
+  readOffer(merchant_id: string, offer_id: string): Observable<Offer> {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/${offer_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+  
   /** 
     * Events
     */

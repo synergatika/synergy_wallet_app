@@ -12,7 +12,7 @@ import { SupportService } from './_support.service';
 @Component({
   selector: 'app-customer-support',
   templateUrl: './customer-support.component.html',
-  styleUrls: ['./customer-support.component.sass']
+  styleUrls: ['./customer-support.component.scss']
 })
 export class CustomerSupportComponent implements OnInit, OnDestroy {
 

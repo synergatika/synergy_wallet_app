@@ -36,8 +36,11 @@ import { CardCoopComponent } from './views/layout/card-coop/card-coop.component'
 import { CardPostComponent } from './views/layout/card-post/card-post.component';
 import { CardMicrocreditComponent } from './views/layout/card-microcredit/card-microcredit.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
+import { LanguageSwitcherComponent } from './views/layout/header/language-switcher/language-switcher.component';
 
-//import { HistoryModule } from './history/history.module';
+import { CreateItemsModule } from './create-items/create-items.module';
+import { ScannerModule } from './scanner/scanner.module';
+import { EditItemsModule } from './edit-items/edit-items.module';
 
 import { MenuService } from './core/services/menu.service';
 
@@ -56,6 +59,9 @@ import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
 import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MerchantOffersComponent } from './views/pages/merchant-offers/merchant-offers.component';
+import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-posts.component';
+import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -88,6 +94,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	ArchiveCoopsComponent,
 	ArchiveOffersComponent,
 	ArchivePostsComponent,
+	LanguageSwitcherComponent,
+	MerchantOffersComponent,
+	MerchantPostsComponent,
+	MerchantEventsComponent,
   ],
   imports: [
     QRCodeModule,
@@ -108,7 +118,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	BrowserAnimationsModule,
 	CarouselModule,
 	//SlickModule.forRoot(),
-	InfiniteScrollModule
+	InfiniteScrollModule,
+	CreateItemsModule,
+	ScannerModule,
+	EditItemsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

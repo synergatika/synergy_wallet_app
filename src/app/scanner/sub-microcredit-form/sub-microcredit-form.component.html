@@ -1,32 +1,52 @@
-<p>sub-microcredit-form works!</p>
-
-<p>ID: {{transaction.campaign_id}}</p>
-<p>Initial: {{transaction.initial_tokens}}</p>
-<p>Redeemed: {{transaction.redeemed_tokens}}</p>
-<p>Remaining: {{transaction.possible_tokens}}</p>
-<p>Support ID: {{transaction.support_id}}</p>
-
-<div *ngFor="let item of supports">
+<h4 class="heading">Support items <div class="extra-details">Campaign ID {{transaction.campaign_id}}</div></h4>
+	<div class="row justify-content-md-center">
+		<mat-radio-group 
+		aria-labelledby="token-radio-group-label"
+		class="token-radio-group">
+			<mat-radio-button class="token-radio-buttons" *ngFor="let item of supports" [value]='item.support_id' type="radio" name="item.support_id"
+				[checked]="item.support_id === transaction.support_id"
+				[disabled]="item.redeemedTokens === item.initialTokens" (click)="onRadioButtonChange(item.support_id)">
+				{{item.support_id}}
+			</mat-radio-button>
+		</mat-radio-group>
+	</div>
+<!--<div *ngFor="let item of supports" class="mb-3">
     <label>
         <input [value]='item.support_id' type="radio" name="item.support_id"
             [checked]="item.support_id === transaction.support_id"
             [disabled]="item.redeemedTokens === item.initialTokens" (click)="onRadioButtonChange(item.support_id)">
         {{item.support_id}}
     </label>
+	
+</div>-->
+<div class="mb-3">
+	<h4 class="heading">Tokens <div class="extra-details">Support ID {{transaction.support_id}}</div></h4>
+	<div class="row token-info">
+		<div class="col-md-4">
+			<div class="col-head init">initial</div>
+			<div class="token-num">{{transaction.initial_tokens}}</div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-head redeemed">redeemed</div>
+			<div class="token-num">{{transaction.redeemed_tokens}}</div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-head remaining">remaining</div>
+			<div class="token-num">{{transaction.possible_tokens}}</div>
+		</div>
+	</div>
 </div>
-
-<div *ngIf="!transaction.possible_tokens">
-    Cannot
+<div class="merchant-alert" *ngIf="!transaction.possible_tokens">
+    No Transactions. Unable to proceed.
 </div>
 <div *ngIf="transaction.possible_tokens">
     <form [formGroup]="submitForm">
         <!--begin: Form Wizard Step 1-->
-        <div class="col-xl-6">
-            <h5>Transaction's Tokens</h5>
+        <div class="">
+            <h5>Transaction Tokens</h5>
             <div class="form-group">
                 <label>Tokens</label>
                 <div class="input-group">
-                    <span class="input-group-text"></span>
                     <input type="number" class="form-control" name="tokens" formControlName="tokens"
                         placeholder="Tokens" value="0">
                 </div>
@@ -38,10 +58,10 @@
                 <span *ngIf="isControlHasError('tokens','max')"
                     class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
                     {{ transaction.possible_tokens }}</span>
-                <span class="form-text text-muted">Please enter
-                    transaction's tokens.</span>
+                <span class="form-text text-muted">Please enter transaction tokens.</span>
             </div>
         </div>
     </form>
-    <button type="button" (click)="onNextStep()">Go to next step</button>
+	<button mat-raised-button class="mr-2" type="button" awPreviousStep>Previous Step</button>
+    <button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
 </div>

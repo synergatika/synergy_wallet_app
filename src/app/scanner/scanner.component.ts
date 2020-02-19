@@ -12,6 +12,8 @@ import { ScannerService } from './_scanner.service';
 import { ScanLoyaltyComponent } from './scan-loyalty/scan-loyalty.component';
 import { ScanOffersComponent } from './scan-offers/scan-offers.component';
 import { ScanMicrocreditComponent } from './scan-microcredit/scan-microcredit.component';
+// Translate
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-scanner',
@@ -33,6 +35,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     private scannerService: ScannerService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
+	private translate: TranslateService,
   ) {
     this.scannerService.offers.subscribe(offers => this.offers = offers)
     this.scannerService.microcredit.subscribe(microcredit => this.microcredit = microcredit)

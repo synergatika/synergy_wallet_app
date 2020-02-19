@@ -48,7 +48,8 @@ export class MicrocreditComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.campaigns = data;
-            this.supportService.changeMicrocreditCampaigns(this.campaigns);
+			console.log(this.campaigns);
+            this.supportService.changeMicrocreditCampaigns(this.campaigns);			
           },
           error => {
           }),

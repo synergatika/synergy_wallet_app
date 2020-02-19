@@ -1,0 +1,31 @@
+<div class="m-events">
+	<div class="heading-container">
+		<h1 class="heading">Events</h1>
+		<button class="add-item" mat-mini-fab routerLink="create">+</button>
+	</div>
+	<div class="row">	
+		<ng-container *ngIf="events">
+			<div class="item item-wrapper col-md-4" *ngFor="let item of events" routerLink="edit/{{item.offer_id}}">
+				<mat-card class="item-card">
+				  <mat-card-content>
+					<div class="col-sm-12 item-img-container">
+						<div class="item-img">
+							<img src={{item.post_event_imageURL}} alt={{item.title}} />	
+							<div class="item-expires">{{item.expiresAt | date: 'd.M'}}</div>						
+						</div>				
+					</div>
+					<div class="col-sm-12 item-details">				
+						<div class="item-heading">
+							<div class="item-title">{{item.title}}</div>
+						</div>
+						<div class="item-description">
+							{{item.description}}
+						</div>
+					</div>
+					
+				  </mat-card-content>
+				</mat-card>
+			</div>
+		</ng-container>
+	</div>
+</div>

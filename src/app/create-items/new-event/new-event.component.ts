@@ -16,7 +16,7 @@ import { ItemsService } from '../../core/services/items.service';
 @Component({
   selector: 'app-new-event',
   templateUrl: './new-event.component.html',
-  styleUrls: ['./new-event.component.sass']
+  styleUrls: ['./new-event.component.scss']
 })
 export class NewEventComponent implements OnInit, OnDestroy {
 
@@ -115,6 +115,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   }
 
   preview() {
+	if(this.fileData) {
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -128,6 +129,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
       }
       this.previewUrl = reader.result;
     }
+	}
+	else {
+		this.previewUrl = null;
+	}
   }
 
   onImageCancel() {

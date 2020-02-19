@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MenuService } from '../../../../core/services/menu.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+// Translate
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu',
@@ -7,36 +11,44 @@ import { MenuService } from '../../../../core/services/menu.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+	currentRouteUrl: string = '';
 	menu = [
 		{
-			title: 'Home',
-			link: '/',
+			title: 'MENU.HOME',
+			link: 'scanner',
 			icon: 'home-roof',
 		},
 		{
-			title: 'Dashboard',
-			link: 'dashboard',
-			icon: 'wallet-outline',
+			title: 'MENU.OFFERS',
+			link: 'm-offers',
+			icon: 'muffin',
 		},
 		{
-			title: 'Profile',
-			link: 'settings',
-			icon: 'settings',
+			title: 'MENU.CAMPAIGNS',
+			link: 'microcredit',
+			icon: 'set-none',
 		},
 		{
-			title: 'QR code',
-			link: 'qr-code',
-			icon: 'qrcode',
+			title: 'MENU.POSTS',
+			link: 'm-posts',
+			icon: 'file-document',
 		},
 		{
-			title: 'Explore',
-			link: 'explore',
-			icon: 'compass-outline',
-		},
+			title: 'MENU.EVENTS',
+			link: 'm-events',
+			icon: 'calendar',
+		}
 	];
-	constructor(private menuService : MenuService) { }
+	constructor(private menuService : MenuService, private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef) { }
 
 	ngOnInit() {
+		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
+		this.router.events
+			.pipe(filter(event => event instanceof NavigationEnd))
+			.subscribe(event => {
+				this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
+				this.cdr.markForCheck();
+			});
 	}
 	
 	openNav() {
@@ -56,6 +68,24 @@ export class MenuComponent implements OnInit {
 		//document.body.classList.replace("menu-overlay", "");
 		document.body.classList.remove("menu-overlay");
 		*/
+	}
+	
+	toggleNav() {
+		this.menuService.toggleNav();
+		/*
+		document.getElementById("mySidenav").style.width = "0";
+		document.getElementById("main").style.marginLeft = "0";
+		//document.body.classList.replace("menu-overlay", "");
+		document.body.classList.remove("menu-overlay");
+		*/
+	}
+	
+	getItemCssClasses(item) {
+		let classes = '';
+		if (this.currentRouteUrl.indexOf(item) !== -1) {
+			classes = 'side-menu-item-active';
+		}
+		return classes;
 	}
 
 }

@@ -6,7 +6,7 @@ import { SupportInterface } from '../_support.interface';
 @Component({
   selector: 'app-sub-amount-form',
   templateUrl: './sub-amount-form.component.html',
-  styleUrls: ['./sub-amount-form.component.sass']
+  styleUrls: ['./sub-amount-form.component.scss']
 })
 export class SubAmountFormComponent implements OnInit {
 

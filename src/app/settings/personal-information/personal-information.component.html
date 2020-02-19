@@ -3,98 +3,105 @@
 	<div class="grid__item grid__item--fluid wizard-v3__wrapper">
 		<form class="form" id="personal_form">
 			<div class="heading">Setup Your Personal Information</div>
-			<div class="form__section form__section--first">
+			<div class="form_section">
 				<div class="wizard-v3__form">
-					<div class="form-group">
-						<label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
-						<div class="col-lg-9 col-xl-6">
-							<div class="avatar avatar--outline" id="merchat_avatar">
-								<img class="avatar-holder" [src]="previewUrl">
-								<label class="avatar-upload" data-toggle="tooltip" title=""
-									data-original-title="Change avatar">
-									<i class="fa fa-pen"></i>
-									<input type="file" (change)="fileProgress($event)" name="profile_avatar"
-										accept=".png, .jpg, .jpeg">
-								</label>
-								<span *ngIf="!originalImage" class="avatar-cancel" (click)="onImageCancel()"
-									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-									<i class="fa fa-times"></i>
-								</span>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-form-label">Avatar</label>
+							<div class="">
+								<div class="avatar" id="merchat_avatar">
+									<img class="avatar-holder" [src]="previewUrl">
+									<button type="button" mat-raised-button (click)="fileInputMerch.click()">Choose File</button>
+									<label class="avatar-upload" data-toggle="tooltip" title=""
+										data-original-title="Change avatar">
+										<i class="fa fa-pen"></i>
+										<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+											accept=".png, .jpg, .jpeg" #fileInputMerch>
+									</label>
+									<span *ngIf="!originalImage" class="avatar-cancel" (click)="onImageCancel()"
+										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+										<i class="fa fa-times"></i>
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" name="name" [(ngModel)]="merchant.name"
-							placeholder="Name" value="Name">
-						<span class="form-text text-muted">Please enter your Name.</span>
-					</div>
-					<div class="form-group">
-						<label>Address</label>
-						<input type="text" class="form-control" name="address" [(ngModel)]="merchant.address.street"
-							placeholder="Address Line" value="Address Line">
-						<span class="form-text text-muted">Please enter your Address.</span>
+						<div class="form-group col-md-12">
+							<mat-form-field>
+								<mat-label>Name</mat-label>
+								<input matInput type="text" name="name" [(ngModel)]="merchant.name"
+									placeholder="Name" value="Name">
+								<mat-hint class="form-text text-muted">Please enter your Name.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group col-md-12">
+							<mat-form-field>
+								<mat-label>Address</mat-label>
+								<input matInput type="text" name="address" [(ngModel)]="merchant.address.street"
+									placeholder="Address Line" value="Address Line">
+								<mat-hint class="form-text text-muted">Please enter your Address.</mat-hint>
+							</mat-form-field>
+						</div>
 					</div>
 					<div class="row">
-						<div class="col-xl-6">
-							<div class="form-group">
-								<label>Postcode</label>
-								<input type="text" class="form-control" name="postcode"
+						<div class="col-xl-6 form-group">
+							<mat-form-field>
+								<mat-label>Postcode</mat-label>
+								<input matInput type="text" name="postcode"
 									[(ngModel)]="merchant.address.postCode" placeholder="Postcode" value="3000">
-								<span class="form-text text-muted">Please enter your Postcode.</span>
-							</div>
+								<mat-hint class="form-text text-muted">Please enter your Postcode.</mat-hint>
+							</mat-form-field>
 						</div>
-						<div class="col-xl-6">
-							<div class="form-group">
-								<label>City</label>
-								<input type="text" class="form-control" name="city" [(ngModel)]="merchant.address.city"
+						<div class="col-xl-6 form-group">
+							<mat-form-field>
+								<mat-label>City</mat-label>
+								<input matInput type="text" name="city" [(ngModel)]="merchant.address.city"
 									placeholder="City" value="Athens">
-								<span class="form-text text-muted">Please enter your City.</span>
-							</div>
+								<mat-hint class="form-text text-muted">Please enter your City.</mat-hint>
+							</mat-form-field>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xl-6">
-							<div class="form-group">
-								<label>Phone</label>
-								<input type="text" class="form-control" name="phone"
+						<div class="col-xl-6 form-group">					
+							<mat-form-field>
+								<mat-label>Phone</mat-label>
+								<input matInput type="text" name="phone"
 									[(ngModel)]="merchant.contact.phone" placeholder="Phone" value="VIC">
-								<span class="form-text text-muted">Please enter your Phone.</span>
-							</div>
+								<mat-hint class="form-text text-muted">Please enter your Phone.</mat-hint>
+							</mat-form-field>							
 						</div>
-						<div class="col-xl-6">
-							<div class="form-group">
-								<label>Website</label>
-								<input type="text" class="form-control" name="web"
+						<div class="col-xl-6 form-group">
+							<mat-form-field>
+								<mat-label>Website</mat-label>
+								<input matInput type="text" name="web"
 									[(ngModel)]="merchant.contact.websiteURL" placeholder="Webpage" value="VIC">
-								<span class="form-text text-muted">Please enter your Webpage.</span>
-							</div>
+								<mat-hint class="form-text text-muted">Please enter your Webpage.</mat-hint>
+							</mat-form-field>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xl-12">
-							<div class="form-group">
-								<label>Sector</label>
-								<select name="sector" [(ngModel)]="merchant.sector" class="form-control">
-									<option value="0">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES._' | translate}}
-									</option>
-									<option value="1">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.A' | translate}}
-									</option>
-									<option value="2">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.B' | translate}}
-									</option>
-									<option value="3">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.C' | translate}}
-									</option>
-									<option value="4">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.D' | translate}}
-									</option>
-									<option value="5">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.E' | translate}}
-									</option>
-									<option value="6">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.F' | translate}}
-									</option>
-									<option value="7">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.G' | translate}}
-									</option>
-								</select>
-								<span class="form-text text-muted">Please enter your sector.</span>
-							</div>
+						<div class="col-xl-12 form-group">
+							<mat-form-field>
+								<mat-label>Sector</mat-label>
+								<mat-select name="sector" [(ngModel)]="merchant.sector">
+									<mat-option value="0">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES._' | translate}}
+									</mat-option>
+									<mat-option value="1">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.A' | translate}}
+									</mat-option>
+									<mat-option value="2">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.B' | translate}}
+									</mat-option>
+									<mat-option value="3">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.C' | translate}}
+									</mat-option>
+									<mat-option value="4">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.D' | translate}}
+									</mat-option>
+									<mat-option value="5">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.E' | translate}}
+									</mat-option>
+									<mat-option value="6">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.F' | translate}}
+									</mat-option>
+									<mat-option value="7">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.G' | translate}}
+									</mat-option>
+								</mat-select>
+								<mat-hint class="form-text text-muted">Please enter your sector.</mat-hint>
+							</mat-form-field>
 						</div>
 					</div>
 				</div>
@@ -103,11 +110,11 @@
 			<!--begin: Form Actions -->
 			<div class="form__actions">
 
-				<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-					class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+				<button (click)="onSubmit()" mat-raised-button (keyup.enter)="onSubmit()"
+					class="btn-md btn-tall btn-wide font-bold font-transform-u"
 					data-ktwizard-type="action-submit">
 					{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-				</div>
+				</button>
 
 			</div>
 			<!--end: Form Actions -->
@@ -121,12 +128,12 @@
 	<div class="grid__item">
 		<form class="form" id="user_form">
 			<div class="heading heading--md">Setup Your Personal Information</div>
-			<div class="form__section mb-4">
+			<div class="form_section">
 				<div class="">
 					<div class="form-group">
 						<label class="">Avatar.</label>
 						<div class="">
-							<div class="avatar avatar--outline" id="user_avatar">
+							<div class="avatar" id="user_avatar">
 								<img class="avatar-holder" [src]="previewUrl">
 								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
 								<label class="avatar-upload" data-toggle="tooltip" title=""
@@ -157,11 +164,11 @@
 			<!--begin: Form Actions -->
 			<div class="form__actions">
 
-				<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-					class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+				<button (click)="onSubmit()" mat-raised-button (keyup.enter)="onSubmit()"
+					class="btn-md btn-tall btn-wide font-bold font-transform-u"
 					data-ktwizard-type="action-submit">
 					{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-				</div>
+				</button>
 
 			</div>
 			<!--end: Form Actions -->

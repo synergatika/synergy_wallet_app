@@ -19,7 +19,7 @@ import { SupportInterface } from '../_support.interface';
 @Component({
   selector: 'app-edit-microcredit-campaign',
   templateUrl: './edit-microcredit-campaign.component.html',
-  styleUrls: ['./edit-microcredit-campaign.component.sass']
+  styleUrls: ['./edit-microcredit-campaign.component.scss']
 })
 export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
 
@@ -72,6 +72,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
             const groupedSupports = this.groupBy(data, 'status'); // => {orange:[...], banana:[...]}
             this.paidSupports = groupedSupports.confirmation;
             this.unpaidSupports = groupedSupports.order;
+			console.log(groupedSupports);
           },
           error => {
           }),
@@ -88,6 +89,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   initializeCurrentCampaignData() {
     const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
     this.current = currentCampaign;
+	console.log(this.current);
     this.supportService.changeMicrocreditCurrent(this.current);
   }
 

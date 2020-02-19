@@ -7,7 +7,7 @@ import { ScannerInterface } from '../_scanner.interface';
 @Component({
   selector: 'app-sub-microcredit-form',
   templateUrl: './sub-microcredit-form.component.html',
-  styleUrls: ['./sub-microcredit-form.component.sass']
+  styleUrls: ['./sub-microcredit-form.component.scss']
 })
 export class SubMicrocreditFormComponent implements OnInit {
 

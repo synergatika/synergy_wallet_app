@@ -34,6 +34,10 @@ body {
 	&.menu-overlay {
 		background-color: rgba(0,0,0,0.4);
 	}
+	.nav a {
+		padding: 8px 8px 8px 32px;
+	}
+ 
 	button:focus {
 		outline:0;
 	}
@@ -94,7 +98,12 @@ body {
 	}
 	.dropdown-menu {
 		border: none;
-		box-shadow: 0 0 40px 0 rgba(40,70,120,.15);
+		box-shadow: 0 0 40px 0 rgba(40,70,120,.15);		
+	}
+	.dropdown-toggle {
+		&:after {
+			content: none;
+		}
 	}
 
 	
@@ -102,6 +111,21 @@ body {
 	.mat-card:not([class*=mat-elevation-z]) {
 		box-shadow: 0 6px 21px -2px #d1cbcb;
 		border-radius: 9px;
+	}
+	.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+		background-color: #e6c615;
+	}
+	.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+		border-color: #e6c615;
+	}
+	.mat-mini-fab {
+		span.mat-button-wrapper {
+			padding: 1px 0;
+			line-height: inherit;
+		}
+	}
+	button.mat-mini-fab.mat-accent {
+		background-color: #0c1a33;
 	}
 	
 	// Slider
@@ -167,6 +191,20 @@ body {
 			border: none;
 		}
 	}
+	
+	//Merchant Forms
+	.merchant-alert {
+		color: #f14551;
+		font-weight: 600;
+	}
+	
+	//Forms
+	.avatar, .upload-img {
+		&-holder {
+			max-width: 60px;
+			margin-right: 20px;
+		}
+	}
 
 }
 
@@ -200,12 +238,46 @@ body {
 
 //aw-wizard
 aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
-	&.current .step-indicator {
-		background-color: #37aba7;
+	&.current {
+		.step-indicator {
+			background-color: #37aba7;
+			top: -19px;
+			left: calc(50% - 12px);
+			width: 24px;
+			height: 24px;
+			line-height: 24px;
+		}
+		.label {
+			color: #222;
+		}
 	}
 	&.optional .step-indicator {
 		background-color: #e6db91;
 	}
+	&.done .step-indicator {
+		background-color: #a4cfce;
+	}
+	&.navigable.done a:hover .step-indicator {
+		background-color: #37aba7;
+	}
+}
+// TEMPORARY
+aw-wizard-navigation-bar ul.steps-indicator li {
+    pointer-events: auto;
+}
+// -------
+aw-wizard-navigation-bar ul.steps-indicator li a {
+	.label {
+		font-weight: 400;
+		font-size: 12px;
+	}
+}
+.message-highlight {
+	font-size: 24px;
+	color: #37aba7;
+}
+.scan-modal-container form {
+	padding-bottom: 20px;
 }
 
 @media (min-width:992px) {
@@ -216,6 +288,19 @@ aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
 				margin-right: -25px;
 				margin-left: -25px;
 			}
+		}
+	}
+}
+@media screen and (min-width: 1025px) {
+	.menu-toggled {
+		.nav a {
+			padding-left: 20px;
+		}
+		.menu-text {
+			opacity: 0;
+		}
+		.togglebtn {
+			transform: rotate(180deg);
 		}
 	}
 }

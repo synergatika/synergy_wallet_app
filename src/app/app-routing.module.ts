@@ -10,6 +10,13 @@ import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-off
 import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 import { LayoutComponent } from './views/layout/layout.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
+import { MerchantOffersComponent } from './views/pages/merchant-offers/merchant-offers.component';
+import { NewOfferComponent } from './create-items/new-offer/new-offer.component';
+import { EditOfferComponent } from './edit-items/edit-offer/edit-offer.component';
+import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-posts.component';
+import { NewPostComponent } from './create-items/new-post/new-post.component';
+import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
+import { NewEventComponent } from './create-items/new-event/new-event.component';
 
 const routes: Routes = [
   // Customer Zone
@@ -52,6 +59,48 @@ const routes: Routes = [
 			},
 			{
 				path: 'invitation', component: InvitationComponent
+			},
+			{
+				path: 'm-offers',
+				children: [
+					{
+						path: '', component: MerchantOffersComponent,
+					},
+					{
+						path: 'create', component: NewOfferComponent
+					},
+					{
+						path: 'edit/:_id', component: EditOfferComponent
+					},
+				]
+			},
+			{
+				path: 'm-posts',
+				children: [
+					{
+						path: '', component: MerchantPostsComponent,
+					},
+					{
+						path: 'create', component: NewPostComponent
+					},
+					{
+						path: 'edit/:_id', component: EditOfferComponent
+					},
+				]
+			},
+			{
+				path: 'm-events',
+				children: [
+					{
+						path: '', component: MerchantEventsComponent,
+					},
+					{
+						path: 'create', component: NewEventComponent
+					},
+					{
+						path: 'edit/:_id', component: EditOfferComponent
+					},
+				]
 			},
 			/*{
 				path: '**', component: NotFoundComponent

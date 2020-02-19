@@ -1,0 +1,32 @@
+.extra-details {
+	font-size: 12px;
+	color: #aaa;
+}
+.token-radio-group {
+	display: flex;
+	flex-direction: column;
+	margin: 0 0 15px;
+	.token-radio-buttons {
+		margin: 5px;
+	}
+}
+
+
+.token-info {
+	font-size: 22px;
+	font-weight: 600;
+	.col-head {
+		&.init {
+			color: #e6c615;
+		}
+		&.redeemed {
+			color: #f14551;
+		}
+		&.remaining {
+			color: #37aba7;
+		}
+		.token-num {
+			font-size: 36px;
+		}
+	}
+}

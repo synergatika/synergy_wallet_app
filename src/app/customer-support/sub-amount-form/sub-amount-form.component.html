@@ -1,49 +1,43 @@
 <form [formGroup]="submitForm">
     <!--begin: Form Wizard Step 1-->
-    <div class="col-xl-6">
-        <h5>Transaction's amount</h5>
-        <div class="form-group">
-            <label>Amount</label>
-            <div class="input-group">
-                <span class="input-group-text">€</span>
-                <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="Amount"
-                    value="0">
-            </div>
-            <span *ngIf="isControlHasError('amount','required')"
-                class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-            <span *ngIf="isControlHasError('amount','min')"
-                class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
-                {{ campaign.minAllowed | currency: 'EUR'}}</span>
-            <span *ngIf="isControlHasError('amount','max')"
-                class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
-                {{ campaign.maxAllowed | currency: 'EUR'}}</span>
-            <span class="form-text text-muted">Please enter
-                transaction's
-                amount.</span>
+    <h5>Transaction amount</h5>
+    <div class="form-group">
+        <label>Amount</label>
+        <div class="input-group">
+            <span class="input-group-text">€</span>
+            <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="Amount"
+                value="0">
         </div>
-        <div class="form-group">
-            <label>Payment Method</label>
-            <select name="method" formControlName="method" class="form-control">
-                <option value="Paypal">
-                    Paypal</option>
-            </select>
-            <!-- <select name="method" formControlName="method" class="form-control">
-                <option *ngIf="campaign.merchant_payment.Paypal" value="Paypal">
-                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.A' | translate}}</option>
-                <option *ngIf="campaign.merchant_payment.NationalBank" value="NationalBank">
-                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.B' | translate}}</option>
-                <option *ngIf="campaign.merchant_payment.Eurobank" value="Eurobank">
-                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.C' | translate}}</option>
-                <option *ngIf="campaign.merchant_payment.AlphaBank" value="AlphaBank">
-                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.D' | translate}}</option>
-                <option *ngIf="campaign.merchant_payment.PiraeusBank" value="PiraeusBank">
-                    {{'FIELDS.SUPPORT.PAYMENT_CHOICES.E' | translate}}</option>
-            </select> -->
-            <span *ngIf="isControlHasError('method','required')"
-                class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-            <span class="form-text text-muted">Please enter your payment method.</span>
-        </div>
+        <span *ngIf="isControlHasError('amount','required')"
+            class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+        <span *ngIf="isControlHasError('amount','min')"
+            class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
+            {{ campaign.minAllowed | currency: 'EUR'}}</span>
+        <span *ngIf="isControlHasError('amount','max')"
+            class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
+            {{ campaign.maxAllowed | currency: 'EUR'}}</span>
+        <span class="form-text text-muted">Please enter
+            transaction's
+            amount.</span>
+    </div>
+    <div class="form-group">
+        <label>Payment Method</label>
+        <select name="method" formControlName="method" class="form-control">
+            <option value="Paypal"> Paypal</option>
+            <!--<option *ngIf="campaign.merchant_payment.Paypal" value="Paypal">
+				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.A' | translate}}</option>
+			<option *ngIf="campaign.merchant_payment.NationalBank" value="NationalBank">
+				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.B' | translate}}</option>
+			<option *ngIf="campaign.merchant_payment.Eurobank" value="Eurobank">
+				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.C' | translate}}</option>
+			<option *ngIf="campaign.merchant_payment.AlphaBank" value="AlphaBank">
+				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.D' | translate}}</option>
+			<option *ngIf="campaign.merchant_payment.PiraeusBank" value="PiraeusBank">
+				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.E' | translate}}</option>-->
+        </select>
+        <span *ngIf="isControlHasError('method','required')"
+            class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+        <span class="form-text text-muted">Please enter your payment method.</span>
     </div>
 </form>
-
-<button type="button" (click)="onNextStep()">Go to next step</button>
+<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>

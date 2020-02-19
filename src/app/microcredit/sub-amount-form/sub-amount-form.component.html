@@ -1,7 +1,7 @@
 <form [formGroup]="submitForm">
     <!--begin: Form Wizard Step 1-->
-    <div class="col-xl-6">
-        <h5>Transaction's amount</h5>
+    <div>
+        <h5>Transaction amount</h5>
         <div class="form-group">
             <label>Amount</label>
             <div class="input-group">
@@ -31,4 +31,4 @@
     </div>
 </form>
 
-<button type="button" (click)="onNextStep()">Go to next step</button>
+<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>

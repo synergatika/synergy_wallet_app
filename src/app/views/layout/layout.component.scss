@@ -48,7 +48,23 @@
 }
 
 
-@media screen and (max-height: 450px) {
+
+@media screen and (max-width: 450px) {
 	.sidenav {padding-top: 15px;}
 	.sidenav a {font-size: 18px;}
+} 
+
+@media screen and (min-width: 1025px) {
+	.sidenav {
+		width: 250px;
+		&.menu-toggled {
+			width: 65px;
+		}
+	}
+	#main {
+		margin-left: 250px;
+		&.main-menu-toggled {
+			margin-left: 65px;
+		}
+	}
 } 

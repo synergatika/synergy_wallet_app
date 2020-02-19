@@ -1,77 +1,82 @@
-<div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
-    <form class="kt-form" [formGroup]="submitForm" id="kt_form">
-        <div class="kt-heading kt-heading--md">{{'FIELDS.POST.DESC' | translate}}</div>
-        <div class="kt-form__section kt-form__section--first">
-            <div class="kt-wizard-v3__form">
-                <div class="form-group">
-                    <label>{{'FIELDS.POST.TITLE.TITLE' | translate}}</label>
-                    <input type="text" class="form-control" formControlName="title"
-                        placeholder="{{'FIELDS.POST.TITLE.PLACEHOLDER' | translate}}" value="title">
-                    <span *ngIf="isControlHasError('title','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span *ngIf="isControlHasError('title','minlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-                        {{validator.content.minLength}}</span>
-                    <span *ngIf="isControlHasError('title','maxlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-                        {{validator.content.maxLength}}</span>
-                    <span class="form-text text-muted">{{'FIELDS.POST.TITLE.DESC' | translate}}</span>
-                </div>
-                <div class="form-group">
-                    <label>{{'FIELDS.POST.CONTENT.TITLE' | translate}}</label>
-                    <textarea type="text" class="form-control" formControlName="content"
-                        placeholder="{{'FIELDS.POST.CONTENT.PLACEHOLDER' | translate}}" value="content"> </textarea>
-                    <span *ngIf="isControlHasError('content','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span *ngIf="isControlHasError('content','minlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-                        {{validator.content.minLength}}</span>
-                    <span *ngIf="isControlHasError('content','maxlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-                        {{validator.content.maxLength}}</span>
-                    <span class="form-text text-muted">{{'FIELDS.POST.CONTENT.DESC' | translate}}</span>
-                </div>
-                <div class="form-group">
-                    <label>{{'FIELDS.POST.ACCESS.TITLE' | translate}}</label>
-                    <select name="access" class="form-control" formControlName="access">
-                        <option value="public">{{'FIELDS.POST.ACCESS_CHOICES.A' | translate}}</option>
-                        <option value="private">{{'FIELDS.POST.ACCESS_CHOICES.B' | translate}}</option>
-                        <option value="partners">{{'FIELDS.POST.ACCESS_CHOICES.C' | translate}}</option>
-                    </select>
-                    <span *ngIf="isControlHasError('access','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span class="form-text text-muted">{{'FIELDS.POST.ACCESS.DESC' | translate}}</span>
-                </div>
-                <div class="form-group">
-                    <label class="col-xl-3 col-lg-3 col-form-label">{{'FIELDS.POST.IMAGE.TITLE' | translate}}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar">
-                            <img class="kt-avatar__holder" [src]="previewUrl">
-                            <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
-                                data-original-title="Change avatar">
-                                <i class="fa fa-pen"></i>
-                                <input type="file" (change)="fileProgress($event)" name="profile_avatar"
-                                    accept=".png, .jpg, .jpeg">
-                            </label>
-                            <span *ngIf="!originalImage" class="kt-avatar__cancel" (click)="onImageCancel()"
-                                data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                                <i class="fa fa-times"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="new-offer">
+	<mat-card>
+		<mat-card-content>
+			<form class="form" [formGroup]="submitForm" id="kt_form">
+				<div class="heading heading--md">Create a new Post</div>
+				<div class="form__section form__section--first">
+					<div class="wizard-v3__form">
+						<div class="form-group">
+							<label>{{'FIELDS.POST.TITLE.TITLE' | translate}}</label>
+							<input type="text" class="form-control" formControlName="title"
+								placeholder="{{'FIELDS.POST.TITLE.PLACEHOLDER' | translate}}" value="title">
+							<span *ngIf="isControlHasError('title','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+							<span *ngIf="isControlHasError('title','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.content.minLength}}</span>
+							<span *ngIf="isControlHasError('title','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.content.maxLength}}</span>
+							<span class="form-text text-muted">{{'FIELDS.POST.TITLE.DESC' | translate}}</span>
+						</div>
+						<div class="form-group">
+							<label>{{'FIELDS.POST.CONTENT.TITLE' | translate}}</label>
+							<textarea type="text" class="form-control" formControlName="content"
+								placeholder="{{'FIELDS.POST.CONTENT.PLACEHOLDER' | translate}}"
+								value="content"> </textarea>
+							<span *ngIf="isControlHasError('content','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+							<span *ngIf="isControlHasError('content','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.content.minLength}}</span>
+							<span *ngIf="isControlHasError('content','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.content.maxLength}}</span>
+							<span class="form-text text-muted">{{'FIELDS.POST.CONTENT.DESC' | translate}}</span>
+						</div>
+						<div class="form-group">
+							<label>{{'FIELDS.POST.ACCESS.TITLE' | translate}}</label>
+							<select name="access" class="form-control" formControlName="access">
+								<option value="public">{{'FIELDS.POST.ACCESS_CHOICES.A' | translate}}</option>
+								<option value="private">{{'FIELDS.POST.ACCESS_CHOICES.B' | translate}}</option>
+								<option value="partners">{{'FIELDS.POST.ACCESS_CHOICES.C' | translate}}</option>
+							</select>
+							<span *ngIf="isControlHasError('access','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+							<span class="form-text text-muted">{{'FIELDS.POST.ACCESS.DESC' | translate}}</span>
+						</div>
+						<div class="form-group">
+							<label class="col-xl-3 col-lg-3 col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+							<div class="col-lg-9 col-xl-6">
+								<div class="avatar avatar--outline" id="kt_user_avatar">
+									<img class="avatar__holder" [src]="previewUrl">
+									<label class="avatar__upload" data-toggle="tooltip" title=""
+										data-original-title="Change avatar">
+										<i class="fa fa-pen"></i>
+										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+											accept=".png, .jpg, .jpeg">
+									</label>
+									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
+										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+										<i class="fa fa-times"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <!--begin: Form Actions -->
-        <div class="kt-form__actions">
-            <div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-                class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
-                data-ktwizard-type="action-submit">
-                {{ 'FORM.BUTTONS.SUBMIT' | translate }}
-            </div>
-        </div>
-        <!--end: Form Actions -->
+				<!--begin: Form Actions -->
+				<div class="form__actions">
+					<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+						data-ktwizard-type="action-submit">
+						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+					</div>
+				</div>
+				<!--end: Form Actions -->
 
-    </form>
+			</form>
+		</mat-card-content>
+	</mat-card>
 </div>
