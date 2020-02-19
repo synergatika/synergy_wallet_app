@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MenuService } from '../../../../core/services/menu.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+// Translate
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu',
@@ -12,27 +14,32 @@ export class MenuComponent implements OnInit {
 	currentRouteUrl: string = '';
 	menu = [
 		{
-			title: 'Home',
+			title: 'MENU.HOME',
 			link: 'scanner',
 			icon: 'home-roof',
 		},
 		{
-			title: 'Offers',
-			link: 'dashboard',
-			icon: 'wallet-outline',
+			title: 'MENU.OFFERS',
+			link: 'm-offers',
+			icon: 'muffin',
 		},
 		{
-			title: 'Campaigns',
+			title: 'MENU.CAMPAIGNS',
 			link: 'microcredit',
-			icon: 'settings',
+			icon: 'set-none',
 		},
 		{
-			title: 'Posts',
-			link: 'microcredit',
-			icon: 'qrcode',
+			title: 'MENU.POSTS',
+			link: 'm-posts',
+			icon: 'file-document',
+		},
+		{
+			title: 'MENU.EVENTS',
+			link: 'm-events',
+			icon: 'calendar',
 		}
 	];
-	constructor(private menuService : MenuService, private router: Router, private cdr: ChangeDetectorRef) { }
+	constructor(private menuService : MenuService, private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef) { }
 
 	ngOnInit() {
 		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];

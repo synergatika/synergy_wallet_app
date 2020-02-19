@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -12,35 +13,38 @@ import { TranslateService } from '@ngx-translate/core';
 
 // Services
 import { ItemsService } from '../../core/services/items.service';
+import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Component({
-  selector: 'app-new-event',
-  templateUrl: './new-event.component.html',
-  styleUrls: ['./new-event.component.scss']
+  selector: 'app-edit-offer',
+  templateUrl: './edit-offer.component.html',
+  styleUrls: ['./edit-offer.component.sass']
 })
-export class NewEventComponent implements OnInit, OnDestroy {
+export class EditOfferComponent implements OnInit, OnDestroy {
 
   public validator: any = {
     title: {
       minLength: 3,
-      maxLenth: 250
+      maxLenth: 150
     },
     description: {
       minLength: 3,
-      maxLenth: 2500
+      maxLenth: 150
     },
-    location: {
-      minLength: 3,
-      maxLenth: 250
+    cost: {
+      minValue: 0,
+      maxValue: 100000
     }
   };
-
+  
+  offer_id: string;
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = false;
 
   submitForm: FormGroup;
   submitted: boolean = false;
+  offer: any;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -58,7 +62,12 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
+	private activatedRoute: ActivatedRoute,
+	private authenticationService: AuthenticationService,
   ) {
+	this.activatedRoute.params.subscribe(params => {
+      this.offer_id = params['_id'];
+    });
     this.unsubscribe = new Subject();
   }
 
@@ -66,6 +75,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
   ngOnInit() {
+	this.fetchOfferData();
     this.initForm();
   }
 
@@ -92,17 +102,13 @@ export class NewEventComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      access: ['public', Validators.compose([
-        Validators.required
-      ])
-      ],
-      location: ['', Validators.compose([
+      cost: [0, Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.location.minLength),
-        Validators.maxLength(this.validator.location.maxLength)
+        Validators.min(this.validator.cost.minValue),
+        Validators.max(this.validator.cost.maxValue)
       ])
       ],
-      dateTime: ['', Validators.compose([
+      expiration: ['1', Validators.compose([
         Validators.required
       ])
       ],
@@ -115,7 +121,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
   }
 
   preview() {
-	if(this.fileData) {
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -129,10 +134,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
       }
       this.previewUrl = reader.result;
     }
-	}
-	else {
-		this.previewUrl = null;
-	}
   }
 
   onImageCancel() {
@@ -141,8 +142,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
-
-	/**
+  /**
 	 * On Form Submit
 	 */
   onSubmit() {
@@ -156,25 +156,41 @@ export class NewEventComponent implements OnInit, OnDestroy {
       );
       return;
     }
-
-    this.submitted = true;
     this.loading = true;
+    this.submitted = true;
+
+    var _date = new Date();
+    _date.setHours(23, 59, 59, 0);
+    switch (controls.expiration.value) {
+      case '1':
+        var _newDate = _date.setDate(_date.getDate() + 7);
+        break;
+      case '2':
+        var _newDate = _date.setMonth(_date.getMonth() + 1);
+        break;
+      case '3':
+        var _newDate = _date.setMonth(_date.getMonth() + 3);
+        break;
+      case '4':
+        var _newDate = _date.setMonth(_date.getMonth() + 6);
+        break;
+      default:
+        var _newDate = _date.setDate(_date.getDate() + 7);
+    }
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
-    formData.append('title', controls.title.value);
+    formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
-    formData.append('access', controls.access.value);
-    formData.append('location', controls.location.value);
-    formData.append('dateTime', controls.dateTime.value);
+    formData.append('expiresAt', _newDate.toString());
 
-    this.itemsService.createEvent(formData)
+    this.itemsService.createOffer(formData)
       .pipe(
         tap(
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
               'success'
             );
           },
@@ -194,7 +210,27 @@ export class NewEventComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-
+  
+  fetchOfferData() {
+    this.itemsService.readOffer(this.authenticationService.currentUserValue.user["_id"],this.offer_id)
+      .pipe(
+        tap(
+          data => {
+            this.offer = data;
+            console.log(this.offer);
+            //this.scannerService.changeOffers(this.offer);
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+  
   /**
    * Checking control validation
    *

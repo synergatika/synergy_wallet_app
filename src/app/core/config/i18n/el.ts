@@ -11,73 +11,77 @@ export const locale = {
             FEATURES: 'Features',
             APPS: 'Apps',
             DASHBOARD: 'Dashboard',
-
-            COMMUNITY: {
-                TITLE: 'ΚΟΙΝΟΤΗΤΑ',
-                SUBTITLE: 'Αυτοί είμαστε!',
-                DESC: 'Ο ένας καλύτερος από τον άλλο!'
-            },
-            BALANCE: {
-                TITLE: 'ΠΟΝΤΟΙ',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            QR: {
-                TITLE: 'QR',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            SCAN: {
-                TITLE: 'ΣΑΡΩΣΗ',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            SCAN_POINTS: {
-                TITLE: 'Σάρωση για Πόντους',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            SCAN_OFFERS: {
-                TITLE: 'Σάρωση για Προσφορά',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            OFFERS: {
-                TITLE: 'ΠΡΟΣΦΟΡΕΣ',
-                SUBTITLE: 'Δημιουργία νέας Προσφοράς',
-                DESC: 'Δώσε στο λαό!'
-            },
-            POSTS: {
-                TITLE: 'ΑΝΑΡΤΗΣΕΙΣ / ΓΕΓΟΝΟΤΑ',
-                SUBTITLE: 'Δημιουργία νέας Ανάρτησης / Γεγονότος',
-                DESC: 'Δημοσιοποίησε τις σκέψεις σου ή ενημέρωσε για ένα μελλοντικό γεγονός!'
-            },
-            PROFILE: {
-                TITLE: 'ΠΕΡΙΟΧΗ ΧΡΗΣΤΗ',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            PERSONAL_INFO: {
-                TITLE: 'Προσωπικά Δεδομένα',
-                SUBTITLE: 'Προσωπικά Δεδομένα',
-                DESC: 'Άνανέωσε τα Στοιχεία σου'
-            },
-            CHANGE_PASSWORD: {
-                TITLE: 'Αλλαγή Συνθηματικού',
-                SUBTITLE: 'Αλλαγή Συνθηματικού',
-                DESC: ''
-            },
-            TRANSACTIONS: {
-                TITLE: 'Αλισβερίσι',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            PARTNERS: {
-                TITLE: 'Συνεργάτες',
-                SUBTITLE: '',
-                DESC: ''
-            }
+			HOME: 'Αρχική',
+			CAMPAIGNS: 'Καμπάνιες',
+			EVENTS: 'Εκδηλώσεις',
+			POSTS: 'Αναρτήσεις',
+			OFFERS: 'Προσφορές',
         },
+		COMMUNITY: {
+			TITLE: 'ΚΟΙΝΟΤΗΤΑ',
+			SUBTITLE: 'Αυτοί είμαστε!',
+			DESC: 'Ο ένας καλύτερος από τον άλλο!'
+		},
+		BALANCE: {
+			TITLE: 'ΠΟΝΤΟΙ',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		QR: {
+			TITLE: 'QR',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		SCAN: {
+			TITLE: 'ΣΑΡΩΣΗ',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		SCAN_POINTS: {
+			TITLE: 'Σάρωση για Πόντους',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		SCAN_OFFERS: {
+			TITLE: 'Σάρωση για Προσφορά',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		OFFERS: {
+			TITLE: 'ΠΡΟΣΦΟΡΕΣ',
+			SUBTITLE: 'Δημιουργία νέας Προσφοράς',
+			DESC: 'Δώσε στο λαό!'
+		},
+		POSTS: {
+			TITLE: 'ΑΝΑΡΤΗΣΕΙΣ / ΓΕΓΟΝΟΤΑ',
+			SUBTITLE: 'Δημιουργία νέας Ανάρτησης / Γεγονότος',
+			DESC: 'Δημοσιοποίησε τις σκέψεις σου ή ενημέρωσε για ένα μελλοντικό γεγονός!'
+		},
+		PROFILE: {
+			TITLE: 'ΠΕΡΙΟΧΗ ΧΡΗΣΤΗ',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		PERSONAL_INFO: {
+			TITLE: 'Προσωπικά Δεδομένα',
+			SUBTITLE: 'Προσωπικά Δεδομένα',
+			DESC: 'Άνανέωσε τα Στοιχεία σου'
+		},
+		CHANGE_PASSWORD: {
+			TITLE: 'Αλλαγή Συνθηματικού',
+			SUBTITLE: 'Αλλαγή Συνθηματικού',
+			DESC: ''
+		},
+		TRANSACTIONS: {
+			TITLE: 'Αλισβερίσι',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		PARTNERS: {
+			TITLE: 'Συνεργάτες',
+			SUBTITLE: '',
+			DESC: ''
+		},
 		HEADER: {
 			MESSAGE: 'Καλώς ήρθες'
 		},
@@ -94,7 +98,7 @@ export const locale = {
                 POINTS: 'Πόντοι:',
                 EXPIRATION: 'Hμερομηνία Λήξης:',
                 POST: 'Ανάρτηση',
-                EVENT: 'Γεγονός',
+                EVENT: 'Εκδήλωση',
             }
         },
         MESSAGE: {
@@ -155,7 +159,7 @@ export const locale = {
                 DESC: ''
             },
             IMAGE: {
-
+				TITLE: 'Εικόνα',
             },
             PHONE: {
 
@@ -217,7 +221,24 @@ export const locale = {
             },
             POST_ACCESS: {
 
-            }
+            },
+			POST: {
+                TITLE: {
+                    TITLE: 'Τίτλος Ανάρτησης',
+                    PLACEHOLDER: 'Τίτλος',
+                    DESC: 'Please, enter Offer Title.'
+                },
+                CONTENT: {
+                    TITLE: 'Περιγραφή ανάρτησης',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Offer Description.'
+                },
+                DATE: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Offer will be expired.'
+                },
+            },
         },
         FORM: {
             BUTTONS: {

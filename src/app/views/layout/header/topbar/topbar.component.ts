@@ -17,7 +17,7 @@ export class TopbarComponent implements OnInit {
 
 	ngOnInit() {
 		this.user = this.authenticationService.currentUserValue.user;
-		console.log(this.user);
+		//console.log(this.user);
 		this.cDRef.markForCheck();	
 	}
 	

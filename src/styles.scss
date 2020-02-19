@@ -118,6 +118,16 @@ body {
 	.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
 		border-color: #e6c615;
 	}
+	.mat-mini-fab {
+		span.mat-button-wrapper {
+			padding: 1px 0;
+			line-height: inherit;
+		}
+	}
+	button.mat-mini-fab.mat-accent {
+		background-color: #0c1a33;
+	}
+	
 	// Slider
 	swiper.swiper-wrapper {
 		//margin-bottom: -50px;
@@ -186,6 +196,14 @@ body {
 	.merchant-alert {
 		color: #f14551;
 		font-weight: 600;
+	}
+	
+	//Forms
+	.avatar, .upload-img {
+		&-holder {
+			max-width: 60px;
+			margin-right: 20px;
+		}
 	}
 
 }

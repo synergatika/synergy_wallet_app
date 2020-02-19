@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSelectModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from "@angular/material";
 
@@ -64,6 +64,7 @@ const routes: Routes = [
         TranslateModule.forChild(),
         MatDialogModule,
 		MatCardModule,
+		MatSelectModule,
 		//HistoryModule
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),

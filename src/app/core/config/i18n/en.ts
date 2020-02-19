@@ -11,73 +11,77 @@ export const locale = {
             FEATURES: 'Features',
             APPS: 'Apps',
             DASHBOARD: 'Dashboard',
-
-            COMMUNITY: {
-                TITLE: 'COMMUNITY',
-                SUBTITLE: 'Meet our partners!',
-                DESC: 'Who we are!'
-            },
-            BALANCE: {
-                TITLE: 'BALANCE',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            QR: {
-                TITLE: 'QR',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            SCAN: {
-                TITLE: 'SCAN',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            SCAN_POINTS: {
-                TITLE: 'Scan for Points',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            SCAN_OFFERS: {
-                TITLE: 'Scan for Offers',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            OFFERS: {
-                TITLE: 'OFFERS',
-                SUBTITLE: 'Create a new Offer',
-                DESC: 'Reward your customer for being loyal!'
-            },
-            POSTS: {
-                TITLE: 'POSTS / EVENTS',
-                SUBTITLE: 'Upload a new Post / Event',
-                DESC: 'Make your thoughts or an upcoming event public!'
-            },
-            PROFILE: {
-                TITLE: 'PROFILE',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            PERSONAL_INFO: {
-                TITLE: 'Personal information',
-                SUBTITLE: 'Personal information',
-                DESC: 'Update for Personal Information'
-            },
-            CHANGE_PASSWORD: {
-                TITLE: 'Change Password',
-                SUBTITLE: 'Update Password',
-                DESC: ''
-            },
-            TRANSACTIONS: {
-                TITLE: 'Transactions',
-                SUBTITLE: '',
-                DESC: ''
-            },
-            PARTNERS: {
-                TITLE: 'PARTNERS',
-                SUBTITLE: '',
-                DESC: ''
-            }
+			HOME: 'Home',
+			CAMPAIGNS: 'Campaigns',
+			EVENTS: 'Events',
+			POSTS: 'Posts',
+			OFFERS: 'Offers',
         },
+		COMMUNITY: {
+			TITLE: 'COMMUNITY',
+			SUBTITLE: 'Meet our partners!',
+			DESC: 'Who we are!'
+		},
+		BALANCE: {
+			TITLE: 'BALANCE',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		QR: {
+			TITLE: 'QR',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		SCAN: {
+			TITLE: 'SCAN',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		SCAN_POINTS: {
+			TITLE: 'Scan for Points',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		SCAN_OFFERS: {
+			TITLE: 'Scan for Offers',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		OFFERS: {
+			TITLE: 'OFFERS',
+			SUBTITLE: 'Create a new Offer',
+			DESC: 'Reward your customer for being loyal!'
+		},
+		POSTS: {
+			TITLE: 'POSTS / EVENTS',
+			SUBTITLE: 'Upload a new Post / Event',
+			DESC: 'Make your thoughts or an upcoming event public!'
+		},
+		PROFILE: {
+			TITLE: 'PROFILE',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		PERSONAL_INFO: {
+			TITLE: 'Personal information',
+			SUBTITLE: 'Personal information',
+			DESC: 'Update for Personal Information'
+		},
+		CHANGE_PASSWORD: {
+			TITLE: 'Change Password',
+			SUBTITLE: 'Update Password',
+			DESC: ''
+		},
+		TRANSACTIONS: {
+			TITLE: 'Transactions',
+			SUBTITLE: '',
+			DESC: ''
+		},
+		PARTNERS: {
+			TITLE: 'PARTNERS',
+			SUBTITLE: '',
+			DESC: ''
+		},
 		HEADER: {
 			MESSAGE: 'Welcome'
 		},
@@ -158,7 +162,7 @@ export const locale = {
                 DESC: ''
             },
             IMAGE: {
-
+				TITLE: 'Image',
             },
             PHONE: {
 
@@ -197,19 +201,19 @@ export const locale = {
 
             OFFER: {
                 TITLE: {
-                    TITLE: 'Offer\'s Title',
+                    TITLE: 'Offer Title',
                     PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Offer\'s Title.'
+                    DESC: 'Please, enter Offer Title.'
                 },
                 DESCRIPTION: {
-                    TITLE: 'Offer\'s Description',
+                    TITLE: 'Offer Description',
                     PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Offer\'s Description.'
+                    DESC: 'Please, enter Offer Description.'
                 },
                 COST: {
                     TITLE: 'Cost in points',
                     PLACEHOLDER: 'Points',
-                    DESC: 'Please enter offer\'s required points.'
+                    DESC: 'Please enter offer required points.'
                 },
                 EXPIRATION: {
                     TITLE: 'Expiration Date',
@@ -254,7 +258,24 @@ export const locale = {
             },
             POST_ACCESS: {
 
-            }
+            },
+			POST: {
+                TITLE: {
+                    TITLE: 'Post Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Post Title.'
+                },
+                CONTENT: {
+                    TITLE: 'Offer Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Post Description.'
+                },
+                DATE: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
+                },
+            },
         },
         FORM: {
             BUTTONS: {

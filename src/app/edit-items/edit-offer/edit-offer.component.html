@@ -1,15 +1,15 @@
 <div class="new-offer">
 	<mat-card>
 		<mat-card-content>
-			<form class="form" [formGroup]="submitForm" id="kt_form">
-				<div class="heading">Create a new Offer</div>
+			<form *ngIf="offer" class="form" [formGroup]="submitForm" id="kt_form">
+				<div class="heading">Edit Offer</div>
 				<div class="form__section">
 					<div class="wizard-v3__form">
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.TITLE.TITLE' | translate}}</mat-label>
 								<input matInput type="text" name="Title" formControlName="title"
-									placeholder="{{'FIELDS.OFFER.TITLE.PLACEHOLDER' | translate}}">
+									placeholder="{{'FIELDS.OFFER.TITLE.PLACEHOLDER' | translate}}" value="{{offer.title}}">
 								<mat-error *ngIf="isControlHasError('title','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('title','minlength')"
@@ -25,7 +25,7 @@
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</mat-label>
 								<input matInput type="text" name="Description" formControlName="description"
-									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}">
+									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}" value="{{offer.description}}">
 								<mat-error *ngIf="isControlHasError('description','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('description','minlength')"
@@ -55,7 +55,7 @@
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.COST.TITLE' | translate}}</mat-label>
 								<input matInput type="number" name="points" formControlName="cost"
-									placeholder="{{'FIELDS.OFFER.COST.PLACEHOLDER' | translate}}">
+									placeholder="{{'FIELDS.OFFER.COST.PLACEHOLDER' | translate}}" value="{{offer.cost}}">
 								<mat-error *ngIf="isControlHasError('cost','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('cost','min')"
@@ -71,7 +71,7 @@
 							<label class="col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
 								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+									<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="offer.offer_imageURL">
 									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
 									<label class="avatar__upload" data-toggle="tooltip" title=""
 										data-original-title="Change avatar">

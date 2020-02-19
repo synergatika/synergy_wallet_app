@@ -1,98 +1,109 @@
-<div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
-    <form class="kt-form" [formGroup]="submitForm" id="kt_form">
-        <div class="kt-heading kt-heading--md">Create a new Post / Event</div>
-        <div class="kt-form__section kt-form__section--first">
-            <div class="kt-wizard-v3__form">
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" class="form-control" formControlName="title" placeholder="Title" value="title">
-                    <span *ngIf="isControlHasError('title','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span *ngIf="isControlHasError('title','minlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-                        {{validator.title.minLength}}</span>
-                    <span *ngIf="isControlHasError('title','maxlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-                        {{validator.title.maxLength}}</span>
-                    <span class="form-text text-muted">Please enter post's/event's Title.</span>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea type="text" class="form-control" formControlName="description" placeholder="Description"
-                        value="description"> </textarea>
-                    <span *ngIf="isControlHasError('description','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span *ngIf="isControlHasError('description','minlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-                        {{validator.description.minLength}}</span>
-                    <span *ngIf="isControlHasError('description','maxlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-                        {{validator.description.maxLength}}</span>
-                    <span class="form-text text-muted">Please enter post's/event's Description.</span>
-                </div>
-                <div class="form-group">
-                    <label>Access</label>
-                    <select name="access" class="form-control" formControlName="access">
-                        <option value="public">Public to All</option>
-                        <option value="private">Only for registered Members</option>
-                        <option value="partners">Only for Coops</option>
-                    </select>
-                    <span *ngIf="isControlHasError('Access','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span class="form-text text-muted">Please enter post's/events's access.</span>
-                </div>
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" class="form-control" formControlName="location" placeholder="Location"
-                        value="location">
-                    <span *ngIf="isControlHasError('location','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span *ngIf="isControlHasError('location','minlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-                        {{validator.location.minLength}}</span>
-                    <span *ngIf="isControlHasError('location','maxlength')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-                        {{validator.location.maxLength}}</span>
-                    <span class="form-text text-muted">Please enter post's/events's location.</span>
-                </div>
-                <div class="form-group">
-                    <label>Date and Time</label>
-                    <input type="text" class="form-control" formControlName="dateTime" placeholder="DateTime"
-                        value="dateTime">
-                    <span *ngIf="isControlHasError('Access','required')"
-                        class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-                    <span class="form-text text-muted">Please enter post's/events's date time.</span>
-                </div>
-                <div class="form-group">
-                    <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar">
-                            <img class="kt-avatar__holder" [src]="previewUrl">
-                            <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
-                                data-original-title="Change avatar">
-                                <i class="fa fa-pen"></i>
-                                <input type="file" (change)="fileProgress($event)" name="profile_avatar"
-                                    accept=".png, .jpg, .jpeg">
-                            </label>
-                            <span *ngIf="!originalImage" class="kt-avatar__cancel" (click)="onImageCancel()"
-                                data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                                <i class="fa fa-times"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="new-event">
+	<mat-card>
+		<mat-card-content>
+			<form class="form" [formGroup]="submitForm" id="kt_form">
+				<div class="heading heading--md">Create a new Post / Event</div>
+				<div class="form__section form__section--first">
+					<div class="wizard-v3__form">
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Title</mat-label>
+							<input matInput type="text"  formControlName="title" placeholder="Title">
+							<mat-error *ngIf="isControlHasError('title','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-error *ngIf="isControlHasError('title','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.title.minLength}}</mat-error>
+							<mat-error *ngIf="isControlHasError('title','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.title.maxLength}}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/event's Title.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Description</mat-label>
+							<textarea matInput type="text"  formControlName="description" placeholder="Description" > </textarea>
+							<mat-error *ngIf="isControlHasError('description','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-error *ngIf="isControlHasError('description','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.description.minLength}}</mat-error>
+							<mat-error *ngIf="isControlHasError('description','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.description.maxLength}}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/event's Description.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Access</mat-label>
+							<mat-select name="access"  formControlName="access">
+								<mat-option value="public">Public to All</mat-option>
+								<mat-option value="private">Only for registered Members</mat-option>
+								<mat-option value="partners">Only for Coops</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('Access','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/events's access.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Location</mat-label>
+							<input matInput type="text"  formControlName="location" placeholder="Location">
+							<mat-error *ngIf="isControlHasError('location','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-error *ngIf="isControlHasError('location','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.location.minLength}}</mat-error>
+							<mat-error *ngIf="isControlHasError('location','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.location.maxLength}}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/events's location.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Date and Time</mat-label>
+							<input matInput type="text"  formControlName="dateTime" placeholder="DateTime">
+							<mat-error *ngIf="isControlHasError('Access','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/events's date time.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
+							<div class="col-lg-9 col-xl-6">
+								<div class="upload-img" id="kt_user_avatar">
+									<img class="upload-img-holder" [src]="previewUrl">
+									<label class="avatar__upload" data-toggle="tooltip" title=""
+										data-original-title="Change avatar">
+										<i class="fa fa-pen"></i>
+										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+											accept=".png, .jpg, .jpeg">
+									</label>
+									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
+										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+										<i class="fa fa-times"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <!--begin: Form Actions -->
-        <div class="kt-form__actions">
-            <div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-                class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
-                data-ktwizard-type="action-submit">
-                {{ 'FORM.BUTTONS.SUBMIT' | translate }}
-            </div>
-        </div>
-        <!--end: Form Actions -->
+				<!--begin: Form Actions -->
+				<div class="form__actions">
+					<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+						data-ktwizard-type="action-submit">
+						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+					</div>
+				</div>
+				<!--end: Form Actions -->
 
-    </form>
+			</form>
+		</mat-card-content>
+	</mat-card>
 </div>
