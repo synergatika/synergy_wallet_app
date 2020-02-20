@@ -1,8 +1,13 @@
-<div class="microcredit">
-	<p>microcredit</p>
-
-	<div class="row" *ngIf="campaigns">
-		<h2 class="col-md-12 section-heading"> Edit </h2>
+<div class="microcredit">	
+	<h2 class="section-heading"> Campaigns </h2>
+	<div class="row" *ngIf="campaigns">	
+		<div class="item item-wrapper col-md-4" routerLink="create">
+			<mat-card class="item-card new-item-card">
+			 <mat-card-content>
+				<div class="new-item">Add New Campaign</div>
+			 </mat-card-content>
+			</mat-card>
+		</div>
 		<div class="item item-wrapper col-md-4" *ngFor="let item of campaigns" >
 		<mat-card class="item-card">
 			<mat-card-content>

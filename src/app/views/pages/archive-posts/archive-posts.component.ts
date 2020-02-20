@@ -18,7 +18,29 @@ export class ArchivePostsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.fetchPostsData();
+		//this.fetchPostsData();
+		this.fetchPostsEventsData();
+	}
+	
+	fetchPostsEventsData() {
+		this.itemsService.readAllPrivatePostsEvents()
+		  .pipe(
+			tap(
+			  data => {
+				this.posts = data;
+				console.log("all posts");
+				console.log(this.posts)
+
+			  },
+			  error => {
+			  }),
+			takeUntil(this.unsubscribe),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
 	}
 	
 	fetchPostsData() {

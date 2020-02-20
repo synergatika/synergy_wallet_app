@@ -78,19 +78,19 @@ export class ItemsService {
   // }
 
   readPrivateEventsByStore(merchant_id: string): Observable<Event[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
-      // return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}`)
+   // return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
+     return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  // readPublicEventsByStore(merchant_id: string): Observable<Event[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
+   readPublicEventsByStore(merchant_id: string): Observable<Event[]> {
+     return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}`)
+       .pipe(map(response => {
+         return response.data;
+       }));
+   }
 
   createEvent(formData: FormData): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/events`, formData)
@@ -103,8 +103,8 @@ export class ItemsService {
     * Posts
     */
   readAllPrivatePosts(): Observable<Post[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/private/`)
-      //return this.http.get<any>(`${environment.apiUrl}/posts/private/`)
+		//return this.http.get<any>(`${environment.apiUrl}/community/private/`)
+    return this.http.get<any>(`${environment.apiUrl}/posts/private/`)
       .pipe(map(response => {
         return response.data;
       }));
@@ -118,8 +118,8 @@ export class ItemsService {
   // }
 
   readPrivatePostsByStore(merchant_id: string): Observable<Post[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
-      // return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}`)
+    //return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
+     return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}`)
       .pipe(map(response => {
         return response.data;
       }));

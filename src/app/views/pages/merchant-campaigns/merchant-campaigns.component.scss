@@ -1,8 +1,18 @@
-.offer-card {
-	margin-bottom: 30px;
-	padding-top: 0;
-	.offer {
-		&-img {
+.microcredit {
+	.item-wrapper {
+		margin-bottom: 20px;
+	}
+	> .row {
+		margin-top: 20px;
+	}
+	.item {
+		
+		&-card {
+			padding-top: 0;
+			padding-left: 0;
+			padding-right: 0;
+		}		
+		&-img {	
 			position: relative;
 			height: auto;
 			overflow: hidden;
@@ -24,25 +34,28 @@
 				object-position: 50% 50%;
 				object-fit: cover;
 			}
+
 		}
 		&-expires {
 			position: absolute;
 			z-index: 1;
-			right: 0;
-			bottom: 20%;
-			background-color: #e6c615;
+			right: -1px;
+			bottom: 30%;
+			background-color: #37aba7;
 			color: #fff;
-			padding: 10px 22px;
-			font-size: 1.42rem;
+			padding: 5px 15px;
+			font-size: 1.22rem;
 		}
 		&-heading {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			margin-bottom: 18px;
+			position: relative;
 			.points {
 				font-size: 1.1rem;
 			}
+
 		}
 		&-description {
 			font-size: 1.1rem;
@@ -62,9 +75,10 @@
 				position: relative;
 				top: -2px;
 				margin-right: 5px;
+				max-width: fit-content;
 			}
 		}
-		&-info {
+		&-info{
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
@@ -74,13 +88,3 @@
 		}
 	}
 }
-@media (min-width: 768px) {
-	.offer {
-		&-amount {
-			padding-right: 30px;
-			padding-left: 30px;
-		}
-		padding-bottom: 15px;
-	}
-}
-

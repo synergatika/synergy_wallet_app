@@ -154,7 +154,8 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.fetchMerchantsData();
-		this.fetchPostsData();
+		//this.fetchPostsData();
+		this.fetchPostsEventsData();		
 		this.fetchOffersData();
 	}
 
@@ -222,7 +223,28 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		  )
 		  .subscribe();
 	}
+	
+	fetchPostsEventsData() {
+		this.itemsService.readAllPrivatePostsEvents()
+		  .pipe(
+			tap(
+			  data => {
+				this.posts = data;
+				console.log("all posts");
+				console.log(this.posts)
 
+			  },
+			  error => {
+			  }),
+			takeUntil(this.unsubscribe),
+			finalize(() => {
+			  this.loading = false;
+			  this.cdRef.markForCheck();
+			})
+		  )
+		  .subscribe();
+	}
+	
 	fetchOffersData() {
 		this.itemsService.readAllOffers()
 		  .pipe(
@@ -347,6 +369,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	mousedown() {
 	  this.moved = false;
 	}
+	
 	mousemove() {
 	  this.moved = true;
 	}

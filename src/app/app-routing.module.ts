@@ -17,6 +17,8 @@ import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-po
 import { NewPostComponent } from './create-items/new-post/new-post.component';
 import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
 import { NewEventComponent } from './create-items/new-event/new-event.component';
+import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
+import { NewMicrocreditCampaignComponent } from './create-items/new-microcredit-campaign/new-microcredit-campaign.component';
 
 const routes: Routes = [
   // Customer Zone
@@ -68,6 +70,20 @@ const routes: Routes = [
 					},
 					{
 						path: 'create', component: NewOfferComponent
+					},
+					{
+						path: 'edit/:_id', component: EditOfferComponent
+					},
+				]
+			},
+			{
+				path: 'm-campaigns',
+				children: [
+					{
+						path: '', component: MerchantCampaignsComponent,
+					},
+					{
+						path: 'create', component: NewMicrocreditCampaignComponent
 					},
 					{
 						path: 'edit/:_id', component: EditOfferComponent

@@ -51,7 +51,7 @@
 							</div>
 							<div class="col-sm-3 single-amount">
 								<div>
-									<span class="points">{{single.price_reduced | currency:'EUR'}}</span>
+									<span class="points">{{single.price_reduced}}</span>
 								</div>
 							</div>
 						</div>
@@ -67,7 +67,7 @@
 		</div>
 	</div>
 	<div class="row" *ngIf="offers">
-		<div class="col-md-6" *ngFor="let offer of (offers)">
+		<div class="col-md-4" *ngFor="let offer of (offers)">
 			<app-card-offer [offer]="offer" type="all"></app-card-offer>
 		</div>
 	</div>

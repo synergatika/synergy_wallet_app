@@ -1,9 +1,16 @@
 <div class="m-offers">
 	<div class="heading-container">
 		<h1 class="heading">Offers</h1>
-		<button class="add-item" mat-mini-fab routerLink="create">+</button>
+		<!--<button class="add-item" mat-mini-fab routerLink="create">+</button>-->
 	</div>
-	<div class="row">	
+	<div class="row">
+		<div class="item item-wrapper col-md-4" routerLink="create">
+			<mat-card class="item-card new-item-card">
+			 <mat-card-content>
+				<div class="new-item">New Offer</div>
+			 </mat-card-content>
+			</mat-card>
+		</div>
 		<ng-container *ngIf="offers">
 			<div class="item item-wrapper col-md-4" *ngFor="let item of offers" routerLink="edit/{{item.offer_id}}">
 				<mat-card class="item-card">
