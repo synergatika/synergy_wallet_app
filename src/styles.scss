@@ -113,6 +113,9 @@ body {
 		border-radius: 9px;
 		overflow: hidden;
 	}
+	.mat-card.wallet-card:not([class*=mat-elevation-z]) {
+		overflow: visible;
+	}
 	.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
 		background-color: #e6c615;
 	}
@@ -153,14 +156,14 @@ body {
 		.owl-prev {
 			pointer-events: all;
 			&:before {
-				content:"\f97b";
+				content:"\f141";
 				font-family: "Material Design Icons";
 			}
 		}
 		.owl-next {
 			pointer-events: all;
 			&:before {
-				content:"\f96c";
+				content:"\f142";
 				font-family: "Material Design Icons";
 			}
 		}
