@@ -10,6 +10,9 @@
     url(/assets/MaterialIcons-Regular.ttf) format('truetype');
 }*/
 
+
+@import "variables.scss";
+
 html, body { height: 100%; }
 body { 
 	margin: 0; 
@@ -17,10 +20,10 @@ body {
 	background-color: #f2f3f8;
 	font-family: "Noto Sans", "Helvetica Neue", sans-serif; 
 	a {
-		color: #368f8c;
+		color: $main-color;
 		transition: color 0.3s;
 		&:hover {
-			color: #37aba7;
+			color: $main-light;
 		}
 	}
 	.heading {
@@ -48,7 +51,7 @@ body {
 			cursor: pointer;
 		}
 		.mdi {
-			color: #368f8c;
+			color:$main-color;
 			font-size: 18px;
 			margin-right: 5px;
 			&.white {
@@ -80,20 +83,20 @@ body {
 	
 	//Bootstrap
 	.btn-primary {
-		background-color: #37aba7;
-		border-color: #37aba7;
+		background-color:$main-color;
+		border-color:$main-light;
 		&:hover, &:active, &:not(:disabled):not(.disabled):active, &:focus {
-			background-color: #368f8c;
-			border-color: #368f8c;
+			background-color:$main-color;
+			border-color:$main-light;
 		}
 	}
 	.btn-success {
 		color: #fff;
-		background-color: #faa635;
-		border-color: #faa635;
+		background-color: $third-color;
+		border-color: $third-color;
 		&:hover, &:active {
-			background-color: #e49326;
-			border-color: #e49326;
+			background-color: $third-color;
+			border-color: $third-color;
 		}
 	}
 	.dropdown-menu {
@@ -109,8 +112,8 @@ body {
 	
 	//Material Design
 	.mat-card:not([class*=mat-elevation-z]) {
-		box-shadow: 0 6px 21px -2px #d1cbcb;
-		border-radius: 9px;
+		box-shadow: 0 2px 4px 10px rgba(266,266,266,0.1);
+		border-radius: 0px;
 		overflow: hidden;
 	}
 	.mat-card.wallet-card:not([class*=mat-elevation-z]) {

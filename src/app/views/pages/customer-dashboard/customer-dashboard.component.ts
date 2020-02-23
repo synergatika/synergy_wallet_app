@@ -105,6 +105,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	* On init
 	*/
 	ngOnInit() {
+		//Get Wallet Data
 		this.fetchBalanceData();
 		this.fetchOffersData();
 	}
@@ -119,6 +120,12 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		this.loading = false;
 	}
 
+
+	/**
+	* Assets Function On init
+	*/
+
+	//Get the Balance of the Customer
 	fetchBalanceData() {
 		this.loyaltyService.readBalance()
 			.pipe(
@@ -137,6 +144,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			.subscribe();
 	}
 
+	//
 	fetchOffersData() {
 		this.itemsService.readAllOffers()
 			.pipe(
