@@ -196,25 +196,25 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
 		});
 	}
-
 	openQrcode() {
-		/*this.modalService.open(this.qrcode).result.then((result) => {
+		this.modalService.open(this.qrcode).result.then((result) => {
 			console.log('closed');
-
+		}, (reason) => {
+			console.log('dismissed');
+		});
+		/*
+		const modalRef = this.modalService.open(QrCodeComponent);
+		modalRef.result.then((result) => {
+			console.log('closed');
 			}, (reason) => {
 				console.log('dismissed');
-
         });*/
-		const modalRef = this.modalService.open(QrCodeComponent);
 	}
-
 	openWallet() {
 		this.modalService.open(this.wallet).result.then((result) => {
 			console.log('closed');
-
 		}, (reason) => {
 			console.log('dismissed');
-
 		});
 	}
 
