@@ -223,7 +223,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.offers = data;
-						//console.log(this.offers)
+						console.log(this.offers)
 					},
 					error => {
 					}),

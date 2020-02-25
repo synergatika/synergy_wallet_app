@@ -32,7 +32,7 @@ export class ItemsService {
     * Offers
     */
   readAllOffers(): Observable<Offer[]> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/`)
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/public/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
