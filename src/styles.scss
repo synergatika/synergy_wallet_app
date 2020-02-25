@@ -1,14 +1,11 @@
-/*@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://example.com/MaterialIcons-Regular.eot); 
-  src: local('Material Icons'),
-    local('MaterialIcons-Regular'),
-    url(/assets/fonts/MaterialIcons-Regular.woff2) format('woff2'),
-    url(/assets/MaterialIcons-Regular.woff) format('woff'),
-    url(/assets/MaterialIcons-Regular.ttf) format('truetype');
-}*/
+//Variables
+$primary: #e4509e;
+$secondary: #415daa;
+$tertiary: #fdca27;
+$grey: #eee;
+$secondary-dark: #283a6b;
+$primary-dark: #bb4081;
+$tertiary-dark: #ecc032;
 
 html, body { height: 100%; }
 body { 
@@ -17,10 +14,10 @@ body {
 	background-color: #f2f3f8;
 	font-family: "Noto Sans", "Helvetica Neue", sans-serif; 
 	a {
-		color: #368f8c;
+		color: $secondary;
 		transition: color 0.3s;
 		&:hover {
-			color: #37aba7;
+			color: $secondary-dark;
 		}
 	}
 	.heading {
@@ -48,7 +45,7 @@ body {
 			cursor: pointer;
 		}
 		.mdi {
-			color: #368f8c;
+			color: $secondary;
 			font-size: 18px;
 			margin-right: 5px;
 			&.white {
@@ -80,20 +77,20 @@ body {
 	
 	//Bootstrap
 	.btn-primary {
-		background-color: #37aba7;
-		border-color: #37aba7;
+		background-color: $primary;
+		border-color: $primary;
 		&:hover, &:active, &:not(:disabled):not(.disabled):active, &:focus {
-			background-color: #368f8c;
-			border-color: #368f8c;
+			background-color: $primary-dark;
+			border-color: $primary-dark;
 		}
 	}
 	.btn-success {
 		color: #fff;
-		background-color: #faa635;
-		border-color: #faa635;
+		background-color: $tertiary;
+		border-color: $tertiary;
 		&:hover, &:active {
-			background-color: #e49326;
-			border-color: #e49326;
+			background-color: $tertiary-dark;
+			border-color: $tertiary-dark;
 		}
 	}
 	.dropdown-menu {
@@ -212,7 +209,7 @@ body {
 	
 	//New Item Card
 	.new-item-card {
-		background-color: #faa635;
+		background-color: $tertiary;
 		height: 100%;
 		display: flex;
 		align-items: center;
@@ -259,7 +256,7 @@ body {
 aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
 	&.current {
 		.step-indicator {
-			background-color: #37aba7;
+			background-color: $primary;
 			top: -19px;
 			left: calc(50% - 12px);
 			width: 24px;
@@ -277,7 +274,7 @@ aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
 		background-color: #a4cfce;
 	}
 	&.navigable.done a:hover .step-indicator {
-		background-color: #37aba7;
+		background-color: $primary;
 	}
 }
 // TEMPORARY
@@ -293,7 +290,7 @@ aw-wizard-navigation-bar ul.steps-indicator li a {
 }
 .message-highlight {
 	font-size: 24px;
-	color: #37aba7;
+	color: $primary;
 }
 .scan-modal-container form {
 	padding-bottom: 20px;
