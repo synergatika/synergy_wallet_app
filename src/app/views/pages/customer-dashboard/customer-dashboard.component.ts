@@ -1,16 +1,16 @@
+//Import Basic Services
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 import { Subject, Subscriber } from 'rxjs';
-
+import { AuthNotice } from 'src/app/core/helpers/auth-notice/auth-notice.interface';
+import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+//Import System Services
 import { AuthenticationService } from '../../../core/services/authentication.service';
-import { LoyaltyService } from '../../../core/services/loyalty.service';
 import { StaticContentService } from '../../../core/services/staticcontent.service';
 import { ItemsService } from '../../../core/services/items.service';
-import { QrCodeComponent } from '../../../views/pages/qr-code/qr-code.component';
-
-import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { LoyaltyService } from '../../../core/services/loyalty.service';
 import { MicrocreditService } from 'src/app/core/services/microcredit.service';
-import { AuthNotice } from 'src/app/core/helpers/auth-notice/auth-notice.interface';
+
 
 @Component({
 	selector: 'app-customer-dashboard',
@@ -18,17 +18,26 @@ import { AuthNotice } from 'src/app/core/helpers/auth-notice/auth-notice.interfa
 	styleUrls: ['./customer-dashboard.component.scss']
 })
 export class CustomerDashboardComponent implements OnInit, OnDestroy {
+
+	//Set Basic Variables
+	loading: boolean = false;
+	private unsubscribe: Subject<any>;
+
+	//Set Content Variables
+	balance: number = 0; //The points balance of customer
+	badge: any ; //The loyalty badge of customer
+	supports: any; //The microcredits the customer supports
+	offers: any; //Available Offers
+	microcredit: any; //Microcredit content (used in Modal)
+
+	//Set Badges Icons
 	badgesImages = {
 		supporter: '../../../assets/media/images/ranking-1.png',
 		helper: '../../../assets/media/images/ranking-2.png',
 		one_of_us: '../../../assets/media/images/ranking-3.png',
 	};
-	balance: number = 0;
-	badge: any ;
-	offers: any;
-	supports: any;
-	loading: boolean = false;
-	private unsubscribe: Subject<any>;
+
+	//Demo Content
 	list = [
 		{
 			id: "Commonspace34533",
@@ -61,7 +70,6 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			phone: '2103606333'
 		},
 	];
-
 	coops = {
 		"Synallois14234562456": {
 			"id": "Synallois14234562456",
@@ -84,11 +92,11 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			"address": "Nileos 35, 11851, Athens"
 		},
 	};
-	microcredit: any;
-
-	@ViewChild('microcredit_item', { static: false }) microcreditItem;
+	
+	//Set Child Modals
 	@ViewChild('qrcode', { static: false }) qrcode;
 	@ViewChild('wallet', { static: false }) wallet;
+	@ViewChild('microcredit_item', { static: false }) microcreditItem;
 
 	/**
    * Component constructor
@@ -100,11 +108,11 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	constructor(
 		private cdRef: ChangeDetectorRef,
 		private authenticationService: AuthenticationService,
+		private modalService: NgbModal,
 		private loyaltyService: LoyaltyService,
 		private staticContentService: StaticContentService,
 		private itemsService: ItemsService,
 		private microcreditService: MicrocreditService,
-		private modalService: NgbModal
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -117,6 +125,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		this.fetchBadgeData();
 		//Get Wallet Data
 		this.fetchBalanceData();
+		this.fetchSupportsData();
 		//Get Offers Data
 		this.fetchOffersData();
 	}
@@ -131,7 +140,6 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		this.loading = false;
 	}
 
-
 	/**
 	* Assets Function On init
 	*/
@@ -143,8 +151,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			tap(
 				data => {
 					this.badge = data;
-					console.log("badge");
-					console.log(this.badge);
+					//Set Data for Badge based On Level
 					switch(this.badge.slug) {
 						case 1:
 							this.badge.image = this.badgesImages.supporter;
@@ -156,9 +163,10 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 						  break;
 						case 3:
 							this.badge.image = this.badgesImages.one_of_us;
-							this.badge.text_id = 8;
+							this.badge.text_id = 9;
 						  break;
 					} 
+					//Get static content of Badge
 					this.staticContentService.readText(this.badge.text_id)
 					.pipe(
 						tap(
@@ -177,6 +185,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 					).subscribe();
 				},
 				error => {
+					console.log(error);
 			}),
 			takeUntil(this.unsubscribe),
 			finalize(() => {
@@ -196,6 +205,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 						this.balance = parseInt(data.points, 16);
 					},
 					error => {
+						console.log(error);
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
@@ -213,7 +223,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.offers = data;
-						console.log(this.offers)
+						//console.log(this.offers)
 					},
 					error => {
 					}),
@@ -226,7 +236,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			.subscribe();
 	}
 
-
+	//Get the Mircoredit the Customer supports
 	fetchSupportsData() {
 		this.microcreditService.readAllBackerSupports()
 			.pipe(
@@ -236,6 +246,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 						console.log(this.supports);
 					},
 					error => {
+						console.log(error);
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
@@ -245,31 +256,16 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			)
 			.subscribe();
 	}
-	openCoop(singleId) {
-		this.microcredit = this.list.find(x => x.id === singleId);
-		console.log(this.microcredit);
-		console.log(singleId);
-		this.modalService.open(this.microcreditItem).result.then((result) => {
-			console.log('closed');
 
-		}, (reason) => {
-			console.log('dismissed');
-
-		});
-	}
+	/**
+	* Modal Functions
+	*/
 	openQrcode() {
 		this.modalService.open(this.qrcode).result.then((result) => {
 			console.log('closed');
 		}, (reason) => {
 			console.log('dismissed');
 		});
-		/*
-		const modalRef = this.modalService.open(QrCodeComponent);
-		modalRef.result.then((result) => {
-			console.log('closed');
-			}, (reason) => {
-				console.log('dismissed');
-        });*/
 	}
 	openWallet() {
 		this.modalService.open(this.wallet).result.then((result) => {
@@ -277,6 +273,18 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		}, (reason) => {
 			console.log('dismissed');
 		});
+	}
+	openSupport(singleId) {
+		/*
+		this.microcredit = this.list.find(x => x.id === singleId);
+		console.log(this.microcredit);
+		console.log(singleId);
+		this.modalService.open(this.microcreditItem).result.then((result) => {
+			console.log('closed');
+		}, (reason) => {
+			console.log('dismissed');
+
+		});*/
 	}
 
 }

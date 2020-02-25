@@ -2,8 +2,8 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="badge-container">
-				<div *ngIf="badge.image" class="mr-4">
-					<img [src]="badge.image">
+				<div *ngIf="badge" class="mr-4">
+					<img *ngIf="badge.image" [src]="badge.image">
 				</div>
 				<div *ngIf="badge" class="bagde-text">
 					<h2 *ngIf="badge.text">{{badge.text.title.rendered}}</h2>
@@ -37,21 +37,23 @@
 								</div>
 							</div>
 						</div>
-						<div class="single row wallet-coop" *ngFor="let single of (list)" (click)="openCoop(single.id)">
+						<div class="single row wallet-coop" *ngFor="let s of (supports)" (click)="openSupport(s.campaign_id)">
 							<div class="col-sm-9 single-content">
 								<div class="wallet-img">
-									<img src={{single.img}} alt={{single.title}} />
+									<img src={{s.campaign_imageURL}} alt={{s.title}} />
 								</div>
 								<div class="">
 
-									<div class="single-title">{{single.title}}</div>
-									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{coops[single.coop_id]['name']}}</div>
-									<div class="single-subtitle">εώς {{single.expires}}</div>
+									<div class="single-title">{{s.title}}</div>
+									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{s.merchant_name}}</div>
+									<div class="single-subtitle">
+										από {{s.redeemStarts| date: 'd.M.y' }}
+										εώς {{s.redeemEnds | date: 'd.M.y' }}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
 								<div>
-									<span class="points">{{single.price_reduced}}</span>
+									<span class="points">{{ s.initialTokens - s.redeemedTokens }}</span>
 								</div>
 							</div>
 						</div>

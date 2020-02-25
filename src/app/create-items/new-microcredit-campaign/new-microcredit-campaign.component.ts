@@ -190,12 +190,14 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     formData.append('description', controls.description.value);
     formData.append('category', controls.category.value);
     formData.append('access', controls.access.value);
+    formData.append('stepAmount', controls.expiration.value);
     formData.append('quantitative', controls.quantitative.value);
     formData.append('minAllowed', controls.minAllowed.value);
     formData.append('maxAllowed', controls.maxAllowed.value);
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value);
     formData.append('redeemEnds', controls.redeemEnds.value);
+    formData.append('startsAt', controls.expiration.value);
     formData.append('expiresAt', controls.expiration.value);
 
     this.itemsService.createMicrocreditCampaign(formData)
