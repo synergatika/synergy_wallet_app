@@ -17,8 +17,8 @@ export class QrCodeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.myAngularxQrCode = this.authenticationService.currentUserValue.user['email'];
-    //this.authenticationService.currentUserValue.user['email'];
+      this.myAngularxQrCode = this.authenticationService.currentUserValue.user['email'];
   }
+
 }
 

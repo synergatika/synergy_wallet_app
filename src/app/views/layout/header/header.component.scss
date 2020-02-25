@@ -1,6 +1,12 @@
+@import "../../../../variables.scss";
+
 .app-header {
-	background-color: #fff;
-	padding: 10px 30px;
+	background-color:$main-color;
+	padding: 6px 30px;
+	.logo{
+		padding-top: 5px;
+		width: 220px;
+	}
 	box-shadow: 1px 1px 10px #ddd;
 	.header__wrapper {
 		align-items: center;

@@ -73,13 +73,13 @@
 	</div>
 </div>
 
+<!-- Modales -->
 <ng-template #microcredit_item let-c="close" let-d="dismiss">
 	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 		<span aria-hidden="true">&times;</span>
 	</button>
 	<app-card-microcredit [microcredit]="microcredit" [type]="all"></app-card-microcredit>
 </ng-template>
-
 <ng-template #wallet let-c="close" let-d="dismiss">
 	<div class="container wallet-popup">
 		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
@@ -106,10 +106,11 @@
 		</div>
 	</div>
 </ng-template>
-
 <ng-template #qrcode let-c="close" let-d="dismiss">
-	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-		<span aria-hidden="true">&times;</span>
-	</button>
-
+	<div class="container qrcode-popup">
+		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<app-qr-code></app-qr-code>
+	</div>
 </ng-template>
