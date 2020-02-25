@@ -16,7 +16,11 @@ import { MicrocreditService } from 'src/app/core/services/microcredit.service';
 	styleUrls: ['./customer-dashboard.component.scss']
 })
 export class CustomerDashboardComponent implements OnInit, OnDestroy {
-
+	badges = {
+		supporter: '../../../assets/media/images/ranking-1.png',
+		helper: '../../../assets/media/images/ranking-2.png',
+		one_of_us: '../../../assets/media/images/ranking-3.png',
+	};
 	balance: number = 0;
 	offers: any;
 	supports: any;
