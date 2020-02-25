@@ -4,11 +4,13 @@ import { Subject, Subscriber } from 'rxjs';
 
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { LoyaltyService } from '../../../core/services/loyalty.service';
+import { StaticContentService } from '../../../core/services/staticcontent.service';
 import { ItemsService } from '../../../core/services/items.service';
 import { QrCodeComponent } from '../../../views/pages/qr-code/qr-code.component';
 
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MicrocreditService } from 'src/app/core/services/microcredit.service';
+import { AuthNotice } from 'src/app/core/helpers/auth-notice/auth-notice.interface';
 
 @Component({
 	selector: 'app-customer-dashboard',
@@ -16,12 +18,13 @@ import { MicrocreditService } from 'src/app/core/services/microcredit.service';
 	styleUrls: ['./customer-dashboard.component.scss']
 })
 export class CustomerDashboardComponent implements OnInit, OnDestroy {
-	badges = {
+	badgesImages = {
 		supporter: '../../../assets/media/images/ranking-1.png',
 		helper: '../../../assets/media/images/ranking-2.png',
 		one_of_us: '../../../assets/media/images/ranking-3.png',
 	};
 	balance: number = 0;
+	badge: any ;
 	offers: any;
 	supports: any;
 	loading: boolean = false;
@@ -98,6 +101,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		private cdRef: ChangeDetectorRef,
 		private authenticationService: AuthenticationService,
 		private loyaltyService: LoyaltyService,
+		private staticContentService: StaticContentService,
 		private itemsService: ItemsService,
 		private microcreditService: MicrocreditService,
 		private modalService: NgbModal
@@ -109,8 +113,11 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	* On init
 	*/
 	ngOnInit() {
+		//Get Badge
+		this.fetchBadgeData();
 		//Get Wallet Data
 		this.fetchBalanceData();
+		//Get Offers Data
 		this.fetchOffersData();
 	}
 
@@ -128,6 +135,57 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	/**
 	* Assets Function On init
 	*/
+
+	//Get the Badge of the Customer
+	fetchBadgeData() {
+		this.loyaltyService.readBadge()
+		.pipe(
+			tap(
+				data => {
+					this.badge = data;
+					console.log("badge");
+					console.log(this.badge);
+					switch(this.badge.slug) {
+						case 1:
+							this.badge.image = this.badgesImages.supporter;
+							this.badge.text_id = 5;
+							break;
+						case 2:
+							this.badge.image = this.badgesImages.helper;
+							this.badge.text_id = 7;
+						  break;
+						case 3:
+							this.badge.image = this.badgesImages.one_of_us;
+							this.badge.text_id = 8;
+						  break;
+					} 
+					this.staticContentService.readText(this.badge.text_id)
+					.pipe(
+						tap(
+							data => {
+								this.badge.text = data;
+							},
+							error => {
+								console.log(error);
+							}
+						),
+						takeUntil(this.unsubscribe),
+						finalize(() => {
+							this.loading = false;
+							this.cdRef.markForCheck();
+						})
+					).subscribe();
+				},
+				error => {
+			}),
+			takeUntil(this.unsubscribe),
+			finalize(() => {
+				this.loading = false;
+				this.cdRef.markForCheck();
+			})
+		)
+		.subscribe();
+	}
 
 	//Get the Balance of the Customer
 	fetchBalanceData() {
@@ -148,7 +206,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			.subscribe();
 	}
 
-	//
+	//Get the Offers
 	fetchOffersData() {
 		this.itemsService.readAllOffers()
 			.pipe(
@@ -156,7 +214,6 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 					data => {
 						this.offers = data;
 						console.log(this.offers)
-
 					},
 					error => {
 					}),

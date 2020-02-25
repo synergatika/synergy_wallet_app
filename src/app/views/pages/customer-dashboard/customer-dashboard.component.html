@@ -2,12 +2,12 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="badge-container">
-				<div class="mr-4">
-					<img [src]="badges.supporter">
+				<div *ngIf="badge.image" class="mr-4">
+					<img [src]="badge.image">
 				</div>
-				<div class="">
-					<h2>Τίτλος Badges</h2>
-					<p>Μπορείτε αγοράζοντας να μπλα μπλα μπλα</p>
+				<div *ngIf="badge" class="bagde-text">
+					<h2 *ngIf="badge.text">{{badge.text.title.rendered}}</h2>
+					<p [innerHTML]="badge.text.content.rendered" *ngIf="badge.text"></p>
 				</div>
 			</div>
 		</div>
