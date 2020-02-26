@@ -38,7 +38,7 @@ export class AddSupportComponent implements OnInit, OnDestroy {
   support: SupportInterface["MicrocreditSupport"];
 
   submitted: boolean = false;
-
+  rejected: boolean = false;
   showIdentifierForm = false;
 
   constructor(
@@ -96,8 +96,13 @@ export class AddSupportComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.onNextStep();
-            console.log(data);
+			  console.log(data);
+			  if(data.code == 200) {
+				this.onNextStep();
+			  } else {
+				  this.rejected = true;
+				  console.log('no user');
+			  }           
           },
           error => {
           }),

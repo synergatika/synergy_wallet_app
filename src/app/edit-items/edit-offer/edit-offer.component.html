@@ -38,12 +38,11 @@
 							</mat-form-field>
 						</div>
 						<div class="form-group">
-						{{offerExpires}}
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.EXPIRATION.TITLE' | translate}}</mat-label>
-								<input matInput [matDatepicker]="picker" name="expiresAt" formControlName="expiration"  value="{{offer.expiresAt}}" [(ngModel)]="offerExpires">
+								<input matInput [matDatepicker]="picker" name="expiration" formControlName="expiration"  >
 								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-								<mat-datepicker #picker></mat-datepicker>
+								<mat-datepicker #picker [startAt]="date"></mat-datepicker>
 								<!--<mat-select name="expiresAt" formControlName="expiration">
 									<mat-option value="1">{{'FIELDS.OFFER.EXPIRATION_CHOICES.A' | translate}}</mat-option>
 									<mat-option value="2">{{'FIELDS.OFFER.EXPIRATION_CHOICES.B' | translate}}</mat-option>

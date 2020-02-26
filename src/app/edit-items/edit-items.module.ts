@@ -6,6 +6,7 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { EditOfferComponent } from './edit-offer/edit-offer.component';
+import { EditPostComponent } from './edit-post/edit-post.component';
 
 
 const routes: Routes = [
@@ -49,7 +50,7 @@ const routes: Routes = [
     exports: [EditOfferComponent],
     declarations: [
         EditOfferComponent,
-
+		EditPostComponent
     ],
     entryComponents: [
     ]

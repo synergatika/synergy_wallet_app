@@ -15,6 +15,7 @@ import { NewOfferComponent } from './create-items/new-offer/new-offer.component'
 import { EditOfferComponent } from './edit-items/edit-offer/edit-offer.component';
 import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-posts.component';
 import { NewPostComponent } from './create-items/new-post/new-post.component';
+import { EditPostComponent } from './edit-items/edit-post/edit-post.component';
 import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
 import { NewEventComponent } from './create-items/new-event/new-event.component';
 import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
@@ -108,7 +109,7 @@ const routes: Routes = [
 						path: 'create', component: NewPostComponent
 					},
 					{
-						path: 'edit/:_id', component: EditOfferComponent
+						path: 'edit/:_id', component: EditPostComponent
 					},
 				]
 			},

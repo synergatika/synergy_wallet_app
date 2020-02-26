@@ -63,7 +63,7 @@ export class ItemsService {
     * Events
     */
   readAllPrivateEvents(): Observable<Event[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/private/`)
+    return this.http.get<any>(`${environment.apiUrl}/community/private/0-0-0`)
       //    return this.http.get<any>(`${environment.apiUrl}/events/private/`)
       .pipe(map(response => {
         return response.data;
@@ -79,14 +79,14 @@ export class ItemsService {
 
   readPrivateEventsByStore(merchant_id: string): Observable<Event[]> {
    // return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
-     return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}`)
+     return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
    readPublicEventsByStore(merchant_id: string): Observable<Event[]> {
-     return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}`)
+     return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}/0-0-0`)
        .pipe(map(response => {
          return response.data;
        }));
@@ -119,7 +119,7 @@ export class ItemsService {
 
   readPrivatePostsByStore(merchant_id: string): Observable<Post[]> {
     //return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
-     return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}`)
+     return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
