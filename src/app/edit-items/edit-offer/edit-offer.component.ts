@@ -14,11 +14,13 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
+import { ScannerInterface } from '../../scanner/_scanner.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-offer',
   templateUrl: './edit-offer.component.html',
-  styleUrls: ['./edit-offer.component.sass']
+  styleUrls: ['./edit-offer.component.scss']
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
 
@@ -44,8 +46,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 
   submitForm: FormGroup;
   submitted: boolean = false;
-  offer: any;
-
+  offer: ScannerInterface["Offer"];
+  offerExpires: string;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -64,6 +66,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
 	private activatedRoute: ActivatedRoute,
 	private authenticationService: AuthenticationService,
+	private datePipe: DatePipe
   ) {
 	this.activatedRoute.params.subscribe(params => {
       this.offer_id = params['_id'];
@@ -217,6 +220,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.offer = data;
+			 this.offerExpires = this.datePipe.transform(this.offer.expiresAt,'yyyy-MM-dd');;
             console.log(this.offer);
             //this.scannerService.changeOffers(this.offer);
           },

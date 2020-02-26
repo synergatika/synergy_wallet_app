@@ -131,6 +131,9 @@ body {
 	button.mat-mini-fab.mat-accent {
 		background-color: #0c1a33;
 	}
+	th .mat-sort-header-sorted {
+		color: $second-color;
+	}
 	
 	// Slider
 	swiper.swiper-wrapper {

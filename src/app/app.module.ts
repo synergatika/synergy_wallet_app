@@ -104,9 +104,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   ],
   imports: [
     QRCodeModule,
-
-    BrowserModule,
-    AppRoutingModule,
+	AppRoutingModule,
+    BrowserModule,  
     HttpClientModule,
     NoopAnimationsModule,
     MatDialogModule,
@@ -125,7 +124,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	CreateItemsModule,
 	ScannerModule,
 	EditItemsModule,
-	MicrocreditModule
+	MicrocreditModule,
+	
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

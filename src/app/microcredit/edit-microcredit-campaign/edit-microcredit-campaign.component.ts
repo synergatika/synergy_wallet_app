@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AddSupportComponent } from '../add-support/add-support.component';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 // Services
 import { ItemsService } from '../../core/services/items.service';
@@ -22,7 +24,8 @@ import { SupportInterface } from '../_support.interface';
   styleUrls: ['./edit-microcredit-campaign.component.scss']
 })
 export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
-
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -31,10 +34,12 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   paidSupports: MicrocreditSupport[];
   campaigns: MicrocreditCampaign[];
   current: MicrocreditCampaign;
-
+  groupedSupports: Array<any> = [];
   to_pay: string[] = [];
   to_unpay: string[] = [];
-
+  displayedColumns: string[] = ['backer_id', 'initialTokens', 'status'];
+  dataSource:any;
+  
   constructor(
     public matDialog: MatDialog,
     private cdRef: ChangeDetectorRef,
@@ -53,6 +58,8 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+	console.log('this.campaigns');
+	console.log(this.campaigns);
     this.initializeCurrentCampaignData();
     this.fetchSupportsData();
   }
@@ -64,6 +71,8 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
 
   fetchSupportsData() {
+	  console.log('this.campaign_id');
+	  console.log(this.campaign_id);
     this.microcreditService.readAllSupportsByMicrocreditCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
       .pipe(
         tap(
@@ -71,7 +80,10 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
             const groupedSupports = this.groupBy(data, 'status'); // => {orange:[...], banana:[...]}
             this.paidSupports = groupedSupports.confirmation;
             this.unpaidSupports = groupedSupports.order;
-			console.log(groupedSupports);
+			this.groupedSupports = this.groupedSupports.concat(this.unpaidSupports).concat(this.paidSupports);
+			console.log(this.groupedSupports);
+			this.dataSource = new MatTableDataSource(this.groupedSupports);
+			this.dataSource.sort = this.sort;
           },
           error => {
           }),

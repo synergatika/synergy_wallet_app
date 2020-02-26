@@ -32,14 +32,14 @@ export class ItemsService {
     * Offers
     */
   readAllOffers(): Observable<Offer[]> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/`)
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/public/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
   readOffersByStore(merchant_id: string): Observable<Offer[]> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}`)
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/public/${merchant_id}/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
@@ -182,12 +182,19 @@ export class ItemsService {
   }
 
   readPublicMicrocreditCampaignsByStore(merchant_id: string): Observable<MicrocreditCampaign[]> {
-    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/${merchant_id}`)
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/${merchant_id}/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
   }
-
+  
+  readPrivateMicrocreditCampaignsByStore(merchant_id: string): Observable<MicrocreditCampaign[]> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/private/${merchant_id}/0-0-0`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+  
   createMicrocreditCampaign(formData: FormData): Observable<Message[]> {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/campaigns`, formData)
       .pipe(map(response => {
