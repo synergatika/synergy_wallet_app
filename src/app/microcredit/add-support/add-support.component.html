@@ -25,7 +25,7 @@
 		</aw-wizard-step>
 		<aw-wizard-step stepTitle="Amount" awOptionalStep>
 			<div class="step-container row justify-content-md-center">
-				<app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
+				<app-sub-amount-form (add_amount)="onSubmitAmountForm($event)" [rejected]="rejected">
 				</app-sub-amount-form>
 				<!--<button type="button" awPreviousStep>Previous Step</button>-->
 			</div>

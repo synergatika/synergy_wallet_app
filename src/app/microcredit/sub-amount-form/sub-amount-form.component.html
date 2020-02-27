@@ -21,14 +21,13 @@
                 transaction's
                 amount.</span>
         </div>
-        <div class="form-group">
-            <label>Paid?</label>
-            <div class="input-group">
-                <input type="checkbox" class="form-control" name="amount" formControlName="paid" placeholder="Amount"
-                    value="0">
-            </div>
+        <div class="">
+            <mat-checkbox type="checkbox" name="amount" formControlName="paid" placeholder="Amount" value="0" labelPosition="before" >Paid?</mat-checkbox>
         </div>
     </div>
+	<div *ngIf="rejected" class="merchant-alert">
+		Unfortunately there is no user with the details you have entered.
+	</div>
 </form>
-
-<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
+<button mat-raised-button type="button" awPreviousStep class="mr-2">Previous Step</button>
+<button mat-raised-button type="button" (click)="onNextStep()" *ngIf="!rejected">Complete transaction</button>

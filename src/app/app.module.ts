@@ -41,6 +41,7 @@ import { LanguageSwitcherComponent } from './views/layout/header/language-switch
 import { CreateItemsModule } from './create-items/create-items.module';
 import { ScannerModule } from './scanner/scanner.module';
 import { EditItemsModule } from './edit-items/edit-items.module';
+import { MicrocreditModule } from './microcredit/microcredit.module';
 
 import { MenuService } from './core/services/menu.service';
 
@@ -62,6 +63,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MerchantOffersComponent } from './views/pages/merchant-offers/merchant-offers.component';
 import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-posts.component';
 import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
+import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -98,12 +100,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	MerchantOffersComponent,
 	MerchantPostsComponent,
 	MerchantEventsComponent,
+	MerchantCampaignsComponent,
   ],
   imports: [
     QRCodeModule,
-
-    BrowserModule,
-    AppRoutingModule,
+	AppRoutingModule,
+    BrowserModule,  
     HttpClientModule,
     NoopAnimationsModule,
     MatDialogModule,
@@ -121,7 +123,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	InfiniteScrollModule,
 	CreateItemsModule,
 	ScannerModule,
-	EditItemsModule
+	EditItemsModule,
+	MicrocreditModule,
+	
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

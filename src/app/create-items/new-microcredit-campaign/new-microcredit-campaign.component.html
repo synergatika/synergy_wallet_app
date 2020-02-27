@@ -1,211 +1,211 @@
-<div class="grid__item grid__item--fluid">
-	<form class="form" [formGroup]="submitForm" id="kt_form">
-		<div class="heading heading--md">Create a new Microcredit Campaign</div>
-		<div class="form__section">
-			<div class="">
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.TITLE.TITLE' | translate}}</mat-label>
-						<input matInput type="text" name="Title" formControlName="title"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.TITLE.PLACEHOLDER' | translate}}">
-						<mat-error *ngIf="isControlHasError('title','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-error *ngIf="isControlHasError('title','minlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-							{{validator.title.minLength}}</mat-error>
-						<mat-error *ngIf="isControlHasError('title','maxlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-							{{validator.title.maxLength}}</mat-error>
-						<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.TITLE.DESC' | translate}}
-						</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.TITLE' | translate}}</mat-label>
-						<input matInput type="text" name="Terms" formControlName="terms"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.PLACEHOLDER' | translate}}">
-						<mat-error *ngIf="isControlHasError('terms','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-error *ngIf="isControlHasError('terms','minlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-							{{validator.terms.minLength}}</mat-error>
-						<mat-error *ngIf="isControlHasError('terms','maxlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-							{{validator.terms.maxLength}}</mat-error>
-						<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.DESC' | translate}}
-						</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.TITLE' | translate}}</mat-label>
-						<input matInput type="text" name="Description" formControlName="description"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.PLACEHOLDER' | translate}}">
-						<mat-error *ngIf="isControlHasError('description','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-error *ngIf="isControlHasError('description','minlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-							{{validator.description.minLength}}</mat-error>
-						<mat-error *ngIf="isControlHasError('description','maxlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-							{{validator.description.maxLength}}</mat-error>
-						<mat-hint class="form-text text-muted">
-							{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.DESC' | translate}}</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="form-group">
-					<label
-						class="col-xl-3 col-lg-3 col-form-label">{{'FIELDS.MICROCREDIT_CAMPAIGN.IMAGE.TITLE' | translate}}</label>
-					<div class="col-lg-9 col-xl-6">
-						<div class="upload-img" id="kt_user_avatar">
-							<img class="upload-img-holder" [src]="previewUrl">
-							<label class="avatar_upload" data-toggle="tooltip" title=""
-								data-original-title="Change avatar">
-								<i class="fa fa-pen"></i>
-								<input type="file" (change)="fileProgress($event)" name="profile_avatar"
-									accept=".png, .jpg, .jpeg">
+<div class="new-microfunding">
+	<mat-card>
+		<mat-card-content>
+			<form class="form" [formGroup]="submitForm" id="kt_form">
+				<div class="heading">Create a new Microcredit Campaign</div>
+				<div class="form__section">
+					<div class="">
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.TITLE.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="Title" formControlName="title"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.TITLE.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('title','required')" class="error text-danger">
+									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="isControlHasError('title','minlength')" class="error text-danger">
+									{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+									{{validator.title.minLength}}</mat-error>
+								<mat-error *ngIf="isControlHasError('title','maxlength')" class="error text-danger">
+									{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+									{{validator.title.maxLength}}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.TITLE.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="Terms" formControlName="terms"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('terms','required')" class="error text-danger">
+									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="isControlHasError('terms','minlength')" class="error text-danger">
+									{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+									{{validator.terms.minLength}}</mat-error>
+								<mat-error *ngIf="isControlHasError('terms','maxlength')" class="error text-danger">
+									{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+									{{validator.terms.maxLength}}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="Description" formControlName="description"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('description','required')"
+									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+								</mat-error>
+								<mat-error *ngIf="isControlHasError('description','minlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+									{{validator.description.minLength}}</mat-error>
+								<mat-error *ngIf="isControlHasError('description','maxlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+									{{validator.description.maxLength}}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xl-3 col-lg-3 col-form-label">{{'FIELDS.MICROCREDIT_CAMPAIGN.IMAGE.TITLE' | translate}}</label>
+							<div class="col-lg-9 col-xl-6">
+								<div class="upload-img" id="kt_user_avatar">
+									<img class="upload-img-holder" [src]="previewUrl">
+									<label class="avatar_upload" data-toggle="tooltip" title=""
+										data-original-title="Change avatar">
+										<i class="fa fa-pen"></i>
+										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+											accept=".png, .jpg, .jpeg">
+									</label>
+									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
+										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+										<i class="fa fa-times"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="Category" formControlName="category"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('category','required')" class="error text-danger">
+									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group form-check">
+							<label class="form-check-label">
+								<mat-checkbox (click)="onIsQuantitativeCheckboxChange()" type="checkbox"
+									class="form-check-input" name="redeem" formControlName="quantitative" value="false">
+									Is Quantitative?
+								</mat-checkbox>
 							</label>
-							<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-								data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-								<i class="fa fa-times"></i>
-							</span>
+
+						</div>
+						<div *ngIf=isQuantitative>
+							<div class="form-group">
+								<mat-form-field>
+									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.TITLE' | translate}}
+									</mat-label>
+									<input matInput type="number" name="MinAllowed" formControlName="minAllowed"
+										placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.PLACEHOLDER' | translate}}">
+									<mat-error *ngIf="isControlHasError('minAllowed','required')"
+										class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+									</mat-error>
+									<mat-hint class="form-text text-muted">
+										{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.DESC' | translate}}</mat-hint>
+								</mat-form-field>
+							</div>
+							<div class="form-group">
+								<mat-form-field>
+									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.TITLE' | translate}}
+									</mat-label>
+									<input matInput type="number" name="MaxAllowed" formControlName="maxAllowed"
+										placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.PLACEHOLDER' | translate}}">
+									<mat-error *ngIf="isControlHasError('maxAllowed','required')"
+										class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+									</mat-error>
+									<mat-hint class="form-text text-muted">
+										{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.DESC' | translate}}</mat-hint>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.TITLE' | translate}}</mat-label>
+								<input matInput type="number" name="MaxAmount" formControlName="maxAmount"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('maxAmount','required')" class="error text-danger">
+									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="isControlHasError('maxAmount','minlength')" class="error text-danger">
+									{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
+									{{validator.maxAmount.minValue}}</mat-error>
+								<mat-error *ngIf="isControlHasError('maxAmount','maxlength')" class="error text-danger">
+									{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
+									{{validator.maxAmount.maxValue}}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS.TITLE' | translate}}</mat-label>
+								<mat-select name="access" formControlName="access">
+									<mat-option value="public">
+										{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS_CHOICES.A' | translate}}</mat-option>
+									<mat-option value="private">
+										{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS_CHOICES.B' | translate}}</mat-option>
+									<mat-option value="partners">
+										{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS_CHOICES.C' | translate}}</mat-option>
+								</mat-select>
+								<mat-error *ngIf="isControlHasError('access','required')" class="error text-danger">
+									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="Expiration" formControlName="expiration"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('expiration','required')" class="error text-danger">
+									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="RedeemStarts" formControlName="redeemStarts"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('redeemStarts','required')"
+									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+								</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="RedeemEnds" formControlName="redeemEnds"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('redeemEnds','required')" class="error text-danger">
+									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-hint class="form-text text-muted">
+									{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.DESC' | translate}}</mat-hint>
+							</mat-form-field>
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.TITLE' | translate}}</mat-label>
-						<input matInput type="text" name="Category" formControlName="category"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.PLACEHOLDER' | translate}}">
-						<mat-error *ngIf="isControlHasError('category','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-hint class="form-text text-muted">
-							{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.DESC' | translate}}</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="form-group form-check">
-					<label class="form-check-label">
-						<mat-checkbox (click)="onIsQuantitativeCheckboxChange()" type="checkbox"
-							class="form-check-input" name="redeem" formControlName="quantitative" value="false">
-							Is Quantitative?
-						</mat-checkbox>
-					</label>
 
-				</div>
-				<div *ngIf=isQuantitative>
-					<div class="form-group">
-						<mat-form-field>
-							<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.TITLE' | translate}}</mat-label>
-							<input matInput type="number" name="MinAllowed" formControlName="minAllowed"
-								placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.PLACEHOLDER' | translate}}">
-							<mat-error *ngIf="isControlHasError('minAllowed','required')" class="error text-danger">
-								{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-							<mat-hint class="form-text text-muted">
-								{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.DESC' | translate}}</mat-hint>
-						</mat-form-field>
-					</div>
-					<div class="form-group">
-						<mat-form-field>
-							<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.TITLE' | translate}}</mat-label>
-							<input matInput type="number" name="MaxAllowed" formControlName="maxAllowed"
-								placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.PLACEHOLDER' | translate}}">
-							<mat-error *ngIf="isControlHasError('maxAllowed','required')" class="error text-danger">
-								{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-							<mat-hint class="form-text text-muted">
-								{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.DESC' | translate}}</mat-hint>
-						</mat-form-field>
+				<!--begin: Form Actions -->
+				<div class="form__actions">
+					<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+						data-ktwizard-type="action-submit">
+						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
 					</div>
 				</div>
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.TITLE' | translate}}</mat-label>
-						<input matInput type="number" name="MaxAmount" formControlName="maxAmount"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.PLACEHOLDER' | translate}}">
-						<mat-error *ngIf="isControlHasError('maxAmount','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-error *ngIf="isControlHasError('maxAmount','minlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
-							{{validator.maxAmount.minValue}}</mat-error>
-						<mat-error *ngIf="isControlHasError('maxAmount','maxlength')" class="error text-danger">
-							{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
-							{{validator.maxAmount.maxValue}}</mat-error>
-						<mat-hint class="form-text text-muted">
-							{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.DESC' | translate}}</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS.TITLE' | translate}}</mat-label>
-						<mat-select name="access" formControlName="access">
-							<mat-option value="public">{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS_CHOICES.A' | translate}}
-							</mat-option>
-							<mat-option value="private">{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS_CHOICES.B' | translate}}
-							</mat-option>
-							<mat-option value="partners">{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS_CHOICES.C' | translate}}
-							</mat-option>
-						</mat-select>
-						<mat-error *ngIf="isControlHasError('access','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.ACCESS.DESC' | translate}}
-						</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="form-group">
-					<<<<<<< HEAD <label>{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRES.TITLE' | translate}}</label>
-						<input type="text" class="form-control" name="Expiration" formControlName="expiration"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRES.PLACEHOLDER' | translate}}"
-							value="expiration">
-						<span *ngIf="isControlHasError('expiration','required')"
-							class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-						<span
-							class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRES.DESC' | translate}}</span>
-						=======
-						<mat-form-field>
-							<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.TITLE' | translate}}</mat-label>
-							<input matInput type="text" name="Expiration" formControlName="expiration"
-								placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.PLACEHOLDER' | translate}}">
-							<mat-error *ngIf="isControlHasError('expiration','required')" class="error text-danger">
-								{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-							<mat-hint class="form-text text-muted">
-								{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.DESC' | translate}}</mat-hint>
-						</mat-form-field>
-						>>>>>>> origin
-				</div>
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.TITLE' | translate}}</mat-label>
-						<input matInput type="text" name="RedeemStarts" formControlName="redeemStarts"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.PLACEHOLDER' | translate}}">
-						<mat-error *ngIf="isControlHasError('redeemStarts','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-hint class="form-text text-muted">
-							{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.DESC' | translate}}</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="form-group">
-					<mat-form-field>
-						<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.TITLE' | translate}}</mat-label>
-						<input matInput type="text" name="RedeemEnds" formControlName="redeemEnds"
-							placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.PLACEHOLDER' | translate}}">
-						<mat-error *ngIf="isControlHasError('redeemEnds','required')" class="error text-danger">
-							{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-						<mat-hint class="form-text text-muted">
-							{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.DESC' | translate}}</mat-hint>
-					</mat-form-field>
-				</div>
-			</div>
-		</div>
+				<!--end: Form Actions -->
 
-		<!--begin: Form Actions -->
-		<div class="form__actions">
-			<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-				class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
-				data-ktwizard-type="action-submit">
-				{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-			</div>
-		</div>
-		<!--end: Form Actions -->
-
-	</form>
+			</form>
+		</mat-card-content>
+	</mat-card>
 </div>

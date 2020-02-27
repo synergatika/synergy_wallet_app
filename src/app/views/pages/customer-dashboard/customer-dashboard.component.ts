@@ -16,7 +16,11 @@ import { MicrocreditService } from 'src/app/core/services/microcredit.service';
 	styleUrls: ['./customer-dashboard.component.scss']
 })
 export class CustomerDashboardComponent implements OnInit, OnDestroy {
-
+	badges = {
+		supporter: '../../../assets/media/images/ranking-1.png',
+		helper: '../../../assets/media/images/ranking-2.png',
+		one_of_us: '../../../assets/media/images/ranking-3.png',
+	};
 	balance: number = 0;
 	offers: any;
 	supports: any;
@@ -105,6 +109,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	* On init
 	*/
 	ngOnInit() {
+		//Get Wallet Data
 		this.fetchBalanceData();
 		this.fetchOffersData();
 	}
@@ -119,6 +124,12 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		this.loading = false;
 	}
 
+
+	/**
+	* Assets Function On init
+	*/
+
+	//Get the Balance of the Customer
 	fetchBalanceData() {
 		this.loyaltyService.readBalance()
 			.pipe(
@@ -137,6 +148,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			.subscribe();
 	}
 
+	//
 	fetchOffersData() {
 		this.itemsService.readAllOffers()
 			.pipe(
@@ -188,25 +200,25 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
 		});
 	}
-
 	openQrcode() {
-		/*this.modalService.open(this.qrcode).result.then((result) => {
+		this.modalService.open(this.qrcode).result.then((result) => {
 			console.log('closed');
-
+		}, (reason) => {
+			console.log('dismissed');
+		});
+		/*
+		const modalRef = this.modalService.open(QrCodeComponent);
+		modalRef.result.then((result) => {
+			console.log('closed');
 			}, (reason) => {
 				console.log('dismissed');
-
         });*/
-		const modalRef = this.modalService.open(QrCodeComponent);
 	}
-
 	openWallet() {
 		this.modalService.open(this.wallet).result.then((result) => {
 			console.log('closed');
-
 		}, (reason) => {
 			console.log('dismissed');
-
 		});
 	}
 

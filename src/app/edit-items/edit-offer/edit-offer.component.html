@@ -24,8 +24,8 @@
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="Description" formControlName="description"
-									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}" value="{{offer.description}}">
+								<textarea matInput name="Description" formControlName="description"
+									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}" value="{{offer.description}}"></textarea>
 								<mat-error *ngIf="isControlHasError('description','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('description','minlength')"
@@ -40,12 +40,15 @@
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.EXPIRATION.TITLE' | translate}}</mat-label>
-								<mat-select name="expiresAt" formControlName="expiration">
+								<input matInput [matDatepicker]="picker" name="expiration" formControlName="expiration"  >
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker [startAt]="date"></mat-datepicker>
+								<!--<mat-select name="expiresAt" formControlName="expiration">
 									<mat-option value="1">{{'FIELDS.OFFER.EXPIRATION_CHOICES.A' | translate}}</mat-option>
 									<mat-option value="2">{{'FIELDS.OFFER.EXPIRATION_CHOICES.B' | translate}}</mat-option>
 									<mat-option value="3">{{'FIELDS.OFFER.EXPIRATION_CHOICES.C' | translate}}</mat-option>
 									<mat-option value="4">{{'FIELDS.OFFER.EXPIRATION_CHOICES.D' | translate}}</mat-option>
-								</mat-select>
+								</mat-select>-->
 								<mat-error *ngIf="isControlHasError('expiration','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.OFFER.EXPIRATION.DESC' | translate}}</mat-hint>

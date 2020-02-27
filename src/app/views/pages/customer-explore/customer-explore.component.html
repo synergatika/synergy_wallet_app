@@ -88,10 +88,10 @@
 						<div class="singleCoop-sector">{{singleCoop.sector}}</div>
 						<div class="info-row"><span class="mdi mdi-pin"></span>{{singleCoop.address.street}},
 							{{singleCoop.address.city}}</div>
-						<div class="info-row"><span class="mdi mdi-phone"></span>{{singleCoop.phone}}</div>
+						<div class="info-row"><span class="mdi mdi-phone"></span>{{singleCoop.contact.phone}}</div>
 						<div class="info-row"><span class="mdi mdi-email"></span>{{singleCoop.email}}</div>
 						<div class="info-row"><span class="mdi mdi-web"></span><a target="_blank"
-								href="{{singleCoop.websiteURL}}">{{singleCoop.websiteURL}}</a></div>
+								href="{{singleCoop.websiteURL}}">{{singleCoop.contact.websiteURL}}</a></div>
 					</div>
 					<div class="hours">
 						<div *ngFor="let hour of (hours)">
@@ -149,45 +149,33 @@
 		<div class="singlePost row">
 			<div class="col-sm-12 singlePost-img-container">
 				<div class="singlePost-img">
-					<img src={{singlePost.merchant_imageURL}} alt={{singlePost.name}} />
-
+					<img src={{singlePost.post_event_imageURL}} alt={{singlePost.name}} />
+					<div *ngIf="singlePost.dateTime" class="post-date"><span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd.M'}}</div>
 				</div>
-
 			</div>
 			<div class="col-sm-12 singlePost-details">
 				<div class="singlePost-heading">
-					<div class="singlePost-title">{{singlePost.content}}</div>
+					<div class="singlePost-title">{{singlePost.title}}</div>
 					<div class="singlePost-type">{{singlePost.type}}</div>
 				</div>
 				<div class="singlePost-description">
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua. Justo nec ultrices dui sapien eget. Sodales ut etiam sit amet.
-						Gravida quis blandit turpis cursus in hac. Adipiscing tristique risus nec feugiat in.
-						Ullamcorper eget nulla facilisi etiam. Nunc lobortis mattis aliquam faucibus purus in massa
-						tempor nec. Feugiat scelerisque varius morbi enim nunc faucibus. Egestas egestas fringilla
-						phasellus faucibus scelerisque eleifend donec. Rhoncus aenean vel elit scelerisque mauris
-						pellentesque pulvinar. Urna cursus eget nunc scelerisque viverra mauris.
-
-						Convallis posuere morbi leo urna molestie at elementum eu facilisis. Dignissim enim sit amet
-						venenatis urna cursus eget nunc. Ac placerat vestibulum lectus mauris ultrices eros. Ligula
-						ullamcorper malesuada proin libero nunc consequat interdum. Adipiscing enim eu turpis egestas
-						pretium. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Est lorem ipsum dolor
-						sit amet consectetur adipiscing. Suspendisse interdum consectetur libero id faucibus nisl
-						tincidunt eget nullam. Quis ipsum suspendisse ultrices gravida dictum fusce ut. Dictum non
-						consectetur a erat nam at lectus urna duis. Nisl pretium fusce id velit ut tortor.
+					<p *ngIf="singlePost.content">
+						{{singlePost.content}}
+					</p>
+					<p *ngIf="singlePost.description">
+						{{singlePost.description}}
 					</p>
 				</div>
 				<div class="singlePost-info">
 					<div class="">
 						<div class="singleCoop-subtitle">
-							<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span
-								class="mdi mdi-pin"></span>{{singleCoop.address.street}},
-							{{singleCoop.address.city}}</div>
+							<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />-->
+							<span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
+						</div>
 					</div>
-					<div class="share">
-						<span class="mdi mdi-share-variant share-icon"></span>
-						<!--<img src="../../../assets/media/images/Share.png" alt="share" />-->
+					<div class="share">						
+						<app-share-icon></app-share-icon>
+						<!--<span class="mdi mdi-share-variant share-icon"></span><img src="../../../assets/media/images/Share.png" alt="share" />-->
 					</div>
 				</div>
 			</div>

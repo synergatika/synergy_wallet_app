@@ -14,11 +14,13 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
+import { ScannerInterface } from '../../scanner/_scanner.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-offer',
   templateUrl: './edit-offer.component.html',
-  styleUrls: ['./edit-offer.component.sass']
+  styleUrls: ['./edit-offer.component.scss']
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
 
@@ -41,11 +43,10 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = false;
-
+  offerExpires: Date;
   submitForm: FormGroup;
   submitted: boolean = false;
-  offer: any;
-
+  offer: ScannerInterface["Offer"];
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -64,6 +65,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
 	private activatedRoute: ActivatedRoute,
 	private authenticationService: AuthenticationService,
+	private datePipe: DatePipe
   ) {
 	this.activatedRoute.params.subscribe(params => {
       this.offer_id = params['_id'];
@@ -76,7 +78,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 	 */
   ngOnInit() {
 	this.fetchOfferData();
-    this.initForm();
+    //this.initForm();
   }
 
 	/**
@@ -108,7 +110,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         Validators.max(this.validator.cost.maxValue)
       ])
       ],
-      expiration: ['1', Validators.compose([
+      expiration: [this.offerExpires, Validators.compose([
         Validators.required
       ])
       ],
@@ -177,12 +179,13 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       default:
         var _newDate = _date.setDate(_date.getDate() + 7);
     }
-
+return;
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
-    formData.append('expiresAt', _newDate.toString());
+    //formData.append('expiresAt', _newDate.toString());
+	formData.append('expiration', this.offerExpires.toString());
 
     this.itemsService.createOffer(formData)
       .pipe(
@@ -218,6 +221,10 @@ export class EditOfferComponent implements OnInit, OnDestroy {
           data => {
             this.offer = data;
             console.log(this.offer);
+			console.log(this.offer.expiresAt);
+			this.offerExpires = new Date(this.offer.expiresAt);
+			console.log(this.offerExpires.getTime());
+			this.initForm();
             //this.scannerService.changeOffers(this.offer);
           },
           error => {

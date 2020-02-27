@@ -1,4 +1,4 @@
-<div class="footer-wrapper">
+<div class="footer-wrapper" *ngIf="user.access != 'merchant'">
 	<div class="footer-content">
 		<div *ngFor="let item of menu" [ngClass]="getItemCssClasses(item.link)">
 			<a [routerLink]="['/'+item.link]">

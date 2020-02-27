@@ -15,14 +15,24 @@ import { NewOfferComponent } from './create-items/new-offer/new-offer.component'
 import { EditOfferComponent } from './edit-items/edit-offer/edit-offer.component';
 import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-posts.component';
 import { NewPostComponent } from './create-items/new-post/new-post.component';
+import { EditPostComponent } from './edit-items/edit-post/edit-post.component';
 import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
 import { NewEventComponent } from './create-items/new-event/new-event.component';
+import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
+import { NewMicrocreditCampaignComponent } from './create-items/new-microcredit-campaign/new-microcredit-campaign.component';
+import { EditMicrocreditCampaignComponent } from './microcredit/edit-microcredit-campaign/edit-microcredit-campaign.component';
+
+// Auth
+import { AuthGuard } from './core/helpers/auth.guard';
+import { UserGuard } from './core/helpers/user.guard';
 
 const routes: Routes = [
-  // Customer Zone
+	{ path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+
 	{
 		path: '',
 		component: LayoutComponent,
+		canActivate: [AuthGuard],
 		children: [
 			{
 				path: '', redirectTo: 'dashboard', pathMatch: 'full'
@@ -31,7 +41,8 @@ const routes: Routes = [
 			path: 'qr-code', component: QrCodeComponent
 			},*/
 			{
-				path: 'dashboard', component: CustomerDashboardComponent
+				path: 'dashboard', component: CustomerDashboardComponent,
+				canActivate: [UserGuard],
 			},
 			{
 				path: 'explore', component: CustomerExploreComponent
@@ -75,6 +86,20 @@ const routes: Routes = [
 				]
 			},
 			{
+				path: 'm-campaigns',
+				children: [
+					{
+						path: '', component: MerchantCampaignsComponent,
+					},
+					{
+						path: 'create', component: NewMicrocreditCampaignComponent
+					},
+					{
+						path: 'edit/:_id', component: EditMicrocreditCampaignComponent
+					},
+				]
+			},
+			{
 				path: 'm-posts',
 				children: [
 					{
@@ -84,7 +109,7 @@ const routes: Routes = [
 						path: 'create', component: NewPostComponent
 					},
 					{
-						path: 'edit/:_id', component: EditOfferComponent
+						path: 'edit/:_id', component: EditPostComponent
 					},
 				]
 			},
@@ -107,7 +132,7 @@ const routes: Routes = [
 			},*/
 		]
 	},
-	{ path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+	
 	{ path: '', redirectTo: 'create', pathMatch: 'full' },
 	//{ path: '**', redirectTo: 'qr-code', pathMatch: 'full' },
 	{ path: '**', component: NotFoundComponent },

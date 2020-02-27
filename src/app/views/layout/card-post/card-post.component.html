@@ -6,13 +6,13 @@
 				<div class="col-sm-12 post-img-container">
 					<div class="post-img">
 						<img src={{post.post_event_imageURL}} alt={{post.title}} />
-						<div class="post-expires"><span class="white mdi mdi-calendar"></span> {{post.expiresAt | date: 'd.M'}}</div>
+						<div *ngIf="post.dateTime" class="post-expires"><span class="white mdi mdi-calendar"></span> {{post.dateTime | date: 'd.M'}}</div>
 					</div>
 					
 				</div>
 				<div class="col-sm-12 post-amount">
 					<div class="post-heading">
-						<div class="post-title">{{post.description}}</div>
+						<div class="post-title">{{post.title}}</div>
 						<div>
 							<span class="points">{{post.cost | currency:'EUR'}}</span>
 						</div>
@@ -23,7 +23,7 @@
 					<div class="post-info">
 						<div class="">
 							<div class="post-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>{{post.merchant_name}}</div>
-							<div class="post-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span class="mdi mdi-pin"></span>{{post.merchant_name}}</div>
+							<div *ngIf="post.location" class="post-subtitle"><!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />--><span class="mdi mdi-pin"></span>{{post.location}}</div>
 						</div>
 						<!--<app-share-icon></app-share-icon>-->
 					</div>

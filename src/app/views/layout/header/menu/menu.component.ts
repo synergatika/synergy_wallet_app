@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
 		},
 		{
 			title: 'MENU.CAMPAIGNS',
-			link: 'microcredit',
+			link: 'm-campaigns',
 			icon: 'set-none',
 		},
 		{
