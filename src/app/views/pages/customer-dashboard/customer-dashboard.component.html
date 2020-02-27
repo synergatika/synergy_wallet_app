@@ -20,7 +20,8 @@
 			  </mat-card-header>
 			  <mat-card-content>
 					<!--begin::Content-->
-					<div class="wallet_single_wrapper">						
+					<div class="wallet_single_wrapper">		
+						<!-- Show Points the user has -->				
 						<div class="single row wallet-row" (click)="openWallet()">
 							<div class="col-sm-9 single-content">
 								<span class="wallet-img">
@@ -37,7 +38,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="single row wallet-coop" *ngFor="let s of (supports)" (click)="openSupport(s.campaign_id)">
+						<!-- Show Campaign the users supports -->
+						<div class="single row wallet-coop" *ngFor="let s of (supportsList)" (click)="openSupportItem(s.support_id)">
 							<div class="col-sm-9 single-content">
 								<div class="wallet-img">
 									<img src={{s.campaign_imageURL}} alt={{s.title}} />
@@ -47,13 +49,13 @@
 									<div class="single-title">{{s.title}}</div>
 									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{s.merchant_name}}</div>
 									<div class="single-subtitle">
-										από {{s.redeemStarts| date: 'd.M.y' }}
+										από {{s.redeemStarts | date: 'd.M.y' }}
 										εώς {{s.redeemEnds | date: 'd.M.y' }}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
 								<div>
-									<span class="points">{{ s.initialTokens - s.redeemedTokens }}</span>
+									<span class="points">{{ s.initialTokens - s.redeemedTokens | currency:'EUR' }}</span>
 								</div>
 							</div>
 						</div>
@@ -76,11 +78,13 @@
 </div>
 
 <!-- Modales -->
-<ng-template #microcredit_item let-c="close" let-d="dismiss">
-	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-		<span aria-hidden="true">&times;</span>
-	</button>
-	<app-card-microcredit [microcredit]="microcredit" [type]="all"></app-card-microcredit>
+<ng-template #qrcode let-c="close" let-d="dismiss">
+	<div class="qrcode-popup">
+		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<app-qr-code></app-qr-code>
+	</div>
 </ng-template>
 <ng-template #wallet let-c="close" let-d="dismiss">
 	<div class="container wallet-popup">
@@ -108,11 +112,9 @@
 		</div>
 	</div>
 </ng-template>
-<ng-template #qrcode let-c="close" let-d="dismiss">
-	<div class="container qrcode-popup">
-		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		<app-qr-code></app-qr-code>
-	</div>
+<ng-template #supports let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<app-card-supports [supportItem]="supportItem"></app-card-supports>
 </ng-template>

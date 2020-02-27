@@ -26,9 +26,10 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	//Set Content Variables
 	balance: number = 0; //The points balance of customer
 	badge: any ; //The loyalty badge of customer
-	supports: any; //The microcredits the customer supports
+	supportsList: any; //The microcredits the customer supports
+	supportItem: any; //Currently Selected microcredit Support
 	offers: any; //Available Offers
-	microcredit: any; //Microcredit content (used in Modal)
+	// microcredit: any; //Microcredit content (used in Modal)
 
 	//Set Badges Icons
 	badgesImages = {
@@ -37,7 +38,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		one_of_us: '../../../assets/media/images/ranking-3.png',
 	};
 
-	//Demo Content
+	/*/Demo Content
 	list = [
 		{
 			id: "Commonspace34533",
@@ -91,12 +92,12 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			"phone": "2103606333",
 			"address": "Nileos 35, 11851, Athens"
 		},
-	};
+	};*/
 	
 	//Set Child Modals
 	@ViewChild('qrcode', { static: false }) qrcode;
 	@ViewChild('wallet', { static: false }) wallet;
-	@ViewChild('microcredit_item', { static: false }) microcreditItem;
+	@ViewChild('supports', { static: false }) supports ;
 
 	/**
    * Component constructor
@@ -242,8 +243,8 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(
 					data => {
-						this.supports = data;
-						console.log(this.supports);
+						this.supportsList = data;
+						console.log(this.supportsList);
 					},
 					error => {
 						console.log(error);
@@ -274,17 +275,12 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			console.log('dismissed');
 		});
 	}
-	openSupport(singleId) {
-		/*
-		this.microcredit = this.list.find(x => x.id === singleId);
-		console.log(this.microcredit);
-		console.log(singleId);
-		this.modalService.open(this.microcreditItem).result.then((result) => {
+	openSupportItem(supportItemId) {
+		this.supportItem = this.supportsList.find(x => x.support_id === supportItemId);
+		this.modalService.open(this.supports).result.then((result) => {
 			console.log('closed');
 		}, (reason) => {
 			console.log('dismissed');
-
-		});*/
+		});
 	}
-
 }
