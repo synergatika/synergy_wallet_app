@@ -104,7 +104,7 @@ export class ItemsService {
     */
   readAllPrivatePosts(): Observable<Post[]> {
 		//return this.http.get<any>(`${environment.apiUrl}/community/private/`)
-    return this.http.get<any>(`${environment.apiUrl}/posts/private/`)
+    return this.http.get<any>(`${environment.apiUrl}/posts/private/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));

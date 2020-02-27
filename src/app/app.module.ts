@@ -54,7 +54,7 @@ import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 //import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { SlickModule } from 'ngx-slick';
+//import { SlickModule } from 'ngx-slick';
 import { ShareIconComponent } from './views/widgets/share-icon/share-icon.component';
 import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops.component';
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
