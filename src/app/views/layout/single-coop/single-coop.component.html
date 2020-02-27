@@ -48,6 +48,16 @@
 			</div>
 		</div>
 
+		<!-- Microcredit Campaigns -->
+		<div class="col-md-6 col-lg-12" *ngIf="this.singleMicrocredits">
+			<h3 class="section-heading">Καμπάνιες</h3>
+			<owl-carousel-o [options]="customOptionsSingle">
+				<ng-template carouselSlide *ngFor="let microcredit of (singleMicrocredits)">
+					<app-card-microcredit [microcredit]="microcredit" type="single"></app-card-microcredit>
+				</ng-template>
+			</owl-carousel-o>
+		</div>
+
 		<!-- Offers of Coop -->
 		<div class="col-md-6 col-lg-12" *ngIf="singleOffers">
 			<h3 class="section-heading">Προσφορές</h3>
@@ -63,22 +73,15 @@
 			<h3 class="section-heading">Εκδηλώσεις και Νέα</h3>
 			<owl-carousel-o [options]="customOptionsSingle">
 				<ng-template carouselSlide *ngFor="let post of (singlePosts)">
-					<app-card-post [post]="post" (mousedown)="mousedown()" (mousemove)="mousemove()"
+					<app-card-post [post]="post" type="single" (mousedown)="mousedown()" (mousemove)="mousemove()"
 						(mouseup)="mouseup(post, 'post')"></app-card-post>
 				</ng-template>
 			</owl-carousel-o>
 		</div>
-
-
-		<!--<div class="col-md-6 col-lg-12" *ngIf="singleMicrocredit">
-				<h3 class="section-heading">Καμπάνιες</h3>
-				<owl-carousel-o [options]="customOptionsSingle">
-					<ng-template carouselSlide *ngFor="let microcredit of (singleMicrocredit)">
-						<app-card-microcredit [microcredit]="microcredit" type="single"></app-card-microcredit>
-					</ng-template>
-				</owl-carousel-o>
-			</div>-->
 	</div>
+
+
+
 </div>
 
 <!-- Post Event Modal -->

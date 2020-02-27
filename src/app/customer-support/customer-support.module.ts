@@ -8,6 +8,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ArchwizardModule } from 'angular-archwizard';
 
 import { CustomerSupportComponent } from './customer-support.component';
+import { CardMicrocreditComponent } from './card-microcredit/card-microcredit.component';
+
 import { SupportMicrocreditComponent } from './support-microcredit/support-microcredit.component'
 
 import { SubAmountFormComponent } from './sub-amount-form/sub-amount-form.component';
@@ -56,9 +58,10 @@ const routes: Routes = [
         //     multi: true
         // },
     ],
-    exports: [CustomerSupportComponent],
+    exports: [CustomerSupportComponent,CardMicrocreditComponent],
     declarations: [
         CustomerSupportComponent,
+        CardMicrocreditComponent,
         SupportMicrocreditComponent,
         SubAmountFormComponent,
         SubFinalStepComponent,

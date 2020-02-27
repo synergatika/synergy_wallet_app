@@ -23,8 +23,10 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	@Input() singleCoop: any;
 	//Set Content Variables
 	singleOffers: any;
-	singlePosts: any;
-	singlePost:any;
+	singlePosts: any; //Used to store posts
+	singlePost:any; //Used for the post to open in modal
+	singleMicrocredits:any; //Used to store microcredits
+	singleMicrocredit:any; //Used for the Microcreit to open in modal
 
 	//Set Child Modals
 	@ViewChild('microcreditModal', { static: false }) microcreditModal;
@@ -61,14 +63,12 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-
+		//Get Microcredits of Coop
+		this.fetchSingleMicrocreditsData(this.singleCoop._id);
 		//Get Offers of Coop
 		this.fetchSingleOffersData(this.singleCoop._id);
 		//Get Post & Events of Coop
 		this.fetchSinglePostEventsData(this.singleCoop._id);
-		//this.singleMicrocredit = [this.list.find(x => x.coop_id === coop._id)];
-		//this.singleMicrocredit = this.list;
-		//console.log(this.singleMicrocredit);
 	}
 
 	ngOnDestroy() {
@@ -80,6 +80,26 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	/**
 	* Assets Function On init
 	*/
+
+	//Get Microcredit Campaigns of Coop
+	fetchSingleMicrocreditsData(merchant_id) {
+		this.singleMicrocredits = null;
+		this.itemsService.readPublicMicrocreditCampaignsByStore(merchant_id)
+			.pipe(
+				tap(
+					data => {
+						this.singleMicrocredits = data;
+					},
+					error => {
+						console.log(error);
+					}),
+				finalize(() => {
+					this.loading = false;
+					this.cdRef.markForCheck();
+				})
+			)
+			.subscribe();
+	}
 
 	//Get Offers of Coop
 	fetchSingleOffersData(merchant_id) {
@@ -148,7 +168,6 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 
 	//Open Post
 	openPost(post) {
-		console.log("test");
 		this.singlePost = post;
 		this.modalService.open(
 			this.postModal,

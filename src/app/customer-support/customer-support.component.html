@@ -1,9 +1,4 @@
 <div class="support">
-	<!--<main id="logout-button-holder">
-		<button *ngFor="let item of campaigns" mat-raised-button id="logout-button"
-			(click)="openModal(item.merchant_id, item.campaign_id)">Scan
-			for Campaigns: {{item.title}}</button>
-	</main>-->
 	<div class="row" *ngIf="campaigns">
 		<h2 class="col-md-12 section-heading">Scan for Campaigns</h2>
 		<div class="item item-wrapper col-md-4" *ngFor="let campaign of campaigns">			
