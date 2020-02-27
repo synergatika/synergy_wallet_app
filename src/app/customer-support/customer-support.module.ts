@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ArchwizardModule } from 'angular-archwizard';
 
 import { CustomerSupportComponent } from './customer-support.component';
-import { SupportMicrocreditComponent } from './support-microcredit/support-microcredit.component';
+import { SupportMicrocreditComponent } from './support-microcredit/support-microcredit.component'
 
 import { SubAmountFormComponent } from './sub-amount-form/sub-amount-form.component';
 import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component';
@@ -43,7 +43,7 @@ const routes: Routes = [
         MatCheckboxModule,
         MatDialogModule,
 		MatCardModule,
-        TranslateModule.forChild()
+        TranslateModule.forChild(),
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],
