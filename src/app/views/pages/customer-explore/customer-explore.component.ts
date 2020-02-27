@@ -14,7 +14,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styleUrls: ['./customer-explore.component.scss']
 })
 export class CustomerExploreComponent implements OnInit, OnDestroy {
-	//Set Basic Variables
+	//Set Basic Variables 
 	moved;
 	private unsubscribe: Subject<any>;
 	loading: boolean = false;
@@ -32,10 +32,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	//Set Child Modals
 	@ViewChild('coopModal', {static: false}) coopModal;
 	@ViewChild('postModal', {static: false}) postModal;
-	
-	//@ViewChild('myname',  {static: false}) elem:ElementRef;	
-	
-	//hours = ["Δευτέρα, Τρίτη, Πέμπτη, Παρασκευή 9.00-21.00","Τετάρτη 9.00-16.00","Σάββατο 10.00-16.00"];
 	
 	//Slider Options
 	customOptions: OwlOptions = {
@@ -189,148 +185,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 				console.log('dismissed');
 		});
 	}
-
-
-	/*
-	fetchPostsData() {
-		this.itemsService.readAllPrivatePosts()
-		  .pipe(
-			tap(
-			  data => {
-				this.posts = data;
-				console.log("all posts");
-				console.log(this.posts)
-
-			  },
-			  error => {
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
-	}
-
-	fetchEventsData() {
-		this.itemsService.readAllPrivateEvents()
-		  .pipe(
-			tap(
-			  data => {
-				this.events = data;
-			  },
-			  error => {
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
-	}
-		
-	fetchSingleOffersData(merchant_id) {
-		this.singleOffers = null;
-		this.itemsService.readOffersByStore(merchant_id)
-		  .pipe(
-			tap(
-			  data => {
-				console.log("single offers");
-				console.log(data);
-				this.singleOffers = data;
-			  },
-			  error => {
-			  }),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
-	}
-
-	fetchSinglePostsData(merchant_id) {
-		this.itemsService.readPrivatePostsByStore(merchant_id)
-		  .pipe(
-			tap(
-			  data => {
-				console.log(data);
-				this.posts = data;
-			  },
-			  error => {
-			  }),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
-	}
-	*/
-	
-	/*
-	openCoop( coop) {	  
-		console.log('coop modal');
-		//console.log(coop);
-		this.singleCoop = coop;
-		this.fetchSingleOffersData(coop._id);
-		//this.singleMicrocredit = [this.list.find(x => x.coop_id === coop._id)];
-		this.singleMicrocredit = this.list;
-		console.log(this.singleMicrocredit);
-		this.modalService.open(
-			this.coopModal, 
-			{
-				ariaLabelledBy: 'modal-basic-title', 
-				size: 'lg', 
-				backdropClass: 'fullscrenn-backdrop',
-				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
-			}
-		).result.then((result) => {
-			console.log('closed');
-
-			}, (reason) => {
-				console.log('dismissed');
-
-		});
-	}
-
-	openPost(post) {	  
-		console.log('post modal');
-		console.log(post);
-		this.singlePost = post;
-		this.modalService.open(
-			this.postModal, 
-			{
-				ariaLabelledBy: 'modal-basic-title', 
-				size: 'lg', 
-				backdropClass: 'fullscrenn-backdrop',
-				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
-			}
-		).result.then((result) => {
-			console.log('closed');
-
-			}, (reason) => {
-				console.log('dismissed');
-
-		});
-	}*/
-	
-	/*ngAfterViewInit() {
-		const interval = setInterval(() => {
-			const condition = this.elRef.nativeElement.querySelector('.swiper-slide');
-			console.log('-');
-			if (condition) {
-			  this.elRef.nativeElement.querySelector('.swiper-slide').addEventListener('click', this.openCoop.bind(this));
-			  console.log('added!!!!!!!!');
-			  clearInterval(interval) 
-			}
-		  }, 100); 
-	}*/
-
 
 	//Actions to Open Modals from Carousel
 	mousedown() {

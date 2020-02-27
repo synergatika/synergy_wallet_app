@@ -4,29 +4,31 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { ArchwizardModule } from 'angular-archwizard';
 
+//Support Page
 import { CustomerSupportComponent } from './customer-support.component';
+//Campaign Card
 import { CardMicrocreditComponent } from './card-microcredit/card-microcredit.component';
+//Campaign Single
+import { SingleMicrocreditComponent } from './single-microcredit/single-microcredit.component';
 
+//Pledge Form
 import { SupportMicrocreditComponent } from './support-microcredit/support-microcredit.component'
-
 import { SubAmountFormComponent } from './sub-amount-form/sub-amount-form.component';
 import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component';
-
 import { SupportService } from './_support.service';
 
 const routes: Routes = [
     {
         path: '',
         component: CustomerSupportComponent,
-        children: [
+        /*children: [
             {
                 path: 'microcredit/:campaign_id',
                 component: SupportMicrocreditComponent,
             }
-        ]
+        ]*/
     }
 ];
 
@@ -34,7 +36,6 @@ const routes: Routes = [
 @NgModule({
     imports: [
         ArchwizardModule,
-
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -58,10 +59,11 @@ const routes: Routes = [
         //     multi: true
         // },
     ],
-    exports: [CustomerSupportComponent,CardMicrocreditComponent],
+    exports: [CustomerSupportComponent,CardMicrocreditComponent,SingleMicrocreditComponent],
     declarations: [
         CustomerSupportComponent,
         CardMicrocreditComponent,
+        SingleMicrocreditComponent,
         SupportMicrocreditComponent,
         SubAmountFormComponent,
         SubFinalStepComponent,

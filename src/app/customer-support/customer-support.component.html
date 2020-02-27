@@ -1,8 +1,20 @@
 <div class="support">
+	<!-- List of Campaigns -->
 	<div class="row" *ngIf="campaigns">
-		<h2 class="col-md-12 section-heading">Scan for Campaigns</h2>
-		<div class="item item-wrapper col-md-4" *ngFor="let campaign of campaigns">			
+		<h2 class="col-md-12 section-heading">Campaigns</h2>
+		<div class="item item-wrapper col-md-4" *ngFor="let campaign of campaigns" (click)="openMicrocredit(campaign)">			
 			<app-card-microcredit [microcredit]="campaign" ></app-card-microcredit>
 		</div>
 	</div>
 </div>
+
+<!-- Microcredit Campaign Modal -->
+<ng-template #campaignModal let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<app-single-microcredit [singleMicrocredit]="singleMicrocredit"></app-single-microcredit>
+</ng-template>
+
+
+
