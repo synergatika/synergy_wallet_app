@@ -22,8 +22,6 @@ import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
 import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
 import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
-import { CustomerSupportComponent } from './views/pages/customer-support/customer-support.component';
-import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { HeaderComponent } from './views/layout/header/header.component';
@@ -82,8 +80,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     InvitationComponent,
     CustomerDashboardComponent,
     CustomerExploreComponent,
-    CustomerSupportComponent,
-    CustomerExploreOneComponent,
 	
 	MenuComponent,
     LayoutComponent,

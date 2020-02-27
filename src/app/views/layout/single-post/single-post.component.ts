@@ -15,7 +15,7 @@ export class SinglePostComponent implements OnInit {
 	constructor(
 
 	) {
-
+   
 	}
 
 	ngOnInit() {
