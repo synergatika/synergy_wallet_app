@@ -56,28 +56,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		},
 		margin:30,
 		nav: true
-	}
-
-	//Slider Options
-	customOptionsSingle: OwlOptions = {
-		loop: true,
-		mouseDrag: true,
-		touchDrag: false,
-		pullDrag: false,
-		dots: true,
-		navSpeed: 700,
-		navText: ['', ''],
-		responsive: {
-		  0: {
-			items: 1
-		  },
-		  740: {
-			items: 2
-		  }
-		},
-		margin:30,
-		nav: true
-	};	
+	}	
 
 	constructor(
 		private cdRef: ChangeDetectorRef,
@@ -169,6 +148,29 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		  .subscribe();
 	}
 	
+
+	/*
+	/ Modals
+	*/
+
+	//Open Coop
+	openCoop(coop) {	  
+		this.singleCoop = coop;
+		this.modalService.open(
+			this.coopModal, 
+			{
+				ariaLabelledBy: 'modal-basic-title', 
+				size: 'lg', 
+				backdropClass: 'fullscrenn-backdrop',
+				//backdrop: 'static',
+				windowClass: 'fullscrenn-modal',
+			}
+		).result.then((result) => {
+			console.log('closed');
+			}, (reason) => {
+				console.log('dismissed');
+		});
+	}
 
 
 	/*
@@ -325,7 +327,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		} else {
 			console.log('not moved');
 			if(type == "coop") {
-				//this.openCoop(data);
+				this.openCoop(data);
 			} else {
 				//this.openPost(data);
 			}

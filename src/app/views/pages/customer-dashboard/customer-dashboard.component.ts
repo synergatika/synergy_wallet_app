@@ -38,9 +38,9 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	};
 	
 	//Set Child Modals
-	@ViewChild('qrcode', { static: false }) qrcode;
-	@ViewChild('wallet', { static: false }) wallet;
-	@ViewChild('supports', { static: false }) supports ;
+	@ViewChild('qrcodeModal', { static: false }) qrcodeModal;
+	@ViewChild('walletModal', { static: false }) walletModal;
+	@ViewChild('supportsModal', { static: false }) supportsModal ;
 
 	/**
    * Component constructor
@@ -205,22 +205,22 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	* Modal Functions
 	*/
 	openQrcode() {
-		this.modalService.open(this.qrcode).result.then((result) => {
+		this.modalService.open(this.qrcodeModal).result.then((result) => {
 			console.log('closed');
 		}, (reason) => {
 			console.log('dismissed');
 		});
 	}
 	openWallet() {
-		this.modalService.open(this.wallet).result.then((result) => {
+		this.modalService.open(this.walletModal).result.then((result) => {
 			console.log('closed');
 		}, (reason) => {
 			console.log('dismissed');
 		});
 	}
-	openSupportItem(supportItemId) {
-		this.supportItem = this.supportsList.find(x => x.support_id === supportItemId);
-		this.modalService.open(this.supports).result.then((result) => {
+	openSupportItem(supportItemTemp) {
+		this.supportItem = supportItemTemp;
+		this.modalService.open(this.supportsModal).result.then((result) => {
 			console.log('closed');
 		}, (reason) => {
 			console.log('dismissed');

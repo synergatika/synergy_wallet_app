@@ -39,7 +39,7 @@
 							</div>
 						</div>
 						<!-- Show Campaign the users supports -->
-						<div class="single row wallet-coop" *ngFor="let s of (supportsList)" (click)="openSupportItem(s.support_id)">
+						<div class="single row wallet-coop" *ngFor="let s of (supportsList)" (click)="openSupportItem(s)">
 							<div class="col-sm-9 single-content">
 								<div class="wallet-img">
 									<img src={{s.campaign_imageURL}} alt={{s.title}} />
@@ -78,7 +78,7 @@
 </div>
 
 <!-- Modales -->
-<ng-template #qrcode let-c="close" let-d="dismiss">
+<ng-template #qrcodeModal let-c="close" let-d="dismiss">
 	<div class="qrcode-popup">
 		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 			<span aria-hidden="true">&times;</span>
@@ -86,7 +86,7 @@
 		<app-qr-code></app-qr-code>
 	</div>
 </ng-template>
-<ng-template #wallet let-c="close" let-d="dismiss">
+<ng-template #walletModal let-c="close" let-d="dismiss">
 	<div class="container wallet-popup">
 		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 			<span aria-hidden="true">&times;</span>
@@ -112,7 +112,7 @@
 		</div>
 	</div>
 </ng-template>
-<ng-template #supports let-c="close" let-d="dismiss">
+<ng-template #supportsModal let-c="close" let-d="dismiss">
 	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 		<span aria-hidden="true">&times;</span>
 	</button>

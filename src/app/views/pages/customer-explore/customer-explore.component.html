@@ -37,11 +37,13 @@
 	</div>
 </div>
 
-<!-- Coop Modal
+<!-- Coop Modal -->
 <ng-template #coopModal let-c="close" let-d="dismiss">
 	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 		<span aria-hidden="true">&times;</span>
 	</button>
+	<app-single-coop [singleCoop]="singleCoop"></app-single-coop>
+	<!--
 	<div class="wallet_singleCoop_wrapper">
 		<div class="singleCoop row">
 			<div class="col-lg-12">
@@ -109,8 +111,8 @@
 				</owl-carousel-o>
 			</div>
 		</div>
-	</div>
-</ng-template> -->
+	</div> -->
+</ng-template>
 
 <!-- Post Event Modal
 <ng-template #postModal let-c="close" let-d="dismiss">

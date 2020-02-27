@@ -39,7 +39,7 @@ export class ItemsService {
   }
 
   readOffersByStore(merchant_id: string): Observable<Offer[]> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}`)
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/public/${merchant_id}/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
