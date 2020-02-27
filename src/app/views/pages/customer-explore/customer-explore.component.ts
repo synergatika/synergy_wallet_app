@@ -113,8 +113,6 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			tap(
 			  data => {
 				this.posts = data;
-				//console.log("all posts");
-				//console.log(this.posts)
 			  },
 			  error => {
 				console.log(error);
@@ -158,6 +156,26 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		this.singleCoop = coop;
 		this.modalService.open(
 			this.coopModal, 
+			{
+				ariaLabelledBy: 'modal-basic-title', 
+				size: 'lg', 
+				backdropClass: 'fullscrenn-backdrop',
+				//backdrop: 'static',
+				windowClass: 'fullscrenn-modal',
+			}
+		).result.then((result) => {
+			console.log('closed');
+			}, (reason) => {
+				console.log('dismissed');
+		});
+	}
+
+
+	//Open Post
+	openPost(post) {	  
+		this.singlePost = post;
+		this.modalService.open(
+			this.postModal, 
 			{
 				ariaLabelledBy: 'modal-basic-title', 
 				size: 'lg', 
@@ -301,8 +319,8 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		});
 	}*/
 	
-	ngAfterViewInit() {
-		/*const interval = setInterval(() => {
+	/*ngAfterViewInit() {
+		const interval = setInterval(() => {
 			const condition = this.elRef.nativeElement.querySelector('.swiper-slide');
 			console.log('-');
 			if (condition) {
@@ -310,30 +328,30 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			  console.log('added!!!!!!!!');
 			  clearInterval(interval) 
 			}
-		  }, 100); */
-	}
+		  }, 100); 
+	}*/
 
+
+	//Actions to Open Modals from Carousel
 	mousedown() {
 	  this.moved = false;
 	}
-	
 	mousemove() {
 	  this.moved = true;
 	}
-
 	mouseup(data, type) {
 		if (this.moved) {
-			console.log('moved')
+			//Do nothings
 		} else {
-			console.log('not moved');
-			if(type == "coop") {
+			if(type == 'coop') {
 				this.openCoop(data);
-			} else {
-				//this.openPost(data);
+			} else if(type=='post'){
+				this.openPost(data);
+			}else{
+				//Do nothing
 			}
 		}
 		this.moved = false;
 	}
-	
   
 }

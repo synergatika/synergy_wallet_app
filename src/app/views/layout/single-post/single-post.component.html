@@ -1,0 +1,36 @@
+<div class="wallet_singlePost_wrapper">
+	<div class="singlePost row">
+		<div class="col-sm-12 singlePost-img-container">
+			<div class="singlePost-img">
+				<img src={{singlePost.post_event_imageURL}} alt={{singlePost.name}} />
+				<div *ngIf="singlePost.dateTime" class="post-date"><span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd.M'}}</div>
+			</div>
+		</div>
+		<div class="col-sm-12 singlePost-details">
+			<div class="singlePost-heading">
+				<div class="singlePost-title">{{singlePost.title}}</div>
+				<div class="singlePost-type">{{singlePost.type}}</div>
+			</div>
+			<div class="singlePost-description">
+				<p *ngIf="singlePost.content">
+					{{singlePost.content}}
+				</p>
+				<p *ngIf="singlePost.description">
+					{{singlePost.description}}
+				</p>
+			</div>
+			<div class="singlePost-info">
+				<div class="">
+					<div class="singleCoop-subtitle">
+						<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />
+						<span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
+					</div>
+				</div>
+				<div class="share">						
+					<app-share-icon></app-share-icon>
+					<span class="mdi mdi-share-variant share-icon"></span><img src="../../../assets/media/images/Share.png" alt="share" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -37,6 +37,7 @@ import { CardPostComponent } from './views/layout/card-post/card-post.component'
 import { CardSupportsComponent } from './views/layout/card-supports/card-supports.component';
 import { CardMicrocreditComponent } from './views/layout/card-microcredit/card-microcredit.component';
 import { SingleCoopComponent } from './views/layout/single-coop/single-coop.component';
+import { SinglePostComponent } from './views/layout/single-post/single-post.component';
 
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
 import { LanguageSwitcherComponent } from './views/layout/header/language-switcher/language-switcher.component';
@@ -96,6 +97,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	CardSupportsComponent,
 	CardMicrocreditComponent,
 	SingleCoopComponent,
+	SinglePostComponent,
 	NotFoundComponent,
 	ShareIconComponent,
 	ArchiveCoopsComponent,
