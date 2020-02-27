@@ -29,7 +29,6 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	supportsList: any; //The microcredits the customer supports
 	supportItem: any; //Currently Selected microcredit Support
 	offers: any; //Available Offers
-	// microcredit: any; //Microcredit content (used in Modal)
 
 	//Set Badges Icons
 	badgesImages = {
@@ -37,62 +36,6 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		helper: '../../../assets/media/images/ranking-2.png',
 		one_of_us: '../../../assets/media/images/ranking-3.png',
 	};
-
-	/*/Demo Content
-	list = [
-		{
-			id: "Commonspace34533",
-			title: "Ζαπατίστικος Καφές",
-			desc: "Έχοντας προαγοράσει Ζαπατίστικο Καφέ μας βοηθάς να τον εισάγουμε απευθείας από την Τσιάπας χωρίς μεσάζοντες.",
-			coop_id: "Synallois14234562456",
-			begins: "1.5.2020",
-			expires: "4.6.2020",
-			points: "50",
-			price_reduced: "160",
-			price_initial: "200",
-			img: './assets/media/images/syballis-micro-humbnail.jpg',
-			microcredit_num: '3767',
-			address: 'Nileos 35, 11851, Athens',
-			op_hours: '09:00-15:00',
-			phone: '2103606333'
-		},
-		{
-			id: "Ekdoseis3d76r3",
-			title: "Ετήσια Βιβλιοσυνδρομή",
-			coop_id: "Ekdoseis34562456",
-			expires: "March 15, 2020",
-			points: "55",
-			price_reduced: "80",
-			price_initial: "140",
-			img: './assets/media/images/ekdoseis.png',
-			microcredit_num: '3768',
-			address: 'Akakiou 1 - 3 & Ipeirou 60, 10439, Athens',
-			op_hours: '09:00-19:00',
-			phone: '2103606333'
-		},
-	];
-	coops = {
-		"Synallois14234562456": {
-			"id": "Synallois14234562456",
-			"name": "Συν Άλλοις",
-			"img": "./assets/media/images/uploaded/commonspace.webp",
-			"sector": "Recreation and Culture",
-			"subscription_date": "Jan 5, 2020",
-			"email": "info@commonspace.gr",
-			"phone": "2103606333",
-			"address": "Akakiou 1 - 3 & Ipeirou 60, 10439, Athens"
-		},
-		"Ekdoseis34562456": {
-			"id": "Ekdoseis34562456",
-			"name": "Εκδόσεις των Συναδέλφων",
-			"img": "./assets/media/images/uploaded/synallois.jpg",
-			"sector": "Food",
-			"subscription_date": "Jan 1, 2020",
-			"email": "info@synallois.org",
-			"phone": "2103606333",
-			"address": "Nileos 35, 11851, Athens"
-		},
-	};*/
 	
 	//Set Child Modals
 	@ViewChild('qrcode', { static: false }) qrcode;
