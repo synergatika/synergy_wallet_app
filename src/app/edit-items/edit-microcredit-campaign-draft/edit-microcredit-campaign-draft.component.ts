@@ -11,12 +11,12 @@ import { ItemsService } from '../../core/services/items.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-new-microcredit-campaign',
-  templateUrl: './new-microcredit-campaign.component.html',
-  styleUrls: ['./new-microcredit-campaign.component.scss']
+  selector: 'app-edit-microcredit-campaign-draft',
+  templateUrl: './edit-microcredit-campaign-draft.component.html',
+  styleUrls: ['./edit-microcredit-campaign-draft.component.sass']
 })
 
-export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
+export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy {
 
   public validator: any = {
     title: {

@@ -1,15 +1,17 @@
 <div class="new-offer">
 	<mat-card>
 		<mat-card-content>
-			<form *ngIf="offer" class="form" [formGroup]="submitForm" id="kt_form">
-				<div class="heading">Edit Offer</div>
-				<div class="form__section">
-					<div class="wizard-v3__form">
+			<form *ngIf="offer" class="form container single-form" [formGroup]="submitForm">
+				<div class="row">
+					<h1 class="heading col-md-12">Edit Offer</h1>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.TITLE.TITLE' | translate}}</mat-label>
 								<input matInput type="text" name="Title" formControlName="title"
-									placeholder="{{'FIELDS.OFFER.TITLE.PLACEHOLDER' | translate}}" value="{{offer.title}}">
+									placeholder="{{'FIELDS.OFFER.TITLE.PLACEHOLDER' | translate}}">
 								<mat-error *ngIf="isControlHasError('title','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('title','minlength')"
@@ -24,8 +26,8 @@
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</mat-label>
-								<textarea matInput name="Description" formControlName="description"
-									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}" value="{{offer.description}}"></textarea>
+								<textarea matInput style="height: 400px" name="Description" formControlName="description"
+									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}"></textarea>
 								<mat-error *ngIf="isControlHasError('description','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('description','minlength')"
@@ -36,6 +38,29 @@
 									{{validator.description.maxLength}}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.OFFER.DESCRIPTION.DESC' | translate}}</mat-hint>
 							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">      
+							<label class="col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+							<div class="">
+								<div class="upload-img" id="kt_user_avatar">
+									<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="offer.offer_imageURL">
+									<div>
+										<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+									</div>
+									<label class="avatar__upload" data-toggle="tooltip" title=""
+										data-original-title="Change avatar">
+										<i class="fa fa-pen"></i>
+										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+											accept=".png, .jpg, .jpeg" #fileInput>
+									</label>
+									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
+										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+										<i class="fa fa-times"></i>
+									</span>
+								</div>
+							</div>
 						</div>
 						<div class="form-group">
 							<mat-form-field>
@@ -58,7 +83,7 @@
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.COST.TITLE' | translate}}</mat-label>
 								<input matInput type="number" name="points" formControlName="cost"
-									placeholder="{{'FIELDS.OFFER.COST.PLACEHOLDER' | translate}}" value="{{offer.cost}}">
+									placeholder="{{'FIELDS.OFFER.COST.PLACEHOLDER' | translate}}">
 								<mat-error *ngIf="isControlHasError('cost','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('cost','min')"
@@ -69,25 +94,6 @@
 									{{validator.cost.maxValue}}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.OFFER.COST.DESC' | translate}}</mat-hint>
 							</mat-form-field>
-						</div>
-						<div class="form-group">      
-							<label class="col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
-							<div class="">
-								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="offer.offer_imageURL">
-									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-									<label class="avatar__upload" data-toggle="tooltip" title=""
-										data-original-title="Change avatar">
-										<i class="fa fa-pen"></i>
-										<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-											accept=".png, .jpg, .jpeg" #fileInput>
-									</label>
-									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-										<i class="fa fa-times"></i>
-									</span>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

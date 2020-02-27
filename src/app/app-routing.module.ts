@@ -21,6 +21,7 @@ import { NewEventComponent } from './create-items/new-event/new-event.component'
 import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
 import { NewMicrocreditCampaignComponent } from './create-items/new-microcredit-campaign/new-microcredit-campaign.component';
 import { EditMicrocreditCampaignComponent } from './microcredit/edit-microcredit-campaign/edit-microcredit-campaign.component';
+import { EditMicrocreditCampaignComponentDraft } from './edit-items/edit-microcredit-campaign-draft/edit-microcredit-campaign-draft.component';
 
 // Auth
 import { AuthGuard } from './core/helpers/auth.guard';
@@ -96,6 +97,9 @@ const routes: Routes = [
 					},
 					{
 						path: 'edit/:_id', component: EditMicrocreditCampaignComponent
+					},
+					{
+						path: 'edit-draft/:_id', component: EditMicrocreditCampaignComponentDraft
 					},
 				]
 			},

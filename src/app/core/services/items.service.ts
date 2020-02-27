@@ -144,14 +144,14 @@ export class ItemsService {
     */
 
   readAllPrivatePostsEvents(): Observable<PostEvent[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/private/`)
+    return this.http.get<any>(`${environment.apiUrl}/community/private/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
   readAllPublicPostsEvents(): Observable<PostEvent[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/public/`)
+    return this.http.get<any>(`${environment.apiUrl}/community/public/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));

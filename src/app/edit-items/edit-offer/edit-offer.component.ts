@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
+import { ScannerService } from '../../scanner/_scanner.service';
 
 // Swal Alert
 import Swal from 'sweetalert2';
@@ -44,6 +45,9 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   previewUrl: any = null;
   originalImage: boolean = false;
   offerExpires: Date;
+  title: string;
+  description: string;
+  cost: number;
   submitForm: FormGroup;
   submitted: boolean = false;
   offer: ScannerInterface["Offer"];
@@ -65,13 +69,20 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
 	private activatedRoute: ActivatedRoute,
 	private authenticationService: AuthenticationService,
-	private datePipe: DatePipe
+	private datePipe: DatePipe,
+	private scannerService: ScannerService
   ) {
 	this.activatedRoute.params.subscribe(params => {
       this.offer_id = params['_id'];
     });
     this.unsubscribe = new Subject();
+	//this.scannerService.offers.subscribe(offers => this.offer = offers);
   }
+
+
+
+
+
 
 	/**
 	 * On init
@@ -92,19 +103,19 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: ['', Validators.compose([
+      title: [this.title, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      description: ['', Validators.compose([
+      description: [this.description, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      cost: [0, Validators.compose([
+      cost: [this.cost, Validators.compose([
         Validators.required,
         Validators.min(this.validator.cost.minValue),
         Validators.max(this.validator.cost.maxValue)
@@ -161,7 +172,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.submitted = true;
 
-    var _date = new Date();
+   /* var _date = new Date();
     _date.setHours(23, 59, 59, 0);
     switch (controls.expiration.value) {
       case '1':
@@ -178,7 +189,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         break;
       default:
         var _newDate = _date.setDate(_date.getDate() + 7);
-    }
+    }*/
 return;
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
@@ -213,7 +224,7 @@ return;
       )
       .subscribe();
   }
-  
+
   fetchOfferData() {
     this.itemsService.readOffer(this.authenticationService.currentUserValue.user["_id"],this.offer_id)
       .pipe(
@@ -222,9 +233,13 @@ return;
             this.offer = data;
             console.log(this.offer);
 			console.log(this.offer.expiresAt);
+			this.title = this.offer.title;
+			this.description = this.offer.description;
+			this.cost = this.offer.cost;
 			this.offerExpires = new Date(this.offer.expiresAt);
 			console.log(this.offerExpires.getTime());
 			this.initForm();
+			this.cdRef.markForCheck();
             //this.scannerService.changeOffers(this.offer);
           },
           error => {

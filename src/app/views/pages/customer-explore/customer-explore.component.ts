@@ -225,7 +225,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	}
 	
 	fetchPostsEventsData() {
-		this.itemsService.readAllPrivatePostsEvents()
+		this.itemsService.readAllPublicPostsEvents()
 		  .pipe(
 			tap(
 			  data => {

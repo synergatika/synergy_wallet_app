@@ -15,12 +15,12 @@
 									<label class="avatar-upload" data-toggle="tooltip" title=""
 										data-original-title="Change avatar">
 										<i class="fa fa-pen"></i>
-										<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
 											accept=".png, .jpg, .jpeg" #fileInputMerch>
 									</label>
 									<span *ngIf="!originalImage" class="avatar-cancel" (click)="onImageCancel()"
 										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-										<i class="fa fa-times"></i>
+										<i class="fa fa-times"></i>X
 									</span>
 								</div>
 							</div>
@@ -81,23 +81,10 @@
 					<div class="row">
 						<div class="col-xl-12 form-group">
 							<mat-form-field>
-								<mat-label>Sector</mat-label>
-								<mat-select name="sector" [(ngModel)]="merchant.sector">
-									<mat-option value="0">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES._' | translate}}
-									</mat-option>
-									<mat-option value="1">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.A' | translate}}
-									</mat-option>
-									<mat-option value="2">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.B' | translate}}
-									</mat-option>
-									<mat-option value="3">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.C' | translate}}
-									</mat-option>
-									<mat-option value="4">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.D' | translate}}
-									</mat-option>
-									<mat-option value="5">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.E' | translate}}
-									</mat-option>
-									<mat-option value="6">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.F' | translate}}
-									</mat-option>
-									<mat-option value="7">{{'FIELDS.MERCHANT_PROFILE.SECTOR_CHOICES.G' | translate}}
+								<mat-label>{{'FIELDS.SECTOR' | translate}}</mat-label>
+								<!--<mat-select name="sector" [(ngModel)]="merchant.sector">-->
+								<mat-select [(value)]="merchant.sector">
+									<mat-option value="{{item.value}}" *ngFor="let item of menu" >{{item.title | translate}}
 									</mat-option>
 								</mat-select>
 								<mat-hint class="form-text text-muted">Please enter your sector.</mat-hint>
