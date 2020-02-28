@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-new-microcredit-campaign',
   templateUrl: './new-microcredit-campaign.component.html',
-  styleUrls: ['./new-microcredit-campaign.component.sass']
+  styleUrls: ['./new-microcredit-campaign.component.scss']
 })
 
 export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
@@ -128,6 +128,10 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
         Validators.required,
       ])
       ],
+	  initiation: ['', Validators.compose([
+        Validators.required,
+      ])
+      ],
       expiration: ['', Validators.compose([
         Validators.required,
       ])
@@ -169,8 +173,8 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
   /**
  * On Form Submit
  */
-  onSubmit() {
-    // if (this.submitted) return;
+  onSubmit(type='') {
+    if (this.submitted) return;
 
     const controls = this.submitForm.controls;
     /** check form */
@@ -190,12 +194,14 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     formData.append('description', controls.description.value);
     formData.append('category', controls.category.value);
     formData.append('access', controls.access.value);
+    formData.append('stepAmount', controls.expiration.value);
     formData.append('quantitative', controls.quantitative.value);
     formData.append('minAllowed', controls.minAllowed.value);
     formData.append('maxAllowed', controls.maxAllowed.value);
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value);
     formData.append('redeemEnds', controls.redeemEnds.value);
+    formData.append('startsAt', controls.expiration.value);
     formData.append('expiresAt', controls.expiration.value);
 
     this.itemsService.createMicrocreditCampaign(formData)

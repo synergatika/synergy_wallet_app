@@ -2,33 +2,35 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="badge-container">
-				<div class="mr-4">
-					<img [src]="badges.supporter">
+				<div *ngIf="badge" class="mr-4">
+					<img *ngIf="badge.image" [src]="badge.image">
 				</div>
-				<div class="">
-					<h2>Τίτλος Badges</h2>
-					<p>Μπορείτε αγοράζοντας να μπλα μπλα μπλα</p>
+				<div *ngIf="badge" class="bagde-text">
+					<h2 *ngIf="badge.text">{{badge.text.title.rendered}}</h2>
+					<p [innerHTML]="badge.text.content.rendered" *ngIf="badge.text"></p>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<mat-card class="dashboard-card wallet-card">
-			  <mat-card-header class="wallet-card-header">
-				<mat-card-title>Το πορτοφόλι μου</mat-card-title>
-				<!--<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png" (click)="openQrcode()">-->
-				<span class="mdi mdi-qrcode wallet-card-icon" (click)="openQrcode()"></span>
-			  </mat-card-header>
-			  <mat-card-content>
+				<mat-card-header class="wallet-card-header">
+					<mat-card-title>{{'PAGES.CUSTOMER_DASHBOARD.WALLET_TITLE' | translate}}</mat-card-title>
+					<!--<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png" (click)="openQrcode()">-->
+					<span class="mdi mdi-qrcode wallet-card-icon" (click)="openQrcode()"></span>
+				</mat-card-header>
+				<mat-card-content>
 					<!--begin::Content-->
-					<div class="wallet_single_wrapper">						
+					<div class="wallet_single_wrapper">
+						<!-- Show Points the user has -->
 						<div class="single row wallet-row" (click)="openWallet()">
 							<div class="col-sm-9 single-content">
 								<span class="wallet-img">
-									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
+									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
 								</span>
 								<div class="">
-									<div class="single-title">Synergy Πόντοι</div>
-									<div class="single-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>όλο το δίκτυο</div>
+									<div class="single-title" *ngIf="balanceText">{{balanceText.title.rendered}}</div>
+									<div class="single-subtitle"><span
+											class="mdi mdi-shopping"></span>{{'BALANCE.SUBTITLE' | translate}}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
@@ -37,33 +39,39 @@
 								</div>
 							</div>
 						</div>
-						<div class="single row wallet-coop" *ngFor="let single of (list)" (click)="openCoop(single.id)">
+						<!-- Show Campaign the users supports -->
+						<div class="single row wallet-coop" *ngFor="let s of (supportsList)"
+							(click)="openSupportItem(s)">
 							<div class="col-sm-9 single-content">
 								<div class="wallet-img">
-									<img src={{single.img}} alt={{single.title}} />
+									<img src={{s.campaign_imageURL}} alt={{s.title}} />
 								</div>
 								<div class="">
 
-									<div class="single-title">{{single.title}}</div>
-									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{coops[single.coop_id]['name']}}</div>
-									<div class="single-subtitle">εώς {{single.expires}}</div>
+									<div class="single-title">{{s.title}}</div>
+									<div class="single-subtitle"><span
+											class="mdi mdi-shopping"></span>{{s.merchant_name}}</div>
+									<div class="single-subtitle">
+										{{'GENERAL.FROM' | translate}} {{s.redeemStarts | date: 'd.M.y' }}
+										{{'GENERAL.TO' | translate}} {{s.redeemEnds | date: 'd.M.y' }}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
 								<div>
-									<span class="points">{{single.price_reduced}}</span>
+									<span
+										class="points">{{ s.initialTokens - s.redeemedTokens | currency:'EUR' }}</span>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!--end::Content-->
-			  </mat-card-content>
+				</mat-card-content>
 			</mat-card>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<h3>Προσφορές</h3>
+			<h3 class="list-tiltle">{{'LISTS.OFFERS_LIST' | translate }}</h3>
 		</div>
 	</div>
 	<div class="row" *ngIf="offers">
@@ -74,13 +82,16 @@
 </div>
 
 <!-- Modales -->
-<ng-template #microcredit_item let-c="close" let-d="dismiss">
-	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-		<span aria-hidden="true">&times;</span>
-	</button>
-	<app-card-microcredit [microcredit]="microcredit" [type]="all"></app-card-microcredit>
+<ng-template #qrcodeModal let-c="close" let-d="dismiss">
+	<div class="qrcode-popup">
+		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<app-qr-code></app-qr-code>
+		<p class="qr-code-text" [innerHTML]="qrcodeText.content.rendered" *ngIf="qrcodeText"></p>
+	</div>
 </ng-template>
-<ng-template #wallet let-c="close" let-d="dismiss">
+<ng-template #walletModal let-c="close" let-d="dismiss">
 	<div class="container wallet-popup">
 		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 			<span aria-hidden="true">&times;</span>
@@ -88,29 +99,27 @@
 		<div class="single row-flex">
 			<div class="">
 				<span class="wallet-img">
-					<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
+					<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
 				</span>
-				
+
 			</div>
 			<div class="">
-				<div class="single-title">Synergy Πόντοι</div>
+				<h3 class="balance-title" *ngIf="balanceText">{{balanceText.title.rendered}}</h3>
 			</div>
-			<div class="single-amount">
+			<div class="balance-amount">
 				<div>
 					<span class="points">{{balance}}</span>
 				</div>
 			</div>
 		</div>
-		<div class="text-center mt-3">
-			Κάτι πράγματα για τους πόντους
+		<div class="balance-text mt-3">
+			<p [innerHTML]="balanceText.content.rendered" *ngIf="balanceText"></p>
 		</div>
 	</div>
 </ng-template>
-<ng-template #qrcode let-c="close" let-d="dismiss">
-	<div class="container qrcode-popup">
-		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		<app-qr-code></app-qr-code>
-	</div>
+<ng-template #supportsModal let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<app-card-supports [supportItem]="supportItem"></app-card-supports>
 </ng-template>

@@ -57,6 +57,7 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
   initializeCurrentCampaignData() {
     const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
     this.current = currentCampaign;
+    console.log(this.current);
     this.supportService.changeMicrocreditCurrent(this.current);
 
     this.support.merchant_id = currentCampaign.merchant_id;
@@ -69,14 +70,16 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
       _amount: this.support.amount,
       _method: this.support.method
     };
+    console.log("submitted");
     this.microcreditService.earnTokens(this.current.merchant_id, this.current.campaign_id, earnTokens._amount, earnTokens._method)
       .pipe(
         tap(
           data => {
+            console.log(data);
             this.support.support_id = data.data.support_id;
-            this.support.payment = data.data.payment;
+            this.support.payment_id = data.data.payment_id;
+            this.support.how = data.data.how;
             this.supportService.changeMicrocreditSupport(this.support);
-
             this.onNextStep();
           },
           error => {
@@ -99,7 +102,7 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onFinalStep(event) {
+  onFinalStep(event=null) {
     this.dialogRef.close();
   }
 }

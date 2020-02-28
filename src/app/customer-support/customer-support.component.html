@@ -1,43 +1,20 @@
 <div class="support">
-	<!--<main id="logout-button-holder">
-		<button *ngFor="let item of campaigns" mat-raised-button id="logout-button"
-			(click)="openModal(item.merchant_id, item.campaign_id)">Scan
-			for Campaigns: {{item.title}}</button>
-	</main>-->
+	<!-- List of Campaigns -->
 	<div class="row" *ngIf="campaigns">
-		<h2 class="col-md-12 section-heading">Scan for Campaigns</h2>
-		<div class="item item-wrapper col-md-4" *ngFor="let item of campaigns">
-			<mat-card class="item-card">
-				<mat-card-content>
-					<div class="col-sm-12 item-img-container">
-						<div class="item-img">
-							<img src={{item.campaign_imageURL}} alt={{item.title}} />
-							<div class="item-expires">έως {{item.expiresAt | date: 'd.M'}}</div>
-						</div>
-					</div>
-					<div class="col-sm-12 item-details">
-						<div class="item-heading">
-							<div class="item-title">{{item.title}}</div>
-							<div>
-								<span class="points">{{item.category}}</span>
-							</div>
-						</div>
-						<div class="item-description">
-							{{item.description}}
-						</div>
-						<div class="item-info">
-							<div class="">
-								<div class="item-subtitle" *ngIf="type!='single'"><span
-										class="mdi mdi-shopping"></span>{{item.merchant_name}}</div>
-								<div class="item-subtitle" *ngIf="type!='single'"><span
-										class="mdi mdi-pin"></span>{{item.expiresAt}}</div>
-							</div>
-						</div>
-						<button mat-raised-button (click)="openModal(item.merchant_id, item.campaign_id)">Scan for
-							campaign</button>
-					</div>
-				</mat-card-content>
-			</mat-card>
+		<h2 class="col-md-12 section-heading">Campaigns</h2>
+		<div class="item item-wrapper col-md-4" *ngFor="let campaign of campaigns" (click)="openMicrocredit(campaign)">			
+			<app-card-microcredit [microcredit]="campaign" ></app-card-microcredit>
 		</div>
 	</div>
 </div>
+
+<!-- Microcredit Campaign Modal -->
+<ng-template #campaignModal let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<app-single-microcredit [singleMicrocredit]="singleMicrocredit"></app-single-microcredit>
+</ng-template>
+
+
+

@@ -1,10 +1,12 @@
 <div class="new-event">
 	<mat-card>
 		<mat-card-content>
-			<form class="form" [formGroup]="submitForm" id="kt_form">
-				<div class="heading heading--md">Create a new Post / Event</div>
-				<div class="form__section form__section--first">
-					<div class="wizard-v3__form">
+			<form class="form container single-form" [formGroup]="submitForm">
+				<div class="row">
+					<div class="heading col-md-12">Create a new Event</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>Title</mat-label>
@@ -38,6 +40,8 @@
 								</mat-hint>
 							</mat-form-field>
 						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>Access</mat-label>
@@ -67,43 +71,54 @@
 							</mat-form-field>
 						</div>
 						<div class="form-group">
-							<mat-form-field>
-								<mat-label>Date and Time</mat-label>
-								<input matInput type="text" formControlName="dateTime" placeholder="DateTime">
-								<mat-error *ngIf="isControlHasError('Access','required')" class="error text-danger">
-									{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-								<mat-hint class="form-text text-muted">Please enter post's/events's date time.
-								</mat-hint>
-							</mat-form-field>
+							<div class="form-group-inline">
+								<div class="form-group-inline-date">
+									<mat-form-field>
+										<mat-label>Date</mat-label>
+										<input matInput [matDatepicker]="eventDate" formControlName="dateTime" placeholder="DateTime">
+										<mat-datepicker-toggle matSuffix [for]="eventDate"></mat-datepicker-toggle>
+										<mat-datepicker #eventDate ></mat-datepicker>
+										<mat-error *ngIf="isControlHasError('Access','required')"
+											class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+										<mat-hint class="form-text text-muted">Please enter post's/events's date time.</mat-hint>
+									</mat-form-field>
+								</div>
+								<div class="form-group-inline-time">
+									<mat-form-field>
+										<mat-label>Time</mat-label>
+										<input matInput [ngxTimepicker]="picker">
+										<ngx-material-timepicker #picker></ngx-material-timepicker>
+									</mat-form-field>
+								</div>
+							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
-							<div class="col-lg-9 col-xl-6">
+							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+							<div class="">
 								<div class="upload-img" id="kt_user_avatar">
-									<img class="upload-img-holder" [src]="previewUrl">
-									<label class="avatar__upload" data-toggle="tooltip" title=""
-										data-original-title="Change avatar">
-										<i class="fa fa-pen"></i>
-										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
-											accept=".png, .jpg, .jpeg">
-									</label>
-									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-										<i class="fa fa-times"></i>
-									</span>
+									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
 								</div>
+								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar__upload" data-toggle="tooltip" title=""
+									data-original-title="Change avatar">
+									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+										accept=".png, .jpg, .jpeg" #fileInput>
+								</label>
+								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()">
+									<span class="mdi mdi-close-circle-outline"></span>
+								</span>							
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form__actions">
-					<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+				<div class="form-actions">
+					<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()"
 						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
 						data-ktwizard-type="action-submit">
 						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-					</div>
+					</button>
 				</div>
 				<!--end: Form Actions -->
 

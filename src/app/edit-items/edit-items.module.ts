@@ -7,7 +7,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { EditOfferComponent } from './edit-offer/edit-offer.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
-
+import { EditMicrocreditCampaignComponentDraft } from './edit-microcredit-campaign-draft/edit-microcredit-campaign-draft.component';
+import { MAT_DATE_LOCALE } from '@angular/material';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 const routes: Routes = [
     {
@@ -42,15 +44,18 @@ const routes: Routes = [
         MatDialogModule,
 		MatSelectModule,
 		MatDatepickerModule,
-		MatNativeDateModule
+		MatNativeDateModule,
+		NgxMaterialTimepickerModule
     ],
     providers: [
-		DatePipe	
+		DatePipe,
+		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
     ],
     exports: [EditOfferComponent],
     declarations: [
         EditOfferComponent,
-		EditPostComponent
+		EditPostComponent,
+		EditMicrocreditCampaignComponentDraft
     ],
     entryComponents: [
     ]

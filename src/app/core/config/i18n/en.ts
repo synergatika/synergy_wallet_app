@@ -1,9 +1,18 @@
 export const locale = {
     lang: 'en',
     data: {
+        GENERAL:{
+            FROM: 'from',
+            TO: 'until'
+        },
         TRANSLATOR: {
             SELECT: 'Select your language',
         },
+        MENU_CLIENT: {
+            WALLET: 'Wallet',
+            DISCOVER: 'Discover',
+            SUPPORT: 'Suppport',
+          },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',
@@ -86,7 +95,10 @@ export const locale = {
             MESSAGE: 'Welcome'
         },
         PAGES: {
-            DASHBOARD: {
+            CUSTOMER_DASHBOARD:{
+                WALLET_TITLE:'My Wallet'
+            },
+            COMMUNITY: {
                 OUR_COMMUNITY: 'Our Community!',
                 CURRENT_OFFERS: 'Current offers!',
                 LATEST_POSTS: 'Latest Posts & Upcoming Events!',
@@ -100,6 +112,12 @@ export const locale = {
                 POST: 'Post',
                 EVENT: 'Event',
             }
+        },
+        LISTS:{
+            OFFERS_LIST:'Offers',
+            CAMPAIGN_LIST:'Capmaigns',
+            NEWSEVENTS_LIST:'News & Events',
+            MERCHANT_LIST:'Cooperatives'
         },
         MESSAGE: {
             WARNING: {
@@ -179,16 +197,17 @@ export const locale = {
             CITY: {
 
             },
-            SECTOR: {
-
-            },
-
-            SCAN: {
-
-            },
-
-
-
+            SECTOR: 'Sector',
+			SECTOR_CHOICES: {
+				_: 'Other',
+				A: 'Β2Β Services',
+				B: 'Durables',
+				C: 'Durables (Technology)',
+				D: 'Education',
+				E: 'Food',
+				F: 'Hotels, Cafés and Restaurants',
+				G: 'Recreation and Culture',
+			},
             SUPPORT: {
                 PAYMENT_CHOICES: {
                     A: 'Paypal',
@@ -376,7 +395,8 @@ export const locale = {
             BUTTONS: {
                 SUBMIT: 'Submit',
                 PREVIOUS: 'Previous',
-                NEXT_STEP: 'Next Step'
+                NEXT_STEP: 'Next Step',
+				SAVE: 'Save',
             },
             VALIDATION: {
                 REQUIRED_FIELD: 'Required field.',

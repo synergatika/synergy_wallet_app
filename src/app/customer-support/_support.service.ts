@@ -3,6 +3,8 @@ import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
 import { SupportInterface } from './_support.interface';
+import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
+import { MicrocreditSupport } from '../core/models/microcredit-support.model';
 
 @Injectable()
 export class SupportService {
@@ -52,23 +54,24 @@ export class SupportService {
         merchant_id: '',
         campaign_id: '',
         support_id: '',
-        payment: '',
+        payment_id: '',
         amount: 0,
-        method: ''
+        method: '',
+        how:''
     });
     microcreditSupport = this.microcreditSupportSource.asObservable();
 
     constructor() { }
 
-    changeMicrocreditCampaigns(microcreditCampaigns: SupportInterface["MicrocreditCampaign"][]) {
+    changeMicrocreditCampaigns(microcreditCampaigns: MicrocreditCampaign[]) {
         this.microcreditCampaignsSource.next(microcreditCampaigns);
     }
 
-    changeMicrocreditCurrent(microcreditCurrent: SupportInterface["MicrocreditCampaign"]) {
+    changeMicrocreditCurrent(microcreditCurrent: MicrocreditCampaign) {
         this.microcreditCurrentSource.next(microcreditCurrent);
     }
 
-    changeMicrocreditSupport(microcreditSupport: SupportInterface["MicrocreditSupport"]) {
+    changeMicrocreditSupport(microcreditSupport: MicrocreditSupport) {
         this.microcreditSupportSource.next(microcreditSupport);
     }
 }

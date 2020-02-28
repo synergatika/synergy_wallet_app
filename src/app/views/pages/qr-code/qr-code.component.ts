@@ -10,7 +10,7 @@ import { AuthenticationService } from '../../../core/services/authentication.ser
 export class QrCodeComponent implements OnInit {
 
   public myAngularxQrCode: string = null;
-
+  
   constructor(
     private authenticationService: AuthenticationService
   ) {

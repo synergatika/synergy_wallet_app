@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardPostComponent implements OnInit {
 	@Input() post: any;
+	@Input() type: any;
 	
 	constructor() { }
 

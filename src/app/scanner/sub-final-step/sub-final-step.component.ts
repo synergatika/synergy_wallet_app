@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 import { ScannerService } from '../_scanner.service';
-import { ScannerInterface } from '../_scanner.interface';
+import { PointsTransaction, OfferTransaction, MicrocreditTransaction } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-final-step',
@@ -15,7 +15,7 @@ export class SubFinalStepComponent implements OnInit {
   @Output()
   finalize: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  transaction: ScannerInterface["PointsTransaction"] | ScannerInterface["OfferTransaction"] | ScannerInterface["MicrocreditTransaction"];
+  transaction: PointsTransaction | OfferTransaction | MicrocreditTransaction;
 
   constructor(
     private scannerService: ScannerService

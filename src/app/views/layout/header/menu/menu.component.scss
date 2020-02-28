@@ -1,3 +1,4 @@
+@import "../../../../../variables.scss";
 .nav {
 	.side-menu-item-active {
 		a {
@@ -28,7 +29,7 @@
 .nav a:hover {
 	color: #f1f1f1;
 	.mdi {
-		color: #37aba7;
+		color: $secondary;
 	}
 }
 

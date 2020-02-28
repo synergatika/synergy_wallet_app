@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
 import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
-import { CustomerExploreOneComponent } from './views/pages/customer-explore-one/customer-explore-one.component';
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
 import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops.component';
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
@@ -21,6 +20,7 @@ import { NewEventComponent } from './create-items/new-event/new-event.component'
 import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
 import { NewMicrocreditCampaignComponent } from './create-items/new-microcredit-campaign/new-microcredit-campaign.component';
 import { EditMicrocreditCampaignComponent } from './microcredit/edit-microcredit-campaign/edit-microcredit-campaign.component';
+import { EditMicrocreditCampaignComponentDraft } from './edit-items/edit-microcredit-campaign-draft/edit-microcredit-campaign-draft.component';
 
 // Auth
 import { AuthGuard } from './core/helpers/auth.guard';
@@ -47,13 +47,8 @@ const routes: Routes = [
 			{
 				path: 'explore', component: CustomerExploreComponent
 			},
-			{
-				path: 'explore-one/:_id', component: CustomerExploreOneComponent
-			},
-
 			{ path: 'microcredit', loadChildren: () => import('./microcredit/microcredit.module').then(m => m.MicrocreditModule) },
 			{ path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(m => m.CustomerSupportModule) },
-
 			{ path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },
 			{ path: 'scanner', loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule) },
 			{ path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
@@ -96,6 +91,9 @@ const routes: Routes = [
 					},
 					{
 						path: 'edit/:_id', component: EditMicrocreditCampaignComponent
+					},
+					{
+						path: 'edit-draft/:_id', component: EditMicrocreditCampaignComponentDraft
 					},
 				]
 			},

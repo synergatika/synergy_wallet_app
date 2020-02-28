@@ -24,7 +24,7 @@ export class MerchantsService {
   ) { }
 
   readMerchants(): Observable<Merchant[]> {
-    return this.http.get<any>(`${environment.apiUrl}/merchants`)
+    return this.http.get<any>(`${environment.apiUrl}/merchants/public/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));

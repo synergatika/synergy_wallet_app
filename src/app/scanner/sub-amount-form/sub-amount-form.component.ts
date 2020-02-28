@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { ScannerService } from '../_scanner.service';
-import { ScannerInterface } from '../_scanner.interface';
+import { PointsTransaction } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-amount-form',
@@ -15,7 +15,7 @@ export class SubAmountFormComponent implements OnInit {
   @Output()
   add_amount: EventEmitter<number> = new EventEmitter<number>();
 
-  transaction: ScannerInterface["PointsTransaction"];
+  transaction: PointsTransaction;
 
   submitted: boolean = false;
   submitForm: FormGroup;

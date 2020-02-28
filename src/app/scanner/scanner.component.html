@@ -1,4 +1,5 @@
 <div class="scanner">
+	<h1 class="col-md-12 heading">Home</h1>
 	<h2 class="col-md-12 section-heading">Scan</h2>
 	<div class="row">	
 		<div class="item item-wrapper col-md-4" (click)="openModalA()">
@@ -62,4 +63,84 @@
 			</div>
 		</ng-container>
 	</div>
+	<div class="wide-container">
+		<h2 class="section-heading">News from the Community</h2>
+		<ng-container *ngIf="posts">
+			<owl-carousel-o [options]="customOptions">
+				<ng-template carouselSlide *ngFor="let item of posts">
+					<mat-card class="item-card item-card" (mousedown)="mousedown()" (mousemove)="mousemove()" (mouseup)="mouseup(item)">
+					  <mat-card-content>
+							<!--begin::Content-->
+							<div class="item">
+								<div class="col-sm-12 item-img-container">
+									<div class="item-img">
+										<img src={{item.post_event_imageURL}} alt={{item.title}} />
+										<div *ngIf="item.dateTime" class="item-expires"><span class="white mdi mdi-calendar"></span> {{item.dateTime | date: 'd.M'}}</div>
+									</div>
+									
+								</div>
+								<div class="col-sm-12 item-amount">
+									<div class="item-heading">
+										<div class="item-title">{{item.title}}</div>
+										<div>
+											<span class="points">{{item.cost}}</span>
+										</div>
+									</div>
+									<div class="item-description">
+										{{item.description}}
+									</div>
+									<div *ngIf="!singleMerchant" class="item-info">
+										<div class="" >
+											<div class="item-subtitle"><span class="mdi mdi-shopping"></span>{{item.merchant_name}}</div>
+											<div *ngIf="item.location"  class="item-subtitle"><span class="mdi mdi-pin"></span>{{item.location}}</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							<!--end::Content-->
+					  </mat-card-content>
+					</mat-card>
+				</ng-template>
+			</owl-carousel-o>	
+		</ng-container>
+	</div>
 </div>
+
+<ng-template #postModal let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<div class="wallet_singlePost_wrapper">
+		<div class="singlePost row">
+			<div class="col-sm-12 singlePost-img-container">
+				<div class="singlePost-img">
+					<img src={{singlePost.post_event_imageURL}} alt={{singlePost.name}} />
+					<div *ngIf="singlePost.dateTime" class="post-date"><span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd.M'}}</div>
+				</div>
+			</div>
+			<div class="col-sm-12 singlePost-details">
+				<div class="singlePost-heading">
+					<div class="singlePost-title">{{singlePost.title}}</div>
+					<div class="singlePost-createdAt">{{singlePost.createdAt | date: 'd/M/y'}}</div>
+				</div>
+				<div class="singlePost-description">
+					<p *ngIf="singlePost.content">
+						{{singlePost.content}}
+					</p>
+					<p *ngIf="singlePost.description">
+						{{singlePost.description}}
+					</p>
+				</div>
+				<div class="singlePost-info">
+					<div class="">
+						<div class="singleCoop-subtitle">
+							<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />-->
+							<span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

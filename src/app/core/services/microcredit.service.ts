@@ -48,8 +48,9 @@ export class MicrocreditService {
   }
 
   confirmPayment(merchant_id: string, campaign_id: string, payment: string, payment_id: string[]): Observable<Message> {
-    return this.http.put<any>(`${environment.apiUrl}/microcredit/supports/${merchant_id}/${campaign_id}/${payment}`, { payment_id: payment_id })
-    //return this.http.put<any>(`${environment.apiUrl}/microcredit/confirm/${merchant_id}/${campaign_id}/${payment_id}`, { payment_id: payment_id })
+    //return this.http.put<any>(`${environment.apiUrl}/microcredit/supports/${merchant_id}/${campaign_id}/${payment}`, { payment_id: payment_id })
+	/* New call:*/
+    return this.http.put<any>(`${environment.apiUrl}/microcredit/confirm/${merchant_id}/${campaign_id}/${payment_id}`, { payment_id: payment_id })
       .pipe(map(response => {
         return response;
       }));
@@ -65,6 +66,7 @@ export class MicrocreditService {
   earnTokens(merchant_id: string, campaign_id: string, _amount: number, method: string) {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}`, { _amount: _amount, method: method })
       .pipe(map(response => {
+        console.log(response);
         return response;
       }));
   }

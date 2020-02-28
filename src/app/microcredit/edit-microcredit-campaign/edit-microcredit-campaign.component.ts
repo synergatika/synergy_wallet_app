@@ -38,7 +38,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   groupedSupports: Array<any> = [];
   to_pay: string[] = [];
   to_unpay: string[] = [];
-  displayedColumns: string[] = ['backer_id', 'initialTokens', 'status'];
+  displayedColumns: string[] = ['support_id', 'createdAt', 'method', 'initialTokens', 'status'];
   dataSource:any;
   
   constructor(
@@ -127,17 +127,17 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
   
   changeSupportState (backer, state) {
-	   //console.log(backer);
-	   //console.log(state.checked);
-	   let pay: string;
-	  //return;
+	//console.log(backer);
+	//console.log(state.checked);
+	let pay: string;
+	//return;
     if (state.checked == true) {
      pay ="pay";
     } else {
       pay = 'unpay';
     }
 	this.stateUpdateLoading = true;
-	return;
+	//return;
 	this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, pay, backer)
       .pipe(
         tap(

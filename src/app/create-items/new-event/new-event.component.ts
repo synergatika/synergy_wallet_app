@@ -37,7 +37,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = false;
+  originalImage: boolean = true;
 
   submitForm: FormGroup;
   submitted: boolean = false;
@@ -115,6 +115,11 @@ export class NewEventComponent implements OnInit, OnDestroy {
   }
 
   preview() {
+	  if(this.fileData == null) {
+		  this.onImageCancel();
+		  return;
+	  }
+	  this.originalImage = false;
 	if(this.fileData) {
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {

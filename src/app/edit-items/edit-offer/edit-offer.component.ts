@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
+import { ScannerService } from '../../scanner/_scanner.service';
 
 // Swal Alert
 import Swal from 'sweetalert2';
@@ -14,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-import { ScannerInterface } from '../../scanner/_scanner.interface';
+import { Offer } from '../../scanner/_scanner.interface';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -38,15 +39,19 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       maxValue: 100000
     }
   };
-  
+
+  date: any;
   offer_id: string;
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = false;
+  originalImage: boolean = true;
   offerExpires: Date;
+  title: string;
+  description: string;
+  cost: number;
   submitForm: FormGroup;
   submitted: boolean = false;
-  offer: ScannerInterface["Offer"];
+  offer: Offer;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -65,13 +70,20 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
 	private activatedRoute: ActivatedRoute,
 	private authenticationService: AuthenticationService,
-	private datePipe: DatePipe
+	private datePipe: DatePipe,
+	private scannerService: ScannerService
   ) {
 	this.activatedRoute.params.subscribe(params => {
       this.offer_id = params['_id'];
     });
     this.unsubscribe = new Subject();
+	//this.scannerService.offers.subscribe(offers => this.offer = offers);
   }
+
+
+
+
+
 
 	/**
 	 * On init
@@ -92,19 +104,19 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: ['', Validators.compose([
+      title: [this.title, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      description: ['', Validators.compose([
+      description: [this.description, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      cost: [0, Validators.compose([
+      cost: [this.cost, Validators.compose([
         Validators.required,
         Validators.min(this.validator.cost.minValue),
         Validators.max(this.validator.cost.maxValue)
@@ -123,6 +135,11 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   preview() {
+	  if(this.fileData == null) {
+		  this.onImageCancel();
+		  return;
+	  }
+	  this.originalImage = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -151,6 +168,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     if (this.submitted) return;
 
     const controls = this.submitForm.controls;
+	console.log(controls);
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -161,7 +179,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.submitted = true;
 
-    var _date = new Date();
+   /* var _date = new Date();
     _date.setHours(23, 59, 59, 0);
     switch (controls.expiration.value) {
       case '1':
@@ -178,16 +196,22 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         break;
       default:
         var _newDate = _date.setDate(_date.getDate() + 7);
-    }
-return;
+    }*/
+
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+	if(this.fileData) {
+		formData.append('imageURL', this.fileData);
+	}
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
     //formData.append('expiresAt', _newDate.toString());
-	formData.append('expiration', this.offerExpires.toString());
-
-    this.itemsService.createOffer(formData)
+	formData.append('expiration', this.offerExpires.getTime().toString());
+	console.log(formData);
+	/*for (var pair of formData.entries()) {
+		console.log(pair[0]+ ', ' + pair[1]);
+	}*/
+//return;
+    this.itemsService.editOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id, formData)
       .pipe(
         tap(
           data => {
@@ -213,7 +237,7 @@ return;
       )
       .subscribe();
   }
-  
+
   fetchOfferData() {
     this.itemsService.readOffer(this.authenticationService.currentUserValue.user["_id"],this.offer_id)
       .pipe(
@@ -222,9 +246,13 @@ return;
             this.offer = data;
             console.log(this.offer);
 			console.log(this.offer.expiresAt);
+			this.title = this.offer.title;
+			this.description = this.offer.description;
+			this.cost = this.offer.cost;
 			this.offerExpires = new Date(this.offer.expiresAt);
 			console.log(this.offerExpires.getTime());
 			this.initForm();
+			this.cdRef.markForCheck();
             //this.scannerService.changeOffers(this.offer);
           },
           error => {
@@ -237,7 +265,7 @@ return;
       )
       .subscribe();
   }
-  
+
   /**
    * Checking control validation
    *

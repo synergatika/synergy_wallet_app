@@ -17,7 +17,7 @@
 					<div class="col-sm-12 item-img-container">
 						<div class="item-img">
 							<img src={{item.post_imageURL}} alt={{item.title}} />	
-							<div class="item-expires">{{item.expiresAt | date: 'd.M'}}</div>						
+							<div *ngIf="item.dateTime" class="item-expires"><span class="white mdi mdi-calendar"></span>{{item.dateTime | date: 'd.M'}}</div>						
 						</div>				
 					</div>
 					<div class="col-sm-12 item-details">				
