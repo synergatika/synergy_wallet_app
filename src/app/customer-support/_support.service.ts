@@ -52,9 +52,10 @@ export class SupportService {
         merchant_id: '',
         campaign_id: '',
         support_id: '',
-        payment: '',
+        payment_id: '',
         amount: 0,
-        method: ''
+        method: '',
+        how:''
     });
     microcreditSupport = this.microcreditSupportSource.asObservable();
 

@@ -205,6 +205,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(
 					data => {
+						console.log(data);
 						this.supportsList = data;
 					},
 					error => {
@@ -232,6 +233,12 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 					},
 					error => {
 						console.log(error);
+						//Open the QR code Modal
+						this.modalService.open(this.qrcodeModal).result.then((result) => {
+							console.log('closed');
+						}, (reason) => {
+							console.log('dismissed');
+						});
 					}
 				),
 				takeUntil(this.unsubscribe),
@@ -240,11 +247,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 					this.cdRef.markForCheck();
 				})
 			).subscribe();
-		this.modalService.open(this.qrcodeModal).result.then((result) => {
-			console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
-		});
+		
 	}
 	openWallet() {
 		this.modalService.open(this.walletModal).result.then((result) => {
