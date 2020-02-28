@@ -1,7 +1,7 @@
-.microcredit-card {
+.supports-card {
 	margin-bottom: 0;
 	padding-top: 0;
-	.microcredit {
+	.supports {
 		&-img {
 			position: relative;
 			height: auto;
@@ -66,7 +66,7 @@
 	}
 }
 @media (min-width: 768px) {
-	.microcredit {
+	.supports {
 		&-amount {
 			padding-right: 30px;
 			padding-left: 30px;

@@ -2,12 +2,12 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="badge-container">
-				<div class="mr-4">
-					<img [src]="badges.supporter">
+				<div *ngIf="badge" class="mr-4">
+					<img *ngIf="badge.image" [src]="badge.image">
 				</div>
-				<div class="">
-					<h2>Τίτλος Badges</h2>
-					<p>Μπορείτε αγοράζοντας να μπλα μπλα μπλα</p>
+				<div *ngIf="badge" class="bagde-text">
+					<h2 *ngIf="badge.text">{{badge.text.title.rendered}}</h2>
+					<p [innerHTML]="badge.text.content.rendered" *ngIf="badge.text"></p>
 				</div>
 			</div>
 		</div>
@@ -20,7 +20,8 @@
 			  </mat-card-header>
 			  <mat-card-content>
 					<!--begin::Content-->
-					<div class="wallet_single_wrapper">						
+					<div class="wallet_single_wrapper">		
+						<!-- Show Points the user has -->				
 						<div class="single row wallet-row" (click)="openWallet()">
 							<div class="col-sm-9 single-content">
 								<span class="wallet-img">
@@ -37,21 +38,24 @@
 								</div>
 							</div>
 						</div>
-						<div class="single row wallet-coop" *ngFor="let single of (list)" (click)="openCoop(single.id)">
+						<!-- Show Campaign the users supports -->
+						<div class="single row wallet-coop" *ngFor="let s of (supportsList)" (click)="openSupportItem(s)">
 							<div class="col-sm-9 single-content">
 								<div class="wallet-img">
-									<img src={{single.img}} alt={{single.title}} />
+									<img src={{s.campaign_imageURL}} alt={{s.title}} />
 								</div>
 								<div class="">
 
-									<div class="single-title">{{single.title}}</div>
-									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{coops[single.coop_id]['name']}}</div>
-									<div class="single-subtitle">εώς {{single.expires}}</div>
+									<div class="single-title">{{s.title}}</div>
+									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{s.merchant_name}}</div>
+									<div class="single-subtitle">
+										από {{s.redeemStarts | date: 'd.M.y' }}
+										εώς {{s.redeemEnds | date: 'd.M.y' }}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
 								<div>
-									<span class="points">{{single.price_reduced}}</span>
+									<span class="points">{{ s.initialTokens - s.redeemedTokens | currency:'EUR' }}</span>
 								</div>
 							</div>
 						</div>
@@ -74,13 +78,15 @@
 </div>
 
 <!-- Modales -->
-<ng-template #microcredit_item let-c="close" let-d="dismiss">
-	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-		<span aria-hidden="true">&times;</span>
-	</button>
-	<app-card-microcredit [microcredit]="microcredit" [type]="all"></app-card-microcredit>
+<ng-template #qrcodeModal let-c="close" let-d="dismiss">
+	<div class="qrcode-popup">
+		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<app-qr-code></app-qr-code>
+	</div>
 </ng-template>
-<ng-template #wallet let-c="close" let-d="dismiss">
+<ng-template #walletModal let-c="close" let-d="dismiss">
 	<div class="container wallet-popup">
 		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 			<span aria-hidden="true">&times;</span>
@@ -106,11 +112,9 @@
 		</div>
 	</div>
 </ng-template>
-<ng-template #qrcode let-c="close" let-d="dismiss">
-	<div class="container qrcode-popup">
-		<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		<app-qr-code></app-qr-code>
-	</div>
+<ng-template #supportsModal let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<app-card-supports [supportItem]="supportItem"></app-card-supports>
 </ng-template>

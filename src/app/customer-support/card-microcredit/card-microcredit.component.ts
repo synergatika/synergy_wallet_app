@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CardMicrocreditComponent implements OnInit {
 	@Input() microcredit: any;
 	@Input() type: any;
-	
+		
 	constructor() { }
 
 	ngOnInit() {

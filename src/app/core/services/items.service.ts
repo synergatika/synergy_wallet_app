@@ -165,7 +165,7 @@ export class ItemsService {
   }
 
   readPublicPostsEventsByStore(merchant_id: string): Observable<PostEvent[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/public/${merchant_id}`)
+    return this.http.get<any>(`${environment.apiUrl}/community/public/${merchant_id}/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));
@@ -175,7 +175,7 @@ export class ItemsService {
    * Microcredit Campaigns
    */
   readAllPublicMicrocreditCampaigns(): Observable<MicrocreditCampaign[]> {
-    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public`)
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/0-0-0`)
       .pipe(map(response => {
         return response.data;
       }));

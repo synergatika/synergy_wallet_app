@@ -1,0 +1,36 @@
+<mat-card class="dashboard-card supports-card" *ngIf="supportItem">
+  <mat-card-content>
+	  <!-- start::Content-->
+		<div class="wallet_supports_wrapper">
+			<div class="supports row" >
+				<div class="col-sm-12 supports-img-container">
+					<div class="supports-img">
+						<img src={{supportItem.campaign_imageURL}} alt={{supportItem.title}} />
+					</div>
+					
+				</div>
+				<div class="col-sm-12 supports-amount">
+					<div class="supports-heading">
+						<div class="supports-title">{{supportItem.title}}</div>
+						<div>
+							<span class="points">{{ supportItem.initialTokens - supportItem.redeemedTokens | currency:'EUR'}}</span><br>
+							<span class="points">από {{supportItem.initialTokens | currency:'EUR'}}</span>
+						</div>
+					</div>
+					<div class="supports-description">
+						{{supportItem.terms}}
+						<div class="supports-reddem">
+							Εξαργύρωση από {{supportItem.redeemStarts | date: 'd.M.y'}} εώς {{ supportItem.redeemEnds | date: 'd.M.y'}}
+						</div>
+					</div>
+					
+					
+					<div class="supports-info">
+				
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end::Content-->
+  </mat-card-content>
+</mat-card>
