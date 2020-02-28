@@ -12,6 +12,7 @@ import { NewEventComponent } from './new-event/new-event.component';
 import { NewMicrocreditCampaignComponent } from './new-microcredit-campaign/new-microcredit-campaign.component';
 import { NewMicrofundingCampaignComponent } from './new-microfunding-campaign/new-microfunding-campaign.component';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 const routes: Routes = [
     {
@@ -63,7 +64,8 @@ const routes: Routes = [
         MatDialogModule,
 		MatSelectModule,
 		MatDatepickerModule,
-		MatNativeDateModule
+		MatNativeDateModule,
+		NgxMaterialTimepickerModule
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],

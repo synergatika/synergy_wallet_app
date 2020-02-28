@@ -29,6 +29,26 @@ body {
   button:focus {
     outline: 0;
   }
+  .single-delete {
+		margin-top: 20px;
+		text-align: right;
+		button {
+		    opacity: 0.6;
+			transition: opacity 0.3s;
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+	.quantitative-fields {
+		background-color: #f2f2f2;
+		border: 1px solid #d7d7d7;
+		border-radius: 10px;
+		box-shadow: 0 3px 10px #d7d7d7;
+		max-width: 400px;
+		padding: 20px;
+		margin-bottom: 20px;
+	}
 
   /* 1. HEADING */
   &.menu-overlay {
@@ -37,7 +57,7 @@ body {
   .nav a {
     padding: 8px 8px 8px 32px;
   }
-
+  
   /* 2. ASSETS */
   @import "assets/scss/config_assets.scss";
 

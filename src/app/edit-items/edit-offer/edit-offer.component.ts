@@ -43,7 +43,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   offer_id: string;
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = false;
+  originalImage: boolean = true;
   offerExpires: Date;
   title: string;
   description: string;
@@ -134,6 +134,11 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   preview() {
+	  if(this.fileData == null) {
+		  this.onImageCancel();
+		  return;
+	  }
+	  this.originalImage = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -162,6 +167,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     if (this.submitted) return;
 
     const controls = this.submitForm.controls;
+	console.log(controls);
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -171,7 +177,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     }
     this.loading = true;
     this.submitted = true;
-
+	
    /* var _date = new Date();
     _date.setHours(23, 59, 59, 0);
     switch (controls.expiration.value) {
@@ -190,15 +196,21 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       default:
         var _newDate = _date.setDate(_date.getDate() + 7);
     }*/
-return;
+
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+	if(this.fileData) {
+		formData.append('imageURL', this.fileData);
+	}
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
     //formData.append('expiresAt', _newDate.toString());
-	formData.append('expiration', this.offerExpires.toString());
-
-    this.itemsService.createOffer(formData)
+	formData.append('expiration', this.offerExpires.getTime().toString());
+	console.log(formData);
+	/*for (var pair of formData.entries()) {
+		console.log(pair[0]+ ', ' + pair[1]); 
+	}*/
+//return;
+    this.itemsService.editOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id, formData)
       .pipe(
         tap(
           data => {

@@ -1,10 +1,12 @@
 <div class="new-offer">
 	<mat-card>
 		<mat-card-content>
-			<form class="form" [formGroup]="submitForm" id="kt_form">
-				<div class="heading">Create a new Offer</div>
-				<div class="form__section">
-					<div class="">
+			<form class="form container single-form" [formGroup]="submitForm">
+				<div class="row">
+					<div class="heading col-md-12">Create a new Offer</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.TITLE.TITLE' | translate}}</mat-label>
@@ -24,8 +26,8 @@
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="Description" formControlName="description"
-									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}">
+								<textarea class="short" matInput type="text" name="Description" formControlName="description"
+									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}"></textarea>
 								<mat-error *ngIf="isControlHasError('description','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('description','minlength')"
@@ -37,15 +39,14 @@
 								<mat-hint class="form-text text-muted">{{'FIELDS.OFFER.DESCRIPTION.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.EXPIRATION.TITLE' | translate}}</mat-label>
-								<mat-select name="expiresAt" formControlName="expiration">
-									<mat-option value="1">{{'FIELDS.OFFER.EXPIRATION_CHOICES.A' | translate}}</mat-option>
-									<mat-option value="2">{{'FIELDS.OFFER.EXPIRATION_CHOICES.B' | translate}}</mat-option>
-									<mat-option value="3">{{'FIELDS.OFFER.EXPIRATION_CHOICES.C' | translate}}</mat-option>
-									<mat-option value="4">{{'FIELDS.OFFER.EXPIRATION_CHOICES.D' | translate}}</mat-option>
-								</mat-select>
+								<input matInput [matDatepicker]="picker" name="expiration" formControlName="expiration"  >
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('expiration','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.OFFER.EXPIRATION.DESC' | translate}}</mat-hint>
@@ -68,34 +69,34 @@
 							</mat-form-field>
 						</div>
 						<div class="form-group">      
-							<label class="col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
 								<div class="upload-img" id="kt_user_avatar">
 									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
-									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-									<label class="avatar__upload" data-toggle="tooltip" title=""
-										data-original-title="Change avatar">
-										<i class="fa fa-pen"></i>
-										<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-											accept=".png, .jpg, .jpeg" #fileInput>
-									</label>
-									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-										<i class="fa fa-times"></i>
-									</span>
 								</div>
+								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar__upload">
+									<i class="fa fa-pen"></i>
+									<input #image type="file" (change)="fileProgress($event)" name="profile_avatar"
+										formControlName="profile_avatar" accept=".png, .jpg, .jpeg" #fileInput>
+								</label>
+								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()">
+									<span class="mdi mdi-close-circle-outline"></span>
+								</span>
+								<mat-error *ngIf="isControlHasError('profile_avatar','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>								
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form__actions">
-					<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+				<div class="form-actions">
+					<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()"
 						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
 						data-ktwizard-type="action-submit">
 						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-					</div>
+					</button>
 				</div>
 				<!--end: Form Actions -->
 
