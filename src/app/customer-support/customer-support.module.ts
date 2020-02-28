@@ -64,11 +64,13 @@ const routes: Routes = [
         CustomerSupportComponent,
         CardMicrocreditComponent,
         SingleMicrocreditComponent,
+        //Pledge Form
         SupportMicrocreditComponent,
         SubAmountFormComponent,
         SubFinalStepComponent,
     ],
     entryComponents: [
+        SupportMicrocreditComponent
     ]
 })
 

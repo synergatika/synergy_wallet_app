@@ -134,17 +134,8 @@ body {
 	button.mat-mini-fab.mat-accent {
 		background-color: #0c1a33;
 	}
-	
-
-	// Slider
-	swiper.swiper-wrapper {
-		//margin-bottom: -50px;
-	}
-	.swiper-button-next, .swiper-button-prev {
-		top: 22%;
-	}
-	.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
-		bottom: 80px;
+	.cdk-overlay-container{
+		z-index: 9999;
 	}
 	
 	//Owl carousel
@@ -172,7 +163,8 @@ body {
 			}
 		}
 	}
-	//Modal
+
+	//Modals
 	.modal-dialog{
 		margin:5rem auto;
 		.modal-content{
