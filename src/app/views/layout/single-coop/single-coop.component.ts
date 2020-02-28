@@ -26,7 +26,8 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	singlePosts: any; //Used to store posts
 	singlePost:any; //Used for the post to open in modal
 	singleMicrocredits:any; //Used to store microcredits
-	singleMicrocredit:any; //Used for the Microcreit to open in modal
+  singleMicrocredit:any; //Used for the Microcreit to open in modal
+  hours: any;
 
 	//Set Child Modals
 	@ViewChild('campaignModal', { static: false }) campaignModal;
@@ -162,14 +163,14 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	*/
 
 	//Open Microcredit
-	openMicrocredit(campaign) {	 
+	openMicrocredit(campaign) {
 		console.log("test");
 		this.singleMicrocredit = campaign;
 		this.modalService.open(
-			this.campaignModal, 
+			this.campaignModal,
 			{
-				ariaLabelledBy: 'modal-basic-title', 
-				size: 'lg', 
+				ariaLabelledBy: 'modal-basic-title',
+				size: 'lg',
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
 				windowClass: 'fullscrenn-modal',

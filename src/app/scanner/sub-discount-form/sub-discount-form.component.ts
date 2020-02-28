@@ -5,7 +5,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 
 import { LoyaltyService } from '../../core/services/loyalty.service';
 import { ScannerService } from '../_scanner.service';
-import { ScannerInterface } from '../_scanner.interface';
+import { User, PointsTransaction, Actions } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-discount-form',
@@ -17,9 +17,9 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   @Output()
   add_discount: EventEmitter<object> = new EventEmitter<object>();
 
-  user: ScannerInterface["User"];
-  transaction: ScannerInterface["PointsTransaction"];
-  actions: ScannerInterface["Actions"];
+  user: User;
+  transaction: PointsTransaction;
+  actions: Actions;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;

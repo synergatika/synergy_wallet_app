@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 
-import { ScannerInterface } from '../../../scanner/_scanner.interface';
+import { Offer } from '../../../scanner/_scanner.interface';
 import { ScannerService } from '../../../scanner/_scanner.service';
 import { ItemsService } from '../../../core/services/items.service';
 import { AuthenticationService } from '../../../core/services/authentication.service';
@@ -15,9 +15,9 @@ import { AuthenticationService } from '../../../core/services/authentication.ser
 export class MerchantOffersComponent implements OnInit {
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
-	offers: ScannerInterface["Offer"][];
-	
-	constructor(private itemsService: ItemsService, private cdRef: ChangeDetectorRef, private authenticationService: AuthenticationService,private scannerService: ScannerService,) { 
+	offers: Offer[];
+
+	constructor(private itemsService: ItemsService, private cdRef: ChangeDetectorRef, private authenticationService: AuthenticationService,private scannerService: ScannerService,) {
 		this.scannerService.offers.subscribe(offers => this.offers = offers);
 		this.unsubscribe = new Subject();
 	}
@@ -25,7 +25,7 @@ export class MerchantOffersComponent implements OnInit {
 	ngOnInit() {
 		this.fetchOffersData();
 	}
-	
+
 	fetchOffersData() {
 		this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"])
 		  .pipe(
@@ -45,7 +45,7 @@ export class MerchantOffersComponent implements OnInit {
 		  )
 		  .subscribe();
 	}
-	
+
 	ngOnDestroy() {
 		this.unsubscribe.next();
 		this.unsubscribe.complete();

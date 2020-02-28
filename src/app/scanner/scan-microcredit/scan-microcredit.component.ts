@@ -12,7 +12,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 import { ScannerService } from '../_scanner.service';
 
 // Local Models & Interfaces
-import { ScannerInterface } from '../_scanner.interface';
+import { User, MicrocreditCampaign, MicrocreditTransaction, MicrocreditSupport } from '../_scanner.interface';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WizardComponent } from 'angular-archwizard';
@@ -32,10 +32,10 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  user: ScannerInterface["User"];
-  campaigns: ScannerInterface["MicrocreditCampaign"][];
-  transaction: ScannerInterface["MicrocreditTransaction"];
-  supports: ScannerInterface["MicrocreditSupport"][];
+  user: User;
+  campaigns: MicrocreditCampaign[];
+  transaction: MicrocreditTransaction;
+  supports: MicrocreditSupport[];
 
   submitted: boolean = false;
 
@@ -79,7 +79,7 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.supports = data;
+            this.supports = data as any;
             console.log(this.supports);
             this.scannerService.changeMicrocreditSupports(this.supports);
             const currentSupport = this.supports.find(support => support.initialTokens - support.redeemedTokens > 0);
@@ -151,7 +151,7 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onFinalStep(event) {
+  onFinalStep(event=null) {
     this.dialogRef.close();
   }
 }

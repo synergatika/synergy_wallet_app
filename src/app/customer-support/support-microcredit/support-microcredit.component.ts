@@ -102,7 +102,7 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onFinalStep(event) {
+  onFinalStep(event=null) {
     this.dialogRef.close();
   }
 }
