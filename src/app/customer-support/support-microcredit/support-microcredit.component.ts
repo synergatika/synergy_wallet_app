@@ -73,10 +73,10 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
+            console.log(data);
             this.support.support_id = data.data.support_id;
             this.support.payment = data.data.payment;
             this.supportService.changeMicrocreditSupport(this.support);
-
             this.onNextStep();
           },
           error => {

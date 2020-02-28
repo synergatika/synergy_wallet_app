@@ -25,7 +25,9 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
 	//Set Content Variables
 	balance: number = 0; //The points balance of customer
-	badge: any ; //The loyalty badge of customer
+	balanceText: any ; //Static Text for Balance Modal
+	qrcodeText: any ; //Static Text for QR Code Modal
+	badge: any; //The loyalty badge of customer
 	supportsList: any; //The microcredits the customer supports
 	supportItem: any; //Currently Selected microcredit Support
 	offers: any; //Available Offers
@@ -36,11 +38,11 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		helper: '../../../assets/media/images/ranking-2.png',
 		one_of_us: '../../../assets/media/images/ranking-3.png',
 	};
-	
+
 	//Set Child Modals
 	@ViewChild('qrcodeModal', { static: false }) qrcodeModal;
 	@ViewChild('walletModal', { static: false }) walletModal;
-	@ViewChild('supportsModal', { static: false }) supportsModal ;
+	@ViewChild('supportsModal', { static: false }) supportsModal;
 
 	/**
    * Component constructor
@@ -91,53 +93,53 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	//Get the Badge of the Customer
 	fetchBadgeData() {
 		this.loyaltyService.readBadge()
-		.pipe(
-			tap(
-				data => {
-					this.badge = data;
-					//Set Data for Badge based On Level
-					switch(this.badge.slug) {
-						case 1:
-							this.badge.image = this.badgesImages.supporter;
-							this.badge.text_id = 5;
-							break;
-						case 2:
-							this.badge.image = this.badgesImages.helper;
-							this.badge.text_id = 7;
-						  break;
-						case 3:
-							this.badge.image = this.badgesImages.one_of_us;
-							this.badge.text_id = 9;
-						  break;
-					} 
-					//Get static content of Badge
-					this.staticContentService.readText(this.badge.text_id)
-					.pipe(
-						tap(
-							data => {
-								this.badge.text = data;
-							},
-							error => {
-								console.log(error);
-							}
-						),
-						takeUntil(this.unsubscribe),
-						finalize(() => {
-							this.loading = false;
-							this.cdRef.markForCheck();
-						})
-					).subscribe();
-				},
-				error => {
-					console.log(error);
-			}),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-				this.loading = false;
-				this.cdRef.markForCheck();
-			})
-		)
-		.subscribe();
+			.pipe(
+				tap(
+					data => {
+						this.badge = data;
+						//Set Data for Badge based On Level
+						switch (this.badge.slug) {
+							case 1:
+								this.badge.image = this.badgesImages.supporter;
+								this.badge.text_id = 5;
+								break;
+							case 2:
+								this.badge.image = this.badgesImages.helper;
+								this.badge.text_id = 7;
+								break;
+							case 3:
+								this.badge.image = this.badgesImages.one_of_us;
+								this.badge.text_id = 9;
+								break;
+						}
+						//Get static content of Badge
+						this.staticContentService.readText(this.badge.text_id)
+							.pipe(
+								tap(
+									data => {
+										this.badge.text = data;
+									},
+									error => {
+										console.log(error);
+									}
+								),
+								takeUntil(this.unsubscribe),
+								finalize(() => {
+									this.loading = false;
+									this.cdRef.markForCheck();
+								})
+							).subscribe();
+					},
+					error => {
+						console.log(error);
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdRef.markForCheck();
+				})
+			)
+			.subscribe();
 	}
 
 	//Get the Balance of the Customer
@@ -147,6 +149,23 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.balance = parseInt(data.points, 16);
+						//Get static content of Balance Points
+						this.staticContentService.readText('18')
+							.pipe(
+								tap(
+									data => {
+										this.balanceText = data;
+									},
+									error => {
+										console.log(error);
+									}
+								),
+								takeUntil(this.unsubscribe),
+								finalize(() => {
+									this.loading = false;
+									this.cdRef.markForCheck();
+								})
+							).subscribe();
 					},
 					error => {
 						console.log(error);
@@ -167,9 +186,9 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.offers = data;
-						console.log(this.offers)
 					},
 					error => {
+						console.log(error);
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
@@ -187,7 +206,6 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.supportsList = data;
-						console.log(this.supportsList);
 					},
 					error => {
 						console.log(error);
@@ -205,6 +223,23 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	* Modal Functions
 	*/
 	openQrcode() {
+			//Get static content of Balance Points
+			this.staticContentService.readText('23')
+			.pipe(
+				tap(
+					data => {
+						this.qrcodeText = data;
+					},
+					error => {
+						console.log(error);
+					}
+				),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdRef.markForCheck();
+				})
+			).subscribe();
 		this.modalService.open(this.qrcodeModal).result.then((result) => {
 			console.log('closed');
 		}, (reason) => {
