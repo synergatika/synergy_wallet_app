@@ -1,0 +1,27 @@
+<mat-card class="microcredit-card">
+	<mat-card-content>
+	  <div class="col-sm-12 microcredit-img-container">
+		  <div class="microcredit-img">
+			  <img src={{microcredit.campaign_imageURL}} alt={{microcredit.title}} />
+			  <div class="microcredit-expires">έως {{microcredit.expiresAt | date: 'd.M'}}</div>
+		  </div>				
+	  </div>
+	  <div class="col-sm-12 microcredit-details">					
+		  <div class="microcredit-heading">
+			  <div class="microcredit-title">{{microcredit.title}}</div>
+			  <div>
+				  <span class="points">{{microcredit.category}}</span>
+			  </div>
+		  </div>
+		  <div class="microcredit-description">
+			  {{microcredit.description}}
+		  </div>
+		  <div class="microcredit-info">
+			  <div class="" >
+				  <div class="microcredit-subtitle" *ngIf="type!='single'"><span class="mdi mdi-shopping"></span>{{microcredit.merchant_name}}</div>
+				  <div class="microcredit-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{microcredit.expiresAt}}</div>
+			  </div>
+		  </div>
+	  </div>
+	</mat-card-content>
+  </mat-card>

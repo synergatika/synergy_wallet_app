@@ -1,6 +1,10 @@
 export const locale = {
     lang: 'el',
     data: {
+        GENERAL:{
+            FROM: 'από',
+            ΤΟ: 'εώς'
+        },
         TRANSLATOR: {
             SELECT: 'Επιλογή γλώσσας',
         },
@@ -24,13 +28,10 @@ export const locale = {
 		},
 		BALANCE: {
 			TITLE: 'ΠΟΝΤΟΙ',
-			SUBTITLE: '',
-			DESC: ''
+			SUBTITLE: 'όλο το δίκτυο',
 		},
 		QR: {
-			TITLE: 'QR',
-			SUBTITLE: '',
-			DESC: ''
+			TITLE: 'Αυτό είναι το QR code σας',
 		},
 		SCAN: {
 			TITLE: 'ΣΑΡΩΣΗ',
@@ -86,6 +87,9 @@ export const locale = {
 			MESSAGE: 'Καλώς ήρθες'
 		},
         PAGES: {
+            CUSTOMER_DASHBOARD:{
+                WALLET_TITLE:'Το πορτοφόλι μου'
+            },
             COMMUNITY: {
                 OUR_COMMUNITY: 'Η Κοινότητά μας!',
                 CURRENT_OFFERS: 'Τρέχουσες Προσφορές!',

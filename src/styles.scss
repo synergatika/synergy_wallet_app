@@ -109,8 +109,11 @@ body {
 	
 	//Material Design
 	.mat-card:not([class*=mat-elevation-z]) {
-		box-shadow: 0 2px 4px 10px rgba(266,266,266,0.1);
-		border-radius: 0px;
+		-webkit-box-shadow: 17px 22px 68px -2px rgba(0,0,0,0.05);
+		-moz-box-shadow: 17px 22px 68px -2px rgba(0,0,0,0.05);
+		box-shadow: 17px 22px 68px -2px rgba(0,0,0,0.05);
+		border-bottom-left-radius: 9px;
+		border-bottom-right-radius: 9px;
 		overflow: hidden;
 	}
 	.mat-card.wallet-card:not([class*=mat-elevation-z]) {
@@ -131,6 +134,11 @@ body {
 	button.mat-mini-fab.mat-accent {
 		background-color: #0c1a33;
 	}
+
+	.cdk-overlay-container{
+		z-index: 9999;
+  }
+
 	th .mat-sort-header-sorted {
 		color: $second-color;
 	}
@@ -146,7 +154,7 @@ body {
 		}
 	}
 	
-	// Slider
+	/* Slider
 	swiper.swiper-wrapper {
 		//margin-bottom: -50px;
 	}
@@ -155,7 +163,7 @@ body {
 	}
 	.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
 		bottom: 80px;
-	}
+	}*/
 	
 	//Owl carousel
 	.owl-theme {
@@ -196,9 +204,20 @@ body {
 			}
 		}
 	}
-	//Modal
+
+	//Modals
 	.modal-dialog{
 		margin:5rem auto;
+		.modal-content{
+			border: none;
+		}
+		.mat-card{
+			-webkit-box-shadow: 17px 22px 45px 8px rgba(0,0,0,0.2);
+			-moz-box-shadow: 17px 22px 45px 8px rgba(0,0,0,0.2);
+			box-shadow: 17px 22px 45px 8px rgba(0,0,0,0.2);
+			border-bottom-left-radius: 9px;
+			border-bottom-right-radius: 9px;
+		}
 	}
 	.close-btn {
 		position: absolute;
