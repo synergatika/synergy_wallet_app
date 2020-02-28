@@ -1,77 +1,86 @@
-<div class="new-offer">
+<div class="edit-post">
 	<mat-card>
 		<mat-card-content>
-			<form class="form" [formGroup]="submitForm" id="kt_form">
-				<div class="heading heading--md">Edit Post</div>
-				<div class="form__section form__section--first">
-					<div class="wizard-v3__form">
+			<form class="form container single-form" [formGroup]="submitForm" id="kt_form">
+				<div class="row">
+					<div class="heading col-md-12">Edit Post</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group">
-							<label>{{'FIELDS.POST.TITLE.TITLE' | translate}}</label>
-							<input type="text" class="form-control" formControlName="title"
-								placeholder="{{'FIELDS.POST.TITLE.PLACEHOLDER' | translate}}" value="title">
-							<span *ngIf="isControlHasError('title','required')"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-							<span *ngIf="isControlHasError('title','minlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-								{{validator.content.minLength}}</span>
-							<span *ngIf="isControlHasError('title','maxlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-								{{validator.content.maxLength}}</span>
-							<span class="form-text text-muted">{{'FIELDS.POST.TITLE.DESC' | translate}}</span>
+							<mat-form-field>
+								<mat-label>{{'FIELDS.POST.TITLE.TITLE' | translate}}</mat-label>
+								<input matInput type="text" formControlName="title"
+									placeholder="{{'FIELDS.POST.TITLE.PLACEHOLDER' | translate}}" value="title">
+								<mat-error *ngIf="isControlHasError('title','required')"
+									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="isControlHasError('title','minlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+									{{validator.content.minLength}}</mat-error>
+								<mat-error *ngIf="isControlHasError('title','maxlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+									{{validator.content.maxLength}}</mat-error>
+								<mat-hint class="form-text text-muted">{{'FIELDS.POST.TITLE.DESC' | translate}}</mat-hint>
+							</mat-form-field>
 						</div>
 						<div class="form-group">
-							<label>{{'FIELDS.POST.CONTENT.TITLE' | translate}}</label>
-							<textarea type="text" class="form-control" formControlName="content"
-								placeholder="{{'FIELDS.POST.CONTENT.PLACEHOLDER' | translate}}" value="content"> </textarea>
-							<span *ngIf="isControlHasError('content','required')"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-							<span *ngIf="isControlHasError('content','minlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-								{{validator.content.minLength}}</span>
-							<span *ngIf="isControlHasError('content','maxlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-								{{validator.content.maxLength}}</span>
-							<span class="form-text text-muted">{{'FIELDS.POST.CONTENT.DESC' | translate}}</span>
+							<mat-form-field>
+								<mat-label>{{'FIELDS.POST.CONTENT.TITLE' | translate}}</mat-label>
+									<textarea matInput class="short" type="text" formControlName="content"
+									placeholder="{{'FIELDS.POST.CONTENT.PLACEHOLDER' | translate}}" value="content"> </textarea>
+								<mat-error *ngIf="isControlHasError('content','required')"
+									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="isControlHasError('content','minlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+									{{validator.content.minLength}}</mat-error>
+								<mat-error *ngIf="isControlHasError('content','maxlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+									{{validator.content.maxLength}}</mat-error>
+								<mat-hint class="form-text text-muted">{{'FIELDS.POST.CONTENT.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.POST.ACCESS.TITLE' | translate}}</mat-label>
+								<mat-select name="access" formControlName="access">
+									<mat-option value="public">{{'FIELDS.POST.ACCESS_CHOICES.A' | translate}}</mat-option>
+									<mat-option value="private">{{'FIELDS.POST.ACCESS_CHOICES.B' | translate}}</mat-option>
+									<mat-option value="partners">{{'FIELDS.POST.ACCESS_CHOICES.C' | translate}}</mat-option>
+								</mat-select>
+								<mat-error *ngIf="isControlHasError('access','required')"
+									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-hint class="form-text text-muted">{{'FIELDS.POST.ACCESS.DESC' | translate}}</mat-hint>
+							</mat-form-field>
 						</div>
 						<div class="form-group">
-							<label>{{'FIELDS.POST.ACCESS.TITLE' | translate}}</label>
-							<select name="access" class="form-control" formControlName="access">
-								<option value="public">{{'FIELDS.POST.ACCESS_CHOICES.A' | translate}}</option>
-								<option value="private">{{'FIELDS.POST.ACCESS_CHOICES.B' | translate}}</option>
-								<option value="partners">{{'FIELDS.POST.ACCESS_CHOICES.C' | translate}}</option>
-							</select>
-							<span *ngIf="isControlHasError('access','required')"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-							<span class="form-text text-muted">{{'FIELDS.POST.ACCESS.DESC' | translate}}</span>
-						</div>
-						<div class="form-group">
-							<label class="col-xl-3 col-lg-3 col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
-							<div class="col-lg-9 col-xl-6">
-								<div class="avatar avatar--outline" id="kt_user_avatar">
-									<img class="avatar__holder" [src]="previewUrl">
-									<label class="avatar__upload" data-toggle="tooltip" title=""
-										data-original-title="Change avatar">
-										<i class="fa fa-pen"></i>
-										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
-											accept=".png, .jpg, .jpeg">
-									</label>
-									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-										<i class="fa fa-times"></i>
-									</span>
+							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+							<div class="">
+								<div class="upload-img-holder">
+									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
 								</div>
+								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar__upload" data-toggle="tooltip" title=""
+									data-original-title="Change avatar">
+									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+										accept=".png, .jpg, .jpeg" #fileInput>
+								</label>
+								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()">
+									<span class="mdi mdi-close-circle-outline"></span>
+								</span>							
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form__actions">
-					<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
+				<div class="form-actions">
+					<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()"
 						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
 						data-ktwizard-type="action-submit">
 						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-					</div>
+					</button>
 				</div>
 				<!--end: Form Actions -->
 
@@ -79,3 +88,25 @@
 		</mat-card-content>
 	</mat-card>
 </div>
+<div class="delete-single">
+	<button mat-raised-button class="delete-text"(click)="deleteItemModal()">
+		Delete Item
+	</button>
+</div>
+
+<!-- Remove Item Modal -->
+<ng-template #remove_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Delete Post</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div *ngIf="post" class="modal-body">
+		Are you sure you would like to delete '{{post.title}}'?
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-primary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
+		<button mat-raised-button class="btn btn-secondary" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>

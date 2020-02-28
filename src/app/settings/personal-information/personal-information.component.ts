@@ -168,6 +168,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   fileProgress(fileInput: any) {
+	  console.log(fileInput);
     if (fileInput) {
       this.fileData = <File>fileInput.target.files[0];
       this.originalImage = false;
@@ -176,6 +177,10 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   preview() {
+	  if(this.fileData == null) {
+		  this.onImageCancel();
+		  return;
+	  }
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;

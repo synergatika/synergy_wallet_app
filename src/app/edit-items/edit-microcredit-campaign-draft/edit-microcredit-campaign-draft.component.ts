@@ -128,6 +128,10 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         Validators.required,
       ])
       ],
+	  initiation: ['', Validators.compose([
+        Validators.required,
+      ])
+      ],
       expiration: ['', Validators.compose([
         Validators.required,
       ])

@@ -33,7 +33,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
 
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = false;
+  originalImage: boolean = true;
 
   submitForm: FormGroup;
   submitted: boolean = false;
@@ -101,6 +101,11 @@ export class NewPostComponent implements OnInit, OnDestroy {
   }
 
   preview() {
+	  if(this.fileData == null) {
+		  this.onImageCancel();
+		  return;
+	  }
+	  this.originalImage = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
