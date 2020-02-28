@@ -7,6 +7,14 @@
 @media (min-width: 768px) {
 	.offer {
 		padding-bottom: 15px;
+		.amount{
+			img{
+				width: 29px;
+				position: absolute;
+				left: 3px;
+				top: 4px;
+			}
+		}
 	}
 }
 

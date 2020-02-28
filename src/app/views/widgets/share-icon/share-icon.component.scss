@@ -1,3 +1,5 @@
+@import "../../../../variables.scss";
+
 .share-dropdown {
 	.dropdown-toggle {
 		&:after {
@@ -25,12 +27,12 @@
 	.share-icon {
 		transition: color 0.3s;
 		&:hover {
-			color: #37aba7;
+			color:$primary;
 		}
 	}
 	&.show {
 		.share-icon {
-			color: #37aba7;
+			color: $primary;
 		}
 	}
 }

@@ -7,8 +7,10 @@ body {
 body {
   /* 0.GENERAL */
   margin: 0;
+  color:$main-font-color;
+  font-size:1.1;
   background-color: #f2f3f8;
-  font-family: "Noto Sans", "Helvetica Neue", sans-serif;
+  font-family: $main-font, sans-serif;
   a {
     color: $primary;
     transition: color 0.3s;
@@ -104,7 +106,7 @@ body {
 		/*display: flex;
 		align-items: center;
 		justify-content: space-between;*/
-		margin-bottom: 18px;
+		margin-bottom: 10px;
 	}
 	&-title {
 		font-size: 1.35rem;
@@ -113,12 +115,13 @@ body {
 	&-points {
 		font-size: 1.5rem;
 		color:$amount-color;
+		text-align: right;
+		padding-right: 10px;
 	}
 	&-subtitle {
-		font-size: 1.1rem;
-		color: #8b8b8b;
-		margin-bottom: 20px;
+		color:$main-font-color;
 		padding-bottom: 15px;
+		margin-bottom:10px;
 		border-bottom: 1px solid #eee;
 	}
 	&-info {
