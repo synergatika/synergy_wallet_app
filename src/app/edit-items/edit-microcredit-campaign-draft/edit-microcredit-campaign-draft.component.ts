@@ -64,7 +64,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   redeemEnds: Date;
   startsAt: Date;
   expiresAt: Date;
-  
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -190,8 +190,8 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
     this.fileData = null;
     this.originalImage = true;
   }
-  
-  fetchCampaignData() {   	
+
+  fetchCampaignData() {
 	this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
 		  .pipe(
 			tap(
@@ -229,7 +229,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 	/*const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
     this.current = currentCampaign;	*/
   }
-  
+
   onIsQuantitativeCheckboxChange() {
     this.isQuantitative = !this.isQuantitative;
   }
@@ -237,7 +237,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   /**
  * On Form Submit
  */
-  onSubmit() {
+  onSubmit(type=null) {
     if (this.submitted) return;
 
     const controls = this.submitForm.controls;

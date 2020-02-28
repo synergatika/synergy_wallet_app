@@ -40,6 +40,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     }
   };
 
+  date: any;
   offer_id: string;
   fileData: File = null;
   previewUrl: any = null;
@@ -177,7 +178,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     }
     this.loading = true;
     this.submitted = true;
-	
+
    /* var _date = new Date();
     _date.setHours(23, 59, 59, 0);
     switch (controls.expiration.value) {
@@ -207,7 +208,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 	formData.append('expiration', this.offerExpires.getTime().toString());
 	console.log(formData);
 	/*for (var pair of formData.entries()) {
-		console.log(pair[0]+ ', ' + pair[1]); 
+		console.log(pair[0]+ ', ' + pair[1]);
 	}*/
 //return;
     this.itemsService.editOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id, formData)

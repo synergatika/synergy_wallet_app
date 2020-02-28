@@ -10,6 +10,10 @@ export interface PointsTransaction {
     discount_amount: number;
     discount_points: number;
     points: number;
+    quantity?: any;
+    initial_tokens? : any;
+    redeemed_tokens?: any;
+    discount_tokens?: any;
 }
 
 export interface Actions {
@@ -27,6 +31,9 @@ export interface Offer {
     cost: number;
     expiresAt: number;
     createdAt: string;
+
+    offer_imageURL?: any;
+
 }
 
 export interface OfferTransaction {
@@ -37,6 +44,9 @@ export interface OfferTransaction {
     possible_quantity: number;
     quantity: number;
     final_amount: number;
+    initial_tokens?: any;
+    redeemed_tokens?: any;
+    discount_tokens?: number;
 }
 
 export interface MicrocreditSupport {
@@ -66,6 +76,9 @@ export interface MicrocreditTransaction {
     redeemed_tokens: number;
     possible_tokens: number;
     discount_tokens: number;
+    final_amount?: any;
+    discount_points?: any;
+    quantity?: any;
 }
 
 // export interface ScannerInterface {
