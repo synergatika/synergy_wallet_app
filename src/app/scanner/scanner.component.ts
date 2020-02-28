@@ -6,7 +6,7 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { ItemsService } from '../core/services/items.service';
 import { AuthenticationService } from '../core/services/authentication.service';
 
-import { ScannerInterface } from './_scanner.interface';
+import { Offer, MicrocreditCampaign } from './_scanner.interface';
 import { ScannerService } from './_scanner.service';
 
 import { ScanLoyaltyComponent } from './scan-loyalty/scan-loyalty.component';
@@ -30,8 +30,10 @@ export class ScannerComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
   posts: PostEvent[];
   singlePost: any;
-  offers: ScannerInterface["Offer"][];
-  microcredit: ScannerInterface["MicrocreditCampaign"][];
+  offers: Offer[];
+  microcredit: MicrocreditCampaign[];
+  singleMerchant = false;
+
   @ViewChild('postModal', {static: false}) postModal;
 	customOptions: OwlOptions = {
 		loop: true,
@@ -52,7 +54,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
 		margin:30,
 		nav: true
 	}
-	
+
   constructor(
     public matDialog: MatDialog,
     private cdRef: ChangeDetectorRef,
@@ -126,7 +128,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.microcredit = data;
-			
+
             console.log(this.microcredit);
             this.scannerService.changeMicrocreditCampaigns(this.microcredit);
           },
@@ -160,7 +162,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-  
+
  	fetchPostsData() {
 		this.itemsService.readAllPrivatePostsEvents()
 		  .pipe(
@@ -180,17 +182,17 @@ export class ScannerComponent implements OnInit, OnDestroy {
 			})
 		  )
 		  .subscribe();
-	} 
-	
- 	openPost(post) {	  
+	}
+
+ 	openPost(post) {
 		console.log('post modal');
 		console.log(post);
 		this.singlePost = post;
 		this.modalService.open(
-			this.postModal, 
+			this.postModal,
 			{
-				ariaLabelledBy: 'modal-basic-title', 
-				size: 'lg', 
+				ariaLabelledBy: 'modal-basic-title',
+				size: 'lg',
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
 				windowClass: 'fullscrenn-modal',
@@ -202,12 +204,12 @@ export class ScannerComponent implements OnInit, OnDestroy {
 				console.log('dismissed');
 
 		});
-	} 
-	
+	}
+
 	mousedown() {
 	  this.moved = false;
 	}
-	
+
 	mousemove() {
 	  this.moved = true;
 	}

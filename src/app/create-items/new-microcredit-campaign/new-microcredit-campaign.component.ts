@@ -173,7 +173,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
   /**
  * On Form Submit
  */
-  onSubmit() {
+  onSubmit(type='') {
     if (this.submitted) return;
 
     const controls = this.submitForm.controls;

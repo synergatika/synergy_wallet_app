@@ -18,6 +18,7 @@ import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
 export class MicrocreditComponent implements OnInit, OnDestroy {
 
   loading: boolean = false;
+  type: String = '';
   private unsubscribe: Subject<any>;
 
   campaigns: MicrocreditCampaign[];
@@ -49,7 +50,7 @@ export class MicrocreditComponent implements OnInit, OnDestroy {
           data => {
             this.campaigns = data;
 			console.log(this.campaigns);
-            this.supportService.changeMicrocreditCampaigns(this.campaigns);			
+            this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {
           }),

@@ -48,5 +48,7 @@ export interface MicrocreditCampaign {
         redeemedTokens: number
     },
 
-    createdAt: Date
+    createdAt: Date;
+
+    merchant_payments?: any;
 }

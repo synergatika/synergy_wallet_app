@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { ScannerService } from '../_scanner.service';
-import { ScannerInterface } from '../_scanner.interface';
+import { MicrocreditTransaction, MicrocreditSupport } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-microcredit-form',
@@ -14,8 +14,8 @@ export class SubMicrocreditFormComponent implements OnInit {
   @Output()
   add_microcredit: EventEmitter<number> = new EventEmitter<number>();
 
-  transaction: ScannerInterface["MicrocreditTransaction"];
-  supports: ScannerInterface["MicrocreditSupport"][];
+  transaction: MicrocreditTransaction;
+  supports: MicrocreditSupport[];
 
   submitted: boolean = false;
   submitForm: FormGroup;

@@ -18,7 +18,8 @@ interface LanguageFlag {
   styleUrls: ['./language-switcher.component.scss']
 })
 export class LanguageSwitcherComponent implements OnInit {
-	language;
+  language: any;
+  iconType: any;
 	languages: LanguageFlag[] = [
 		{
 			lang: 'en',
@@ -31,7 +32,7 @@ export class LanguageSwitcherComponent implements OnInit {
 			flag: './assets/media/images/flag-greek.png'
 		},
 	];
-	
+
 	constructor(private translationService: TranslationService, private router: Router) {
 	}
 
