@@ -14,7 +14,7 @@
 		<div class="col-md-6">
 			<mat-card class="dashboard-card wallet-card">
 			  <mat-card-header class="wallet-card-header">
-				<mat-card-title>Το πορτοφόλι μου</mat-card-title>
+				<mat-card-title>{{'PAGES.CUSTOMER_DASHBOARD.WALLET_TITLE' | translate}}</mat-card-title>
 				<!--<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png" (click)="openQrcode()">-->
 				<span class="mdi mdi-qrcode wallet-card-icon" (click)="openQrcode()"></span>
 			  </mat-card-header>
@@ -28,8 +28,8 @@
 									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
 								</span>
 								<div class="">
-									<div class="single-title">Synergy Πόντοι</div>
-									<div class="single-subtitle"><!--<img src="../../../assets/media/images/Shop-Icon.png" alt="Shop" />--><span class="mdi mdi-shopping"></span>όλο το δίκτυο</div>
+									<div class="single-title" *ngIf="balanceText">{{balanceText.title.rendered}}</div>
+									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{'BALANCE.SUBTITLE' | translate}}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
@@ -49,8 +49,8 @@
 									<div class="single-title">{{s.title}}</div>
 									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{s.merchant_name}}</div>
 									<div class="single-subtitle">
-										από {{s.redeemStarts | date: 'd.M.y' }}
-										εώς {{s.redeemEnds | date: 'd.M.y' }}</div>
+										{{'GENERAL.FROM' | translate}} {{s.redeemStarts | date: 'd.M.y' }}
+										{{'GENERAL.TO' | translate}} {{s.redeemEnds | date: 'd.M.y' }}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
@@ -84,6 +84,7 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 		<app-qr-code></app-qr-code>
+		<p class="qr-code-text" [innerHTML]="qrcodeText.content.rendered" *ngIf="qrcodeText"></p>
 	</div>
 </ng-template>
 <ng-template #walletModal let-c="close" let-d="dismiss">
@@ -99,7 +100,7 @@
 				
 			</div>
 			<div class="">
-				<div class="single-title">Synergy Πόντοι</div>
+				<div class="single-title" *ngIf="balanceText">{{balanceText.title.rendered}}</div>
 			</div>
 			<div class="single-amount">
 				<div>
@@ -108,7 +109,7 @@
 			</div>
 		</div>
 		<div class="text-center mt-3">
-			Κάτι πράγματα για τους πόντους
+			<p [innerHTML]="balanceText.content.rendered" *ngIf="balanceText"></p>
 		</div>
 	</div>
 </ng-template>

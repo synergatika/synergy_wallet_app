@@ -23,7 +23,7 @@ export class StaticContentService {
   readText(post_id: string) {
     return this.http.get(environment.staticUrl+'/pages/'+post_id)
       .pipe(
-        tap( // Log the result or error
+        tap( 
           data => {
             return data;
           },

@@ -53,10 +53,11 @@
 			<h3 class="section-heading">Καμπάνιες</h3>
 			<owl-carousel-o [options]="customOptionsSingle">
 				<ng-template carouselSlide *ngFor="let microcredit of (singleMicrocredits)">
-					<app-card-microcredit [microcredit]="microcredit" type="single"></app-card-microcredit>
+					<app-card-microcredit [microcredit]="microcredit" type="single" (mousedown)="mousedown()" (mousemove)="mousemove()"
+					(mouseup)="mouseup(microcredit, 'microcredit')"></app-card-microcredit>
 				</ng-template>
 			</owl-carousel-o>
-		</div>
+		</div>		
 
 		<!-- Offers of Coop -->
 		<div class="col-md-6 col-lg-12" *ngIf="singleOffers">
@@ -90,4 +91,12 @@
 		<span aria-hidden="true">&times;</span>
 	</button>
 	<app-single-post [singlePost]="singlePost"></app-single-post>
+</ng-template>
+
+<!-- Microcredit Campaign Modal -->
+<ng-template #campaignModal let-c="close" let-d="dismiss">
+	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<app-single-microcredit [singleMicrocredit]="singleMicrocredit"></app-single-microcredit>
 </ng-template>

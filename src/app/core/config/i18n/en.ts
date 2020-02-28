@@ -1,6 +1,10 @@
 export const locale = {
     lang: 'en',
     data: {
+        GENERAL:{
+            FROM: 'from',
+            TO: 'to'
+        },
         TRANSLATOR: {
             SELECT: 'Select your language',
         },
@@ -24,13 +28,10 @@ export const locale = {
 		},
 		BALANCE: {
 			TITLE: 'BALANCE',
-			SUBTITLE: '',
-			DESC: ''
+			SUBTITLE: 'across the network',
 		},
 		QR: {
-			TITLE: 'QR',
-			SUBTITLE: '',
-			DESC: ''
+			TITLE: 'This is your QR code',
 		},
 		SCAN: {
 			TITLE: 'SCAN',
@@ -86,7 +87,10 @@ export const locale = {
 			MESSAGE: 'Welcome'
 		},
         PAGES: {
-            DASHBOARD: {
+            CUSTOMER_DASHBOARD:{
+                WALLET_TITLE:'My Wallet'
+            },
+            COMMUNITY: {
                 OUR_COMMUNITY: 'Our Community!',
                 CURRENT_OFFERS: 'Current offers!',
                 LATEST_POSTS: 'Latest Posts & Upcoming Events!',

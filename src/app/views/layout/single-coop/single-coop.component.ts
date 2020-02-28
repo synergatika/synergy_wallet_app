@@ -29,7 +29,7 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	singleMicrocredit:any; //Used for the Microcreit to open in modal
 
 	//Set Child Modals
-	@ViewChild('microcreditModal', { static: false }) microcreditModal;
+	@ViewChild('campaignModal', { static: false }) campaignModal;
 	@ViewChild('postModal', { static: false }) postModal;
 
 	//Slider Options
@@ -146,24 +146,25 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	/* Modals
 	*/
 
-	/*//Open Coop
-	openCoop(coop) {
-		this.singleCoop = coop;
+	//Open Microcredit
+	openMicrocredit(campaign) {	 
+		console.log("test");
+		this.singleMicrocredit = campaign;
 		this.modalService.open(
-			this.coopModal,
+			this.campaignModal, 
 			{
-				ariaLabelledBy: 'modal-basic-title',
-				size: 'lg',
+				ariaLabelledBy: 'modal-basic-title', 
+				size: 'lg', 
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
 				windowClass: 'fullscrenn-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
+			}, (reason) => {
+				console.log('dismissed');
 		});
-	}*/
+	}
 
 
 	//Open Post
@@ -198,7 +199,8 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 			//Do nothings
 		} else {
 			if (type == 'microcredit') {
-				//this.openMicrocredit(data);
+				console.log("tes0t");
+				this.openMicrocredit(data);
 			} else if (type == 'post') {
 				this.openPost(data);
 			} else {
