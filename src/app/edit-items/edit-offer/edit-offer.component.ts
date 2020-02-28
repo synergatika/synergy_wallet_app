@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-import { ScannerInterface } from '../../scanner/_scanner.interface';
+import { Offer } from '../../scanner/_scanner.interface';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -39,7 +39,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       maxValue: 100000
     }
   };
-  
+
   offer_id: string;
   fileData: File = null;
   previewUrl: any = null;
@@ -50,7 +50,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   cost: number;
   submitForm: FormGroup;
   submitted: boolean = false;
-  offer: ScannerInterface["Offer"];
+  offer: Offer;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -264,7 +264,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-  
+
   /**
    * Checking control validation
    *

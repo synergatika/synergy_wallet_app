@@ -9,4 +9,6 @@ export interface MicrocreditCampaign {
     cost: number;
     expiresAt: number;
     createdAt: string;
+
+    merchant_payments: any;
 }

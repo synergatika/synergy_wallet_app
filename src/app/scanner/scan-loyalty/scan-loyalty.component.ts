@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 
 import { SubDiscountFormComponent } from "../sub-discount-form/sub-discount-form.component";
 import { ScannerService } from "../_scanner.service";
-import { ScannerInterface } from "../_scanner.interface";
+import { User, PointsTransaction, Actions } from "../_scanner.interface";
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -41,9 +41,9 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   showIdentifierForm = false;
   showCardScanner = false;
 
-  public user: ScannerInterface["User"];
-  public transaction: ScannerInterface["PointsTransaction"];
-  public actions: ScannerInterface["Actions"];
+  public user: User;
+  public transaction: PointsTransaction;
+  public actions: Actions;
 
   messages = {
     stepB: '',
@@ -81,19 +81,19 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * States: 
+   * States:
    * no_identifier_field: 0,
    * identifier_field: 1
-   * 
+   *
    * no_email_field: 0,
    * email_field: 1
-   * 
+   *
    * CheckIdentifier:
    * user_not_exists_A: 11.
    * user_no_email_A: 10,
    * user_no_card_A: 01,
    * user_exists_A: 00
-   * 
+   *
    * CheckEmail:
    * user_not_exists_B: 0,
    * user_exists_B: 1
@@ -317,10 +317,10 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     // 'd': Is Card Registered,
 
     // All States!!!
-    // xx0011, xx0000, xx0010, xx0111, 
+    // xx0011, xx0000, xx0010, xx0111,
     // 100100, 110100, 000100 // New Card
     // 100101, 110101, 000101 // Card No Email
-    // xx1011, xx1000, xx1010, xx1111, 
+    // xx1011, xx1000, xx1010, xx1111,
     // 101100, 111100, 001100 // New Card
     // 101101, 111101, 001101 // Card No Email
 
@@ -526,7 +526,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     //     })
   }
 
-  onFinalStep(event) {
+  onFinalStep(event=null) {
     this.dialogRef.close();
   }
 }

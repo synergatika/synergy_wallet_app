@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { ScannerService } from "../_scanner.service";
-import { ScannerInterface } from "../_scanner.interface";
+import { User } from "../_scanner.interface";
 
 @Component({
   selector: 'app-sub-email-form',
@@ -18,7 +18,7 @@ export class SubEmailFormComponent implements OnInit {
   submitForm: FormGroup;
   submitted: boolean = false;
 
-  user: ScannerInterface["User"];
+  user: User;
 
   constructor(
     private fb: FormBuilder,

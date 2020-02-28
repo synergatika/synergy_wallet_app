@@ -11,10 +11,11 @@ import { LoyaltyService } from '../../core/services/loyalty.service';
 import { ScannerService } from '../_scanner.service';
 
 // Local Models & Interfaces
-import { ScannerInterface } from '../_scanner.interface';
+import { User, OfferTransaction } from '../_scanner.interface';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WizardComponent } from 'angular-archwizard';
+import { Offer } from 'src/app/core/models/offer.model';
 @Component({
   selector: 'app-scan-offers',
   templateUrl: './scan-offers.component.html',
@@ -31,9 +32,9 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  user: ScannerInterface["User"];
-  offers: ScannerInterface["Offer"][];
-  transaction: ScannerInterface["OfferTransaction"];
+  user: User;
+  offers: Offer[];
+  transaction: OfferTransaction;
 
   submitted: boolean = false;
 
@@ -146,7 +147,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onFinalStep(event) {
+  onFinalStep(event=null) {
     this.dialogRef.close();
   }
 }

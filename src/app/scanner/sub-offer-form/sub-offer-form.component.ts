@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ScannerService } from '../_scanner.service';
-import { ScannerInterface } from '../_scanner.interface';
+import { OfferTransaction } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-offer-form',
@@ -13,7 +13,7 @@ export class SubOfferFormComponent implements OnInit {
   @Output()
   add_offer: EventEmitter<number> = new EventEmitter<number>();
 
-  transaction: ScannerInterface["OfferTransaction"];
+  transaction: OfferTransaction;
 
   submitted: boolean = false;
   submitForm: FormGroup;
