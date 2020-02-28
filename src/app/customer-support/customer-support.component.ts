@@ -52,7 +52,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
 
   //Get Microcredit Campaigns
   fetchMicrocreditData() {
-    this.itemsService.readAllPublicMicrocreditCampaigns()
+    this.itemsService.readAllPrivateMicrocreditCampaigns()
       .pipe(
         tap(
           data => {
@@ -92,21 +92,5 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
 				console.log('dismissed');
 		});
 	}
-
-
-    /*
-  openModal(merchant_id: string, campaign_id: string) {
-    const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    dialogConfig.height = "350px";
-    dialogConfig.width = "600px";
-    dialogConfig.data = {
-      merchant_id: merchant_id,
-      campaign_id: campaign_id
-    };
-    const modalDialog = this.matDialog.open(SupportMicrocreditComponent, dialogConfig);
-  }*/
 
 }

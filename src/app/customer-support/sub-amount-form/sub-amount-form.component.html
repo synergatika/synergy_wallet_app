@@ -23,17 +23,16 @@
 	<div class="form-group">
 		<label>Payment Method</label>
 		<select name="method" formControlName="method" class="form-control">
-			<option value="Paypal">	Paypal</option>
-			<!--<option *ngIf="campaign.merchant_payment.Paypal" value="Paypal">
+			<option *ngIf="campaign.merchant_payments.paypal" value="paypal">
 				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.A' | translate}}</option>
-			<option *ngIf="campaign.merchant_payment.NationalBank" value="NationalBank">
+			<option *ngIf="campaign.merchant_payments.nationalBank" value="nationalBank">
 				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.B' | translate}}</option>
-			<option *ngIf="campaign.merchant_payment.Eurobank" value="Eurobank">
+			<option *ngIf="campaign.merchant_payments.eurobank" value="eurobank">
 				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.C' | translate}}</option>
-			<option *ngIf="campaign.merchant_payment.AlphaBank" value="AlphaBank">
+			<option *ngIf="campaign.merchant_payments.alphaBank" value="alphaBank">
 				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.D' | translate}}</option>
-			<option *ngIf="campaign.merchant_payment.PiraeusBank" value="PiraeusBank">
-				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.E' | translate}}</option>-->
+			<option *ngIf="campaign.merchant_payments.piraeusBank" value="piraeusBank">
+				{{'FIELDS.SUPPORT.PAYMENT_CHOICES.E' | translate}}</option>
 		</select>
 		<span *ngIf="isControlHasError('method','required')"
 			class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>

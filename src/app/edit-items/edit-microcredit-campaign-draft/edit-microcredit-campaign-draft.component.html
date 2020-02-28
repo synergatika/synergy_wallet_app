@@ -1,10 +1,10 @@
 <div class="new-microfunding">
 	<mat-card>
 		<mat-card-content>
-			<form class="form" [formGroup]="submitForm" id="kt_form">
-				<div class="heading">Edit Microcredit Campaign</div>
-				<div class="form__section">
-					<div class="">
+			<form *ngIf="campaign" class="form container single-form" [formGroup]="submitForm">
+				<div class="heading">Edit Microcredit Campaign: {{campaign.title}}</div>
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.TITLE.TITLE' | translate}}</mat-label>
@@ -23,25 +23,19 @@
 						</div>
 						<div class="form-group">
 							<mat-form-field>
-								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="Terms" formControlName="terms"
-									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.PLACEHOLDER' | translate}}">
-								<mat-error *ngIf="isControlHasError('terms','required')"
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.TITLE' | translate}}</mat-label>
+								<input matInput type="text" name="Category" formControlName="category"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.PLACEHOLDER' | translate}}">
+								<mat-error *ngIf="isControlHasError('category','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-								<mat-error *ngIf="isControlHasError('terms','minlength')"
-									class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-									{{validator.terms.minLength}}</mat-error>
-								<mat-error *ngIf="isControlHasError('terms','maxlength')"
-									class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-									{{validator.terms.maxLength}}</mat-error>
-								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.DESC' | translate}}</mat-hint>
+								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="Description" formControlName="description"
-									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.PLACEHOLDER' | translate}}">
+								<textarea matInput type="text" name="Description" formControlName="description"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.DESCRIPTION.PLACEHOLDER' | translate}}"></textarea>
 								<mat-error *ngIf="isControlHasError('description','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('description','minlength')"
@@ -54,43 +48,30 @@
 							</mat-form-field>
 						</div>
 						<div class="form-group">
-							<label class="col-xl-3 col-lg-3 col-form-label">{{'FIELDS.MICROCREDIT_CAMPAIGN.IMAGE.TITLE' | translate}}</label>
-							<div class="col-lg-9 col-xl-6">
-								<div class="upload-img" id="kt_user_avatar">
-									<img class="upload-img-holder" [src]="previewUrl">
-									<label class="avatar_upload" data-toggle="tooltip" title=""
-										data-original-title="Change avatar">
-										<i class="fa fa-pen"></i>
-										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
-											accept=".png, .jpg, .jpeg">
-									</label>
-									<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-										<i class="fa fa-times"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
 							<mat-form-field>
-								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="Category" formControlName="category"
-									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.PLACEHOLDER' | translate}}">
-								<mat-error *ngIf="isControlHasError('category','required')"
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.TITLE' | translate}}</mat-label>
+								<textarea matInput type="text" name="Terms" formControlName="terms"
+									class="short" placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.PLACEHOLDER' | translate}}"></textarea>
+								<mat-error *ngIf="isControlHasError('terms','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.DESC' | translate}}</mat-hint>
+								<mat-error *ngIf="isControlHasError('terms','minlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+									{{validator.terms.minLength}}</mat-error>
+								<mat-error *ngIf="isControlHasError('terms','maxlength')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+									{{validator.terms.maxLength}}</mat-error>
+								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.TERMS.DESC' | translate}}</mat-hint>
 							</mat-form-field>
+						</div>						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-checkbox (click)="onIsQuantitativeCheckboxChange()" type="checkbox"
+								class="" name="redeem" formControlName="quantitative" value="false" labelPosition="before">
+								{{'FIELDS.MICROCREDIT_CAMPAIGN.QUANTITATIVE' | translate}}
+							</mat-checkbox>
 						</div>
-						<div class="form-group form-check">
-							<label class="form-check-label">
-								<mat-checkbox (click)="onIsQuantitativeCheckboxChange()" type="checkbox"
-									class="form-check-input" name="redeem" formControlName="quantitative" value="false">
-									Is Quantitative?
-								</mat-checkbox>
-							</label>
-							
-						</div>
-						<div *ngIf=isQuantitative>
+						<div *ngIf="isQuantitative" class="quantitative-fields">
 							<div class="form-group">
 								<mat-form-field>
 									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.TITLE' | translate}}</mat-label>
@@ -111,6 +92,14 @@
 									<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.DESC' | translate}}</mat-hint>
 								</mat-form-field>
 							</div>
+							<!--<div class="form-group">
+								<mat-form-field>
+									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.STEP.TITLE' | translate}}</mat-label>
+									<input matInput type="number" name="step" formControlName="step"
+										placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.STEP.PLACEHOLDER' | translate}}">
+									<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.STEP.DESC' | translate}}</mat-hint>
+								</mat-form-field>
+							</div>-->
 						</div>
 						<div class="form-group">
 							<mat-form-field>
@@ -143,9 +132,23 @@
 						</div>
 						<div class="form-group">
 							<mat-form-field>
+								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.INITIATION.TITLE' | translate}}</mat-label>
+								<input matInput [matDatepicker]="initiationPicker" name="Initiation" formControlName="initiation"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.INITIATION.PLACEHOLDER' | translate}}">
+								<mat-datepicker-toggle matSuffix [for]="initiationPicker"></mat-datepicker-toggle>
+								<mat-datepicker #initiationPicker ></mat-datepicker>
+								<mat-error *ngIf="isControlHasError('initiation','required')"
+									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.INITIATION.DESC' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="Expiration" formControlName="expiration"
+								<input matInput [matDatepicker]="expirationPicker" name="Expiration" formControlName="expiration"
 									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.PLACEHOLDER' | translate}}">
+								<mat-datepicker-toggle matSuffix [for]="expirationPicker"></mat-datepicker-toggle>
+								<mat-datepicker #expirationPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('expiration','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.DESC' | translate}}</mat-hint>
@@ -154,8 +157,10 @@
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="RedeemStarts" formControlName="redeemStarts"
+								<input matInput [matDatepicker]="redeemStartsPicker" name="RedeemStarts" formControlName="redeemStarts"
 									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.PLACEHOLDER' | translate}}">
+								<mat-datepicker-toggle matSuffix [for]="redeemStartsPicker"></mat-datepicker-toggle>
+								<mat-datepicker #redeemStartsPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('redeemStarts','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_STARTS.DESC' | translate}}</mat-hint>
@@ -164,23 +169,50 @@
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.TITLE' | translate}}</mat-label>
-								<input matInput type="text" name="RedeemEnds" formControlName="redeemEnds"
-									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.PLACEHOLDER' | translate}}">
+								<!--<input matInput type="text" name="RedeemEnds" formControlName="redeemEnds"
+									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.PLACEHOLDER' | translate}}">-->
+								<input matInput [matDatepicker]="redeemEndsPicker" name="RedeemEnds" formControlName="redeemEnds"  >
+								<mat-datepicker-toggle matSuffix [for]="redeemEndsPicker"></mat-datepicker-toggle>
+								<mat-datepicker #redeemEndsPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('redeemEnds','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
+						<div class="form-group">
+							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+							<div class="">
+								<div class="upload-img" id="kt_user_avatar">
+									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+								</div>
+								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar_upload" data-toggle="tooltip" title=""
+									data-original-title="Change avatar">
+									<i class="fa fa-pen"></i>
+									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+										accept=".png, .jpg, .jpeg" #fileInput>
+								</label>
+								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
+									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+									<i class="fa fa-times"></i>
+								</span>								
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form__actions">
-					<div (click)="onSubmit()" (keyup.enter)="onSubmit()"
-						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+				<div class="form-actions">
+					<button mat-raised-button (click)="onSubmit('draft')" (keyup.enter)="onSubmit('draft')"
+						class="btn mr-3"
 						data-ktwizard-type="action-submit">
-						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-					</div>
+						{{ 'FORM.BUTTONS.SAVE' | translate }}
+					</button>
+					<button mat-raised-button (click)="onSubmit('public')" (keyup.enter)="onSubmit('public')"
+						class="btn btn-primary"
+						data-ktwizard-type="action-submit">
+						{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
+					</button>
 				</div>
 				<!--end: Form Actions -->
 

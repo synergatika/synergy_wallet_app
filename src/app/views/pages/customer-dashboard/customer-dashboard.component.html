@@ -13,23 +13,24 @@
 		</div>
 		<div class="col-md-6">
 			<mat-card class="dashboard-card wallet-card">
-			  <mat-card-header class="wallet-card-header">
-				<mat-card-title>{{'PAGES.CUSTOMER_DASHBOARD.WALLET_TITLE' | translate}}</mat-card-title>
-				<!--<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png" (click)="openQrcode()">-->
-				<span class="mdi mdi-qrcode wallet-card-icon" (click)="openQrcode()"></span>
-			  </mat-card-header>
-			  <mat-card-content>
+				<mat-card-header class="wallet-card-header">
+					<mat-card-title>{{'PAGES.CUSTOMER_DASHBOARD.WALLET_TITLE' | translate}}</mat-card-title>
+					<!--<img class="wallet-card-icon" src="../../../assets/media/images/QR-Icon.png" (click)="openQrcode()">-->
+					<span class="mdi mdi-qrcode wallet-card-icon" (click)="openQrcode()"></span>
+				</mat-card-header>
+				<mat-card-content>
 					<!--begin::Content-->
-					<div class="wallet_single_wrapper">		
-						<!-- Show Points the user has -->				
+					<div class="wallet_single_wrapper">
+						<!-- Show Points the user has -->
 						<div class="single row wallet-row" (click)="openWallet()">
 							<div class="col-sm-9 single-content">
 								<span class="wallet-img">
-									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
+									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
 								</span>
 								<div class="">
 									<div class="single-title" *ngIf="balanceText">{{balanceText.title.rendered}}</div>
-									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{'BALANCE.SUBTITLE' | translate}}</div>
+									<div class="single-subtitle"><span
+											class="mdi mdi-shopping"></span>{{'BALANCE.SUBTITLE' | translate}}</div>
 								</div>
 							</div>
 							<div class="col-sm-3 single-amount">
@@ -39,7 +40,8 @@
 							</div>
 						</div>
 						<!-- Show Campaign the users supports -->
-						<div class="single row wallet-coop" *ngFor="let s of (supportsList)" (click)="openSupportItem(s)">
+						<div class="single row wallet-coop" *ngFor="let s of (supportsList)"
+							(click)="openSupportItem(s)">
 							<div class="col-sm-9 single-content">
 								<div class="wallet-img">
 									<img src={{s.campaign_imageURL}} alt={{s.title}} />
@@ -47,7 +49,8 @@
 								<div class="">
 
 									<div class="single-title">{{s.title}}</div>
-									<div class="single-subtitle"><span class="mdi mdi-shopping"></span>{{s.merchant_name}}</div>
+									<div class="single-subtitle"><span
+											class="mdi mdi-shopping"></span>{{s.merchant_name}}</div>
 									<div class="single-subtitle">
 										{{'GENERAL.FROM' | translate}} {{s.redeemStarts | date: 'd.M.y' }}
 										{{'GENERAL.TO' | translate}} {{s.redeemEnds | date: 'd.M.y' }}</div>
@@ -55,19 +58,20 @@
 							</div>
 							<div class="col-sm-3 single-amount">
 								<div>
-									<span class="points">{{ s.initialTokens - s.redeemedTokens | currency:'EUR' }}</span>
+									<span
+										class="points">{{ s.initialTokens - s.redeemedTokens | currency:'EUR' }}</span>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!--end::Content-->
-			  </mat-card-content>
+				</mat-card-content>
 			</mat-card>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<h3>Προσφορές</h3>
+			<h3 class="list-tiltle">{{'LISTS.OFFERS_LIST' | translate }}</h3>
 		</div>
 	</div>
 	<div class="row" *ngIf="offers">
@@ -95,20 +99,20 @@
 		<div class="single row-flex">
 			<div class="">
 				<span class="wallet-img">
-					<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy"/>
+					<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
 				</span>
-				
+
 			</div>
 			<div class="">
-				<div class="single-title" *ngIf="balanceText">{{balanceText.title.rendered}}</div>
+				<h3 class="balance-title" *ngIf="balanceText">{{balanceText.title.rendered}}</h3>
 			</div>
-			<div class="single-amount">
+			<div class="balance-amount">
 				<div>
 					<span class="points">{{balance}}</span>
 				</div>
 			</div>
 		</div>
-		<div class="text-center mt-3">
+		<div class="balance-text mt-3">
 			<p [innerHTML]="balanceText.content.rendered" *ngIf="balanceText"></p>
 		</div>
 	</div>

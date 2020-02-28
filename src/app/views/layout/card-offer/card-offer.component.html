@@ -1,35 +1,49 @@
-<mat-card class="dashboard-card offer-card" *ngIf="offer">
-  <mat-card-content>
+<mat-card class="synergy-card offer-card" *ngIf="offer">
+	<mat-card-content>
 		<!--begin::Content-->
-		<div class="wallet_offer_wrapper">
-			<div class="offer row" >
-				<div class="col-sm-12 offer-img-container">
-					<div class="offer-img">
-						<img src={{offer.offer_imageURL}} alt={{offer.title}} />
-						<div class="offer-expires">έως {{offer.expiresAt | date: 'd.M'}}</div>
-					</div>
-					
-				</div>
-				<div class="col-sm-12 offer-amount">
-					<div class="offer-heading">
-						<div class="offer-title">{{offer.title}}</div>
-						<div>
-							<span class="points">{{offer.cost}}</span>
+		<div class="wallet_offer_wrapper s_archive_wrapper">
+			<div class="offer s_archive row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-sm-12 s_archive-img-container">
+							<div class="s_archive-img">
+								<img src={{offer.offer_imageURL}} alt={{offer.title}} />
+								<div class="s_archive-date">{{'GENERAL.TO' | translate}} {{offer.expiresAt | date: 'd.M'}}</div>
+							</div>
 						</div>
 					</div>
-					<div class="offer-description">
-						{{offer.description}}
-					</div>
-					<div class="offer-info">
-						<div class="" >
-							<div class="offer-subtitle" *ngIf="type!='single'"><span class="mdi mdi-shopping"></span>{{offer.merchant_name}}</div>
-							<div class="offer-subtitle" *ngIf="type!='single'"><span class="mdi mdi-pin"></span>{{offer.expiresAt}}</div>
+					<div class="s_archive-content container-fluid">
+						<div class="s_archive-heading row">
+							<h4 class="s_archive-title col-md-9">{{offer.title}}</h4>
+							<div class="s_archive-points col-md-3">
+								<span class="amount">
+									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
+									{{offer.cost}}
+								</span>
+							</div>
 						</div>
-						<app-share-icon></app-share-icon>
+						<div class="s_archive-subtitle row">
+							<div class="col-md-12">
+								<p [innerHTML]="offer.description"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 s_archive-info">
+								<div class="s_archive-merchant" *ngIf="type!='single'">
+									<div class="s_archive-merch-name">
+										<span class="mdi mdi-shopping"></span>{{offer.merchant_name}}
+									</div>
+									<div class="s_archive-merch-adress" *ngIf="offer.address">
+										<span class="mdi mdi-pin"></span>{{offer.address.street}} , {{offer.address.city}}
+									</div>
+								</div>
+								<app-share-icon></app-share-icon>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!--end::Content-->
-  </mat-card-content>
+	</mat-card-content>
 </mat-card>

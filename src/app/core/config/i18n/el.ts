@@ -8,6 +8,11 @@ export const locale = {
         TRANSLATOR: {
             SELECT: 'Επιλογή γλώσσας',
         },
+        MENU_CLIENT: {
+          WALLET: 'Πορτοφόλι',
+          DISCOVER: 'Ανακάλυψε',
+          SUPPORT: 'Υποστήριξε',
+        },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',
@@ -104,6 +109,12 @@ export const locale = {
                 POST: 'Ανάρτηση',
                 EVENT: 'Εκδήλωση',
             }
+        },
+        LISTS:{
+            OFFERS_LIST:'Προσφορές',
+            CAMPAIGN_LIST:'Καμπάνιες',
+            NEWSEVENTS_LIST:'Νέα & Εκδηλώσεις',
+            MERCHANT_LIST:'Συνεργατικά Εγχειρήματα'
         },
         MESSAGE: {
             WARNING: {
@@ -239,6 +250,16 @@ export const locale = {
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Offer will be expired.'
                 },
+				ACCESS: {
+                    TITLE: 'Πρόσβαση',
+                    PLACEHOLDER: 'Πρόσβαση',
+                    DESC: 'Πρόσβαση'
+                },
+				ACCESS_CHOICES: {
+                    A: 'Δημόσια',
+                    B: 'Προσωπική',
+                    C: 'Συνάδελφοι'					
+                },
             },
 			MICROCREDIT_CAMPAIGN:{
                 TITLE: {
@@ -271,6 +292,11 @@ export const locale = {
                     PLACEHOLDER: '20',
                     DESC: 'Ανώ Όριο το οποίο μπορεί να πάρει κάποιος.'
                 },
+				STEP: {
+                    TITLE: 'Βήμα',
+                    PLACEHOLDER: '20',
+                    DESC: 'Βήμα.'
+                },
 				MAX_AMOUNT: {
                     TITLE: 'Ανώ Όριο πωλήσεων',
                     PLACEHOLDER: '2000',
@@ -285,6 +311,11 @@ export const locale = {
                     A: 'Δημόσια',
                     B: 'Προσωπική',
                     C: 'Συνάδελφοι'					
+                },
+				INITIATION: {
+                    TITLE: 'Initiation Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Campaign will begin.'
                 },
 				EXPIRATION: {
                     TITLE: 'Expiration Date',
@@ -310,7 +341,8 @@ export const locale = {
             BUTTONS: {
                 SUBMIT: 'Υποβολη',
                 PREVIOUS: 'Πισω',
-                NEXT_STEP: 'Επομενο'
+                NEXT_STEP: 'Επομενο',
+				SAVE: 'Αποθήκευση',
             },
             VALIDATION: {
                 REQUIRED_FIELD: 'Υποχρεωτικό Πεδίο.',

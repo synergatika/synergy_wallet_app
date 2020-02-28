@@ -3,11 +3,16 @@ export const locale = {
     data: {
         GENERAL:{
             FROM: 'from',
-            TO: 'to'
+            TO: 'until'
         },
         TRANSLATOR: {
             SELECT: 'Select your language',
         },
+        MENU_CLIENT: {
+            WALLET: 'Wallet',
+            DISCOVER: 'Discover',
+            SUPPORT: 'Suppport',
+          },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',
@@ -104,6 +109,12 @@ export const locale = {
                 POST: 'Post',
                 EVENT: 'Event',
             }
+        },
+        LISTS:{
+            OFFERS_LIST:'Offers',
+            CAMPAIGN_LIST:'Capmaigns',
+            NEWSEVENTS_LIST:'News & Events',
+            MERCHANT_LIST:'Cooperatives'
         },
         MESSAGE: {
             WARNING: {
@@ -280,12 +291,23 @@ export const locale = {
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Post will be expired.'
                 },
+				ACCESS: {
+                    TITLE: 'Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter when your Access.'
+					
+                },
+				ACCESS_CHOICES: {
+                    A: 'Public',
+                    B: 'Private',
+                    C: 'Partners'					
+                },
             },
 			MICROCREDIT_CAMPAIGN:{
                 TITLE: {
-                    TITLE: 'Post Title',
+                    TITLE: 'Campaign Title',
                     PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Post Title.'
+                    DESC: 'Please, enter Campaign Title.'
                 },
                 TERMS: {
                     TITLE: 'Terms Description',
@@ -300,17 +322,22 @@ export const locale = {
 				CATEGORY: {
                     TITLE: 'Category',
                     PLACEHOLDER: 'Category',
-                    DESC: 'Please, enter when the Campaign Category.'
+                    DESC: 'Please, enter the Campaign Category.'
                 },
 				MIN_ALLOWED: {
                     TITLE: 'Min Allowed',
                     PLACEHOLDER: '1000',
-                    DESC: 'Please, enter when your Min Allowed.'
+                    DESC: 'Please, enter your Min Allowed.'
                 },
 				MAX_ALLOWED: {
                     TITLE: 'Max Allowed',
                     PLACEHOLDER: '1000',
-                    DESC: 'Please, enter when your Max Allowed.'
+                    DESC: 'Please, enter your Max Allowed.'
+                },
+				STEP: {
+                    TITLE: 'Step',
+                    PLACEHOLDER: '20',
+                    DESC: 'Step.'
                 },
 				MAX_AMOUNT: {
                     TITLE: 'Max Amount',
@@ -328,20 +355,25 @@ export const locale = {
                     B: 'Private',
                     C: 'Partners'					
                 },
+				INITIATION: {
+                    TITLE: 'Initiation Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Campaign will begin.'
+                },
 				EXPIRATION: {
                     TITLE: 'Expiration Date',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                    DESC: 'Please, enter when your Campaign will expire.'
                 },
 				REDEEM_STARTS: {
                     TITLE: 'Date redeem starts',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                    DESC: 'Please, enter when redeem can begin.'
                 },
                 REDEEM_ENDS: {
                     TITLE: 'Date redeem ends',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                    DESC: 'Please, enter when redeem can end.'
                 },
 				QUANTITATIVE: 'Is it Quantitative?',
 				SUBMIT_DRAFT: 'Save as Draft',
@@ -352,7 +384,8 @@ export const locale = {
             BUTTONS: {
                 SUBMIT: 'Submit',
                 PREVIOUS: 'Previous',
-                NEXT_STEP: 'Next Step'
+                NEXT_STEP: 'Next Step',
+				SAVE: 'Save',
             },
             VALIDATION: {
                 REQUIRED_FIELD: 'Required field.',

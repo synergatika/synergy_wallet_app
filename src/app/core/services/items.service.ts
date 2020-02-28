@@ -45,8 +45,15 @@ export class ItemsService {
       }));
   }
 
-  createOffer(formData: FormData): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/loyalty/offers`, formData)
+  createOffer(merchant_id: string, formData: FormData): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/loyalty/offers${merchant_id}/`, formData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+  
+  editOffer(merchant_id: string, offer_id: string, formData: FormData ): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/${offer_id}`, formData)
       .pipe(map(data => {
         return data;
       }));
@@ -138,7 +145,13 @@ export class ItemsService {
         return response;
       }));
   }
-
+  
+  readPost(merchant_id: string, post_id: string): Observable<Offer> {
+    return this.http.get<any>(`${environment.apiUrl}/posts/${merchant_id}/${post_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
   /** 
     * Posts & Events
     */
@@ -180,6 +193,14 @@ export class ItemsService {
         return response.data;
       }));
   }
+
+  readAllPrivateMicrocreditCampaigns(): Observable<MicrocreditCampaign[]> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/private/0-0-0`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
 
   readPublicMicrocreditCampaignsByStore(merchant_id: string): Observable<MicrocreditCampaign[]> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/${merchant_id}/0-0-0`)
