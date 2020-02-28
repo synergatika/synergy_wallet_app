@@ -46,7 +46,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   submitted: boolean = false;
   post: any;
   title: string;
-  description: string;
+  content: string;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -78,7 +78,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
 	 */
   ngOnInit() {
 	this.fetchPostData();
-    this.initForm();
+    //this.initForm();
   }
 
 	/**
@@ -92,19 +92,19 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: ['', Validators.compose([
+      title: [this.title, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      content: ['', Validators.compose([
+      content: [this.content, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.content.minLength),
         Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
-      access: ['public', Validators.compose([
+      access: ['', Validators.compose([
         Validators.required
       ])
       ],
@@ -151,9 +151,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
             this.post = data;
             console.log(this.post);
 			this.title = this.post.title;
-			this.description = this.post.description;
-			//console.log(this.offerExpires.getTime());
-			//this.initForm();
+			this.content = this.post.content;
+			console.log(this.content);
+			this.initForm();
 			this.cdRef.markForCheck();
             //this.scannerService.changeOffers(this.post);
           },

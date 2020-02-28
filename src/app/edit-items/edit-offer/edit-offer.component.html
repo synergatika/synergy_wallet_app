@@ -3,7 +3,7 @@
 		<mat-card-content>
 			<form *ngIf="offer" class="form container single-form" [formGroup]="submitForm">
 				<div class="row">
-					<h1 class="heading col-md-12">Edit Offer</h1>
+					<h1 class="heading col-md-12">Edit Offer: {{offer.title}}</h1>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
@@ -26,7 +26,7 @@
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</mat-label>
-								<textarea matInput style="height: 400px" name="Description" formControlName="description"
+								<textarea matInput name="Description" formControlName="description"
 									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}"></textarea>
 								<mat-error *ngIf="isControlHasError('description','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>

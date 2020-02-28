@@ -77,7 +77,7 @@
 								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
 								<label class="avatar__upload">
 									<i class="fa fa-pen"></i>
-									<input #image type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+									<input #image type="file" (change)="fileProgress($event)" name="profile_avatar"
 										formControlName="profile_avatar" accept=".png, .jpg, .jpeg" #fileInput>
 								</label>
 								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()">

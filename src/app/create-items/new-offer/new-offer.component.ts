@@ -113,6 +113,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
 
   fileProgress(fileInput: any) {
 	  let reader = new FileReader();
+	  console.log('fileInput');
 	  console.log(fileInput);
     this.fileData = <File>fileInput.target.files[0];
     this.preview();
@@ -140,10 +141,12 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
+	  console.log('Image canceled');
     this.previewUrl = null;
     this.fileData = null;
     this.originalImage = true;
 	this.image.nativeElement.value = null;
+	this.cdRef.markForCheck();
 	//this.submitForm.controls.profile_avatar.invalid = true; 
   }
 
