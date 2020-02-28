@@ -110,6 +110,12 @@ export const locale = {
                 EVENT: 'Εκδήλωση',
             }
         },
+        LISTS:{
+            OFFERS_LIST:'Προσφορές',
+            CAMPAIGN_LIST:'Καμπάνιες',
+            NEWSEVENTS_LIST:'Νέα & Εκδηλώσεις',
+            MERCHANT_LIST:'Συνεργατικά Εγχειρήματα'
+        },
         MESSAGE: {
             WARNING: {
                 TITLE: 'Warning!',

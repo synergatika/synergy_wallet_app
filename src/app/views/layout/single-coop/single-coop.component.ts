@@ -46,7 +46,7 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 				items: 1
 			},
 			740: {
-				items: 3
+				items: 2
 			}
 		},
 		margin: 30,
@@ -89,6 +89,11 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.singleMicrocredits = data;
+						//TEMP FOR DEMO
+						if(this.singleMicrocredits.length<3){
+							this.singleMicrocredits.push(this.singleMicrocredits[0]);
+							this.singleMicrocredits.push(this.singleMicrocredits[0]);
+						}
 					},
 					error => {
 						console.log(error);
@@ -109,6 +114,11 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.singleOffers = data;
+							//TEMP FOR DEMO
+							if(this.singleOffers.length<3){
+								this.singleOffers.push(this.singleOffers[0]);
+								this.singleOffers.push(this.singleOffers[0]);
+							}
 					},
 					error => {
 						console.log(error);
@@ -129,6 +139,11 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.singlePosts = data;
+						//TEMP FOR DEMO
+						if(this.singlePosts.length<3){
+							this.singlePosts.push(this.singlePosts[0]);
+							this.singlePosts.push(this.singlePosts[0]);
+						}
 					},
 					error => {
 						console.log(error);
@@ -199,7 +214,6 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 			//Do nothings
 		} else {
 			if (type == 'microcredit') {
-				console.log("tes0t");
 				this.openMicrocredit(data);
 			} else if (type == 'post') {
 				this.openPost(data);

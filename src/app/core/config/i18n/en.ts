@@ -110,6 +110,12 @@ export const locale = {
                 EVENT: 'Event',
             }
         },
+        LISTS:{
+            OFFERS_LIST:'Offers',
+            CAMPAIGN_LIST:'Capmaigns',
+            NEWSEVENTS_LIST:'News & Events',
+            MERCHANT_LIST:'Cooperatives'
+        },
         MESSAGE: {
             WARNING: {
                 TITLE: 'Warning!',
