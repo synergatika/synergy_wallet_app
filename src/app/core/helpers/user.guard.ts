@@ -14,9 +14,9 @@ export class UserGuard implements CanActivate {
 		console.log('UserGuard');
         const currentUser = this.authenticationService.currentUserValue;
         if (currentUser) {
-			console.log(currentUser);
+			//console.log(currentUser);
 			if(currentUser.user.access=="merchant") {
-				console.log('merchant');
+				//console.log('merchant');
 				this.router.navigate(['/scanner']);
 			} /*else {
 				console.log('else');

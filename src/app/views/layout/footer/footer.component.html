@@ -2,10 +2,9 @@
 	<div class="footer-content">
 		<div *ngFor="let item of menu" [ngClass]="getItemCssClasses(item.link)">
 			<a [routerLink]="['/'+item.link]">
-				<!--<img src={{item.icon}} alt="{{item.title}}" />-->
 				<span class="mdi mdi-{{item.icon}}"></span>
 				<div>
-					{{item.title}}
+					{{item.title | translate}}
 				</div>
 			</a>
 		</div>

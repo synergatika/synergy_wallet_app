@@ -25,8 +25,8 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
 	//Set Content Variables
 	balance: number = 0; //The points balance of customer
-	balanceText: any ; //Static Text for Balance Modal
-	qrcodeText: any ; //Static Text for QR Code Modal
+	balanceText: any; //Static Text for Balance Modal
+	qrcodeText: any; //Static Text for QR Code Modal
 	badge: any; //The loyalty badge of customer
 	supportsList: any; //The microcredits the customer supports
 	supportItem: any; //Currently Selected microcredit Support
@@ -223,8 +223,14 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	* Modal Functions
 	*/
 	openQrcode() {
-			//Get static content of Balance Points
-			this.staticContentService.readText('23')
+		//Open the QR code Modal
+		this.modalService.open(this.qrcodeModal).result.then((result) => {
+			console.log('closed');
+		}, (reason) => {
+			console.log('dismissed');
+		});
+		//Get static content of Balance Points
+		this.staticContentService.readText('23')
 			.pipe(
 				tap(
 					data => {
@@ -240,11 +246,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 					this.cdRef.markForCheck();
 				})
 			).subscribe();
-		this.modalService.open(this.qrcodeModal).result.then((result) => {
-			console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
-		});
+
 	}
 	openWallet() {
 		this.modalService.open(this.walletModal).result.then((result) => {

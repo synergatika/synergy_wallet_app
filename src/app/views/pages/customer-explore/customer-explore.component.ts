@@ -109,6 +109,11 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 			tap(
 			  data => {
 				this.posts = data;
+				//Temp for DEMO
+				if(this.posts.length<3){
+					this.posts.push(this.posts[0]);
+					this.posts.push(this.posts[0]);
+				}
 			  },
 			  error => {
 				console.log(error);

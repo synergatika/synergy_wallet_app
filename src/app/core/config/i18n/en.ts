@@ -3,11 +3,16 @@ export const locale = {
     data: {
         GENERAL:{
             FROM: 'from',
-            TO: 'to'
+            TO: 'until'
         },
         TRANSLATOR: {
             SELECT: 'Select your language',
         },
+        MENU_CLIENT: {
+            WALLET: 'Wallet',
+            DISCOVER: 'Discover',
+            SUPPORT: 'Suppport',
+          },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',
@@ -104,6 +109,12 @@ export const locale = {
                 POST: 'Post',
                 EVENT: 'Event',
             }
+        },
+        LISTS:{
+            OFFERS_LIST:'Offers',
+            CAMPAIGN_LIST:'Capmaigns',
+            NEWSEVENTS_LIST:'News & Events',
+            MERCHANT_LIST:'Cooperatives'
         },
         MESSAGE: {
             WARNING: {

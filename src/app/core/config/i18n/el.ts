@@ -8,6 +8,11 @@ export const locale = {
         TRANSLATOR: {
             SELECT: 'Επιλογή γλώσσας',
         },
+        MENU_CLIENT: {
+          WALLET: 'Πορτοφόλι',
+          DISCOVER: 'Ανακάλυψε',
+          SUPPORT: 'Υποστήριξε',
+        },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',
@@ -104,6 +109,12 @@ export const locale = {
                 POST: 'Ανάρτηση',
                 EVENT: 'Εκδήλωση',
             }
+        },
+        LISTS:{
+            OFFERS_LIST:'Προσφορές',
+            CAMPAIGN_LIST:'Καμπάνιες',
+            NEWSEVENTS_LIST:'Νέα & Εκδηλώσεις',
+            MERCHANT_LIST:'Συνεργατικά Εγχειρήματα'
         },
         MESSAGE: {
             WARNING: {

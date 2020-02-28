@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthenticationService } from '../../../core/services/authentication.service';
-
+// Translate
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-footer',
@@ -14,22 +15,23 @@ export class FooterComponent implements OnInit {
 	user: any;
 	menuConsumer = [
 		{
-			title: 'Πορτοφόλι',
+			title: 'MENU_CLIENT.WALLET',
 			link: 'dashboard',
-			//icon: './assets/media/images/wallet.png',
 			icon: 'wallet-outline',
 		},
 		{
-			title: 'Ανακάλυψε',
+			title: 'MENU_CLIENT.DISCOVER',
 			link: 'explore',
 			icon: 'compass-outline',
 		},
 		{
-			title: 'Υποστήριξε',
+			title: 'MENU_CLIENT.SUPPORT',
 			link: 'support',
 			icon: 'handshake',
 		},
 	];
+
+	/*
 	menuMerchant = [
 		{
 			title: 'Πορτοφόλι',
@@ -61,15 +63,17 @@ export class FooterComponent implements OnInit {
 			link: 'scanner',
 			icon: 'handshake',
 		},
-	];
+	];*/
+
+
 	menu = [];
 	
-	constructor(private authenticationService: AuthenticationService, private router: Router, private cdr: ChangeDetectorRef) { }
+	constructor(private authenticationService: AuthenticationService, private router: Router, private cdr: ChangeDetectorRef,private translate: TranslateService) { }
 
 	ngOnInit() {
 		this.user = this.authenticationService.currentUserValue.user;
 		if(this.user.access == 'merchant') {
-			this.menu = this.menuMerchant;
+			//Do nothing
 		}
 		else {
 			this.menu = this.menuConsumer;

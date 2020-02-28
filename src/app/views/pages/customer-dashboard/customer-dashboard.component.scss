@@ -30,7 +30,7 @@
 		border-radius: 50%;
 		transition: box-shadow 0.3s;
 		color: #fff;
-		background-color: $third-color;
+		background-color: $tertiary;
 		font-size: 51px;
 		width: 75px;
 		height: 75px;
@@ -39,15 +39,11 @@
 			box-shadow: 0 3px 11px -2px #d1cbcb;
 		}
 	}
-	
-	
 	.single {
 		//border-bottom: 1px solid #eee;
 		padding-top: 5px;
 		padding-bottom: 5px;
 		margin-bottom: 20px;
-		&:hover {
-		}
 		&-content {
 			display: flex;
 			align-items: center;
@@ -86,7 +82,18 @@
 			}
 		}
 	}
+}
 
+.balance{
+	&-title{
+		color:$dark-font;
+		margin-bottom: 0px;
+	}
+	&-amount{
+		.points{
+			color:$amount-color;
+		}
+	}
 }
 
 .wallet-coop, .wallet-row {
@@ -108,3 +115,9 @@
 		font-size: 24px;
 	}
 }	
+
+
+.qr-code-text{
+	background: #fff;
+	padding:15px;
+}

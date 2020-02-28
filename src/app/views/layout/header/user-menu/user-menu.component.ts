@@ -20,7 +20,7 @@ export class UserMenuComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.user = this.authenticationService.currentUserValue.user;
-		console.log(this.user);
+		//console.log(this.user);
 		this.userAvatar = this.user.imageURL || '../../../../assets/media/users/default.jpg';
 		this.cDRef.markForCheck();			
 	}
