@@ -22,6 +22,7 @@ interface Offer {
     merchant_name: string;
     merchant_imageURL: string;
     offer_id: string;
+	title: string;
     description: string;
     cost: number;
     expiresAt: number;

@@ -41,7 +41,7 @@ export class MerchantCampaignsComponent implements OnInit {
 	}
 
 	fetchCampaignsData() {
-		this.itemsService.readPublicMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"])
+		this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"])
 		  .pipe(
 			tap(
 			  data => {

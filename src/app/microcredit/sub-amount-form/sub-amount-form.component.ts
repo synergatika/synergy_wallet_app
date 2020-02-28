@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SupportService } from '../_support.service';
 import { SupportInterface } from '../_support.interface';
@@ -9,7 +9,9 @@ import { SupportInterface } from '../_support.interface';
   styleUrls: ['./sub-amount-form.component.scss']
 })
 export class SubAmountFormComponent implements OnInit {
-
+  @Input()
+  rejected: boolean = false;
+  
   @Output()
   add_amount: EventEmitter<number> = new EventEmitter<number>();
 
@@ -29,6 +31,7 @@ export class SubAmountFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+	console.log(this.rejected);
   }
 
   initForm() {

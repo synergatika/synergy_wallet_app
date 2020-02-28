@@ -183,16 +183,17 @@ export const locale = {
             CITY: {
 
             },
-            SECTOR: {
-
-            },
-
-            SCAN: {
-
-            },
-
-
-
+            SECTOR: 'Sector',
+			SECTOR_CHOICES: {
+				_: 'Other',
+				A: 'Β2Β Services',
+				B: 'Durables',
+				C: 'Durables (Technology)',
+				D: 'Education',
+				E: 'Food',
+				F: 'Hotels, Cafés and Restaurants',
+				G: 'Recreation and Culture',
+			},
             SUPPORT: {
                 PAYMENT_CHOICES: {
                     A: 'Paypal',
@@ -280,6 +281,72 @@ export const locale = {
                     DESC: 'Please, enter when your Post will be expired.'
                 },
             },
+			MICROCREDIT_CAMPAIGN:{
+                TITLE: {
+                    TITLE: 'Post Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Post Title.'
+                },
+                TERMS: {
+                    TITLE: 'Terms Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Terms Description.'
+                },
+				DESCRIPTION: {
+                    TITLE: 'Campaign Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter a Campaign Description.'
+                },
+				CATEGORY: {
+                    TITLE: 'Category',
+                    PLACEHOLDER: 'Category',
+                    DESC: 'Please, enter when the Campaign Category.'
+                },
+				MIN_ALLOWED: {
+                    TITLE: 'Min Allowed',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter when your Min Allowed.'
+                },
+				MAX_ALLOWED: {
+                    TITLE: 'Max Allowed',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter when your Max Allowed.'
+                },
+				MAX_AMOUNT: {
+                    TITLE: 'Max Amount',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter when your Max Amount.'
+                },
+				ACCESS: {
+                    TITLE: 'Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter when your Access.'
+					
+                },
+				ACCESS_CHOICES: {
+                    A: 'Public',
+                    B: 'Private',
+                    C: 'Partners'					
+                },
+				EXPIRATION: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
+                },
+				REDEEM_STARTS: {
+                    TITLE: 'Date redeem starts',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
+                },
+                REDEEM_ENDS: {
+                    TITLE: 'Date redeem ends',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
+                },
+				QUANTITATIVE: 'Is it Quantitative?',
+				SUBMIT_DRAFT: 'Save as Draft',
+				SUBMIT_CAMPAIGN: 'Publish Campaign',
+            }
         },
         FORM: {
             BUTTONS: {

@@ -1,95 +1,68 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
-import { ScannerService } from '../../scanner/_scanner.service';
-
-// Swal Alert
-import Swal from 'sweetalert2';
 
 // Translate
 import { TranslateService } from '@ngx-translate/core';
 
 // Services
 import { ItemsService } from '../../core/services/items.service';
-import { AuthenticationService } from '../../core/services/authentication.service';
-import { ScannerInterface } from '../../scanner/_scanner.interface';
-import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-edit-offer',
-  templateUrl: './edit-offer.component.html',
-  styleUrls: ['./edit-offer.component.scss']
+  selector: 'app-edit-microcredit-campaign-draft',
+  templateUrl: './edit-microcredit-campaign-draft.component.html',
+  styleUrls: ['./edit-microcredit-campaign-draft.component.sass']
 })
-export class EditOfferComponent implements OnInit, OnDestroy {
+
+export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy {
 
   public validator: any = {
     title: {
       minLength: 3,
       maxLenth: 150
     },
+    terms: {
+      minLength: 3,
+      maxLenth: 1000
+    },
     description: {
       minLength: 3,
-      maxLenth: 150
+      maxLenth: 1000
     },
-    cost: {
+    maxAmount: {
       minValue: 0,
       maxValue: 100000
     }
   };
-  
-  offer_id: string;
+
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = false;
-  offerExpires: Date;
-  title: string;
-  description: string;
-  cost: number;
+
+  isQuantitative = false;
+
   submitForm: FormGroup;
   submitted: boolean = false;
-  offer: ScannerInterface["Offer"];
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  /**
-    * Component constructor
-    *
-    * @param cdRef: ChangeDetectorRef
-    * @param itemsService: ItemsService
-    * @param fb: FormBuilder
-    * @param translate: TranslateService
-    */
   constructor(
     private cdRef: ChangeDetectorRef,
     private itemsService: ItemsService,
     private fb: FormBuilder,
-    private translate: TranslateService,
-	private activatedRoute: ActivatedRoute,
-	private authenticationService: AuthenticationService,
-	private datePipe: DatePipe,
-	private scannerService: ScannerService
+    private translate: TranslateService
   ) {
-	this.activatedRoute.params.subscribe(params => {
-      this.offer_id = params['_id'];
-    });
     this.unsubscribe = new Subject();
-	//this.scannerService.offers.subscribe(offers => this.offer = offers);
   }
 
-
-
-
-
-
-	/**
+  /**
 	 * On init
 	 */
   ngOnInit() {
-	this.fetchOfferData();
-    //this.initForm();
+    this.initForm();
   }
 
 	/**
@@ -103,26 +76,60 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: [this.title, Validators.compose([
+      title: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      description: [this.description, Validators.compose([
+      terms: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(this.validator.terms.minLength),
+        Validators.maxLength(this.validator.terms.maxLength)
+      ])
+      ],
+      description: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      cost: [this.cost, Validators.compose([
+      category: ['', Validators.compose([
         Validators.required,
-        Validators.min(this.validator.cost.minValue),
-        Validators.max(this.validator.cost.maxValue)
       ])
       ],
-      expiration: [this.offerExpires, Validators.compose([
-        Validators.required
+      access: ['public', Validators.compose([
+        Validators.required,
+      ])
+      ],
+      quantitative: [false, Validators.compose([
+        Validators.required,
+      ])
+      ],
+      minAllowed: [0, Validators.compose([
+        Validators.required,
+      ])
+      ],
+      maxAllowed: [0, Validators.compose([
+        Validators.required,
+      ])
+      ],
+      maxAmount: [0, Validators.compose([
+        Validators.required,
+        Validators.min(this.validator.maxAmount.minLength),
+        Validators.max(this.validator.maxAmount.maxLength)
+      ])
+      ],
+      redeemStarts: ['', Validators.compose([
+        Validators.required,
+      ])
+      ],
+      redeemEnds: ['', Validators.compose([
+        Validators.required,
+      ])
+      ],
+      expiration: ['', Validators.compose([
+        Validators.required,
       ])
       ],
     });
@@ -155,9 +162,13 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
+  onIsQuantitativeCheckboxChange() {
+    this.isQuantitative = !this.isQuantitative;
+  }
+
   /**
-	 * On Form Submit
-	 */
+ * On Form Submit
+ */
   onSubmit() {
     if (this.submitted) return;
 
@@ -172,33 +183,22 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.submitted = true;
 
-   /* var _date = new Date();
-    _date.setHours(23, 59, 59, 0);
-    switch (controls.expiration.value) {
-      case '1':
-        var _newDate = _date.setDate(_date.getDate() + 7);
-        break;
-      case '2':
-        var _newDate = _date.setMonth(_date.getMonth() + 1);
-        break;
-      case '3':
-        var _newDate = _date.setMonth(_date.getMonth() + 3);
-        break;
-      case '4':
-        var _newDate = _date.setMonth(_date.getMonth() + 6);
-        break;
-      default:
-        var _newDate = _date.setDate(_date.getDate() + 7);
-    }*/
-return;
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
-    formData.append('cost', controls.cost.value);
+    formData.append('title', controls.title.value);
+    formData.append('terms', controls.terms.value);
     formData.append('description', controls.description.value);
-    //formData.append('expiresAt', _newDate.toString());
-	formData.append('expiration', this.offerExpires.toString());
+    formData.append('category', controls.category.value);
+    formData.append('access', controls.access.value);
+    formData.append('quantitative', controls.quantitative.value);
+    formData.append('minAllowed', controls.minAllowed.value);
+    formData.append('maxAllowed', controls.maxAllowed.value);
+    formData.append('maxAmount', controls.maxAmount.value);
+    formData.append('redeemStarts', controls.redeemStarts.value);
+    formData.append('redeemEnds', controls.redeemEnds.value);
+    formData.append('expiresAt', controls.expiration.value);
 
-    this.itemsService.createOffer(formData)
+    this.itemsService.createMicrocreditCampaign(formData)
       .pipe(
         tap(
           data => {
@@ -209,6 +209,7 @@ return;
             );
           },
           error => {
+            console.log(error);
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
               this.translate.instant('MESSAGE.ERROR.SERVER'),
@@ -225,34 +226,6 @@ return;
       .subscribe();
   }
 
-  fetchOfferData() {
-    this.itemsService.readOffer(this.authenticationService.currentUserValue.user["_id"],this.offer_id)
-      .pipe(
-        tap(
-          data => {
-            this.offer = data;
-            console.log(this.offer);
-			console.log(this.offer.expiresAt);
-			this.title = this.offer.title;
-			this.description = this.offer.description;
-			this.cost = this.offer.cost;
-			this.offerExpires = new Date(this.offer.expiresAt);
-			console.log(this.offerExpires.getTime());
-			this.initForm();
-			this.cdRef.markForCheck();
-            //this.scannerService.changeOffers(this.offer);
-          },
-          error => {
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-  
   /**
    * Checking control validation
    *

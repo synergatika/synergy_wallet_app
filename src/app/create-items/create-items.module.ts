@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule, MatSelectModule, MatNativeDateModule, MatDatepickerModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CreateItemsComponent } from './create-items.component';
@@ -11,6 +11,7 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { NewEventComponent } from './new-event/new-event.component';
 import { NewMicrocreditCampaignComponent } from './new-microcredit-campaign/new-microcredit-campaign.component';
 import { NewMicrofundingCampaignComponent } from './new-microfunding-campaign/new-microfunding-campaign.component';
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 const routes: Routes = [
     {
@@ -60,11 +61,14 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-		MatSelectModule
+		MatSelectModule,
+		MatDatepickerModule,
+		MatNativeDateModule
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],
     providers: [
+		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
         // InterceptService,
         // {
         //     provide: HTTP_INTERCEPTORS,
