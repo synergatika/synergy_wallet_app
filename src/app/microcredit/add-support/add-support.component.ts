@@ -102,7 +102,7 @@ export class AddSupportComponent implements OnInit, OnDestroy {
 			  } else {
 				  this.rejected = true;
 				  console.log('no user');
-			  }           
+			  }
           },
           error => {
           }),
@@ -123,7 +123,7 @@ export class AddSupportComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onFinalStep(event) {
+  onFinalStep(event=null) {
     this.dialogRef.close();
   }
 

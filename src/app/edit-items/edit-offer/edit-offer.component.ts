@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-import { ScannerInterface } from '../../scanner/_scanner.interface';
+import { Offer } from '../../scanner/_scanner.interface';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -39,7 +39,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       maxValue: 100000
     }
   };
-  
+
+  date: any;
   offer_id: string;
   fileData: File = null;
   previewUrl: any = null;
@@ -50,7 +51,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   cost: number;
   submitForm: FormGroup;
   submitted: boolean = false;
-  offer: ScannerInterface["Offer"];
+  offer: Offer;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -177,7 +178,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     }
     this.loading = true;
     this.submitted = true;
-	
+
    /* var _date = new Date();
     _date.setHours(23, 59, 59, 0);
     switch (controls.expiration.value) {
@@ -207,7 +208,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 	formData.append('expiration', this.offerExpires.getTime().toString());
 	console.log(formData);
 	/*for (var pair of formData.entries()) {
-		console.log(pair[0]+ ', ' + pair[1]); 
+		console.log(pair[0]+ ', ' + pair[1]);
 	}*/
 //return;
     this.itemsService.editOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id, formData)
@@ -264,7 +265,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-  
+
   /**
    * Checking control validation
    *

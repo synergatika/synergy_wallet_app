@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScannerService } from "../_scanner.service";
-import { ScannerInterface } from "../_scanner.interface";
+import { User } from "../_scanner.interface";
 
 @Component({
   selector: 'app-sub-scanner',
@@ -13,7 +13,7 @@ export class SubScannerComponent implements OnInit {
   scan_identifier: EventEmitter<string> = new EventEmitter<string>();
 
   scanned: boolean = false;
-  user: ScannerInterface["User"];
+  user: User;
 
   constructor(
     private scannerService: ScannerService
