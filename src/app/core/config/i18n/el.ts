@@ -156,6 +156,7 @@ export const locale = {
             },
             CONFIRM_PASSWORD: {
                 TITLE: '',
+				PLACEHOLDER: 'Όνομα',
                 DESC: ''
             },
             IMAGE: {
@@ -176,21 +177,17 @@ export const locale = {
             CITY: {
 
             },
-            SECTOR: {
-
-            },
-
+            SECTOR: 'Τομέας',
             SECTOR_CHOICES: {
                 _: 'Άλλο',
                 A: 'Υπηρεσίες B2B και άλλα αγαθά και υπηρεσίες',
                 B: 'Αναλώσιμα',
-                C: 'Αναλώσιμα(Τεχνολογίες)',
+                C: 'Αναλώσιμα (Τεχνολογία)',
                 D: 'Εκπαίδευση',
                 E: 'Τρόφιμα',
                 F: 'Ξενοδοχεία, καφέ και εστιατόρια',
                 G: 'Αναψυχή και Πολιτισμός'
             },
-
             OFFER_DESCRIPTION: {
                 TITLE: 'Περιγραφή Προσφοράς',
                 PLACEHOLDER: 'Περιγραφή',
@@ -239,6 +236,71 @@ export const locale = {
                     DESC: 'Please, enter when your Offer will be expired.'
                 },
             },
+			MICROCREDIT_CAMPAIGN:{
+                TITLE: {
+                    TITLE: 'Post Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Post Title.'
+                },
+                TERMS: {
+                    TITLE: 'Περιγραφή Όρων',
+                    PLACEHOLDER: '10 κιλά καφέ',
+                    DESC: 'Περιγραφή του τι θα λάβουν οι υποστηρικτές.'
+                },
+				DESCRIPTION: {
+                    TITLE: 'Περιγραφή Καμπάνιας',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Campaign Description.'
+                },
+                CATEGORY: {
+                    TITLE: 'Category',
+                    PLACEHOLDER: 'Category',
+                    DESC: 'Please, enter when the Campaign Category.'
+                },
+				MIN_ALLOWED: {
+                    TITLE: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος',
+                    PLACEHOLDER: '10',
+                    DESC: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος.'
+                },
+				MAX_ALLOWED: {
+                    TITLE: 'Ανώ Όριο το οποίο μπορεί να πάρει κάποιος',
+                    PLACEHOLDER: '20',
+                    DESC: 'Ανώ Όριο το οποίο μπορεί να πάρει κάποιος.'
+                },
+				MAX_AMOUNT: {
+                    TITLE: 'Ανώ Όριο πωλήσεων',
+                    PLACEHOLDER: '2000',
+                    DESC: 'Ανώ Όριο πωλήσεων.'
+                },
+				ACCESS: {
+                    TITLE: 'Πρόσβαση',
+                    PLACEHOLDER: 'Πρόσβαση',
+                    DESC: 'Πρόσβαση'
+                },
+				ACCESS_CHOICES: {
+                    A: 'Δημόσια',
+                    B: 'Προσωπική',
+                    C: 'Συνάδελφοι'					
+                },
+				EXPIRATION: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
+                },
+				REDEEM_STARTS: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
+                },
+                REDEEM_ENDS: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
+                },
+				QUANTITATIVE: 'Είναι ποσοτική (μειώνεται η ποσότητα καθώς ξοδεύεις);',
+				SUBMIT_DRAFT: 'Αποθήκευση ως Πρόχειρο',
+				SUBMIT_CAMPAIGN: 'Δημοσίευση Καμπάνιας',
+            }
         },
         FORM: {
             BUTTONS: {

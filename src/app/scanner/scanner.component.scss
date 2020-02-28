@@ -1,3 +1,4 @@
+@import "../../variables.scss";
 .scanner {
 	.item-wrapper {
 		margin-bottom: 20px;
@@ -54,7 +55,7 @@
 			z-index: 1;
 			right: -1px;
 			bottom: 30%;
-			background-color: #37aba7;
+			background-color: $main-color;
 			color: #fff;
 			padding: 5px 15px;
 			font-size: 1.22rem;
@@ -65,7 +66,7 @@
 				background-color: #1a1a33;
 			}
 			&.campaign {
-				background-color: #ef3f4a;
+				background-color: $second-color;
 			}
 		}
 		&-heading {

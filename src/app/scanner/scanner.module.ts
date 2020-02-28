@@ -23,6 +23,7 @@ import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component
 import { SubMicrocreditFormComponent } from './sub-microcredit-form/sub-microcredit-form.component';
 
 import { ScannerService } from './_scanner.service';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 const routes: Routes = [
     {
@@ -62,6 +63,7 @@ const routes: Routes = [
         MatDialogModule,
 		MatCardModule,
 		MatRadioModule,
+		CarouselModule,
         TranslateModule.forChild()
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),

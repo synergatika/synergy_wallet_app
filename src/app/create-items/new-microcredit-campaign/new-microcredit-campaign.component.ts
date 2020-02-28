@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-new-microcredit-campaign',
   templateUrl: './new-microcredit-campaign.component.html',
-  styleUrls: ['./new-microcredit-campaign.component.sass']
+  styleUrls: ['./new-microcredit-campaign.component.scss']
 })
 
 export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {

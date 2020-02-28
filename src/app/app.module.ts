@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
+//import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -43,7 +44,6 @@ import { SingleCoopComponent } from './views/layout/single-coop/single-coop.comp
 import { SinglePostComponent } from './views/layout/single-post/single-post.component';
 
 //1. Customer
-
 import { ShareIconComponent } from './views/widgets/share-icon/share-icon.component';
 
 //Basic Papes
@@ -164,10 +164,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 		EditItemsModule,
 		MicrocreditModule
 
-		//SwiperModule,
-		//RouterModule, 
-		//SlickModule.forRoot(),
-	
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

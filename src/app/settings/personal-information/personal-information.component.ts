@@ -46,7 +46,40 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       coordinates: []
     }
   };
-
+	menu = [
+		{
+			title: 'FIELDS.SECTOR_CHOICES._',
+			value: 'Other',
+		},
+		{
+			title: 'FIELDS.SECTOR_CHOICES.A',
+			value: 'Β2Β Services',
+		},
+		{
+			title: 'FIELDS.SECTOR_CHOICES.B',
+			value: 'Durables',
+		},
+		{
+			title: 'FIELDS.SECTOR_CHOICES.C',
+			value: 'Durables (Technology)',
+		},
+		{
+			title: 'FIELDS.SECTOR_CHOICES.D',
+			value: 'Education',
+		},
+		{
+			title: 'FIELDS.SECTOR_CHOICES.E',
+			value: 'Food',
+		},
+		{
+			title: 'FIELDS.SECTOR_CHOICES.F',
+			value: 'Hotels, Cafés and Restaurants',
+		},
+		{
+			title: 'FIELDS.SECTOR_CHOICES.G',
+			value: 'Recreation and Culture',
+		},
+	];
   submitted = false;
   access: string = '';
   fileData: File = null;
@@ -89,7 +122,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
           tap(
             data => {
               this.merchant = Object.assign({}, this.merchant, data);
-              this.merchant.sector = (this.sectorsArray.indexOf(this.merchant.sector)).toString();
+			  console.log(this.merchant);
+             // this.merchant.sector = (this.sectorsArray.indexOf(this.merchant.sector)).toString();
               this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.png';
             },
             error => {
