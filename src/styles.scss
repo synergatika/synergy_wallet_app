@@ -66,6 +66,9 @@ body {
 	color:$primary;
 	margin-bottom: 15px;
 }
+.mat-card.synergy-card{
+	padding-bottom: 0px;
+}
 .s_archive{
 	&-img {
 		position: relative;
@@ -128,6 +131,7 @@ body {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		font-size: 15px;
 		.share {
 			cursor: pointer;
 		}

@@ -3,7 +3,7 @@ export const locale = {
     data: {
         GENERAL:{
             FROM: 'from',
-            TO: 'to'
+            TO: 'until'
         },
         TRANSLATOR: {
             SELECT: 'Select your language',
