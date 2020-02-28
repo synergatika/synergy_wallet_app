@@ -8,6 +8,11 @@ export const locale = {
         TRANSLATOR: {
             SELECT: 'Select your language',
         },
+        MENU_CLIENT: {
+            WALLET: 'Wallet',
+            DISCOVER: 'Discover',
+            SUPPORT: 'Suppport',
+          },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',

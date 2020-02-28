@@ -8,6 +8,11 @@ export const locale = {
         TRANSLATOR: {
             SELECT: 'Επιλογή γλώσσας',
         },
+        MENU_CLIENT: {
+          WALLET: 'Πορτοφόλι',
+          DISCOVER: 'Ανακάλυψε',
+          SUPPORT: 'Υποστήριξε',
+        },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',

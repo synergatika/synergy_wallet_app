@@ -1,16 +1,34 @@
+/*
+/* Variables
+*/
+
 //Basic Colors
-$main-color: #435DAA;
-$main-light:#6986db;
-$second-color: #E2519D;
-$third-color: #FEC92D;
+$primary: #415daa;
+$primary-light: #6986db;
+$secondary: #e4509e;
+$tertiary: #fdca27;
+$tertiary-dark: #a07b04;
+$grey: #eee;
 
 /* Basic Colors SYNERGY 
-$main-color: #2b3a59;
-$second-color: #ef3f4a;
-$third-color: #faa635;
-*/ 
+$primary: #2b3a59;
+$secondary: #ef3f4a;
+$tertiary: #faa635;
+*/
+
+//Font Colors
+$main-font-color: #9d9d9d;
 
 //Font Sizes
 
-//Font colors
-$main-font-color:#9d9d9d;
+//Shadow
+.light-shadow {
+  -webkit-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.05);
+}
+.dark-shadow {
+  -webkit-box-shadow: 17px 22px 45px 8px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 17px 22px 45px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 17px 22px 45px 8px rgba(0, 0, 0, 0.2);
+}
