@@ -206,6 +206,24 @@
         margin-bottom: 15px;
       }
     }
+		.form-group-inline {
+				display: flex;
+				max-width: 400px;
+				//justify-content: space-between;
+				&-date {
+					flex-grow: 9;
+					margin-right: 30px;
+				}
+				&-time {
+					flex-grow: 3;
+					.mat-form-field-infix {
+						width: 100px;
+					}
+				}
+			}
+			.form-actions {
+				margin-top: 20px;
+			}
   }
   .avatar,
   .upload-img {

@@ -105,7 +105,13 @@ export class ItemsService {
         return response;
       }));
   }
-
+  
+  readEvent(merchant_id: string, post_id: string): Observable<Offer> {
+    return this.http.get<any>(`${environment.apiUrl}/events/${merchant_id}/${post_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
   /** 
     * Posts
     */

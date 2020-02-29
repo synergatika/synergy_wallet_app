@@ -1,0 +1,125 @@
+<div class="new-event">
+	<mat-card>
+		<mat-card-content>
+			<form *ngIf="event" class="form container single-form" [formGroup]="submitForm">
+				<div class="row">
+					<div class="heading col-md-12">Edit Event</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Title</mat-label>
+							<input matInput type="text"  formControlName="title" placeholder="Title">
+							<mat-error *ngIf="isControlHasError('title','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-error *ngIf="isControlHasError('title','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.title.minLength}}</mat-error>
+							<mat-error *ngIf="isControlHasError('title','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.title.maxLength}}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/event's Title.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Description</mat-label>
+							<textarea matInput type="text" formControlName="description" placeholder="Description" > </textarea>
+							<mat-error *ngIf="isControlHasError('description','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-error *ngIf="isControlHasError('description','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.description.minLength}}</mat-error>
+							<mat-error *ngIf="isControlHasError('description','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.description.maxLength}}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/event's Description.</mat-hint>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Access</mat-label>
+							<mat-select name="access"  formControlName="access">
+								<mat-option value="public">Public to All</mat-option>
+								<mat-option value="private">Only for registered Members</mat-option>
+								<mat-option value="partners">Only for Coops</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('Access','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/events's access.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
+								<mat-label>Location</mat-label>
+							<input matInput type="text"  formControlName="location" placeholder="Location">
+							<mat-error *ngIf="isControlHasError('location','required')"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+							<mat-error *ngIf="isControlHasError('location','minlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+								{{validator.location.minLength}}</mat-error>
+							<mat-error *ngIf="isControlHasError('location','maxlength')"
+								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+								{{validator.location.maxLength}}</mat-error>
+							<mat-hint class="form-text text-muted">Please enter post's/events's location.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<div class="form-group-inline">
+								<div class="form-group-inline-date">
+									<mat-form-field>
+										<mat-label>Date</mat-label>
+										<input matInput [matDatepicker]="eventDate" formControlName="dateTime" placeholder="DateTime">
+										<mat-datepicker-toggle matSuffix [for]="eventDate"></mat-datepicker-toggle>
+										<mat-datepicker #eventDate ></mat-datepicker>
+										<mat-error *ngIf="isControlHasError('Access','required')"
+											class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+										<mat-hint class="form-text text-muted">Please enter post's/events's date time.</mat-hint>
+									</mat-form-field>
+								</div>
+								<div class="form-group-inline-time">
+									<mat-form-field>
+										<mat-label>Time</mat-label>
+										<input matInput [ngxTimepicker]="picker">
+										<ngx-material-timepicker #picker></ngx-material-timepicker>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+							<div class="">
+								<div class="upload-img" id="kt_user_avatar">
+									<img *ngIf="event.event_imageURL" class="upload-img-holder" [src]="event.event_imageURL">
+								</div>
+								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar__upload" data-toggle="tooltip" title=""
+									data-original-title="Change avatar">
+									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+										accept=".png, .jpg, .jpeg" #fileInput>
+								</label>
+								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()">
+									<span class="mdi mdi-close-circle-outline"></span>
+								</span>							
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--begin: Form Actions -->
+				<div class="form-actions">
+					<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()"
+						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
+						data-ktwizard-type="action-submit">
+						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+					</button>
+				</div>
+				<!--end: Form Actions -->
+
+			</form>
+		</mat-card-content>
+	</mat-card>
+</div>
