@@ -56,7 +56,8 @@ export const locale = {
 		OFFERS: {
 			TITLE: 'OFFERS',
 			SUBTITLE: 'Create a new Offer',
-			DESC: 'Reward your customer for being loyal!'
+			DESC: 'Reward your customer for being loyal!',
+			UNTIL: 'until'
 		},
 		POSTS: {
 			TITLE: 'POSTS / EVENTS',
@@ -132,6 +133,8 @@ export const locale = {
             SUCCESS: {
                 TITLE: 'All good!',
                 OFFER_CREATED: 'A new Offer has been successfully created!',
+								OFFER_UPDATED: 'The Offer has been successfully updated!',
+								OFFER_DELETED: 'The Offer has been successfully deleted!',
                 POST_CREATED: 'A new Post/Event has been successfully created!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',

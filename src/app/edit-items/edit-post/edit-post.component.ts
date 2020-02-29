@@ -63,9 +63,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
-	private modalService: NgbModal,
-	private activatedRoute: ActivatedRoute,
-	private authenticationService: AuthenticationService,
+		private modalService: NgbModal,
+		private activatedRoute: ActivatedRoute,
+		private authenticationService: AuthenticationService,
   ) {
 	this.activatedRoute.params.subscribe(params => {
       this.post_id = params['_id'];

@@ -56,7 +56,8 @@ export const locale = {
 		OFFERS: {
 			TITLE: 'ΠΡΟΣΦΟΡΕΣ',
 			SUBTITLE: 'Δημιουργία νέας Προσφοράς',
-			DESC: 'Δώσε στο λαό!'
+			DESC: 'Δώσε στο λαό!',
+			UNTIL: 'έως'
 		},
 		POSTS: {
 			TITLE: 'ΑΝΑΡΤΗΣΕΙΣ / ΓΕΓΟΝΟΤΑ',
@@ -132,6 +133,8 @@ export const locale = {
             SUCCESS: {
                 TITLE: 'All good!',
                 OFFER_CREATED: 'A new Offer has been successfully created!',
+								OFFER_UPDATED: 'Η προσφορά ανανεώθηκε επιτυχώς!',
+								OFFER_DELETED: 'Η προσφορά διεγράφη επιτυχώς!!',
                 POST_CREATED: 'A new Post/Event has been successfully created!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',

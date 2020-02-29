@@ -46,7 +46,8 @@ export class ItemsService {
   }
 
   createOffer(merchant_id: string, formData: FormData): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/loyalty/offers${merchant_id}/`, formData)
+    //return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/`, formData)
+		return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/`, formData)
       .pipe(map(data => {
         return data;
       }));
@@ -65,7 +66,13 @@ export class ItemsService {
         return response.data;
       }));
   }
-  
+
+  deleteOffer(merchant_id: string, offer_id: string): Observable<Offer> {
+    return this.http.delete<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/${offer_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  } 
   /** 
     * Events
     */

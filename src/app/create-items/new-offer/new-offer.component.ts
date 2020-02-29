@@ -58,7 +58,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private itemsService: ItemsService,
     private fb: FormBuilder,
-	private authenticationService: AuthenticationService,
+		private authenticationService: AuthenticationService,
     private translate: TranslateService
   ) {
     this.unsubscribe = new Subject();
@@ -145,55 +145,47 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     this.previewUrl = null;
     this.fileData = null;
     this.originalImage = true;
-	this.image.nativeElement.value = null;
-	this.cdRef.markForCheck();
+		this.image.nativeElement.value = null;
+		this.cdRef.markForCheck();
 	//this.submitForm.controls.profile_avatar.invalid = true; 
+		this.submitForm.controls['profile_avatar'].setErrors({'incorrect': true});
+		this.isControlHasError('profile_avatar', 'required');
+		console.log(this.isControlHasError('profile_avatar', 'required'));
+		this.cdRef.markForCheck();
   }
 
   /**
 	 * On Form Submit
 	 */
-  onSubmit() {
+  onSubmit() {	
     if (this.submitted) return;
-
+		console.log('onSubmit');
     const controls = this.submitForm.controls;
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
+			console.log('form invalid');
       return;
     }
+		if(!this.fileData) {
+			console.log('no image');
+			controls['profile_avatar'].setErrors({'incorrect': true});
+			return;
+		}
     this.loading = true;
     this.submitted = true;
 
-    var _date = new Date();
-    _date.setHours(23, 59, 59, 0);
-    switch (controls.expiration.value) {
-      case '1':
-        var _newDate = _date.setDate(_date.getDate() + 7);
-        break;
-      case '2':
-        var _newDate = _date.setMonth(_date.getMonth() + 1);
-        break;
-      case '3':
-        var _newDate = _date.setMonth(_date.getMonth() + 3);
-        break;
-      case '4':
-        var _newDate = _date.setMonth(_date.getMonth() + 6);
-        break;
-      default:
-        var _newDate = _date.setDate(_date.getDate() + 7);
-    }
-
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
+		formData.append('title', controls.title.value);
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
-    formData.append('expiresAt', _newDate.toString());
-	/*for (var pair of formData.entries()) {
-		console.log(pair[0]+ ', ' + pair[1]); 
-	}*/
+    formData.append('expiresAt', controls.expiration.value.getTime().toString());
+		for (var pair of formData.entries()) {
+			console.log(pair[0]+ ', ' + pair[1]); 
+		}
 return;
     this.itemsService.createOffer(this.authenticationService.currentUserValue.user["_id"], formData)
       .pipe(

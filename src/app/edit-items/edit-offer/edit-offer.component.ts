@@ -1,10 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
 import { ScannerService } from '../../scanner/_scanner.service';
+
+//Modal
+import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 // Swal Alert
 import Swal from 'sweetalert2';
@@ -25,6 +28,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
 
+  @ViewChild('remove_item', {static: false}) remove_item;
   public validator: any = {
     title: {
       minLength: 3,
@@ -68,10 +72,11 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
-	private activatedRoute: ActivatedRoute,
-	private authenticationService: AuthenticationService,
-	private datePipe: DatePipe,
-	private scannerService: ScannerService
+		private modalService: NgbModal,
+		private activatedRoute: ActivatedRoute,
+		private authenticationService: AuthenticationService,
+		private datePipe: DatePipe,
+		private scannerService: ScannerService
   ) {
 	this.activatedRoute.params.subscribe(params => {
       this.offer_id = params['_id'];
@@ -79,11 +84,6 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
 	//this.scannerService.offers.subscribe(offers => this.offer = offers);
   }
-
-
-
-
-
 
 	/**
 	 * On init
@@ -168,7 +168,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     if (this.submitted) return;
 
     const controls = this.submitForm.controls;
-	console.log(controls);
+		console.log(controls);
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -179,38 +179,17 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.submitted = true;
 
-   /* var _date = new Date();
-    _date.setHours(23, 59, 59, 0);
-    switch (controls.expiration.value) {
-      case '1':
-        var _newDate = _date.setDate(_date.getDate() + 7);
-        break;
-      case '2':
-        var _newDate = _date.setMonth(_date.getMonth() + 1);
-        break;
-      case '3':
-        var _newDate = _date.setMonth(_date.getMonth() + 3);
-        break;
-      case '4':
-        var _newDate = _date.setMonth(_date.getMonth() + 6);
-        break;
-      default:
-        var _newDate = _date.setDate(_date.getDate() + 7);
-    }*/
-
     const formData = new FormData();
-	if(this.fileData) {
 		formData.append('imageURL', this.fileData);
-	}
+		formData.append('title', controls.title.value);
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
-    //formData.append('expiresAt', _newDate.toString());
-	formData.append('expiration', this.offerExpires.getTime().toString());
-	console.log(formData);
-	/*for (var pair of formData.entries()) {
-		console.log(pair[0]+ ', ' + pair[1]);
-	}*/
-//return;
+		formData.append('expiresAt', controls.expiration.value.getTime().toString());
+		console.log(controls.expiration.value.getTime());
+		for (var pair of formData.entries()) {
+			console.log(pair[0]+ ', ' + pair[1]);
+		}
+	//return;
     this.itemsService.editOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id, formData)
       .pipe(
         tap(
@@ -245,14 +224,14 @@ export class EditOfferComponent implements OnInit, OnDestroy {
           data => {
             this.offer = data;
             console.log(this.offer);
-			console.log(this.offer.expiresAt);
-			this.title = this.offer.title;
-			this.description = this.offer.description;
-			this.cost = this.offer.cost;
-			this.offerExpires = new Date(this.offer.expiresAt);
-			console.log(this.offerExpires.getTime());
-			this.initForm();
-			this.cdRef.markForCheck();
+						console.log(this.offer.expiresAt);
+						this.title = this.offer.title;
+						this.description = this.offer.description;
+						this.cost = this.offer.cost;
+						this.offerExpires = new Date(this.offer.expiresAt);
+						console.log(this.offerExpires.getTime());
+						this.initForm();
+						this.cdRef.markForCheck();
             //this.scannerService.changeOffers(this.offer);
           },
           error => {
@@ -265,7 +244,45 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-
+	deleteItemModal() {
+		this.modalService.open(this.remove_item).result.then((result) => {
+		//this.searchText = '';
+		console.log('closed');
+		//this.showList = false;
+		}, (reason) => {
+			console.log('dismissed');
+			//this.showList = false;
+		});
+	}
+	
+	deleteItem() {
+		console.log('delete');
+		this.itemsService.deleteOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id)
+      .pipe(
+        tap(
+          data => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              this.translate.instant('MESSAGE.SUCCESS.OFFER_DELETED'),
+              'success'
+            );
+          },
+          error => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.ERROR.TITLE'),
+              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              'error'
+            );
+            this.submitted = false;
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+	}
   /**
    * Checking control validation
    *
