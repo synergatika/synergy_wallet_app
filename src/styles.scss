@@ -16,6 +16,7 @@ body {
     transition: color 0.3s;
     &:hover {
       color: $primary-light;
+      text-decoration: none;
     }
   }
   .heading {
@@ -87,17 +88,14 @@ body {
 	margin-bottom: 15px;
 }
 .mat-card.synergy-card{
-	padding-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom:15px;
+  margin-bottom: 30px;
 }
 .s_archive{
 	&-img {
 		position: relative;
-		min-height: 230px;
-		height: auto;
-		overflow: hidden;
-		padding-top: 50%;
-		background-position: 50% 50%;
-		background-size: cover;
+		height: 230px;
 		&-container {
 			padding:0;
 			margin-bottom: 20px;
@@ -124,7 +122,17 @@ body {
 		padding: 10px 22px;
 		font-size: 1.25rem;
 		@extend .light-shadow ;
-	}
+  }
+  &-category{
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    background-color:$primary;
+    color:#fff;
+    padding: 10px;
+    padding-right: 20px;
+  }
 	&-heading {
 		/*display: flex;
 		align-items: center;
@@ -143,7 +151,6 @@ body {
 	}
 	&-subtitle {
 		color:$main-font-color;
-		padding-bottom: 15px;
 		margin-bottom:10px;
 		border-bottom: 1px solid #eee;
 	}
@@ -154,8 +161,16 @@ body {
 		font-size: 15px;
 		.share {
 			cursor: pointer;
-		}
-	}
+    } 
+  }
+  &-merch-phone{
+      a{
+        color:$darker-font;
+        &:hover{
+          color:$primary;
+        }
+      }
+  }
 }
 
 /* 4. PAGES */

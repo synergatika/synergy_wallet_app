@@ -5,6 +5,7 @@
   //Materialize Card
   .mat-card {
     font-family: $main-font, sans-serif;
+    color:$darker-font;
   }
   mat-card {
     font-family: $main-font, sans-serif;
@@ -27,6 +28,9 @@
     border-bottom-left-radius: 9px;
     border-bottom-right-radius: 9px;
     overflow: hidden;
+  }
+  .owl-theme .mat-card{
+    box-shadow: none !important;
   }
   .mat-card.wallet-card:not([class*="mat-elevation-z"]) {
     overflow: visible;
@@ -116,24 +120,29 @@
       [class*="owl-"] {
         font-size: 34px;
         line-height: 1.1;
+        background-color: $primary;
+        &:hover{
+          background-color:$primary-light;
+        }
       }
-    }
-    .owl-prev {
-      pointer-events: all;
-      &:before {
-        content: "\f141";
-        font-family: "Material Design Icons";
+      .owl-prev {
+        margin-left:-25px;
+        pointer-events: all;
+        &:before {
+          content: "\f141";
+          font-family: "Material Design Icons";
+        }
       }
-    }
-    .owl-next {
-      pointer-events: all;
-      &:before {
-        content: "\f142";
-        font-family: "Material Design Icons";
+      .owl-next {
+        margin-right:-25px;
+        pointer-events: all;
+        &:before {
+          content: "\f142";
+          font-family: "Material Design Icons";
+        }
       }
     }
     .owl-dots {
-      margin-top: 15px;
       .owl-dot {
         &.active,
         &:hover {
