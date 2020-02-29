@@ -95,7 +95,10 @@ body {
 .s_archive{
 	&-img {
 		position: relative;
-		height: 230px;
+    height: 230px;
+    @media (max-width: 768px) {
+      height: 280px;
+    }
 		&-container {
 			padding:0;
 			margin-bottom: 20px;
@@ -116,10 +119,11 @@ body {
 		position: absolute;
 		z-index: 1;
 		right: 0;
-		bottom: 30%;
+		bottom: 0;
 		background-color: $tertiary;
 		color: #fff;
-		padding: 10px 22px;
+    padding: 10px;
+    padding-right: 20px;
 		font-size: 1.25rem;
 		@extend .light-shadow ;
   }
@@ -132,6 +136,7 @@ body {
     color:#fff;
     padding: 10px;
     padding-right: 20px;
+    text-transform: uppercase;
   }
 	&-heading {
 		/*display: flex;
@@ -147,7 +152,9 @@ body {
 		font-size: 1.5rem;
 		color:$amount-color;
 		text-align: right;
-		padding-right: 10px;
+    padding-right: 5px;
+    padding-left: 0px;
+    margin-top: -4px;
 	}
 	&-subtitle {
 		color:$main-font-color;

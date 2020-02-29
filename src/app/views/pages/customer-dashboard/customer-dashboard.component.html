@@ -69,14 +69,14 @@
 			</mat-card>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row section-list" *ngIf="offers">
 		<div class="col-md-12">
 			<h3 class="list-tiltle">{{'LISTS.OFFERS_LIST' | translate }}</h3>
-		</div>
-	</div>
-	<div class="row" *ngIf="offers">
-		<div class="col-md-4" *ngFor="let offer of (offers)">
-			<app-card-offer [offer]="offer" type="all"></app-card-offer>
+			<div class="row">
+				<div class="item col-lg-4 col-md-6" *ngFor="let offer of (offers)">
+					<app-card-offer [offer]="offer" type="all"></app-card-offer>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

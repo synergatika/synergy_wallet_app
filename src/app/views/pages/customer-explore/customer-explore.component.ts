@@ -46,6 +46,9 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		  0: {
 			items: 1
 		  },
+		  600: {
+			items: 2
+		  },
 		  940: {
 			items: 3
 		  }

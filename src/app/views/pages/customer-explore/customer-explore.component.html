@@ -1,7 +1,7 @@
 <div class="explore">
-	<div class="row">
-		<!-- Merchants List-->
-		<div class="col-md-6 col-lg-12 section-list" *ngIf="merchants">
+	<!-- Merchants List-->
+	<div class="row section-list" *ngIf="merchants">
+		<div class="col-md-12">
 			<h3 class="list-tiltle">{{ 'LISTS.MERCHANT_LIST' | translate }}</h3>
 			<owl-carousel-o [options]="customOptions">
 				<ng-template carouselSlide *ngFor="let coop of (merchants)">
@@ -9,22 +9,26 @@
 						(mouseup)="mouseup(coop, 'coop')"></app-card-coop>
 				</ng-template>
 			</owl-carousel-o>
-			<div class="section-list-footer"><a [routerLink]="['/coops']">{{ 'LISTS.MERCHANT_LIST_LINK' | translate }}</a></div>
+			<div class="section-list-footer"><a
+					[routerLink]="['/coops']">{{ 'LISTS.MERCHANT_LIST_LINK' | translate }}</a></div>
 		</div>
-		<!-- Offers List-->
-		<div class="col-md-6 col-lg-12 section-list" *ngIf="offers">
+	</div>
+	<!-- Offers List-->
+	<div class="row section-list" *ngIf="offers">
+		<div class="col-md-12">
 			<h3 class="list-tiltle">{{ 'LISTS.OFFERS_LIST' | translate }}</h3>
 			<owl-carousel-o [options]="customOptions">
 				<ng-template carouselSlide *ngFor="let offer of (offers)">
 					<app-card-offer [offer]="offer" type="all"></app-card-offer>
 				</ng-template>
 			</owl-carousel-o>
-			<div class="section-list-footer"><a [routerLink]="['/offers']">{{ 'LISTS.OFFERS_LIST_LINK' | translate }}</a></div>
+			<div class="section-list-footer"><a
+					[routerLink]="['/offers']">{{ 'LISTS.OFFERS_LIST_LINK' | translate }}</a></div>
 		</div>
 	</div>
-	<div class="row">
-		<!-- Evenst & Posts List-->
-		<div class="col-md-6 col-lg-12 section-list" *ngIf="posts">
+	<!-- Evenst & Posts List-->
+	<div class="row section-list" *ngIf="posts">
+		<div class="col-md-12">
 			<h3 class="list-tiltle">{{ 'LISTS.NEWSEVENTS_LIST' | translate }}</h3>
 			<owl-carousel-o [options]="customOptions">
 				<ng-template carouselSlide *ngFor="let post of (posts)">
@@ -32,7 +36,8 @@
 						(mouseup)="mouseup(post, 'post')"></app-card-post>
 				</ng-template>
 			</owl-carousel-o>
-			<div class="section-list-footer"><a [routerLink]="['/posts']">{{ 'LISTS.NEWSEVENTS_LIST_LINK' | translate }}</a></div>
+			<div class="section-list-footer"><a
+					[routerLink]="['/posts']">{{ 'LISTS.NEWSEVENTS_LIST_LINK' | translate }}</a></div>
 		</div>
 	</div>
 </div>

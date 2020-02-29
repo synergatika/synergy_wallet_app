@@ -112,11 +112,14 @@
   .owl-theme {
     .owl-nav {
       position: absolute;
-      bottom: 60%;
+      top:100px;
       display: flex;
       width: 100%;
       justify-content: space-between;
       pointer-events: none;
+      @media(max-width:600px){
+        display: none;
+      }
       [class*="owl-"] {
         font-size: 34px;
         line-height: 1.1;
@@ -157,6 +160,9 @@
   ///2.3 Modal Diaglog
   .modal-dialog {
     margin: 5rem auto;
+    @media(max-width:576px){
+      max-width: 92%;
+    }
     .modal-content {
       border: none;
     }
