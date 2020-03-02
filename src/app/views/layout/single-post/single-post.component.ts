@@ -17,6 +17,7 @@ export class SinglePostComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		console.log(this.singlePost);
 	}
 
 }
