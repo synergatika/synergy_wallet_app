@@ -141,9 +141,9 @@ export const locale = {
 								EVENT_CREATED: 'A new Event has been successfully created!',
 								EVENT_UPDATED: 'The Event has been successfully updated!',
 								EVENT_DELETED: 'The Event has been successfully deleted!',
-								CAMPAIGN_CREATED: 'A new Event has been successfully created!',
-								CAMPAIGN_UPDATED: 'The Event has been successfully updated!',
-								CAMPAIGN_DELETED: 'The Event has been successfully deleted!',
+								CAMPAIGN_CREATED: 'A new Campaign has been successfully created!',
+								CAMPAIGN_UPDATED: 'The Campaign has been successfully updated!',
+								CAMPAIGN_DELETED: 'The Campaign has been successfully deleted!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',
                 PROFILE_UPDATED: 'Your Personal Information has been successfully updated!',
@@ -490,7 +490,35 @@ export const locale = {
         },
 		MERCHANT: {
 			SCANNER: {
-				LOYALTY_TITLE: 'Scan for Points'
+				LOYALTY_TITLE: 'Scan for Points',
+				BACK_TO_SCANNER: 'Back to Scanner',
+				PREVIOUS_STEP: 'Go back',
+				NEXT_STEP: 'Go to next step',
+				COMPLETE: 'Complete Transaction',
+				CLOSE: 'Close Window',
+				SCAN_LOYALTY: {
+					HEADING: 'Scan a new Card, Scan User App, Scan User Card',
+					ALT_PROMPT: 'Enter new Email / new Card / user Email / user Card',
+				},
+				SUB_IDENTIFIER_FORM: {
+					HEADING: 'Identifier Form',
+					TITLE: 'Identifier',
+					HINT: 'Please enter email or card number.'
+				},
+				SUB_EMAIL_FORM: {
+					HEADING: 'Scan your barcode or enter a customer E-mail',
+					HINT: 'Please enter client\'s email address.'
+				},
+				SUB_AMOUNT_FORM: {
+					HEADING: 'Transaction amount',
+					TITLE: 'Amount',
+					HINT: 'Please enter transaction amount.'
+				},
+				SUB_DISCOUNT_FORM: {
+					HEADING: 'Transaction amount',
+					TITLE: 'You can have a discount of',
+					CTA: 'Check to Redeem discount'
+				}
 			}
 		},
 		OFFER: {

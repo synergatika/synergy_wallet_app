@@ -7,16 +7,16 @@
 			<div class="step-container row justify-content-md-center">
 				<div class="col-md-12">
 					<div *ngIf="!showIdentifierForm">
-						<h3 class="heading">Scan a new Card, Scan User's App, Scan User's Card </h3>
+						<h3 class="heading">{{ 'MERCHANT.SCANNER.SCAN_LOYALTY.HEADING' | translate }}</h3>
 						<app-sub-scanner (scan_identifier)="onSuccessScanIdentifier($event)">
 						</app-sub-scanner>
 					</div>
 					<button class="btn btn-primary" type="button" (click)="onShowIdentifierFormChange()">
 						<span *ngIf="!showIdentifierForm; else back_to_scanner">
-							Enter new Email,Enter a new Card, Enter User's Email, Enter User's Card
+							{{ 'MERCHANT.SCANNER.SCAN_LOYALTY.ALT_PROMPT' | translate }}
 						</span>
 						<ng-template #back_to_scanner>
-							<span>Back to Scanner</span>
+							<span>{{ 'MERCHANT.SCANNER.BACK_TO_SCANNER' | translate }}</span>
 						</ng-template>
 					</button>
 					<div *ngIf="showIdentifierForm">

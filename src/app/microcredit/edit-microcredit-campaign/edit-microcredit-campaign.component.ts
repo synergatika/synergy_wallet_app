@@ -8,15 +8,22 @@ import { AddSupportComponent } from '../add-support/add-support.component';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
+// Translate
+import { TranslateService } from '@ngx-translate/core';
+
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { MicrocreditService } from '../../core/services/microcredit.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
+
 // Models
 import { MicrocreditCampaign } from '../../core/models/microcredit-campaign.model';
 import { MicrocreditSupport } from 'src/app/core/models/microcredit-support.model';
 import { SupportService } from '../_support.service';
 import { SupportInterface } from '../_support.interface';
+
+// Swal Alert
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-microcredit-campaign',
@@ -48,6 +55,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private microcreditService: MicrocreditService,
     private authenticationService: AuthenticationService,
+		private translate: TranslateService,
     private supportService: SupportService
   ) {
     this.activatedRoute.params.subscribe(params => {
@@ -141,9 +149,17 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-			console.log('confirmPayment data');
+						console.log('confirmPayment data');
             console.log(data);
-			this.stateUpdateLoading = false;
+						this.stateUpdateLoading = false;
+						Swal.fire(
+              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_UPDATED'),
+              'success'
+            );
+						setTimeout(()=>{
+							Swal.close();
+						},2000);
           },
           error => {
           }),

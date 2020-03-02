@@ -16,5 +16,5 @@
     <p>Tokens Remaining Now:
         {{transaction.initial_tokens - (transaction.redeemed_tokens + transaction.discount_tokens)}}
     </p>
-    <button mat-raised-button type="button" (click)="onNextStep()">Complete Transaction</button>
+    <button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.CLOSE' | translate }}</button>
 </div>

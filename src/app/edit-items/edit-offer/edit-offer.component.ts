@@ -201,6 +201,9 @@ export class EditOfferComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
               'success'
             );
+						setTimeout(()=>{
+							Swal.close();
+						},2000);
           },
           error => {
             Swal.fire(
@@ -226,7 +229,6 @@ export class EditOfferComponent implements OnInit, OnDestroy {
           data => {
             this.offer = data;
             console.log(this.offer);
-						console.log(this.offer.expiresAt);
 						this.title = this.offer.title;
 						this.description = this.offer.description;
 						this.cost = this.offer.cost;
@@ -235,7 +237,6 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 						this.previewUrl = this.offer.offer_imageURL;
 						this.initForm();
 						this.cdRef.markForCheck();
-            //this.scannerService.changeOffers(this.offer);
           },
           error => {
           }),

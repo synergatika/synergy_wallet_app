@@ -264,9 +264,10 @@ export class EditEventComponent implements OnInit {
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.EVENT_UPDATED'),
               'success'
-            ).then((result) => {
-							console.log('closed');
-						});
+            );
+						setTimeout(()=> {
+							Swal.close();
+						},2000);
           },
           error => {
             Swal.fire(

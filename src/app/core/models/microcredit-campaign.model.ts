@@ -23,7 +23,8 @@ export interface MicrocreditCampaign {
     minAllowed: number,
     maxAllowed: number,
     maxAmount: number,
-
+		
+		startsAt: number,
     redeemStarts: number,
     redeemEnds: number,
     expiresAt: number,

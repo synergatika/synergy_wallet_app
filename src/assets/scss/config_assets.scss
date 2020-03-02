@@ -299,15 +299,48 @@
   }
   .avatar {
     &-holder {
-      max-width: 60px;
+      max-width: 80px;
+			max-height: 80px;
       margin-right: 20px;
     }
+		&-img {
+			float: left;
+		}
+		&-container {
+			position: relative;
+			display: inline-block;
+		}
+		button {
+			margin-top: 10px;
+		}
+		.image-cancel {
+			position: absolute;
+			top: -9px;
+			right: 8px;
+			font-size: 22px;
+			width: 20px;
+			height: 20px;
+			background: #fff;
+			border-radius: 50%;
+			span {
+					position: relative;
+					top: -5px;
+					right: 5px;
+					font-size: 22px;
+					cursor: pointer;
+			}
+		}
   }
   .merchant-alert {
     color: #f14551;
     font-weight: 600;
   }
-
+	
+	.input-group.amount-input {
+		max-width: 220px;
+    margin: 0 auto;
+	}
+	
   //2.5 Wizards
   aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
     &.current {
@@ -326,6 +359,9 @@
     &.optional .step-indicator {
       background-color: #e6db91;
     }
+		&.navigable.optional a:hover .step-indicator {
+			background-color: $secondary;
+		}
     &.done .step-indicator {
       background-color: #a4cfce;
     }

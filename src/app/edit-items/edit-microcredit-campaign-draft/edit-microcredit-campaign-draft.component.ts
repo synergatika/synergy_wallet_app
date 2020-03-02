@@ -54,7 +54,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 
   submitForm: FormGroup;
   submitted: boolean = false;
-  campaign: any;
+  campaign: MicrocreditCampaign;
   title: string;
   terms: string;
   description: string;
@@ -145,6 +145,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         Validators.required,
       ])
       ],
+			step: [''],
       maxAmount: [this.maxAmount, Validators.compose([
         Validators.required,
         Validators.min(this.validator.maxAmount.minLength),
@@ -159,7 +160,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         Validators.required,
       ])
       ],
-	  initiation: [this.startsAt, Validators.compose([
+			initiation: [this.startsAt, Validators.compose([
         Validators.required,
       ])
       ],
@@ -209,6 +210,8 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 			tap(
 			  data => {
 				this.campaign = data;
+					console.log('this.current');
+					console.log(this.campaign);
 				  this.title = this.campaign.title;
 				  this.terms = this.campaign.terms;
 				  this.description = this.campaign.description;
@@ -216,7 +219,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 				  this.access = this.campaign.access;
 				  this.quantitative = this.campaign.quantitative;
 				  if (this.quantitative) {
-					this.isQuantitative = true;
+						this.isQuantitative = true;
 				  }
 				  this.minAllowed = this.campaign.minAllowed;
 				  this.maxAllowed = this.campaign.maxAllowed;
@@ -226,9 +229,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 				  this.startsAt = new Date(this.campaign.startsAt);
 				  this.expiresAt = new Date(this.campaign.expiresAt);
 					this.previewUrl = this.campaign.campaign_imageURL;	
-				  this.initForm();
-				console.log('this.current');
-				console.log(this.campaign);
+				  this.initForm();					
 			  },
 			  error => {
 			  }),
@@ -272,11 +273,13 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
     formData.append('category', controls.category.value);
     formData.append('access', controls.access.value);
 		formData.append('status', campaignStatus);
-    //formData.append('stepAmount', controls.expiration.value);
 		formData.append('stepAmount', '20');
     formData.append('quantitative', controls.quantitative.value);
-    formData.append('minAllowed', controls.minAllowed.value);
-    formData.append('maxAllowed', controls.maxAllowed.value);
+		if (controls.quantitative.value) {
+			formData.append('minAllowed', controls.minAllowed.value);
+			formData.append('maxAllowed', controls.maxAllowed.value);
+			//formData.append('stepAmount', controls.expiration.value);
+		}
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
     formData.append('redeemEnds', controls.redeemEnds.value.getTime().toString());
@@ -295,9 +298,10 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_UPDATED'),
               'success'
-            ).then((result) => {
-							console.log('closed');
-						});
+            );
+						setTimeout(()=>{
+							Swal.close();
+						},2000);
           },
           error => {
             Swal.fire(
@@ -324,7 +328,13 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_CREATED'),
               'success'
-            );
+            ).then((result) => {
+							this.router.navigate(['/m-campaigns']);
+						});
+						setTimeout(()=> {
+							Swal.close();
+							this.router.navigate(['/m-campaigns']);
+						},2000);
           },
           error => {
             console.log(error);

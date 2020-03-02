@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -59,6 +60,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
 		private authenticationService: AuthenticationService,
+		private router: Router,
     private translate: TranslateService
   ) {
     this.unsubscribe = new Subject();
@@ -191,7 +193,10 @@ export class NewOfferComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
               'success'
-            );
+            ).then((result) => {
+							console.log('deleted');
+							this.router.navigate(['/m-offers']);
+						});
           },
           error => {
             Swal.fire(

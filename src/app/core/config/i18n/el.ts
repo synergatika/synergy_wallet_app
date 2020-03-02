@@ -132,23 +132,23 @@ export const locale = {
             },
             SUCCESS: {
                 TITLE: 'All good!',
-                OFFER_CREATED: 'A new Offer has been successfully created!',
+                OFFER_CREATED: 'Η προσφορά δημιουργήθηκε επιτυχώς!',
 								OFFER_UPDATED: 'Η προσφορά ανανεώθηκε επιτυχώς!',
-								OFFER_DELETED: 'Η προσφορά διεγράφη επιτυχώς!!',
-                POST_CREATED: 'A new Post/Event has been successfully created!',
-								POST_UPDATED: 'The Post has been successfully updated!',
-								POST_DELETED: 'The Post has been successfully deleted!',
-								EVENT_CREATED: 'A new Event has been successfully created!',
-								EVENT_UPDATED: 'The Event has been successfully updated!',
-								EVENT_DELETED: 'The Event has been successfully deleted!',
-								CAMPAIGN_CREATED: 'A new Event has been successfully created!',
-								CAMPAIGN_UPDATED: 'The Event has been successfully updated!',
-								CAMPAIGN_DELETED: 'The Event has been successfully deleted!',
+								OFFER_DELETED: 'Η προσφορά διεγράφη επιτυχώς!',
+                POST_CREATED: 'Το άρθρο δημιουργήθηκε επιτυχώς!',
+								POST_UPDATED: 'Το άρθρο ανανεώθηκε επιτυχώς!',
+								POST_DELETED: 'Το άρθρο διεγράφη επιτυχώς!',
+								EVENT_CREATED: 'Η εκδήλωση δημιουργήθηκε επιτυχώς!',
+								EVENT_UPDATED: 'Η εκδήλωση ανανεώθηκε επιτυχώς!',
+								EVENT_DELETED: 'Η εκδήλωση διεγράφη επιτυχώς!',
+								CAMPAIGN_CREATED: 'Η καμπάνια δημιουργήθηκε επιτυχώς!',
+								CAMPAIGN_UPDATED: 'Η καμπάνια ανανεώθηκε επιτυχώς!',
+								CAMPAIGN_DELETED: 'Η προσφορά διεγράφη επιτυχώς!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',
                 PROFILE_UPDATED: 'Your Personal Information has been successfully updated!',
                 POINTS: 'Points Used: ',
-                AMOUNT: 'Amount: €'
+                AMOUNT: 'Ποσό: €'
             }
         },
         FIELDS: {
@@ -447,7 +447,35 @@ export const locale = {
         },
 		MERCHANT: {
 			SCANNER: {
-				LOYALTY_TITLE: 'Πληρωμή με Loyalty'
+				LOYALTY_TITLE: 'Πληρωμή με Loyalty',
+				BACK_TO_SCANNER: 'Πίσω στη Σάρωση',
+				PREVIOUS_STEP: 'Προηγούμενο Βήμα',
+				NEXT_STEP: 'Επόμενο Βήμα',
+				COMPLETE: 'Ολοκλήρωση Συναλλαγής',
+				CLOSE: 'Κλείσιμο',
+				SCAN_LOYALTY: {
+					HEADING: 'Σάρωση νέας Κάρτας/ Εφαρμογής Πελάτη / Κάρτας Πελάτη',
+					ALT_PROMPT: 'Εισάγετε νέο E-mail / νέα Κάρτα / E-mail Πελάτη / Κάρτας Πελάτη',
+				},
+				SUB_IDENTIFIER_FORM: {
+					HEADING: 'Φόρμα Εισαγωγής Αναγνωριστικών Στοιχείων',
+					TITLE: 'Αναγνωριστικό Στοιχείο',
+					HINT: 'Παρακαλούμε εισάγετε E-mail ή άριθμό κάρτας.'
+				},
+				SUB_EMAIL_FORM: {
+					HEADING: 'Σαρωση του barcode ή εισαγωγή του E-mail του πελάτη',
+					HINT: 'Παρακαλούμε εισάγετε τη διεύθυνση E-mail του πελάτη.'
+				},
+				SUB_AMOUNT_FORM: {
+					HEADING: 'Ποσό Συναλλαγής',
+					TITLE: 'Ποσό',
+					HINT: 'Παρακαλούμε εισάγετε το ποσό συναλλαγής.'
+				},
+				SUB_DISCOUNT_FORM: {
+					HEADING: 'Ποσό Συναλλαγής',
+					TITLE: 'Έχετε έκπτωση',
+					CTA: 'Τσεκάρετε για να εξαργυρώσετε την έκπτωση'
+				}
 			}
 		},
 		OFFER: {

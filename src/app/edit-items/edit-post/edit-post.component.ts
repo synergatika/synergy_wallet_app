@@ -211,11 +211,12 @@ export class EditPostComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
-              'success'
-            );
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.POST_UPDATED'),
+              icon: 'success',
+							timer: 2000
+            });
           },
           error => {
             Swal.fire(
@@ -236,12 +237,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
   
 	deleteItemModal() {
 		this.modalService.open(this.remove_item).result.then((result) => {
-		//this.searchText = '';
 		console.log('closed');
-		//this.showList = false;
 		}, (reason) => {
 			console.log('dismissed');
-			//this.showList = false;
 		});
 	}
 	

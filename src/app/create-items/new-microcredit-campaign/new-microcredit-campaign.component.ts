@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
 
@@ -59,6 +61,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private translate: TranslateService,
 		private modalService: NgbModal,
+		private router: Router,
   ) {
     this.unsubscribe = new Subject();
   }
@@ -119,6 +122,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
         Validators.required,
       ])
       ],
+			step: [''],
       maxAmount: [0, Validators.compose([
         Validators.required,
         Validators.min(this.validator.maxAmount.minLength),
@@ -218,11 +222,12 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     formData.append('category', controls.category.value);
     formData.append('access', controls.access.value);
 		formData.append('status', campaignStatus);
-    //formData.append('stepAmount', controls.expiration.value);
-		formData.append('stepAmount', '20');
     formData.append('quantitative', controls.quantitative.value);
-    formData.append('minAllowed', controls.minAllowed.value);
-    formData.append('maxAllowed', controls.maxAllowed.value);
+		if (controls.quantitative.value) {
+			formData.append('minAllowed', controls.minAllowed.value);
+			formData.append('maxAllowed', controls.maxAllowed.value);
+			//formData.append('stepAmount', controls.expiration.value);
+		}
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
     formData.append('redeemEnds', controls.redeemEnds.value.getTime().toString());
@@ -240,7 +245,13 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_CREATED'),
               'success'
-            );
+            ).then((result) => {
+							this.router.navigate(['/m-campaigns']);
+						});
+						setTimeout(()=> {
+							Swal.close();
+							this.router.navigate(['/m-campaigns']);
+						},2000);
           },
           error => {
             console.log(error);
