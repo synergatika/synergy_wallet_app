@@ -208,9 +208,8 @@
 						data-ktwizard-type="action-submit">
 						{{ 'FORM.BUTTONS.SAVE' | translate }}
 					</button>
-					<button mat-raised-button (click)="onSubmit('public')" (keyup.enter)="onSubmit('public')"
-						class="btn btn-primary"
-						data-ktwizard-type="action-submit">
+					<button mat-raised-button type="button" (click)="publishItemModal()" (keyup.enter)="publishItemModal()"
+						class="btn btn-primary">
 						{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
 					</button>
 				</div>
@@ -220,3 +219,45 @@
 		</mat-card-content>
 	</mat-card>
 </div>
+
+<!-- Publish Item Modal -->
+<ng-template #publish_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Publish campaign</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div *ngIf="campaign" class="modal-body">
+		Are you sure you would like to publish the campaign '{{campaign.title}}'?
+		<br>
+		You won't be able to make any further changes after your campaign has been published.
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="publishItem();c('Close click'); ">Publish</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>
+
+<div class="single-delete">
+	<button mat-raised-button class="delete-text"(click)="deleteItemModal()">
+		Delete Item
+	</button>
+</div>
+
+<!-- Remove Item Modal -->
+<ng-template #remove_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Delete Campaign</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div *ngIf="campaign" class="modal-body">
+		Are you sure you would like to delete '{{campaign.title}}'?
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>

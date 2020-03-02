@@ -26,7 +26,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 
 export class EditEventComponent implements OnInit {
 	@ViewChild('remove_item', {static: false}) remove_item;
-	@ViewChild('fileInput', {static: true}) image : ElementRef;
+	@ViewChild('fileInput', {static: false}) imageInput : ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -156,7 +156,6 @@ export class EditEventComponent implements OnInit {
 		  return;
 	  }
 	  this.originalImage = false;
-	if(this.fileData) {
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -170,10 +169,6 @@ export class EditEventComponent implements OnInit {
       }
       this.previewUrl = reader.result;
     }
-	}
-	else {
-		this.previewUrl = null;
-	}
   }
 
   onImageCancel() {
@@ -181,7 +176,7 @@ export class EditEventComponent implements OnInit {
     this.previewUrl = this.event.event_imageURL;
     this.fileData = null;
     this.originalImage = true;
-		this.image.nativeElement.value = null;
+		this.imageInput.nativeElement.value = null;
   }
 
   fetchEventData() {
@@ -200,18 +195,16 @@ export class EditEventComponent implements OnInit {
 						const dateTime = this.event.dateTime;
 						//this.eventDate = '';
 						const eventDate = new Date(dateTime);
-						console.log(eventDate);
+						/*console.log(eventDate);
 						console.log(eventDate.getTime());
 						console.log(eventDate.getHours());
-						console.log(eventDate.getMinutes());
-						//console.log(this.eventDate.setHours(0,0,0,0));
+						console.log(eventDate.getMinutes());*/
 						this.eventTime = eventDate.getHours().toString() + ':' + eventDate.getMinutes().toString();
 						this.eventDate = new Date(eventDate.setHours(0,0,0,0));
-						console.log(this.eventDate.getTime());
+						//console.log(this.eventDate.getTime());
 						this.previewUrl = this.event.event_imageURL;						
 						this.initForm();
 						this.cdRef.markForCheck();
-            //this.scannerService.changeOffers(this.event);
           },
           error => {
           }),
@@ -230,16 +223,16 @@ export class EditEventComponent implements OnInit {
   onSubmit() {
     if (this.submitted) return;
     const controls = this.submitForm.controls;
-		console.log(controls.eventDate.value);
+		/*console.log(controls.eventDate.value);
 		console.log(controls.eventDate.value.getTime());
 		console.log(controls.eventDate.value);
-		console.log(controls.eventTime.value);	
+		console.log(controls.eventTime.value);	*/
 		const timeArray = controls.eventTime.value.split(':');
 		var timeInMiliseconds = ((timeArray[0])* 60 * 60 + (+timeArray[1]) * 60 ) * 1000;
-		console.log(timeInMiliseconds);
-		console.log(controls.eventDate.value.getTime());
+		//console.log(timeInMiliseconds);
+		//console.log(controls.eventDate.value.getTime());
 		var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
-		console.log(new Date(totalMiliseconds));		
+		//console.log(new Date(totalMiliseconds));		
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -269,7 +262,7 @@ export class EditEventComponent implements OnInit {
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.EVENT_UPDATED'),
               'success'
             ).then((result) => {
 							console.log('closed');

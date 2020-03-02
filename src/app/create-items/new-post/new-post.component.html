@@ -11,7 +11,7 @@
 							<mat-form-field>
 								<mat-label>{{'FIELDS.POST.TITLE.TITLE' | translate}}</mat-label>
 								<input matInput type="text" formControlName="title"
-									placeholder="{{'FIELDS.POST.TITLE.PLACEHOLDER' | translate}}" value="title">
+									placeholder="{{'FIELDS.POST.TITLE.PLACEHOLDER' | translate}}">
 								<mat-error *ngIf="isControlHasError('title','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('title','minlength')"
@@ -25,9 +25,16 @@
 						</div>
 						<div class="form-group">
 							<mat-form-field>
+								<mat-label>Abstract</mat-label>
+							<input matInput type="text" formControlName="itemAbstract" placeholder="Abstract">
+							<mat-hint class="form-text text-muted">Please enter event Abstract.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
 								<mat-label>{{'FIELDS.POST.CONTENT.TITLE' | translate}}</mat-label>
 									<textarea matInput class="short" type="text" formControlName="content"
-									placeholder="{{'FIELDS.POST.CONTENT.PLACEHOLDER' | translate}}" value="content"> </textarea>
+									placeholder="{{'FIELDS.POST.CONTENT.PLACEHOLDER' | translate}}"> </textarea>
 								<mat-error *ngIf="isControlHasError('content','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="isControlHasError('content','minlength')"
@@ -68,7 +75,6 @@
 								</div>
 								<button class="upload-img-btn" type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
 								<label class="avatar__upload">
-									<i class="fa fa-pen"></i>
 									<input #image type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										formControlName="profile_avatar" accept=".png, .jpg, .jpeg" #fileInput>
 								</label>

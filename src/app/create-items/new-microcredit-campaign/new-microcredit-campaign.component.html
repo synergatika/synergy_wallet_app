@@ -182,20 +182,22 @@
 						<div class="form-group">
 							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
-								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+								<div class="upload-img">
+									<div class="upload-img-container">
+										<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+										<div *ngIf="!originalImage" class="image-cancel">
+											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+											</span>
+										</div>
+									</div>
 								</div>
-								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar_upload" data-toggle="tooltip" title=""
-									data-original-title="Change avatar">
-									<i class="fa fa-pen"></i>
-									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+								<button class="upload-img-btn" type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar_upload">
+									<input #image type="file" hidden (change)="fileProgress($event)" name="profile_avatar" formControlName="profile_avatar" 
 										accept=".png, .jpg, .jpeg" #fileInput>
-								</label>
-								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-									<i class="fa fa-times"></i>
-								</span>								
+								</label>	
+								<mat-error *ngIf="isControlHasError('profile_avatar','required') || fileDataEmptied"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>								
 							</div>
 						</div>
 					</div>
@@ -204,11 +206,15 @@
 				<!--begin: Form Actions -->
 				<div class="row">
 					<div class="form-actions col-md-12">
-						<button mat-raised-button (click)="onSubmit('draft')" (keyup.enter)="onSubmit('draft')"
+						<button mat-raised-button type="button" (click)="onSubmit('draft')" (keyup.enter)="onSubmit('draft')"
 							class="btn mr-3">
 							{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_DRAFT' | translate }}
 						</button>
-						<button mat-raised-button (click)="onSubmit('public')" (keyup.enter)="onSubmit('public')"
+						<!--<button mat-raised-button (click)="onSubmit('public')" (keyup.enter)="onSubmit('public')"
+							class="btn btn-primary">
+							{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
+						</button>-->
+						<button mat-raised-button type="button" (click)="publishItemModal()" (keyup.enter)="publishItemModal()"
 							class="btn btn-primary">
 							{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
 						</button>
@@ -220,3 +226,22 @@
 		</mat-card-content>
 	</mat-card>
 </div>
+
+<!-- Publish Item Modal -->
+<ng-template #publish_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Publish campaign</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		Are you sure you would like to publish the campaign?
+		<br>
+		You won't be able to make any further changes after your campaign has been published.
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="publishItem();c('Close click'); ">Publish</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>

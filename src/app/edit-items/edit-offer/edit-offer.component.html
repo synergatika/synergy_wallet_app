@@ -71,8 +71,14 @@
 						<div class="form-group">      
 							<label class="col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
-								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="previewUrl">
+								<div class="upload-img" >
+									<div class="upload-img-container">
+										<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="previewUrl">
+										<div *ngIf="!originalImage" class="image-cancel">
+											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+											</span>
+										</div>
+									</div>
 								</div>
 								<div>
 									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
@@ -82,11 +88,7 @@
 									<i class="fa fa-pen"></i>
 									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										accept=".png, .jpg, .jpeg" #fileInput>
-								</label>
-								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-									<span class="mdi mdi-close-circle-outline"></span>
-								</span>		
+								</label>	
 							</div>
 						</div>
 					</div>

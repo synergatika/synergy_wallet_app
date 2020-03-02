@@ -181,6 +181,20 @@ export class ItemsService {
         return response.data;
       }));
   }
+	
+	editPost(merchant_id: string, post_id: string, formData: FormData ): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/posts/${merchant_id}/${post_id}`, formData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+	
+	deletePost(merchant_id: string, post_id: string): Observable<Offer> {
+    return this.http.delete<any>(`${environment.apiUrl}/posts/${merchant_id}/${post_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
   /** 
     * Posts & Events
     */
@@ -251,9 +265,23 @@ export class ItemsService {
         return response;
       }));
   }
-
+	
+	editCampaign(merchant_id: string, campaign_id: string, formData: FormData ): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`, formData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+	
   readCampaign(merchant_id: string, campaign_id: string): Observable<MicrocreditCampaign> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+	
+	deleteCampaign(merchant_id: string, campaign_id: string): Observable<Offer> {
+    return this.http.delete<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`)
       .pipe(map(response => {
         return response.data;
       }));

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -54,6 +55,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
+		private router: Router,
   ) {
     this.unsubscribe = new Subject();
   }
@@ -82,6 +84,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [''],
       content: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.content.minLength),
@@ -159,9 +162,13 @@ export class NewPostComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('content', controls.content.value);
     formData.append('access', controls.access.value);
-
+		/*for (var pair of formData.entries()) {
+			console.log(pair[0]+ ', ' + pair[1]); 
+		}*/
+		//return;
     this.itemsService.createPost(formData)
       .pipe(
         tap(
@@ -170,7 +177,10 @@ export class NewPostComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
               'success'
-            );
+            ).then((result) => {
+							console.log('deleted');
+							this.router.navigate(['/m-posts']);
+						});
           },
           error => {
             Swal.fire(

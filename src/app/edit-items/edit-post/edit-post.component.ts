@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -23,9 +23,10 @@ import { AuthenticationService } from '../../core/services/authentication.servic
   templateUrl: './edit-post.component.html',
   styleUrls: ['./edit-post.component.sass']
 })
+
 export class EditPostComponent implements OnInit, OnDestroy {
-	
-  @ViewChild('remove_item', {static: false}) remove_item;
+	@ViewChild('remove_item', {static: false}) remove_item;	
+  @ViewChild('fileInput', {static: false}) imageInput : ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -46,6 +47,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
   submitted: boolean = false;
   post: any;
   title: string;
+	itemAbstract: string;
+	access: string;
   content: string;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -66,6 +69,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
 		private modalService: NgbModal,
 		private activatedRoute: ActivatedRoute,
 		private authenticationService: AuthenticationService,
+		private router: Router,
   ) {
 	this.activatedRoute.params.subscribe(params => {
       this.post_id = params['_id'];
@@ -98,13 +102,14 @@ export class EditPostComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [this.itemAbstract],
       content: [this.content, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.content.minLength),
         Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
-      access: ['', Validators.compose([
+      access: [this.access, Validators.compose([
         Validators.required
       ])
       ],
@@ -113,7 +118,11 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
   fileProgress(fileInput: any) {
     this.fileData = <File>fileInput.target.files[0];
-    this.preview();
+    if (fileInput) {
+      this.fileData = <File>fileInput.target.files[0];
+      this.originalImage = false;
+      this.preview();
+    }
   }
 
   preview() {
@@ -138,9 +147,10 @@ export class EditPostComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
-    this.previewUrl = null;
+    this.previewUrl = this.post.post_imageURL;
     this.fileData = null;
     this.originalImage = true;
+		this.imageInput.nativeElement.value = null;
   }
   
   fetchPostData() {
@@ -150,11 +160,13 @@ export class EditPostComponent implements OnInit, OnDestroy {
           data => {
             this.post = data;
             console.log(this.post);
-			this.title = this.post.title;
-			this.content = this.post.content;
-			console.log(this.content);
-			this.initForm();
-			this.cdRef.markForCheck();
+						this.title = this.post.title;
+						this.content = this.post.content;
+						this.access = this.post.access;
+						this.itemAbstract = this.post.subtitle;
+						this.previewUrl = this.post.post_imageURL;	
+						this.initForm();
+						this.cdRef.markForCheck();
             //this.scannerService.changeOffers(this.post);
           },
           error => {
@@ -188,16 +200,20 @@ export class EditPostComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('content', controls.content.value);
     formData.append('access', controls.access.value);
-
-    this.itemsService.createPost(formData)
+		/*for (var pair of formData.entries()) {
+			console.log(pair[0]+ ', ' + pair[1]);
+		}*/
+		//return;
+    this.itemsService.editPost(this.authenticationService.currentUserValue.user["_id"], this.post_id, formData)
       .pipe(
         tap(
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
               'success'
             );
           },
@@ -231,6 +247,34 @@ export class EditPostComponent implements OnInit, OnDestroy {
 	
 	deleteItem() {
 		console.log('delete');
+		this.itemsService.deletePost(this.authenticationService.currentUserValue.user["_id"], this.post_id)
+      .pipe(
+        tap(
+          data => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              this.translate.instant('MESSAGE.SUCCESS.POST_DELETED'),
+              'success'
+            ).then((result) => {
+							console.log('deleted');
+							this.router.navigate(['/m-posts']);
+						});
+          },
+          error => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.ERROR.TITLE'),
+              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              'error'
+            );
+            this.submitted = false;
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
 	}
   /**
    * Checking control validation

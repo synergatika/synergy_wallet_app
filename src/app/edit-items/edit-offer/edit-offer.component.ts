@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -27,7 +27,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./edit-offer.component.scss']
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
-
+	@ViewChild('fileInput', {static: false}) imageInput : ElementRef;
   @ViewChild('remove_item', {static: false}) remove_item;
   public validator: any = {
     title: {
@@ -75,6 +75,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 		private modalService: NgbModal,
 		private activatedRoute: ActivatedRoute,
 		private authenticationService: AuthenticationService,
+		private router: Router,
 		private datePipe: DatePipe,
 		private scannerService: ScannerService
   ) {
@@ -156,9 +157,10 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
-    this.previewUrl = null;
+		this.previewUrl = this.offer.offer_imageURL;
     this.fileData = null;
     this.originalImage = true;
+		this.imageInput.nativeElement.value = null;
   }
 
   /**
@@ -267,7 +269,10 @@ export class EditOfferComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.OFFER_DELETED'),
               'success'
-            );
+            ).then((result) => {
+							console.log('deleted');
+							this.router.navigate(['/m-offers']);
+						});
           },
           error => {
             Swal.fire(

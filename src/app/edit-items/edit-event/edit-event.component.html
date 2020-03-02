@@ -115,7 +115,7 @@
 								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
 								<label class="avatar__upload" data-toggle="tooltip" title=""
 									data-original-title="Change avatar">
-									<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										accept=".png, .jpg, .jpeg" #fileInput>
 								</label>						
 							</div>
