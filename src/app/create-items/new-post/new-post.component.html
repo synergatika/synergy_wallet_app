@@ -57,30 +57,35 @@
 						<div class="form-group">
 							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
-								<div class="upload-img-holder">
-									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+								<div class="upload-img">
+									<div class="upload-img-container">
+										<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+										<div *ngIf="!originalImage" class="image-cancel">
+											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+											</span>
+										</div>
+									</div>
 								</div>
-								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar__upload" data-toggle="tooltip" title=""
-									data-original-title="Change avatar">
-									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-										accept=".png, .jpg, .jpeg" #fileInput>
+								<button class="upload-img-btn" type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar__upload">
+									<i class="fa fa-pen"></i>
+									<input #image type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+										formControlName="profile_avatar" accept=".png, .jpg, .jpeg" #fileInput>
 								</label>
-								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()">
-									<span class="mdi mdi-close-circle-outline"></span>
-								</span>							
+								<mat-error *ngIf="isControlHasError('profile_avatar','required') || fileDataEmptied"
+								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>								
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form-actions">
-					<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()"
-						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
-						data-ktwizard-type="action-submit">
-						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-					</button>
+				<div class="row">
+					<div class="form-actions col-md-12">
+						<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-primary">
+							{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+						</button>
+					</div>
 				</div>
 				<!--end: Form Actions -->
 

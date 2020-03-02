@@ -186,10 +186,10 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     formData.append('description', controls.description.value);
 		formData.append('expiresAt', controls.expiration.value.getTime().toString());
 		console.log(controls.expiration.value.getTime());
-		for (var pair of formData.entries()) {
+		/*for (var pair of formData.entries()) {
 			console.log(pair[0]+ ', ' + pair[1]);
-		}
-	//return;
+		}*/
+		//return;
     this.itemsService.editOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id, formData)
       .pipe(
         tap(
@@ -230,6 +230,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 						this.cost = this.offer.cost;
 						this.offerExpires = new Date(this.offer.expiresAt);
 						console.log(this.offerExpires.getTime());
+						this.previewUrl = this.offer.offer_imageURL;
 						this.initForm();
 						this.cdRef.markForCheck();
             //this.scannerService.changeOffers(this.offer);
@@ -244,6 +245,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
+	
 	deleteItemModal() {
 		this.modalService.open(this.remove_item).result.then((result) => {
 		//this.searchText = '';

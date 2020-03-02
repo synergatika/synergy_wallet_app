@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subject } from 'rxjs';
@@ -19,7 +19,7 @@ import { ItemsService } from '../../core/services/items.service';
   styleUrls: ['./new-post.component.sass']
 })
 export class NewPostComponent implements OnInit, OnDestroy {
-
+  @ViewChild('image', {static: true}) image: ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -34,7 +34,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-
+	fileDataEmptied: boolean;
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -92,6 +92,10 @@ export class NewPostComponent implements OnInit, OnDestroy {
         Validators.required
       ])
       ],
+			profile_avatar: ['', Validators.compose([
+        Validators.required
+      ])
+      ],
     });
   }
 
@@ -106,6 +110,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
 		  return;
 	  }
 	  this.originalImage = false;
+		this.fileDataEmptied = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -125,6 +130,9 @@ export class NewPostComponent implements OnInit, OnDestroy {
     this.previewUrl = null;
     this.fileData = null;
     this.originalImage = true;
+		this.image.nativeElement.value = null;
+		this.fileDataEmptied = true;
+		this.cdRef.markForCheck();
   }
 
 	/**
@@ -141,6 +149,10 @@ export class NewPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
+		if(!this.fileData) {
+			console.log('no image');
+			return;
+		}
     this.loading = true;
     this.submitted = true;
 

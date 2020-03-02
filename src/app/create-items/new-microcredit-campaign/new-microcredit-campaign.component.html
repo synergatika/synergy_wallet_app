@@ -202,17 +202,17 @@
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form-actions">
-					<button mat-raised-button (click)="onSubmit('draft')" (keyup.enter)="onSubmit('draft')"
-						class="btn mr-3"
-						data-ktwizard-type="action-submit">
-						{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_DRAFT' | translate }}
-					</button>
-					<button mat-raised-button (click)="onSubmit('public')" (keyup.enter)="onSubmit('public')"
-						class="btn btn-primary"
-						data-ktwizard-type="action-submit">
-						{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
-					</button>
+				<div class="row">
+					<div class="form-actions col-md-12">
+						<button mat-raised-button (click)="onSubmit('draft')" (keyup.enter)="onSubmit('draft')"
+							class="btn mr-3">
+							{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_DRAFT' | translate }}
+						</button>
+						<button mat-raised-button (click)="onSubmit('public')" (keyup.enter)="onSubmit('public')"
+							class="btn btn-primary">
+							{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
+						</button>
+					</div>
 				</div>
 				<!--end: Form Actions -->
 

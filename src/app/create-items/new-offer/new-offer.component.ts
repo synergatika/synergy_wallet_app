@@ -20,7 +20,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
   styleUrls: ['./new-offer.component.sass']
 })
 export class NewOfferComponent implements OnInit, OnDestroy {
-  @ViewChild('image', {static: true}) image: ElementRef;
+  @ViewChild('fileInput', {static: true}) image: ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -39,7 +39,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-
+	fileDataEmptied: boolean;
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -94,13 +94,13 @@ export class NewOfferComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      cost: [0, Validators.compose([
+      cost: ['', Validators.compose([
         Validators.required,
         Validators.min(this.validator.cost.minValue),
         Validators.max(this.validator.cost.maxValue)
       ])
       ],
-      expiration: ['1', Validators.compose([
+      expiration: ['', Validators.compose([
         Validators.required
       ])
       ],
@@ -112,9 +112,8 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   }
 
   fileProgress(fileInput: any) {
-	  let reader = new FileReader();
-	  console.log('fileInput');
-	  console.log(fileInput);
+	  /*console.log('fileInput');
+	  console.log(fileInput);*/
     this.fileData = <File>fileInput.target.files[0];
     this.preview();
   }
@@ -125,6 +124,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
 		  return;
 	  }
 	  this.originalImage = false;
+		this.fileDataEmptied = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -146,11 +146,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     this.fileData = null;
     this.originalImage = true;
 		this.image.nativeElement.value = null;
-		this.cdRef.markForCheck();
-	//this.submitForm.controls.profile_avatar.invalid = true; 
-		this.submitForm.controls['profile_avatar'].setErrors({'incorrect': true});
-		this.isControlHasError('profile_avatar', 'required');
-		console.log(this.isControlHasError('profile_avatar', 'required'));
+		this.fileDataEmptied = true;
 		this.cdRef.markForCheck();
   }
 
@@ -171,7 +167,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     }
 		if(!this.fileData) {
 			console.log('no image');
-			controls['profile_avatar'].setErrors({'incorrect': true});
+			//controls['profile_avatar'].setErrors({'incorrect': true});
 			return;
 		}
     this.loading = true;
@@ -183,10 +179,10 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
     formData.append('expiresAt', controls.expiration.value.getTime().toString());
-		for (var pair of formData.entries()) {
+		/*for (var pair of formData.entries()) {
 			console.log(pair[0]+ ', ' + pair[1]); 
-		}
-return;
+		}*/
+		//return;
     this.itemsService.createOffer(this.authenticationService.currentUserValue.user["_id"], formData)
       .pipe(
         tap(
@@ -227,6 +223,14 @@ return;
     }
 
     const result = control.hasError(validationType) && (control.dirty || control.touched);
+		/*if(controlName=='profile_avatar') {
+			console.log('--control--');
+			console.log(controlName);
+			console.log(control);
+			console.log(control.value);
+			console.log(control.hasError(validationType));
+			console.log(result);
+		}*/
     return result;
   }
 }

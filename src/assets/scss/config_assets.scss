@@ -72,7 +72,9 @@
   }
 
   //2.2 Configue Bootsrtap
-
+	.btn {
+		transition: background-color 0.3s;
+	}
   .btn-primary {
     background-color: $primary;
     border-color: $primary-light;
@@ -80,8 +82,19 @@
     &:active,
     &:not(:disabled):not(.disabled):active,
     &:focus {
-      background-color: $primary;
+      background-color: $primary-light;
       border-color: $primary-light;
+    }
+  }
+	.btn-secondary {
+    background-color: $secondary;
+    border-color: $secondary-light;
+    &:hover,
+    &:active,
+    &:not(:disabled):not(.disabled):active,
+    &:focus {
+      background-color: $secondary-light;
+      border-color: $secondary-light;
     }
   }
   .btn-success {
@@ -200,33 +213,91 @@
         height: 200px;
       }
     }
-    .upload-img {
+    .upload-img {		
       &-holder {
         max-width: 250px;
         margin-bottom: 15px;
       }
+			&-container {
+				position: relative;
+				display: inline-block;
+			}
+			&-btn {
+				margin-bottom: 10px;
+			}
+			.image-cancel {
+				position: absolute;
+				top: -6px;
+				right: -6px;
+				font-size: 24px;
+				width: 20px;
+				height: 20px;
+				background: #fff;
+				border-radius: 50%;
+				span {
+						position: relative;
+						top: -10px;
+						right: 5px;
+						font-size: 28px;
+						cursor: pointer;
+				}
+			}
     }
 		.form-group-inline {
 				display: flex;
 				max-width: 400px;
 				//justify-content: space-between;
 				&-date {
-					flex-grow: 9;
+					flex-grow: 6;
 					margin-right: 30px;
 				}
 				&-time {
-					flex-grow: 3;
+					flex-grow: 6;
 					.mat-form-field-infix {
 						width: 100px;
+					}
+					.ngx-timepicker {
+						background-color: #f8f6f6;
+						padding: 18px 0 10px; 
+						width: 150px;
+						height: auto;
+						border-bottom: 1px solid rgba(0,0,0,.42);
+						input {
+							font-size: 14px;
+							background: transparent;
+						}
+						&-control {
+							width: 50px;
+							&--active {
+								&:after {
+									content: none;
+								}
+							}
+						}
+						&__toggle {
+							button {
+								margin-left: 6px;
+								padding-left: 6px;
+								padding-right: 5px;
+							}
+							svg {
+								width: 18px;
+								height: 18px;
+								opacity: 0.6;	
+							}
+						}
 					}
 				}
 			}
 			.form-actions {
 				margin-top: 20px;
+				button {
+					font-size: 18px;
+					padding: 4px 22px;
+				}
 			}
   }
-  .avatar,
-  .upload-img {
+  .avatar {
     &-holder {
       max-width: 60px;
       margin-right: 20px;

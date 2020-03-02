@@ -72,7 +72,7 @@
 							<label class="col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
 								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="offer.offer_imageURL">
+									<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="previewUrl">
 								</div>
 								<div>
 									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
@@ -93,12 +93,12 @@
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form-actions">
-					<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()"
-						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
-						data-ktwizard-type="action-submit">
-						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-					</button>
+				<div class="row">
+					<div class="form-actions col-md-12">
+						<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-primary">
+							{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+						</button>
+					</div>
 				</div>
 				<!--end: Form Actions -->
 
@@ -124,7 +124,7 @@
 		Are you sure you would like to delete '{{offer.title}}'?
 	</div>
 	<div class="modal-footer">
-		<button mat-raised-button class="btn btn-primary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
-		<button mat-raised-button class="btn btn-secondary" (click)="c('Close click');">Close</button>
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
 	</div>
 </ng-template>

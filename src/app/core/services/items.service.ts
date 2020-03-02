@@ -73,6 +73,7 @@ export class ItemsService {
         return response.data;
       }));
   } 
+	
   /** 
     * Events
     */
@@ -119,6 +120,21 @@ export class ItemsService {
         return response.data;
       }));
   }
+	
+	editEvent(merchant_id: string, event_id: string, formData: FormData ): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/events/${merchant_id}/${event_id}`, formData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+	
+	deleteEvent(merchant_id: string, event_id: string): Observable<Offer> {
+    return this.http.delete<any>(`${environment.apiUrl}/events/${merchant_id}/${event_id}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+	
   /** 
     * Posts
     */

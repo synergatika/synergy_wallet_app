@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -25,7 +25,8 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 })
 
 export class EditEventComponent implements OnInit {
-
+	@ViewChild('remove_item', {static: false}) remove_item;
+	@ViewChild('fileInput', {static: true}) image : ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -40,16 +41,32 @@ export class EditEventComponent implements OnInit {
       maxLenth: 250
     }
   };
+	timePickerTheme: any = {
+			container: {
+					bodyBackgroundColor: '#0c1a33',
+					buttonColor: '#fff'
+			},
+			dial: {
+					dialBackgroundColor: '#415daa',
+			},
+			clockFace: {
+					clockFaceBackgroundColor: '#415daa',
+					clockHandColor: '#e4509e',
+					clockFaceTimeInactiveColor: '#fff'
+			}
+	};
   event_id: string;
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
   event: any;
   title: string;
+	itemAbstract: string;
   description: string;
   access: string;
   location: string;
-  dateTime: Date;
+  eventDate: Date;
+	eventTime: string;
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -61,11 +78,12 @@ export class EditEventComponent implements OnInit {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
-	private modalService: NgbModal,
-	private activatedRoute: ActivatedRoute,
-	private authenticationService: AuthenticationService,
+		private modalService: NgbModal,
+		private activatedRoute: ActivatedRoute,
+		private authenticationService: AuthenticationService,
+		private router: Router,
   ) {
-	this.activatedRoute.params.subscribe(params => {
+		this.activatedRoute.params.subscribe(params => {
       this.event_id = params['_id'];
     });
     this.unsubscribe = new Subject();
@@ -95,6 +113,7 @@ export class EditEventComponent implements OnInit {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [this.itemAbstract],
       description: [this.description, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
@@ -111,7 +130,11 @@ export class EditEventComponent implements OnInit {
         Validators.maxLength(this.validator.location.maxLength)
       ])
       ],
-      dateTime: [this.dateTime, Validators.compose([
+      eventDate: [this.eventDate, Validators.compose([
+        Validators.required
+      ])
+      ],
+			eventTime: [this.eventTime, Validators.compose([
         Validators.required
       ])
       ],
@@ -119,8 +142,12 @@ export class EditEventComponent implements OnInit {
   }
 
   fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
+		console.log(fileInput);
+    if (fileInput) {
+      this.fileData = <File>fileInput.target.files[0];
+      this.originalImage = false;
+      this.preview();
+    }
   }
 
   preview() {
@@ -150,9 +177,11 @@ export class EditEventComponent implements OnInit {
   }
 
   onImageCancel() {
-    this.previewUrl = null;
+		console.log('Image canceled');
+    this.previewUrl = this.event.event_imageURL;
     this.fileData = null;
     this.originalImage = true;
+		this.image.nativeElement.value = null;
   }
 
   fetchEventData() {
@@ -162,13 +191,26 @@ export class EditEventComponent implements OnInit {
           data => {
             this.event = data;
             console.log(this.event);
-			this.title = this.event.title;
-			  this.description = this.event.description;
-			  this.access = this.event.access;
-			  this.location = this.event.location;
-			  this.dateTime = this.event.dateTime;
-			this.initForm();
-			this.cdRef.markForCheck();
+						this.title = this.event.title;
+						this.itemAbstract = this.event.subtitle;
+						this.description = this.event.description;
+						this.access = this.event.access;
+						this.location = this.event.location;
+						
+						const dateTime = this.event.dateTime;
+						//this.eventDate = '';
+						const eventDate = new Date(dateTime);
+						console.log(eventDate);
+						console.log(eventDate.getTime());
+						console.log(eventDate.getHours());
+						console.log(eventDate.getMinutes());
+						//console.log(this.eventDate.setHours(0,0,0,0));
+						this.eventTime = eventDate.getHours().toString() + ':' + eventDate.getMinutes().toString();
+						this.eventDate = new Date(eventDate.setHours(0,0,0,0));
+						console.log(this.eventDate.getTime());
+						this.previewUrl = this.event.event_imageURL;						
+						this.initForm();
+						this.cdRef.markForCheck();
             //this.scannerService.changeOffers(this.event);
           },
           error => {
@@ -187,8 +229,17 @@ export class EditEventComponent implements OnInit {
 	 */
   onSubmit() {
     if (this.submitted) return;
-
     const controls = this.submitForm.controls;
+		console.log(controls.eventDate.value);
+		console.log(controls.eventDate.value.getTime());
+		console.log(controls.eventDate.value);
+		console.log(controls.eventTime.value);	
+		const timeArray = controls.eventTime.value.split(':');
+		var timeInMiliseconds = ((timeArray[0])* 60 * 60 + (+timeArray[1]) * 60 ) * 1000;
+		console.log(timeInMiliseconds);
+		console.log(controls.eventDate.value.getTime());
+		var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
+		console.log(new Date(totalMiliseconds));		
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -203,20 +254,26 @@ export class EditEventComponent implements OnInit {
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('description', controls.description.value);
     formData.append('access', controls.access.value);
     formData.append('location', controls.location.value);
-    formData.append('dateTime', controls.dateTime.value);
-
-    this.itemsService.createEvent(formData)
+    formData.append('dateTime', totalMiliseconds.toString());
+		/*for (var pair of formData.entries()) {
+			console.log(pair[0]+ ', ' + pair[1]);
+		}*/
+		//return;
+    this.itemsService.editEvent(this.authenticationService.currentUserValue.user["_id"], this.event_id, formData)
       .pipe(
         tap(
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
               'success'
-            );
+            ).then((result) => {
+							console.log('closed');
+						});
           },
           error => {
             Swal.fire(
@@ -234,7 +291,46 @@ export class EditEventComponent implements OnInit {
       )
       .subscribe();
   }
-
+	
+	deleteItemModal() {
+		this.modalService.open(this.remove_item).result.then((result) => {
+		console.log('closed');
+		}, (reason) => {
+			console.log('dismissed');
+		});
+	}
+	
+	deleteItem() {
+		console.log('delete');
+		this.itemsService.deleteEvent(this.authenticationService.currentUserValue.user["_id"], this.event_id)
+      .pipe(
+        tap(
+          data => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              this.translate.instant('MESSAGE.SUCCESS.OFFER_DELETED'),
+              'success'
+            ).then((result) => {
+							console.log('deleted');
+							this.router.navigate(['/m-events']);
+						});
+          },
+          error => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.ERROR.TITLE'),
+              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              'error'
+            );
+            this.submitted = false;
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+	}
   /**
    * Checking control validation
    *

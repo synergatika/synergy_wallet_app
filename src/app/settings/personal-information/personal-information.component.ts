@@ -122,7 +122,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
           tap(
             data => {
               this.merchant = Object.assign({}, this.merchant, data);
-			  console.log(this.merchant);
+							console.log(this.merchant);
              // this.merchant.sector = (this.sectorsArray.indexOf(this.merchant.sector)).toString();
               this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.png';
             },
