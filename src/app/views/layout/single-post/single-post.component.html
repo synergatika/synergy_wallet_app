@@ -11,26 +11,28 @@
 					<img src={{singlePost.post_event_imageURL}} alt={{singlePost.name}} />
 				</div>
 				<div *ngIf="singlePost.dateTime" class="s_single-date">
-					<span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd.M'}}
+					<span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd.M.y'}}
 				</div>
 			</div>
-			<div class="row s_single-details">
-				<div class="col-md-12">
-					<div class="row s_single-info-container">
-						<div class="col-md-6 s_single-info">
-							<div class="info-row"><span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
-							</div>
-							<div *ngIf="singlePost.location" class="info-row"><span
-									class="mdi mdi-map"></span>{{singlePost.location}}</div>
+		</div>
+		<div class="row s_single-details">
+			<div class="col-md-12">
+				<div class="row s_single-info-container">
+					<div class="col-md-6 s_single-info">
+						<div *ngIf="!singlePost.dateTime" class="info-row"><span class="mdi mdi-clock"></span>{{ singlePost.createdAt }}
 						</div>
-						<div class="col-md-6 single-share">
-							<app-share-icon></app-share-icon>
+						<div class="info-row"><span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
 						</div>
+						<div *ngIf="singlePost.location" class="info-row"><span
+								class="mdi mdi-map"></span>{{singlePost.location}}</div>
 					</div>
-					<div class="row s_single-description">
-						<div class="col-md-12">
-							<p [innerHTML]="singlePost.content"></p>
-						</div>
+					<div class="col-md-6 s_single-share">
+						<app-share-icon></app-share-icon>
+					</div>
+				</div>
+				<div class="row s_single-description">
+					<div class="col-md-12">
+						<p [innerHTML]="singlePost.content"></p>
 					</div>
 				</div>
 			</div>

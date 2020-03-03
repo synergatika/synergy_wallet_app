@@ -236,9 +236,6 @@ body {
 		font-size: 1.22rem;
 	}
 	&-info-container {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
 		padding: 20px 0;
 		border-bottom: 1px solid #eee;
 		margin-bottom: 30px;
@@ -247,7 +244,10 @@ body {
 			font-size: 18px;
 			margin-right: 5px;
 			position: relative;
-			top: 1.5px;
+      top: 1.5px;
+      &.share-icon{
+        font-size: 30px;
+      }
 		}
 		.hours {
 			text-align: right;
@@ -255,7 +255,10 @@ body {
 		.info-row {
 			margin-bottom: 5px;
 		}
-	}
+  }
+  &-share{
+    text-align: right;
+  }
 	&-details {
 		margin-bottom: 30px;
 	}
@@ -277,9 +280,9 @@ body {
   }
   .s_single{
     &-title-container {
-      -webkit-box-shadow: 15px 15px 45px 10px rgba(0, 0, 0, 0.1);
-      -moz-box-shadow: 15px 15px 45px 10px rgba(0, 0, 0, 0.1);
-      box-shadow: 15px 15px 45px 10px rgba(0, 0, 0, 0.1);
+      -webkit-box-shadow: 5px 5px 5px 3px rgba(0, 0, 0, 0.1);
+      -moz-box-shadow: 5px 5px 5px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 5px 5px 5px 3px rgba(0, 0, 0, 0.1);
       position: fixed;
       top: 0px;
       width: 100%;

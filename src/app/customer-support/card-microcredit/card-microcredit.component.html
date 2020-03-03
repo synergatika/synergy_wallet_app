@@ -14,13 +14,15 @@
 					</div>
 					<div class="s_archive-content container-fluid">
 						<div class="s_archive-heading row">
-							<h4 class="s_archive-title col-12">{{microcredit.title}}</h4>
-							<!--<div class="s_archive-points col-3">
-								<span class="amount">
-									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
-									{{microcredit.cost}}
+							<h4 class="s_archive-title col-9">{{microcredit.title}}</h4>
+							<div class="s_archive-points col-3">
+								<span class="from" *ngIf="microcredit.quantitative==true">
+									{{'GENERAL.FROM' | translate}}
 								</span>
-							</div>-->
+								<span class="amount">
+									{{microcredit.minAllowed | currency:'EUR' }}
+								</span>
+							</div>
 						</div>
 						<div class="s_archive-subtitle row">
 							<div class="col-md-12">

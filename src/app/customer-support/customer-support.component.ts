@@ -57,6 +57,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.campaigns = data;
+            console.log(this.campaigns);
             this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {
