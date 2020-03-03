@@ -49,7 +49,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   campaign_id: string;
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = false;
+  originalImage: boolean = true;
   isQuantitative = false;
 
   submitForm: FormGroup;
@@ -63,6 +63,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   quantitative: boolean;
   minAllowed: number;
   maxAllowed: number;
+	step: number;
   maxAmount: number;
   redeemStarts: Date;
   redeemEnds: Date;
@@ -145,7 +146,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         Validators.required,
       ])
       ],
-			step: [''],
+			step: [this.step],
       maxAmount: [this.maxAmount, Validators.compose([
         Validators.required,
         Validators.min(this.validator.maxAmount.minLength),
@@ -168,12 +169,17 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         Validators.required,
       ])
       ],
-    });
+    },
+		{validator: this.endDateAfterOrEqualValidator}			
+		);
   }
 
   fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
+    if (fileInput) {
+      this.fileData = <File>fileInput.target.files[0];
+      this.originalImage = false;
+      this.preview();
+    }
   }
 
   preview() {
@@ -205,7 +211,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   }
 
   fetchCampaignData() {
-	this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
+		this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
 		  .pipe(
 			tap(
 			  data => {
@@ -223,6 +229,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 				  }
 				  this.minAllowed = this.campaign.minAllowed;
 				  this.maxAllowed = this.campaign.maxAllowed;
+					//this.step = this.campaign.stepAmount;
 				  this.maxAmount = this.campaign.maxAmount;
 				  this.redeemStarts = new Date(this.campaign.redeemStarts);
 				  this.redeemEnds = new Date(this.campaign.redeemEnds);
@@ -278,12 +285,12 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 		if (controls.quantitative.value) {
 			formData.append('minAllowed', controls.minAllowed.value);
 			formData.append('maxAllowed', controls.maxAllowed.value);
-			//formData.append('stepAmount', controls.expiration.value);
+			formData.append('stepAmount', controls.step.value);
 		}
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
     formData.append('redeemEnds', controls.redeemEnds.value.getTime().toString());
-    formData.append('startsAt', controls.expiration.value.getTime().toString());
+    formData.append('startsAt', controls.initiation.value.getTime().toString());
     formData.append('expiresAt', controls.expiration.value.getTime().toString());
 		/*for (var pair of formData.entries()) {
 			console.log(pair[0]+ ', ' + pair[1]); 
@@ -414,7 +421,38 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         })
       )
       .subscribe();
-	}	
+	}
+	
+	endDateAfterOrEqualValidator(formGroup): any {
+    var startDateTimestamp, endDateTimestamp, startRedeemDateTimestamp, endRedeemDateTimestamp;
+    for(var controlName in formGroup.controls) {
+      if(controlName.indexOf("initiation") !== -1) {
+        startDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+      if(controlName.indexOf("expiration") !== -1) {
+        endDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+			if(controlName.indexOf("redeemStarts") !== -1) {
+        startRedeemDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+      if(controlName.indexOf("redeemEnds") !== -1) {
+        endRedeemDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+    }
+		if (endDateTimestamp < startDateTimestamp) {
+			console.log("error init");
+			formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: true });
+		} 
+		if (endRedeemDateTimestamp < startRedeemDateTimestamp) {
+			console.log("error endRedeemDateTimestamp");
+			formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: true });
+		} 
+		if((endDateTimestamp >= startDateTimestamp) && (endRedeemDateTimestamp >= startRedeemDateTimestamp)) {
+			return null;
+		}
+
+  }
+	
   /**
    * Checking control validation
    *
@@ -431,3 +469,5 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
     return result;
   }
 }
+
+

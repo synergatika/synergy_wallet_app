@@ -48,10 +48,10 @@
   .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
   .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
   .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-    background-color: #e6c615;
+    background-color: $tertiary;
   }
   .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #e6c615;
+    border-color: $tertiary;
   }
 
   //Other
@@ -331,6 +331,7 @@
 			}
 		}
   }
+	
   .merchant-alert {
     color: #f14551;
     font-weight: 600;
@@ -339,6 +340,11 @@
 	.input-group.amount-input {
 		max-width: 220px;
     margin: 0 auto;
+	}
+	
+	app-sub-offer-form {
+		width: 100%;
+		max-width: 500px;
 	}
 	
   //2.5 Wizards
@@ -357,7 +363,7 @@
       }
     }
     &.optional .step-indicator {
-      background-color: #e6db91;
+      background-color: $tertiary;
     }
 		&.navigable.optional a:hover .step-indicator {
 			background-color: $secondary;

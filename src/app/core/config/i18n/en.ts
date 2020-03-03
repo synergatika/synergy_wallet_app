@@ -100,7 +100,7 @@ export const locale = {
                 OUR_COMMUNITY: 'Our Community!',
                 CURRENT_OFFERS: 'Current offers!',
                 LATEST_POSTS: 'Latest Posts & Upcoming Events!',
-                OFFER_DESCRIPTION: 'Offer\'s Description',
+                OFFER_DESCRIPTION: 'Offer Description',
                 MEMBER_SINCE: 'Member Since:',
                 SINCE: 'Since',
                 UNTIL: 'Until',
@@ -314,7 +314,7 @@ export const locale = {
                     C: 'Partners'					
                 },
             },
-			MICROCREDIT_CAMPAIGN:{
+				MICROCREDIT_CAMPAIGN:{
                 TITLE: {
                     TITLE: 'Campaign Title',
                     PLACEHOLDER: 'Title',
@@ -325,70 +325,70 @@ export const locale = {
                     PLACEHOLDER: 'Description',
                     DESC: 'Please, enter Terms Description.'
                 },
-				DESCRIPTION: {
+								DESCRIPTION: {
                     TITLE: 'Campaign Description',
                     PLACEHOLDER: 'Description',
                     DESC: 'Please, enter a Campaign Description.'
                 },
-				CATEGORY: {
+								CATEGORY: {
                     TITLE: 'Category',
                     PLACEHOLDER: 'Category',
                     DESC: 'Please, enter the Campaign Category.'
                 },
-				MIN_ALLOWED: {
+								MIN_ALLOWED: {
                     TITLE: 'Min Allowed',
                     PLACEHOLDER: '1000',
                     DESC: 'Please, enter your Min Allowed.'
                 },
-				MAX_ALLOWED: {
+								MAX_ALLOWED: {
                     TITLE: 'Max Allowed',
                     PLACEHOLDER: '1000',
                     DESC: 'Please, enter your Max Allowed.'
                 },
-				STEP: {
+								STEP: {
                     TITLE: 'Step',
                     PLACEHOLDER: '20',
                     DESC: 'Step.'
                 },
-				MAX_AMOUNT: {
+								MAX_AMOUNT: {
                     TITLE: 'Max Amount',
                     PLACEHOLDER: '1000',
                     DESC: 'Please, enter when your Max Amount.'
                 },
-				ACCESS: {
+								ACCESS: {
                     TITLE: 'Access',
                     PLACEHOLDER: 'Access',
                     DESC: 'Please, enter when your Access.'
 					
                 },
-				ACCESS_CHOICES: {
+								ACCESS_CHOICES: {
                     A: 'Public',
                     B: 'Private',
                     C: 'Partners'					
                 },
-				INITIATION: {
+								INITIATION: {
                     TITLE: 'Initiation Date',
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Campaign will begin.'
                 },
-				EXPIRATION: {
+								EXPIRATION: {
                     TITLE: 'Expiration Date',
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Campaign will expire.'
                 },
-				REDEEM_STARTS: {
+								REDEEM_STARTS: {
                     TITLE: 'Date redeem starts',
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when redeem can begin.'
                 },
-                REDEEM_ENDS: {
-                    TITLE: 'Date redeem ends',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when redeem can end.'
-                },
-				QUANTITATIVE: 'Is it Quantitative?',
-				SUBMIT_DRAFT: 'Save as Draft',
-				SUBMIT_CAMPAIGN: 'Publish Campaign',
+								REDEEM_ENDS: {
+										TITLE: 'Date redeem ends',
+										PLACEHOLDER: 'Date',
+										DESC: 'Please, enter when redeem can end.'
+								},
+								QUANTITATIVE: 'Is it Quantitative?',
+								SUBMIT_DRAFT: 'Save as Draft',
+								SUBMIT_CAMPAIGN: 'Publish Campaign',
             }
         },
         FORM: {
@@ -518,6 +518,36 @@ export const locale = {
 					HEADING: 'Transaction amount',
 					TITLE: 'You can have a discount of',
 					CTA: 'Check to Redeem discount'
+				},
+				SUB_OFFER_FORM: {
+					HEADING_MAIN: 'Offer Transaction Details',
+					HEADING: 'Transaction quantity',
+					TITLE: 'Quantity',
+					HINT: 'Please enter transaction quantity.',
+					ALERT: 'Not enough points',
+					ID: 'ID',
+					COST: 'Cost',
+					POINTS: 'Customer Points'
+				},
+				SUB_FINAL_STEP: {
+					AMOUNT: 'Transaction Amount',
+					POINTS_TO_REDEEM: 'Points to Redeem',
+					QUANTITY: 'Quantity',
+					TOKENS_BEFORE: 'Initial Tokens',
+					TOKENS_REDEEMED: 'Tokens Redeemed', 
+					TOKENS_REMAINING: 'Tokens Remaining'
+				},
+				SUB_MICROCREDIT_FORM: {
+					HEADING: 'Support items',
+					CAMPAIGN_ID: 'Campaign ID',
+					HEADING_2: 'Tokens',
+					SUPPORT_ID: 'Support ID',
+					INITIAL: 'initial',
+					REDEEMED: 'redeemed',
+					REMAINING: 'remaining',
+					ALERT: 'No Transactions. Unable to proceed.',
+					HEADING_3: 'Transaction Tokens',
+					HINT: 'Please enter transaction tokens.'
 				}
 			}
 		},

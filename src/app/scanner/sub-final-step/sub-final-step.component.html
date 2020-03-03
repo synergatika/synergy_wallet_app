@@ -1,19 +1,19 @@
 <div *ngIf='type===1'>
-    <p>Transaction Amount: {{transaction.final_amount}}</p>
-    <p>Points to Redeem: {{transaction.discount_points}}</p>
-    <button mat-raised-button type="button" (click)="onNextStep()">Complete Transaction</button>
+    <p>{{ 'MERCHANT.SCANNER.SUB_FINAL_STEP.AMOUNT' | translate }}: {{transaction.final_amount}}</p>
+    <p>{{ 'MERCHANT.SCANNER.SUB_FINAL_STEP.POINTS_TO_REDEEM' | translate }}: {{transaction.discount_points}}</p>
+    <button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.CLOSE' | translate }}</button>
 </div>
 
 <div *ngIf='type===2'>
-    <p>Points to Redeem: {{transaction.discount_points}}</p>
-    <p>Quantity: {{transaction.quantity}}</p>
-    <button mat-raised-button type="button" (click)="onNextStep()">Complete Transaction</button>
+    <p>{{ 'MERCHANT.SCANNER.SUB_FINAL_STEP.POINTS_TO_REDEEM' | translate }}: {{transaction.discount_points}}</p>
+    <p>{{ 'MERCHANT.SCANNER.SUB_FINAL_STEP.QUANTITY' | translate }}: {{transaction.quantity}}</p>
+    <button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.CLOSE' | translate }}</button>
 </div>
 
 <div *ngIf='type===3'>
-    <p>Tokens Remaining Before: {{transaction.initial_tokens - transaction.redeemed_tokens}}</p>
-    <p>Tokens Redeemed Now: {{transaction.discount_tokens}}</p>
-    <p>Tokens Remaining Now:
+    <p>{{ 'MERCHANT.SCANNER.SUB_FINAL_STEP.TOKENS_BEFORE' | translate }}: {{transaction.initial_tokens - transaction.redeemed_tokens}}</p>
+    <p>{{ 'MERCHANT.SCANNER.SUB_FINAL_STEP.TOKENS_REDEEMED' | translate }}: {{transaction.discount_tokens}}</p>
+    <p>{{ 'MERCHANT.SCANNER.SUB_FINAL_STEP.TOKENS_REMAINING' | translate }}:
         {{transaction.initial_tokens - (transaction.redeemed_tokens + transaction.discount_tokens)}}
     </p>
     <button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.CLOSE' | translate }}</button>

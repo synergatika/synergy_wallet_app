@@ -1,4 +1,4 @@
-<h4 class="heading">Support items <div class="extra-details">Campaign ID {{transaction.campaign_id}}</div></h4>
+<h4 class="heading">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HEADING' | translate }} <div class="extra-details">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.CAMPAIGN_ID' | translate }} {{transaction.campaign_id}}</div></h4>
 	<div class="row justify-content-md-center">
 		<mat-radio-group 
 		aria-labelledby="token-radio-group-label"
@@ -20,35 +20,35 @@
 	
 </div>-->
 <div class="mb-3">
-	<h4 class="heading">Tokens <div class="extra-details">Support ID {{transaction.support_id}}</div></h4>
+	<h4 class="heading">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HEADING_2' | translate }} <div class="extra-details">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.SUPPORT_ID' | translate }} {{transaction.support_id}}</div></h4>
 	<div class="row token-info">
-		<div class="col-md-4">
-			<div class="col-head init">initial</div>
+		<div class="col-md-3">
+			<div class="col-head init">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.INITIAL' | translate }}</div>
 			<div class="token-num">{{transaction.initial_tokens}}</div>
 		</div>
 		<div class="col-md-4">
-			<div class="col-head redeemed">redeemed</div>
+			<div class="col-head redeemed">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.REDEEMED' | translate }}</div>
 			<div class="token-num">{{transaction.redeemed_tokens}}</div>
 		</div>
-		<div class="col-md-4">
-			<div class="col-head remaining">remaining</div>
+		<div class="col-md-5">
+			<div class="col-head remaining">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.REMAINING' | translate }}</div>
 			<div class="token-num">{{transaction.possible_tokens}}</div>
 		</div>
 	</div>
 </div>
 <div class="merchant-alert" *ngIf="!transaction.possible_tokens">
-    No Transactions. Unable to proceed.
+   <p>{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.ALERT' | translate }}</p>
 </div>
 <div *ngIf="transaction.possible_tokens">
     <form [formGroup]="submitForm">
         <!--begin: Form Wizard Step 1-->
         <div class="">
-            <h5>Transaction Tokens</h5>
+            <h5>{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HEADING_3' | translate }}</h5>
             <div class="form-group">
-                <label>Tokens</label>
-                <div class="input-group">
+                <!--<label>Tokens</label>-->
+                <div class="input-group amount-input">
                     <input type="number" class="form-control" name="tokens" formControlName="tokens"
-                        placeholder="Tokens" value="0">
+                        placeholder="Tokens">
                 </div>
                 <span *ngIf="isControlHasError('tokens','required')"
                     class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
@@ -58,10 +58,10 @@
                 <span *ngIf="isControlHasError('tokens','max')"
                     class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
                     {{ transaction.possible_tokens }}</span>
-                <span class="form-text text-muted">Please enter transaction tokens.</span>
+                <span class="form-text text-muted">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HINT' | translate }}</span>
             </div>
         </div>
     </form>
-	<button mat-raised-button class="mr-2" type="button" awPreviousStep>Previous Step</button>
-    <button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
 </div>
+<button mat-raised-button class="mr-2" type="button" awPreviousStep>{{ 'MERCHANT.SCANNER.PREVIOUS_STEP' | translate }}</button>
+<button  *ngIf="transaction.possible_tokens" mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.NEXT_STEP' | translate }}</button>

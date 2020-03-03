@@ -6,7 +6,7 @@ import { OfferTransaction } from '../_scanner.interface';
 @Component({
   selector: 'app-sub-offer-form',
   templateUrl: './sub-offer-form.component.html',
-  styleUrls: ['./sub-offer-form.component.sass']
+  styleUrls: ['./sub-offer-form.component.scss']
 })
 export class SubOfferFormComponent implements OnInit {
 

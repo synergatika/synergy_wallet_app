@@ -272,7 +272,7 @@ export const locale = {
                     C: 'Συνάδελφοι'					
                 },
             },
-			MICROCREDIT_CAMPAIGN:{
+				MICROCREDIT_CAMPAIGN: {
                 TITLE: {
                     TITLE: 'Post Title',
                     PLACEHOLDER: 'Title',
@@ -283,15 +283,15 @@ export const locale = {
                     PLACEHOLDER: '10 κιλά καφέ',
                     DESC: 'Περιγραφή του τι θα λάβουν οι υποστηρικτές.'
                 },
-				DESCRIPTION: {
+								DESCRIPTION: {
                     TITLE: 'Περιγραφή Καμπάνιας',
-                    PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Campaign Description.'
+                    PLACEHOLDER: 'Περιγραφή',
+                    DESC: 'Παρακαλούμε εισάγετε την περιγραφή της καμπάνιας.'
                 },
                 CATEGORY: {
-                    TITLE: 'Category',
-                    PLACEHOLDER: 'Category',
-                    DESC: 'Please, enter when the Campaign Category.'
+                    TITLE: 'Κατηγορία',
+                    PLACEHOLDER: 'Υπηρεσίες',
+                    DESC: 'Παρακαλούμε εισάγετε την κατηγορία της καμπάνιας'
                 },
 				MIN_ALLOWED: {
                     TITLE: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος',
@@ -324,28 +324,28 @@ export const locale = {
                     C: 'Συνάδελφοι'					
                 },
 				INITIATION: {
-                    TITLE: 'Initiation Date',
+                    TITLE: 'Έναρξη Καμπάνιας',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Campaign will begin.'
+                    DESC: 'Παρακαλούμε εισάγετε την ημερομηνία έναρξης της καμπάνιας.'
                 },
 				EXPIRATION: {
-                    TITLE: 'Expiration Date',
+                    TITLE: 'Λήξη Καμπάνιας',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                    DESC: 'Παρακαλούμε εισάγετε την ημερομηνία λήξεως της καμπάνιας.'
                 },
 				REDEEM_STARTS: {
-                    TITLE: 'Expiration Date',
+                    TITLE: 'Έναρξη Εξαργύρωσης',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                    DESC: 'Παρακαλούμε εισάγετε την ημερομηνία έναρξης εξαργύρωσης.'
                 },
-                REDEEM_ENDS: {
-                    TITLE: 'Expiration Date',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
-                },
-				QUANTITATIVE: 'Είναι ποσοτική (μειώνεται η ποσότητα καθώς ξοδεύεις);',
-				SUBMIT_DRAFT: 'Αποθήκευση ως Πρόχειρο',
-				SUBMIT_CAMPAIGN: 'Δημοσίευση Καμπάνιας',
+							REDEEM_ENDS: {
+									TITLE: 'Λήξη Εξαργύρωσης',
+									PLACEHOLDER: 'Date',
+									DESC: 'Παρακαλούμε εισάγετε την ημερομηνία λήξεως εξαργύρωσης.'
+							},
+							QUANTITATIVE: 'Είναι ποσοτική (μειώνεται η ποσότητα καθώς ξοδεύεις);',
+							SUBMIT_DRAFT: 'Αποθήκευση ως Πρόχειρο',
+							SUBMIT_CAMPAIGN: 'Δημοσίευση Καμπάνιας',
             }
         },
         FORM: {
@@ -475,6 +475,36 @@ export const locale = {
 					HEADING: 'Ποσό Συναλλαγής',
 					TITLE: 'Έχετε έκπτωση',
 					CTA: 'Τσεκάρετε για να εξαργυρώσετε την έκπτωση'
+				},
+				SUB_OFFER_FORM: {
+					HEADING_MAIN: 'Λεπτομέρειες Προσφοράς',
+					HEADING: 'Ποσό Συναλλαγής',
+					TITLE: 'Ποσότητα',
+					HINT: 'Παρακαλούμε εισάγετε το ποσό συναλλαγής.',
+					ALERT: 'Δε φτάνουν οι πόντοι.',
+					ID: 'Ταυτότητα Πληρωμής',
+					COST: 'Κόστος',
+					POINTS: 'Πόντοι Πελάτη'
+				},
+				SUB_FINAL_STEP: {
+					AMOUNT: 'Ποσό Συναλλαγής',
+					POINTS_TO_REDEEM: 'Πόντοι που θα χρησιμοποιηθούν',
+					QUANTITY: 'Ποσότητα',
+					TOKENS_BEFORE: 'Αρχικοί Πόντοι',
+					TOKENS_REDEEMED: 'Πόντοι που Χρησιμοποιήθηκαν', 
+					TOKENS_REMAINING: 'Εναπομείναντες Πόντοι'
+				},
+				SUB_MICROCREDIT_FORM: {
+					HEADING: 'Τεμάχια Συναλλαγής',
+					CAMPAIGN_ID: 'Ταυτότητα Καμπάνιας',
+					HEADING_2: 'Πόντοι',
+					SUPPORT_ID: 'Ταυτότητα Συναλλαγής',
+					INITIAL: 'αρχικοί',
+					REDEEMED: 'χρησιμοποιήθηκαν',
+					REMAINING: 'εναπομείναντες',
+					ALERT: 'Δεν υπάρχουν συναλλαγές. Αδυναμία ολοκήρωσης της διαδικασίας.',
+					HEADING_3: 'Πόντοι Συναλλαγής',
+					HINT: 'Παρακαλούμε εισάγετε τους πόντους συναλλαγής.'
 				}
 			}
 		},

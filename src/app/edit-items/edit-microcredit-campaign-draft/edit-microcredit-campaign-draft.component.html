@@ -151,6 +151,8 @@
 								<mat-datepicker #expirationPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('expiration','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="submitForm.get('expiration').errors && submitForm.get('expiration').errors.endDateLessThanStartDate"
+									class="error text-danger">Wrong!!!!!</mat-error>	
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
@@ -171,31 +173,36 @@
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.TITLE' | translate}}</mat-label>
 								<!--<input matInput type="text" name="RedeemEnds" formControlName="redeemEnds"
 									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.PLACEHOLDER' | translate}}">-->
-								<input matInput [matDatepicker]="redeemEndsPicker" name="RedeemEnds" formControlName="redeemEnds"  >
+								<input matInput [matDatepicker]="redeemEndsPicker" name="RedeemEnds" formControlName="redeemEnds">
 								<mat-datepicker-toggle matSuffix [for]="redeemEndsPicker"></mat-datepicker-toggle>
 								<mat-datepicker #redeemEndsPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('redeemEnds','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="submitForm.get('redeemEnds').errors && submitForm.get('redeemEnds').errors.endRedeemDateLessThanStartDate"
+									class="error text-danger">Wrong redeem!!!!!</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
 						<div class="form-group">
 							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
-								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+								<div class="upload-img">
+									<div class="upload-img-container">
+										<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+										<div *ngIf="!originalImage" class="image-cancel">
+											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+											</span>
+										</div>
+									</div>
 								</div>
-								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar_upload" data-toggle="tooltip" title=""
-									data-original-title="Change avatar">
-									<i class="fa fa-pen"></i>
+								<div>
+									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								</div>
+								<label class="avatar_upload">
 									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										accept=".png, .jpg, .jpeg" #fileInput>
 								</label>
-								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-									<i class="fa fa-times"></i>
-								</span>								
+															
 							</div>
 						</div>
 					</div>

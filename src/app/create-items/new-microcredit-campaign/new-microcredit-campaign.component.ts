@@ -149,7 +149,9 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
         Validators.required
       ])
       ],
-    });
+    },
+		{validator: this.endDateAfterOrEqualValidator}
+		);
   }
 
   fileProgress(fileInput: any) {
@@ -226,12 +228,12 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
 		if (controls.quantitative.value) {
 			formData.append('minAllowed', controls.minAllowed.value);
 			formData.append('maxAllowed', controls.maxAllowed.value);
-			//formData.append('stepAmount', controls.expiration.value);
+			formData.append('stepAmount', controls.step.value);
 		}
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
     formData.append('redeemEnds', controls.redeemEnds.value.getTime().toString());
-    formData.append('startsAt', controls.expiration.value.getTime().toString());
+    formData.append('startsAt', controls.initiation.value.getTime().toString());
     formData.append('expiresAt', controls.expiration.value.getTime().toString());
 		/*for (var pair of formData.entries()) {
 			console.log(pair[0]+ ', ' + pair[1]); 
@@ -296,6 +298,35 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
 		this.onSubmit('public');
 	}
 	
+	endDateAfterOrEqualValidator(formGroup): any {
+    var startDateTimestamp, endDateTimestamp, startRedeemDateTimestamp, endRedeemDateTimestamp;
+    for(var controlName in formGroup.controls) {
+      if(controlName.indexOf("initiation") !== -1) {
+        startDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+      if(controlName.indexOf("expiration") !== -1) {
+        endDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+			if(controlName.indexOf("redeemStarts") !== -1) {
+        startRedeemDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+      if(controlName.indexOf("redeemEnds") !== -1) {
+        endRedeemDateTimestamp = Date.parse(formGroup.controls[controlName].value);
+      }
+    }
+		if (endDateTimestamp < startDateTimestamp) {
+			console.log("error init");
+			formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: true });
+		} 
+		if (endRedeemDateTimestamp < startRedeemDateTimestamp) {
+			console.log("error endRedeemDateTimestamp");
+			formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: true });
+		} 
+		if((endDateTimestamp >= startDateTimestamp) && (endRedeemDateTimestamp >= startRedeemDateTimestamp)) {
+			return null;
+		}
+
+  }	
   /**
    * Checking control validation
    *

@@ -25,7 +25,7 @@ export class MerchantEventsComponent implements OnInit {
 	
 	fetchEventsData() {
 		//this.itemsService.readPrivateEventsByStore(this.authenticationService.currentUserValue.user["_id"])
-		this.itemsService.readPublicEventsByStore(this.authenticationService.currentUserValue.user["_id"])
+		this.itemsService.readPrivateEventsByStore(this.authenticationService.currentUserValue.user["_id"])
 		
 		  .pipe(
 			tap(
