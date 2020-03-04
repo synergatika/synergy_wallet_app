@@ -23,20 +23,27 @@
 							<h4>What do I get ?</h4>
 							<p [innerHTML]="singleMicrocredit.terms"></p>
 						</div>
+						<div class="info-row">
+							<span><strong>Redeem Period:</strong>  {{singleMicrocredit.redeemStarts | date: 'd.M.y'}} - {{singleMicrocredit.redeemEnds | date: 'd.M.y'}}</span><br>
+							<i>This is the period in which you can get the items you pledged for</i>
+						</div>
 					</div>
 					<div class="col-md-5 s_single-credit">
-						<div class="min-amount">
-							<span class="from" *ngIf="singleMicrocredit.quantitative==true">
+						<div class="min-amount" *ngIf="singleMicrocredit.quantitative==true">
+							<span class="hypertitle" >
 								{{'GENERAL.FROM' | translate}}
 							</span>
-							<span [ngClass]="{'price-item':singleMicrocredit.quantitative!=true}">
+							<span>
 								{{singleMicrocredit.minAllowed | currency:'EUR' }}
 							</span>
 						</div>
-						<div class="price-item" *ngIf="singleMicrocredit.stepAmount>0">
-							<span>{{singleMicrocredit.stepAmount}} / per item </span>
+						<div class="price-item" >
+							<span class="hypertitle" *ngIf="singleMicrocredit.quantitative!=true">Price</span>
+							<span class="hypertitle" *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">Price per item</span>							
+							<span *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">{{singleMicrocredit.stepAmount | currency:'EUR' }}</span>
+							<span *ngIf="singleMicrocredit.quantitative!=true">{{singleMicrocredit.minAllowed | currency:'EUR' }}</span>
 						</div>
-						<button mat-raised-button
+						<button class="plegde-button" mat-raised-button
 							(click)="pledgeModal(singleMicrocredit.merchant_id, singleMicrocredit.campaign_id)">Pledge</button>
 					</div>
 				</div>

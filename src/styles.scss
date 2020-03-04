@@ -225,6 +225,17 @@ body {
       object-fit: cover;
     }
   }
+  &-date {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    color: #fff;
+    padding: 10px;
+    font-size: 1.25rem;
+    @extend .light-shadow;
+    background-color: $tertiary;
+  }
 	&-category {
 		position: absolute;
 		z-index: 1;
