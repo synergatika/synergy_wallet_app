@@ -27,7 +27,7 @@ export class SingleMicrocreditComponent implements OnInit {
 		// The user can't close the dialog by clicking outside its body
 		dialogConfig.disableClose = true;
 		dialogConfig.id = "modal-component";
-		dialogConfig.height = "350px";
+		dialogConfig.height = "auto";
 		dialogConfig.width = "600px";
 		dialogConfig.data = {
 		  merchant_id: merchant_id,

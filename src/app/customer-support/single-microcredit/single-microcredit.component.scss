@@ -1,5 +1,14 @@
 @import "../../../variables.scss";
 .s_single {
+  &-info {
+    .tag {
+      color: #000;
+    }
+    .desc {
+      font-size: 12px;
+      font-style: italic;
+    }
+  }
   .terms {
     margin-left: 15px;
     border-left: 2px solid $tertiary;

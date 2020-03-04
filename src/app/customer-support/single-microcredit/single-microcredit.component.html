@@ -24,24 +24,30 @@
 							<p [innerHTML]="singleMicrocredit.terms"></p>
 						</div>
 						<div class="info-row">
-							<span><strong>Redeem Period:</strong>  {{singleMicrocredit.redeemStarts | date: 'd.M.y'}} - {{singleMicrocredit.redeemEnds | date: 'd.M.y'}}</span><br>
-							<i>This is the period in which you can get the items you pledged for</i>
+							<span class="tag">Redeem Period:</span> {{singleMicrocredit.redeemStarts | date: 'd.M.y'}} -
+							{{singleMicrocredit.redeemEnds | date: 'd.M.y'}}<br>
+							<span class="desc">This is the period in which you can get the items you pledged
+								for</span>
 						</div>
 					</div>
 					<div class="col-md-5 s_single-credit">
 						<div class="min-amount" *ngIf="singleMicrocredit.quantitative==true">
-							<span class="hypertitle" >
+							<span class="hypertitle">
 								{{'GENERAL.FROM' | translate}}
 							</span>
 							<span>
 								{{singleMicrocredit.minAllowed | currency:'EUR' }}
 							</span>
 						</div>
-						<div class="price-item" >
+						<div class="price-item">
 							<span class="hypertitle" *ngIf="singleMicrocredit.quantitative!=true">Price</span>
-							<span class="hypertitle" *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">Price per item</span>							
-							<span *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">{{singleMicrocredit.stepAmount | currency:'EUR' }}</span>
-							<span *ngIf="singleMicrocredit.quantitative!=true">{{singleMicrocredit.minAllowed | currency:'EUR' }}</span>
+							<span class="hypertitle"
+								*ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">Price per
+								item</span>
+							<span
+								*ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">{{singleMicrocredit.stepAmount | currency:'EUR' }}</span>
+							<span
+								*ngIf="singleMicrocredit.quantitative!=true">{{singleMicrocredit.minAllowed | currency:'EUR' }}</span>
 						</div>
 						<button class="plegde-button" mat-raised-button
 							(click)="pledgeModal(singleMicrocredit.merchant_id, singleMicrocredit.campaign_id)">Pledge</button>
@@ -52,9 +58,11 @@
 						<h6>Merchant Info</h6>
 						<h5>{{singleMicrocredit.merchant_name}}</h5>
 						<img src="{{singleMicrocredit.merchant_imageURL}}" alt="{{singleMicrocredit.merchant_name}}">
-						<div *ngIf="singleMicrocredit.address" class="info-row"><span class="mdi mdi-pin"></span>{{singleMicrocredit.address.street}},
+						<div *ngIf="singleMicrocredit.address" class="info-row"><span
+								class="mdi mdi-pin"></span>{{singleMicrocredit.address.street}},
 							{{singleMicrocredit.address.city}}</div>
-						<div *ngIf="singleMicrocredit.contact" class="info-row"><span class="mdi mdi-phone"></span>{{singleMicrocredit.contact.phone}}</div>
+						<div *ngIf="singleMicrocredit.contact" class="info-row"><span
+								class="mdi mdi-phone"></span>{{singleMicrocredit.contact.phone}}</div>
 						<div class="info-row"><span class="mdi mdi-email"></span>{{singleMicrocredit.email}}</div>
 					</div>
 					<div class="col-md-8">
