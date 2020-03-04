@@ -56,6 +56,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   submitted: boolean = false;
   campaign: MicrocreditCampaign;
   title: string;
+	itemAbstract: string;
   terms: string;
   description: string;
   category: string;
@@ -114,6 +115,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [this.itemAbstract],
       terms: [this.terms, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.terms.minLength),
@@ -219,6 +221,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 					console.log('this.current');
 					console.log(this.campaign);
 				  this.title = this.campaign.title;
+					this.itemAbstract = this.campaign.subtitle;
 				  this.terms = this.campaign.terms;
 				  this.description = this.campaign.description;
 				  this.category = this.campaign.category;
@@ -275,6 +278,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('terms', controls.terms.value);
     formData.append('description', controls.description.value);
     formData.append('category', controls.category.value);
@@ -285,7 +289,9 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 		if (controls.quantitative.value) {
 			formData.append('minAllowed', controls.minAllowed.value);
 			formData.append('maxAllowed', controls.maxAllowed.value);
-			formData.append('stepAmount', controls.step.value);
+			if(controls.step.value) {
+				formData.append('stepAmount', controls.step.value.toString());
+			}
 		}
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
@@ -309,6 +315,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 						setTimeout(()=>{
 							Swal.close();
 						},2000);
+						this.submitted = false;
           },
           error => {
             Swal.fire(

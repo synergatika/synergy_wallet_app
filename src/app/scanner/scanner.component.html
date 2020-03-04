@@ -28,7 +28,7 @@
 							</div>
 						</div>
 						<div class="item-description">
-							{{item.description}}
+							{{item.subtitle}}
 						</div>
 					</div>
 					
@@ -55,7 +55,7 @@
 							</div>
 						</div>
 						<div class="item-description">
-							{{item.description}}
+							{{item.subtitle}}
 						</div>
 					</div>
 				  </mat-card-content>
@@ -111,12 +111,12 @@
 	<button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<div class="wallet_singlePost_wrapper">
+	<div class="wallet_singlePost_wrapper container">
 		<div class="singlePost row">
 			<div class="col-sm-12 singlePost-img-container">
 				<div class="singlePost-img">
 					<img src={{singlePost.post_event_imageURL}} alt={{singlePost.name}} />
-					<div *ngIf="singlePost.dateTime" class="post-date"><span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd.M'}}</div>
+					<div *ngIf="singlePost.dateTime" class="post-date"><span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd/M, HH:mm'}}</div>
 				</div>
 			</div>
 			<div class="col-sm-12 singlePost-details">
@@ -125,18 +125,17 @@
 					<div *ngIf="singlePost.createdAt.length" class="singlePost-createdAt">{{singlePost.createdAt | date: 'd/M/y'}}</div>
 				</div>
 				<div class="singlePost-description">
-					<p *ngIf="singlePost.content">
-						{{singlePost.content}}
-					</p>
-					<p *ngIf="singlePost.description">
-						{{singlePost.description}}
-					</p>
+					<p *ngIf="singlePost.content" [innerHTML]="singlePost.content"></p>
+					<p *ngIf="singlePost.description" [innerHTML]="singlePost.description"></p>
 				</div>
 				<div class="singlePost-info">
 					<div class="">
-						<div class="singleCoop-subtitle">
+						<div class="singlePost-subtitle">
 							<!--<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />-->
 							<span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
+						</div>
+						<div class="singlePost-subtitle">
+							<span class="mdi mdi-pin"></span>{{singlePost.location}}
 						</div>
 					</div>
 				</div>

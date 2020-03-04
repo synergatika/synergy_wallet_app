@@ -90,6 +90,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [''],
       terms: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.terms.minLength),
@@ -219,6 +220,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('terms', controls.terms.value);
     formData.append('description', controls.description.value);
     formData.append('category', controls.category.value);

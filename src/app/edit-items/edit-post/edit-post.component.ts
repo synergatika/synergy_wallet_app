@@ -217,6 +217,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
               icon: 'success',
 							timer: 2000
             });
+						this.submitted = false;
           },
           error => {
             Swal.fire(

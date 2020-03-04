@@ -90,6 +90,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [''],
       description: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
@@ -178,6 +179,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
 		formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
     formData.append('expiresAt', controls.expiration.value.getTime().toString());

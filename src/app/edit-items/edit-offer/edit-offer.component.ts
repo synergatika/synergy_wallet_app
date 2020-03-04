@@ -51,6 +51,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   originalImage: boolean = true;
   offerExpires: Date;
   title: string;
+	itemAbstract: string;
   description: string;
   cost: number;
   submitForm: FormGroup;
@@ -111,6 +112,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [this.itemAbstract],
       description: [this.description, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
@@ -184,6 +186,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     const formData = new FormData();
 		formData.append('imageURL', this.fileData);
 		formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
 		formData.append('expiresAt', controls.expiration.value.getTime().toString());
@@ -230,6 +233,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
             this.offer = data;
             console.log(this.offer);
 						this.title = this.offer.title;
+						this.itemAbstract = this.offer.subtitle;
 						this.description = this.offer.description;
 						this.cost = this.offer.cost;
 						this.offerExpires = new Date(this.offer.expiresAt);

@@ -14,6 +14,7 @@ export interface MicrocreditCampaign {
     campaign_id: string,
     campaign_imageURL: string,
     title: string,
+		subtitle: string;
     terms: string,
     description: string,
     category: string,

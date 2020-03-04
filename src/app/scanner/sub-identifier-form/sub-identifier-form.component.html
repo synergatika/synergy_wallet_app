@@ -4,8 +4,7 @@
 		<div class="form-group">
 			<mat-form-field>
 				<mat-label>{{ 'MERCHANT.SCANNER.SUB_IDENTIFIER_FORM.TITLE' | translate }}</mat-label>
-				<input matInput type="text" name="identifier" formControlName="identifier"
-					 value="demo@email.com">
+				<input matInput type="text" name="identifier" formControlName="identifier">
 				<mat-error *ngIf="isControlHasError('identifier','required')"
 					class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 				<mat-error *ngIf="isControlHasError('identifier','min')"

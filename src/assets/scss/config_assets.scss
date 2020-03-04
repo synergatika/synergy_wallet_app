@@ -32,6 +32,7 @@
     overflow: visible;
   }
   .mat-card.item-card {
+		cursor: pointer;
     .item-draft {
       position: absolute;
       right: -1px;
@@ -376,9 +377,9 @@
     }
   }
   // TEMPORARY
-  aw-wizard-navigation-bar ul.steps-indicator li {
+  /*aw-wizard-navigation-bar ul.steps-indicator li {
     pointer-events: auto;
-  }
+  }*/
   // -------
   aw-wizard-navigation-bar ul.steps-indicator li a {
     .label {

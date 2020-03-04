@@ -28,6 +28,7 @@ export class SupportService {
         campaign_id: '',
         campaign_imageURL: '',
         title: '',
+				subtitle: '',
         terms: '',
         description: '',
         category: '',

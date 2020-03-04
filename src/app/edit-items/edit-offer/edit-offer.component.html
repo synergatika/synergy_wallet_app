@@ -25,6 +25,13 @@
 						</div>
 						<div class="form-group">
 							<mat-form-field>
+								<mat-label>Abstract</mat-label>
+							<input matInput type="text" formControlName="itemAbstract" placeholder="Abstract">
+							<mat-hint class="form-text text-muted">Please enter event Abstract.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</mat-label>
 								<textarea matInput name="Description" formControlName="description"
 									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}"></textarea>
