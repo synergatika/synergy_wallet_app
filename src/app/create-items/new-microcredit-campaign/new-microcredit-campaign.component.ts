@@ -300,6 +300,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
 	
 	endDateAfterOrEqualValidator(formGroup): any {
     var startDateTimestamp, endDateTimestamp, startRedeemDateTimestamp, endRedeemDateTimestamp;
+		var opts = { onlySelf: true, emitEvent: false };
     for(var controlName in formGroup.controls) {
       if(controlName.indexOf("initiation") !== -1) {
         startDateTimestamp = Date.parse(formGroup.controls[controlName].value);
@@ -315,14 +316,23 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
       }
     }
 		if (endDateTimestamp < startDateTimestamp) {
-			console.log("error init");
+			//console.log("error init");
 			formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: true });
-		} 
+		} else {
+			//console.log("init null");
+			formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: null });		
+			formGroup.controls['expiration'].updateValueAndValidity(opts);
+		}
 		if (endRedeemDateTimestamp < startRedeemDateTimestamp) {
-			console.log("error endRedeemDateTimestamp");
+			//console.log("error endRedeemDateTimestamp");
 			formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: true });
-		} 
+		}  else {
+			//console.log("redeemEnds null");
+			formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: null });
+			formGroup.controls['redeemEnds'].updateValueAndValidity(opts);
+		}
 		if((endDateTimestamp >= startDateTimestamp) && (endRedeemDateTimestamp >= startRedeemDateTimestamp)) {
+			//console.log("null");
 			return null;
 		}
 

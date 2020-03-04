@@ -182,11 +182,11 @@ export const locale = {
             },
             CONFIRM_PASSWORD: {
                 TITLE: '',
-				PLACEHOLDER: 'Όνομα',
+						PLACEHOLDER: 'Όνομα',
                 DESC: ''
             },
             IMAGE: {
-				TITLE: 'Εικόνα',
+						TITLE: 'Εικόνα',
             },
             PHONE: {
 
@@ -293,47 +293,47 @@ export const locale = {
                     PLACEHOLDER: 'Υπηρεσίες',
                     DESC: 'Παρακαλούμε εισάγετε την κατηγορία της καμπάνιας'
                 },
-				MIN_ALLOWED: {
+						MIN_ALLOWED: {
                     TITLE: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος',
                     PLACEHOLDER: '10',
                     DESC: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος.'
                 },
-				MAX_ALLOWED: {
+						MAX_ALLOWED: {
                     TITLE: 'Ανώ Όριο το οποίο μπορεί να πάρει κάποιος',
                     PLACEHOLDER: '20',
                     DESC: 'Ανώ Όριο το οποίο μπορεί να πάρει κάποιος.'
                 },
-				STEP: {
+						STEP: {
                     TITLE: 'Βήμα',
                     PLACEHOLDER: '20',
                     DESC: 'Βήμα.'
                 },
-				MAX_AMOUNT: {
+						MAX_AMOUNT: {
                     TITLE: 'Ανώ Όριο πωλήσεων',
                     PLACEHOLDER: '2000',
                     DESC: 'Ανώ Όριο πωλήσεων.'
                 },
-				ACCESS: {
+						ACCESS: {
                     TITLE: 'Πρόσβαση',
                     PLACEHOLDER: 'Πρόσβαση',
                     DESC: 'Πρόσβαση'
                 },
-				ACCESS_CHOICES: {
+						ACCESS_CHOICES: {
                     A: 'Δημόσια',
                     B: 'Προσωπική',
                     C: 'Συνάδελφοι'					
                 },
-				INITIATION: {
+						INITIATION: {
                     TITLE: 'Έναρξη Καμπάνιας',
                     PLACEHOLDER: 'Date',
                     DESC: 'Παρακαλούμε εισάγετε την ημερομηνία έναρξης της καμπάνιας.'
                 },
-				EXPIRATION: {
+						EXPIRATION: {
                     TITLE: 'Λήξη Καμπάνιας',
                     PLACEHOLDER: 'Date',
                     DESC: 'Παρακαλούμε εισάγετε την ημερομηνία λήξεως της καμπάνιας.'
                 },
-				REDEEM_STARTS: {
+						REDEEM_STARTS: {
                     TITLE: 'Έναρξη Εξαργύρωσης',
                     PLACEHOLDER: 'Date',
                     DESC: 'Παρακαλούμε εισάγετε την ημερομηνία έναρξης εξαργύρωσης.'
@@ -344,6 +344,7 @@ export const locale = {
 									DESC: 'Παρακαλούμε εισάγετε την ημερομηνία λήξεως εξαργύρωσης.'
 							},
 							QUANTITATIVE: 'Είναι ποσοτική (μειώνεται η ποσότητα καθώς ξοδεύεις);',
+							DATE_TOO_EARLY: 'Η ημερομηνία λέξεως πρέπει να είναι μετά την ημερομηνία έναρξης',
 							SUBMIT_DRAFT: 'Αποθήκευση ως Πρόχειρο',
 							SUBMIT_CAMPAIGN: 'Δημοσίευση Καμπάνιας',
             }
@@ -366,35 +367,37 @@ export const locale = {
         },
         AUTH: {
             MESSAGES: {
-                HAVE_ACCOUNT: 'Ακόμα δεν έχεις Λογαρισμό;',
+								WELCOME_TITLE: 'Καλωσήρθατε στο Synergy!',
+								WELCOME_SUBTITLE: 'Ένα Οικονομικό Εργαλείο για Συνεταιρισμούς',
+                HAVE_ACCOUNT: 'Ακόμα δεν έχεις Λογαριασμό;',
                 ALREADY_VALIDATED: 'Έχεις ήδη επαληθεύσει το email σου;',
                 ALREADY_UPDATED: 'Έχεις ήδη αλλάξει το password σου;',
 
             },
             GENERAL: {
-                OR: 'Or',
-                SUBMIT_BUTTON: 'Submit',
-                SIGNUP_BUTTON: 'Sign Up',
-                FORGOT_BUTTON: 'Forgot Password',
-                BACK_BUTTON: 'Back',
+                OR: 'Ή',
+                SUBMIT_BUTTON: 'Υποβολή',
+                SIGNUP_BUTTON: 'Κάνε Εγγραφή',
+                FORGOT_BUTTON: 'Ανάκτηση Κωδικού',
+                BACK_BUTTON: 'Πίσω',
                 PRIVACY: 'Privacy',
-                LEGAL: 'Legal',
-                CONTACT: 'Contact',
+                LEGAL: 'Νομικά',
+                CONTACT: 'Επικοινωνία',
             },
             LOGIN: {
-                TITLE: 'Sign In',
-                BUTTON: 'Sign In',
+                TITLE: 'Σύνδεση',
+                BUTTON: 'Σύνδεση',
                 EMAIL_NEEDS_VERIFICATION: 'You have to verify your email address',
                 PASSWORD_NEEDS_UPDATE: 'You have to update your password'
             },
             FORGOT: {
-                TITLE: 'Forgotten Password?',
-                DESC: 'Enter your email to reset your password',
-                SUCCESS: 'Your account has been successfully reset.'
+                TITLE: 'Ξεχάσατε τον κωδικό σας;',
+                DESC: 'Εισάγετε το E-mail σας για να αλλάξετε τον κωδικό σας.',
+                SUCCESS: 'Ο λογαριασμός σας ανανεώθηκε επιτυχώς.'
             },
             REGISTER: {
-                TITLE: 'Sign Up',
-                BUTTON: 'Sign Up',
+                TITLE: 'Εγγραφή',
+                BUTTON: 'Εγγραφή',
                 DESC: 'Enter your details to create your account',
                 SUCCESS: 'Your account has been successfuly registered. We have send an email in your address. Please follow the link to verify your account',
                 ERROR: 'Something went wrong during your registration. Please repeat the process'
@@ -406,8 +409,8 @@ export const locale = {
                 ERROR: 'Your password is wrong or the process has already completed!',
             },
             FORGOT_PASSWORD: {
-                TITLE_ASK: 'Απώλεια Password;',
-                DESC: 'Εισάγεται το email σας για να επαναφέρεται το password σας',
+                TITLE_ASK: 'Απώλεια κωδικού;',
+                DESC: 'Εισάγετε το email σας για να επαναφέρετε τον κωδικό σας',
                 SUCCESS_SEND: 'You will receive an email! Follow the link to reset your password!',
                 ERROR_SEND: 'Email address is wrong!',
                 SUCCESS_CHECK: 'Your can procceed to reseting password!',
@@ -425,11 +428,11 @@ export const locale = {
             },
             INPUT: {
                 EMAIL: 'Email',
-                FULLNAME: 'Fullname',
-                PASSWORD: 'Password',
-                NEW_PASSWORD: 'New Password',
-                CONFIRM_PASSWORD: 'Confirm Password',
-                USERNAME: 'Username'
+                FULLNAME: 'Πλήρες όνομα',
+                PASSWORD: 'Κωδικός',
+                NEW_PASSWORD: 'Νέος Κωδικός',
+                CONFIRM_PASSWORD: 'Επιβεβαίωση Κωδικού',
+                USERNAME: 'Όνομα Χρήστη'
             },
             VALIDATION: {
                 INVALID: '{{name}} is not valid',
@@ -512,7 +515,8 @@ export const locale = {
 			TITLE: 'ΠΡΟΣΦΟΡΑ'
 		},
 		CAMPAIGN: {
-			TITLE: 'ΚΑΜΠΑΝΙΑ'
+			TITLE: 'ΚΑΜΠΑΝΙΑ',
+			DRAFT: 'πρόχειρο'
 		},
     }
 };

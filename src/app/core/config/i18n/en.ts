@@ -387,6 +387,7 @@ export const locale = {
 										DESC: 'Please, enter when redeem can end.'
 								},
 								QUANTITATIVE: 'Is it Quantitative?',
+								DATE_TOO_EARLY: 'The end date cannot be earlier tha th start date',
 								SUBMIT_DRAFT: 'Save as Draft',
 								SUBMIT_CAMPAIGN: 'Publish Campaign',
             }
@@ -409,6 +410,8 @@ export const locale = {
         },
         AUTH: {
             MESSAGES: {
+								WELCOME_TITLE: 'Welcome to Synergy!',
+								WELCOME_SUBTITLE: 'A Financial Toolkit for Cooperatives',
                 HAVE_ACCOUNT: 'Don\'t have an account yet?',
                 ALREADY_VALIDATED: 'Do you have already validated your email address?',
                 ALREADY_UPDATED: 'Do you have already updated your password?',
@@ -555,7 +558,8 @@ export const locale = {
 			TITLE: 'OFFER'
 		},
 		CAMPAIGN: {
-			TITLE: 'CAMPAIGN'
+			TITLE: 'CAMPAIGN',
+			DRAFT: 'draft'
 		},
     }
 };

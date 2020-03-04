@@ -152,7 +152,7 @@
 								<mat-error *ngIf="isControlHasError('expiration','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 								<mat-error *ngIf="submitForm.get('expiration').errors && submitForm.get('expiration').errors.endDateLessThanStartDate"
-									class="error text-danger">Wrong!!!!!</mat-error>	
+									class="error text-danger">{{ 'FIELDS.MICROCREDIT_CAMPAIGN.DATE_TOO_EARLY' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
@@ -178,8 +178,8 @@
 								<mat-datepicker #redeemEndsPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('redeemEnds','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-								<mat-error *ngIf="submitForm.get('redeemEnds').errors && submitForm.get('redeemEnds').errors.endRedeemDateLessThanStartDate"
-									class="error text-danger">Wrong redeem!!!!!</mat-error>
+								<mat-error *ngIf="submitForm.get('expiration').errors && submitForm.get('expiration').errors.endDateLessThanStartDate"
+									class="error text-danger">{{ 'FIELDS.MICROCREDIT_CAMPAIGN.DATE_TOO_EARLY' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
