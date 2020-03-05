@@ -74,16 +74,6 @@ import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-po
 import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
 import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
 
-//import { SwiperModule } from 'ngx-swiper-wrapper';
-//import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
-//import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-//for Owl Carousel!
-//import { RouterModule, Routes } from '@angular/router';
-/*
-const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 'auto'
-};*/
 
 @NgModule({
 	declarations: [

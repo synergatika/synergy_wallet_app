@@ -195,7 +195,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
 				size: 'lg',
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
+				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');

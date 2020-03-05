@@ -46,6 +46,9 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		  0: {
 			items: 1
 		  },
+		  600: {
+			items: 2
+		  },
 		  940: {
 			items: 3
 		  }
@@ -162,7 +165,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 				size: 'lg', 
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
+				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');
@@ -182,7 +185,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 				size: 'lg', 
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
+				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');

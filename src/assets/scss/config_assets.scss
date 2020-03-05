@@ -5,6 +5,7 @@
   //Materialize Card
   .mat-card {
     font-family: $main-font, sans-serif;
+    color:$darker-font;
   }
   mat-card {
     font-family: $main-font, sans-serif;
@@ -28,6 +29,9 @@
     border-bottom-right-radius: 9px;
     overflow: hidden;
   }
+  .owl-theme .mat-card{
+    box-shadow: none !important;
+  }
   .mat-card.wallet-card:not([class*="mat-elevation-z"]) {
     overflow: visible;
   }
@@ -44,7 +48,7 @@
     }
   }
 
-  //Radio Buttons
+  //Radio Button
   .mat-radio-button.mat-accent .mat-radio-inner-circle,
   .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
   .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
@@ -56,6 +60,9 @@
   }
 
   //Other
+  .mat-button, .mat-fab, .mat-flat-button, .mat-icon-button, .mat-mini-fab, .mat-raised-button, .mat-stroked-button{
+    font-family: $main-font, sans-serif;
+  }
   .mat-mini-fab {
     span.mat-button-wrapper {
       padding: 1px 0;
@@ -122,32 +129,40 @@
   .owl-theme {
     .owl-nav {
       position: absolute;
-      bottom: 60%;
+      top:100px;
       display: flex;
       width: 100%;
       justify-content: space-between;
       pointer-events: none;
+      @media(max-width:600px){
+        display: none;
+      }
       [class*="owl-"] {
         font-size: 34px;
         line-height: 1.1;
+        background-color: $primary;
+        &:hover{
+          background-color:$primary-light;
+        }
       }
-    }
-    .owl-prev {
-      pointer-events: all;
-      &:before {
-        content: "\f141";
-        font-family: "Material Design Icons";
+      .owl-prev {
+        margin-left:-25px;
+        pointer-events: all;
+        &:before {
+          content: "\f141";
+          font-family: "Material Design Icons";
+        }
       }
-    }
-    .owl-next {
-      pointer-events: all;
-      &:before {
-        content: "\f142";
-        font-family: "Material Design Icons";
+      .owl-next {
+        margin-right:-25px;
+        pointer-events: all;
+        &:before {
+          content: "\f142";
+          font-family: "Material Design Icons";
+        }
       }
     }
     .owl-dots {
-      margin-top: 15px;
       .owl-dot {
         &.active,
         &:hover {
@@ -162,6 +177,9 @@
   ///2.3 Modal Diaglog
   .modal-dialog {
     margin: 5rem auto;
+    @media(max-width:576px){
+      max-width: 92%;
+    }
     .modal-content {
       border: none;
     }

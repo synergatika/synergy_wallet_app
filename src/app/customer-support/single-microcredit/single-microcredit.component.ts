@@ -19,15 +19,15 @@ export class SingleMicrocreditComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		console.log(this.singleMicrocredit);
 	}
 
 	pledgeModal(merchant_id: string, campaign_id: string) {
-		console.log("test");
 		const dialogConfig = new MatDialogConfig();
 		// The user can't close the dialog by clicking outside its body
 		dialogConfig.disableClose = true;
 		dialogConfig.id = "modal-component";
-		dialogConfig.height = "350px";
+		dialogConfig.height = "auto";
 		dialogConfig.width = "600px";
 		dialogConfig.data = {
 		  merchant_id: merchant_id,

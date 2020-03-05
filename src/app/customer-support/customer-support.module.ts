@@ -46,7 +46,7 @@ const routes: Routes = [
         MatCheckboxModule,
         MatDialogModule,
 		MatCardModule,
-        TranslateModule.forChild(),
+        TranslateModule.forChild()
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],
@@ -67,7 +67,7 @@ const routes: Routes = [
         //Pledge Form
         SupportMicrocreditComponent,
         SubAmountFormComponent,
-        SubFinalStepComponent,
+        SubFinalStepComponent
     ],
     entryComponents: [
         SupportMicrocreditComponent

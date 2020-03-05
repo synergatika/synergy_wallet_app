@@ -113,9 +113,13 @@ export const locale = {
         },
         LISTS:{
             OFFERS_LIST:'Offers',
-            CAMPAIGN_LIST:'Capmaigns',
+            OFFERS_LIST_LINK:'All Offers',
+            CAMPAIGN_LIST:'Campaigns',
+            CAMPAIGN_LIST_LINK:'All Campaigns',
             NEWSEVENTS_LIST:'News & Events',
-            MERCHANT_LIST:'Cooperatives'
+            NEWSEVENTS_LIST_LINK:'All News & Events',
+            MERCHANT_LIST:'Cooperatives',
+            MERCHANT_LIST_LINK:'All Cooperatives'
         },
         MESSAGE: {
             WARNING: {

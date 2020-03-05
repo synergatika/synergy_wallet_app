@@ -113,9 +113,13 @@ export const locale = {
         },
         LISTS:{
             OFFERS_LIST:'Προσφορές',
+            OFFERS_LIST_LINK:'Όλες οι προσφορές',
             CAMPAIGN_LIST:'Καμπάνιες',
+            CAMPAIGN_LIST_LINK:'Όλες οι καμπάνιες',
             NEWSEVENTS_LIST:'Νέα & Εκδηλώσεις',
-            MERCHANT_LIST:'Συνεργατικά Εγχειρήματα'
+            NEWSEVENTS_LIST_LINK:'Όλα τα νέα και εκδηλώσεις',
+            MERCHANT_LIST:'Τα Συνεργατικά του δικτύου',
+            MERCHANT_LIST_LIST:'Όλα τα μέλη του δικτύου'
         },
         MESSAGE: {
             WARNING: {

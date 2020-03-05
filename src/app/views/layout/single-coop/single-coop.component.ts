@@ -91,7 +91,7 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 					data => {
 						this.singleMicrocredits = data;
 						//TEMP FOR DEMO
-						if(this.singleMicrocredits.length<3){
+						if(this.singleMicrocredits.length && this.singleMicrocredits.length<3){
 							this.singleMicrocredits.push(this.singleMicrocredits[0]);
 							this.singleMicrocredits.push(this.singleMicrocredits[0]);
 						}
@@ -116,7 +116,7 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 					data => {
 						this.singleOffers = data;
 							//TEMP FOR DEMO
-							if(this.singleOffers.length<3){
+							if(this.singleOffers.length && this.singleOffers.length<3){
 								this.singleOffers.push(this.singleOffers[0]);
 								this.singleOffers.push(this.singleOffers[0]);
 							}
@@ -141,7 +141,7 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 					data => {
 						this.singlePosts = data;
 						//TEMP FOR DEMO
-						if(this.singlePosts.length<3){
+						if(this.singlePosts.length && this.singlePosts.length<3){
 							this.singlePosts.push(this.singlePosts[0]);
 							this.singlePosts.push(this.singlePosts[0]);
 						}
@@ -164,7 +164,6 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 
 	//Open Microcredit
 	openMicrocredit(campaign) {
-		console.log("test");
 		this.singleMicrocredit = campaign;
 		this.modalService.open(
 			this.campaignModal,
@@ -173,7 +172,7 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 				size: 'lg',
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
+				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');
@@ -193,7 +192,7 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 				size: 'lg',
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
+				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');

@@ -57,6 +57,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.campaigns = data;
+            console.log(this.campaigns);
             this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {
@@ -84,7 +85,7 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
 				size: 'lg', 
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
-				windowClass: 'fullscrenn-modal',
+				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');

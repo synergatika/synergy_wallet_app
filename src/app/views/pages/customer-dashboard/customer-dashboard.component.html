@@ -23,7 +23,7 @@
 					<div class="wallet_single_wrapper">
 						<!-- Show Points the user has -->
 						<div class="single row wallet-row" (click)="openWallet()">
-							<div class="col-sm-9 single-content">
+							<div class="col-9 single-content">
 								<span class="wallet-img">
 									<img src="../../../assets/media/images/Synergy-Icon.png" alt="Synergy" />
 								</span>
@@ -33,7 +33,7 @@
 											class="mdi mdi-shopping"></span>{{'BALANCE.SUBTITLE' | translate}}</div>
 								</div>
 							</div>
-							<div class="col-sm-3 single-amount">
+							<div class="col-3 single-amount">
 								<div>
 									<span class="points">{{balance}}</span>
 								</div>
@@ -69,14 +69,14 @@
 			</mat-card>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row section-list" *ngIf="offers">
 		<div class="col-md-12">
 			<h3 class="list-tiltle">{{'LISTS.OFFERS_LIST' | translate }}</h3>
-		</div>
-	</div>
-	<div class="row" *ngIf="offers">
-		<div class="col-md-4" *ngFor="let offer of (offers)">
-			<app-card-offer [offer]="offer" type="all"></app-card-offer>
+			<div class="row">
+				<div class="item col-lg-4 col-md-6" *ngFor="let offer of (offers)">
+					<app-card-offer [offer]="offer" type="all"></app-card-offer>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
