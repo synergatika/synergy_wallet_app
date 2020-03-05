@@ -1,24 +1,20 @@
 <form [formGroup]="submitForm">
-    <!--begin: Form Wizard Step 1-->
     <div>
-        <h5>Transaction amount</h5>
+        <h5 class="heading">{{ 'MERCHANT.SCANNER.SUB_AMOUNT_FORM.HEADING' | translate }}</h5>
         <div class="form-group">
-            <label>Amount</label>
-            <div class="input-group">
+            <!--<label>Amount</label>-->
+            <div class="input-group amount-input">
                 <span class="input-group-text">€</span>
-                <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="Amount"
-                    value="0">
+                <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="10">
             </div>
-
-			  
             <span *ngIf="isControlHasError('amount','required')"
                 class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
             <span *ngIf="isControlHasError('amount','min')"
                 class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
                 {{ '1' | currency: 'EUR'}}</span>
-            <span class="form-text text-muted">Please enter transaction amount.</span>
+            <span class="form-text text-muted">{{ 'MERCHANT.SCANNER.SUB_AMOUNT_FORM.HINT' | translate }}</span>
         </div>
     </div>
 </form>
-<button class="mr-2" mat-raised-button type="button" awPreviousStep>Previous Step</button>
-<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
+<button class="mr-2" mat-raised-button type="button" awPreviousStep>{{ 'MERCHANT.SCANNER.PREVIOUS_STEP' | translate }}</button>
+<button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.NEXT_STEP' | translate }}</button>

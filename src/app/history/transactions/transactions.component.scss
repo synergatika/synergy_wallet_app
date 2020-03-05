@@ -1,3 +1,5 @@
+@import "../../../variables.scss";
+
 .transaction {
 	.title {
 		font-weight: 500;
@@ -20,10 +22,10 @@
 	}
 	.font {		
 		&-danger {
-			color: #faa635;
+			color: $secondary;
 		}
 		&-success {
-			color: #37aba7;
+			color: $primary;
 		}
 	}
 

@@ -1,34 +1,40 @@
-<div class="wallet_singlePost_wrapper">
-	<div class="singlePost row">
-		<div class="col-sm-12 singlePost-img-container">
-			<div class="singlePost-img">
-				<img src={{singlePost.post_event_imageURL}} alt={{singlePost.name}} />
-				<div *ngIf="singlePost.dateTime" class="post-date"><span class="white mdi mdi-calendar"></span> {{singlePost.dateTime | date: 'd.M'}}</div>
+<div class="wallet_s_single_wrapper synergy-single post-single row">
+	<div class="s_single col-md-12">
+		<div appSticky position="top" class="row s_single-title-container">
+			<div class="col-md-12">
+				<h1 class="s_single-title">{{singlePost.title}}</h1>
 			</div>
 		</div>
-		<div class="col-sm-12 singlePost-details">
-			<div class="singlePost-heading">
-				<div class="singlePost-title">{{singlePost.title}}</div>
-				<div class="singlePost-type">{{singlePost.type}}</div>
+		<div class="row s_single-img-area">
+			<div class="col-md-12 s_single-img-container">
+				<div class="s_single-img">
+					<img src={{singlePost.post_event_imageURL}} alt={{singlePost.name}} />
+				</div>
+				<div *ngIf="singlePost.dateTime" class="s_single-date">
+					<span class="white mdi mdi-calendar"></span> {{ singlePost.dateTime | date: 'd.M.y'}}
+				</div>
 			</div>
-			<div class="singlePost-description">
-				<p *ngIf="singlePost.content">
-					{{singlePost.content}}
-				</p>
-				<p *ngIf="singlePost.description">
-					{{singlePost.description}}
-				</p>
-			</div>
-			<div class="singlePost-info">
-				<div class="">
-					<div class="singleCoop-subtitle">
-						<img src="../../../assets/media/images/Map-Icon.png" alt="Shop" />
-						<span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
+		</div>
+		<div class="row s_single-details">
+			<div class="col-md-12">
+				<div class="row s_single-info-container">
+					<div class="col-md-6 s_single-info">
+						<div *ngIf="!singlePost.dateTime" class="info-row"><span
+								class="mdi mdi-clock"></span>{{ singlePost.createdAt | date: 'd.M.y' }}
+						</div>
+						<div *ngIf="singlePost.location" class="info-row"><span
+								class="mdi mdi-map"></span>{{singlePost.location}}</div>
+						<div class="info-row"><span class="mdi mdi-shopping"></span>{{singlePost.merchant_name}}
+						</div>
+					</div>
+					<div class="col-md-6 s_single-share">
+						<app-share-icon></app-share-icon>
 					</div>
 				</div>
-				<div class="share">						
-					<app-share-icon></app-share-icon>
-					<span class="mdi mdi-share-variant share-icon"></span><img src="../../../assets/media/images/Share.png" alt="share" />
+				<div class="row s_single-description">
+					<div class="col-md-12">
+						<p [innerHTML]="singlePost.content"></p>
+					</div>
 				</div>
 			</div>
 		</div>

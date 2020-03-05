@@ -56,7 +56,8 @@ export const locale = {
 		OFFERS: {
 			TITLE: 'OFFERS',
 			SUBTITLE: 'Create a new Offer',
-			DESC: 'Reward your customer for being loyal!'
+			DESC: 'Reward your customer for being loyal!',
+			UNTIL: 'until'
 		},
 		POSTS: {
 			TITLE: 'POSTS / EVENTS',
@@ -99,7 +100,7 @@ export const locale = {
                 OUR_COMMUNITY: 'Our Community!',
                 CURRENT_OFFERS: 'Current offers!',
                 LATEST_POSTS: 'Latest Posts & Upcoming Events!',
-                OFFER_DESCRIPTION: 'Offer\'s Description',
+                OFFER_DESCRIPTION: 'Offer Description',
                 MEMBER_SINCE: 'Member Since:',
                 SINCE: 'Since',
                 UNTIL: 'Until',
@@ -112,9 +113,13 @@ export const locale = {
         },
         LISTS:{
             OFFERS_LIST:'Offers',
-            CAMPAIGN_LIST:'Capmaigns',
+            OFFERS_LIST_LINK:'All Offers',
+            CAMPAIGN_LIST:'Campaigns',
+            CAMPAIGN_LIST_LINK:'All Campaigns',
             NEWSEVENTS_LIST:'News & Events',
-            MERCHANT_LIST:'Cooperatives'
+            NEWSEVENTS_LIST_LINK:'All News & Events',
+            MERCHANT_LIST:'Cooperatives',
+            MERCHANT_LIST_LINK:'All Cooperatives'
         },
         MESSAGE: {
             WARNING: {
@@ -132,7 +137,17 @@ export const locale = {
             SUCCESS: {
                 TITLE: 'All good!',
                 OFFER_CREATED: 'A new Offer has been successfully created!',
-                POST_CREATED: 'A new Post/Event has been successfully created!',
+								OFFER_UPDATED: 'The Offer has been successfully updated!',
+								OFFER_DELETED: 'The Offer has been successfully deleted!',
+                POST_CREATED: 'A new Post has been successfully created!',
+								POST_UPDATED: 'The Post has been successfully updated!',
+								POST_DELETED: 'The Post has been successfully deleted!',
+								EVENT_CREATED: 'A new Event has been successfully created!',
+								EVENT_UPDATED: 'The Event has been successfully updated!',
+								EVENT_DELETED: 'The Event has been successfully deleted!',
+								CAMPAIGN_CREATED: 'A new Campaign has been successfully created!',
+								CAMPAIGN_UPDATED: 'The Campaign has been successfully updated!',
+								CAMPAIGN_DELETED: 'The Campaign has been successfully deleted!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',
                 PROFILE_UPDATED: 'Your Personal Information has been successfully updated!',
@@ -303,7 +318,7 @@ export const locale = {
                     C: 'Partners'					
                 },
             },
-			MICROCREDIT_CAMPAIGN:{
+				MICROCREDIT_CAMPAIGN:{
                 TITLE: {
                     TITLE: 'Campaign Title',
                     PLACEHOLDER: 'Title',
@@ -314,70 +329,71 @@ export const locale = {
                     PLACEHOLDER: 'Description',
                     DESC: 'Please, enter Terms Description.'
                 },
-				DESCRIPTION: {
+								DESCRIPTION: {
                     TITLE: 'Campaign Description',
                     PLACEHOLDER: 'Description',
                     DESC: 'Please, enter a Campaign Description.'
                 },
-				CATEGORY: {
+								CATEGORY: {
                     TITLE: 'Category',
                     PLACEHOLDER: 'Category',
                     DESC: 'Please, enter the Campaign Category.'
                 },
-				MIN_ALLOWED: {
+								MIN_ALLOWED: {
                     TITLE: 'Min Allowed',
                     PLACEHOLDER: '1000',
                     DESC: 'Please, enter your Min Allowed.'
                 },
-				MAX_ALLOWED: {
+								MAX_ALLOWED: {
                     TITLE: 'Max Allowed',
                     PLACEHOLDER: '1000',
                     DESC: 'Please, enter your Max Allowed.'
                 },
-				STEP: {
+								STEP: {
                     TITLE: 'Step',
                     PLACEHOLDER: '20',
                     DESC: 'Step.'
                 },
-				MAX_AMOUNT: {
+								MAX_AMOUNT: {
                     TITLE: 'Max Amount',
                     PLACEHOLDER: '1000',
                     DESC: 'Please, enter when your Max Amount.'
                 },
-				ACCESS: {
+								ACCESS: {
                     TITLE: 'Access',
                     PLACEHOLDER: 'Access',
                     DESC: 'Please, enter when your Access.'
 					
                 },
-				ACCESS_CHOICES: {
+								ACCESS_CHOICES: {
                     A: 'Public',
                     B: 'Private',
                     C: 'Partners'					
                 },
-				INITIATION: {
+								INITIATION: {
                     TITLE: 'Initiation Date',
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Campaign will begin.'
                 },
-				EXPIRATION: {
+								EXPIRATION: {
                     TITLE: 'Expiration Date',
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Campaign will expire.'
                 },
-				REDEEM_STARTS: {
+								REDEEM_STARTS: {
                     TITLE: 'Date redeem starts',
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when redeem can begin.'
                 },
-                REDEEM_ENDS: {
-                    TITLE: 'Date redeem ends',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when redeem can end.'
-                },
-				QUANTITATIVE: 'Is it Quantitative?',
-				SUBMIT_DRAFT: 'Save as Draft',
-				SUBMIT_CAMPAIGN: 'Publish Campaign',
+								REDEEM_ENDS: {
+										TITLE: 'Date redeem ends',
+										PLACEHOLDER: 'Date',
+										DESC: 'Please, enter when redeem can end.'
+								},
+								QUANTITATIVE: 'Is it Quantitative?',
+								DATE_TOO_EARLY: 'The end date cannot be earlier tha th start date',
+								SUBMIT_DRAFT: 'Save as Draft',
+								SUBMIT_CAMPAIGN: 'Publish Campaign',
             }
         },
         FORM: {
@@ -398,6 +414,8 @@ export const locale = {
         },
         AUTH: {
             MESSAGES: {
+								WELCOME_TITLE: 'Welcome to Synergy!',
+								WELCOME_SUBTITLE: 'A Financial Toolkit for Cooperatives',
                 HAVE_ACCOUNT: 'Don\'t have an account yet?',
                 ALREADY_VALIDATED: 'Do you have already validated your email address?',
                 ALREADY_UPDATED: 'Do you have already updated your password?',
@@ -479,14 +497,73 @@ export const locale = {
         },
 		MERCHANT: {
 			SCANNER: {
-				LOYALTY_TITLE: 'Scan for Points'
+				LOYALTY_TITLE: 'Scan for Points',
+				BACK_TO_SCANNER: 'Back to Scanner',
+				PREVIOUS_STEP: 'Go back',
+				NEXT_STEP: 'Go to next step',
+				COMPLETE: 'Complete Transaction',
+				CLOSE: 'Close Window',
+				SCAN_LOYALTY: {
+					HEADING: 'Scan a new Card, Scan User App, Scan User Card',
+					ALT_PROMPT: 'Enter new Email / new Card / user Email / user Card',
+				},
+				SUB_IDENTIFIER_FORM: {
+					HEADING: 'Identifier Form',
+					TITLE: 'Identifier',
+					HINT: 'Please enter email or card number.'
+				},
+				SUB_EMAIL_FORM: {
+					HEADING: 'Scan your barcode or enter a customer E-mail',
+					HINT: 'Please enter client\'s email address.'
+				},
+				SUB_AMOUNT_FORM: {
+					HEADING: 'Transaction amount',
+					TITLE: 'Amount',
+					HINT: 'Please enter transaction amount.'
+				},
+				SUB_DISCOUNT_FORM: {
+					HEADING: 'Transaction amount',
+					TITLE: 'You can have a discount of',
+					CTA: 'Check to Redeem discount'
+				},
+				SUB_OFFER_FORM: {
+					HEADING_MAIN: 'Offer Transaction Details',
+					HEADING: 'Transaction quantity',
+					TITLE: 'Quantity',
+					HINT: 'Please enter transaction quantity.',
+					ALERT: 'Not enough points',
+					ID: 'ID',
+					COST: 'Cost',
+					POINTS: 'Customer Points'
+				},
+				SUB_FINAL_STEP: {
+					AMOUNT: 'Transaction Amount',
+					POINTS_TO_REDEEM: 'Points to Redeem',
+					QUANTITY: 'Quantity',
+					TOKENS_BEFORE: 'Initial Tokens',
+					TOKENS_REDEEMED: 'Tokens Redeemed', 
+					TOKENS_REMAINING: 'Tokens Remaining'
+				},
+				SUB_MICROCREDIT_FORM: {
+					HEADING: 'Support items',
+					CAMPAIGN_ID: 'Campaign ID',
+					HEADING_2: 'Tokens',
+					SUPPORT_ID: 'Support ID',
+					INITIAL: 'initial',
+					REDEEMED: 'redeemed',
+					REMAINING: 'remaining',
+					ALERT: 'No Transactions. Unable to proceed.',
+					HEADING_3: 'Transaction Tokens',
+					HINT: 'Please enter transaction tokens.'
+				}
 			}
 		},
 		OFFER: {
 			TITLE: 'OFFER'
 		},
 		CAMPAIGN: {
-			TITLE: 'CAMPAIGN'
+			TITLE: 'CAMPAIGN',
+			DRAFT: 'draft'
 		},
     }
 };

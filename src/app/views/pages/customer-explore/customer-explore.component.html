@@ -1,38 +1,43 @@
 <div class="explore">
-	<div class="row">
-		<!-- Merchants List-->
-		<div class="col-md-6 col-lg-12 section-list" *ngIf="merchants">
-			<h3 class="section-heading">Συνεργατικά Εγχειρήματα</h3>
+	<!-- Merchants List-->
+	<div class="row section-list" *ngIf="merchants">
+		<div class="col-md-12">
+			<h3 class="list-tiltle">{{ 'LISTS.MERCHANT_LIST' | translate }}</h3>
 			<owl-carousel-o [options]="customOptions">
 				<ng-template carouselSlide *ngFor="let coop of (merchants)">
 					<app-card-coop [coop]="coop" (mousedown)="mousedown()" (mousemove)="mousemove()"
 						(mouseup)="mouseup(coop, 'coop')"></app-card-coop>
 				</ng-template>
 			</owl-carousel-o>
-			<div class="section-list-footer"><a [routerLink]="['/coops']">Όλα τα μέλη του δικτύου</a></div>
+			<div class="section-list-footer"><a
+					[routerLink]="['/coops']">{{ 'LISTS.MERCHANT_LIST_LINK' | translate }}</a></div>
 		</div>
-		<!-- Offers List-->
-		<div class="col-md-6 col-lg-12 section-list" *ngIf="offers">
-			<h3 class="section-heading">Προσφορές</h3>
+	</div>
+	<!-- Offers List-->
+	<div class="row section-list" *ngIf="offers">
+		<div class="col-md-12">
+			<h3 class="list-tiltle">{{ 'LISTS.OFFERS_LIST' | translate }}</h3>
 			<owl-carousel-o [options]="customOptions">
 				<ng-template carouselSlide *ngFor="let offer of (offers)">
 					<app-card-offer [offer]="offer" type="all"></app-card-offer>
 				</ng-template>
 			</owl-carousel-o>
-			<div class="section-list-footer"><a [routerLink]="['/offers']">Όλες οι προσφορές</a></div>
+			<div class="section-list-footer"><a
+					[routerLink]="['/offers']">{{ 'LISTS.OFFERS_LIST_LINK' | translate }}</a></div>
 		</div>
 	</div>
-	<div class="row">
-		<!-- Evenst & Posts List-->
-		<div class="col-md-6 col-lg-12 section-list" *ngIf="posts">
-			<h3 class="section-heading">Εκδηλώσεις και Νέα</h3>
+	<!-- Evenst & Posts List-->
+	<div class="row section-list" *ngIf="posts">
+		<div class="col-md-12">
+			<h3 class="list-tiltle">{{ 'LISTS.NEWSEVENTS_LIST' | translate }}</h3>
 			<owl-carousel-o [options]="customOptions">
 				<ng-template carouselSlide *ngFor="let post of (posts)">
 					<app-card-post [post]="post" (mousedown)="mousedown()" (mousemove)="mousemove()"
 						(mouseup)="mouseup(post, 'post')"></app-card-post>
 				</ng-template>
 			</owl-carousel-o>
-			<div class="section-list-footer"><a [routerLink]="['/posts']">Όλα τα νέα</a></div>
+			<div class="section-list-footer"><a
+					[routerLink]="['/posts']">{{ 'LISTS.NEWSEVENTS_LIST_LINK' | translate }}</a></div>
 		</div>
 	</div>
 </div>

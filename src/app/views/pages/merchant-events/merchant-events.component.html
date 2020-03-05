@@ -11,13 +11,13 @@
 			</mat-card>
 		</div>	
 		<ng-container *ngIf="events">
-			<div class="item item-wrapper col-md-4" *ngFor="let item of events" routerLink="edit/{{item.offer_id}}">
+			<div class="item item-wrapper col-md-4" *ngFor="let item of events" routerLink="edit/{{item.event_id}}">
 				<mat-card class="item-card">
 				  <mat-card-content>
 					<div class="col-sm-12 item-img-container">
 						<div class="item-img">
 							<img src={{item.event_imageURL}} alt={{item.title}} />	
-							<div class="item-expires">{{item.expiresAt | date: 'd.M'}}</div>						
+							<div class="item-expires"><span class="white mdi mdi-calendar"></span>{{item.dateTime | date: 'd.M '}}</div>						
 						</div>				
 					</div>
 					<div class="col-sm-12 item-details">				
@@ -25,7 +25,7 @@
 							<div class="item-title">{{item.title}}</div>
 						</div>
 						<div class="item-description">
-							{{item.description}}
+							{{item.subtitle}}
 						</div>
 					</div>
 					

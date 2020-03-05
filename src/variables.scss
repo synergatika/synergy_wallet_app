@@ -6,6 +6,7 @@
 $primary: #415daa;
 $primary-light: #6986db;
 $secondary: #e4509e;
+$secondary-light: #f86cb6;
 $tertiary: #fdca27;
 $tertiary-dark: #a07b04;
 $grey: #eee;
@@ -21,6 +22,7 @@ $main-font:'Fira Sans';
 //Font Colors
 $main-font-color: #707070;
 $dark-font:rgb(34, 34, 34);
+$darker-font: rgba(0,0,0,.87);
 $amount-color: #575757;
 $grey-font:#b6c1c9;
 
@@ -29,9 +31,9 @@ $main-font-size:0.9em;
 
 //Shadow
 .light-shadow {
-  -webkit-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.05);
-  box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.1);
 }
 .dark-shadow {
   -webkit-box-shadow: 17px 22px 45px 8px rgba(0, 0, 0, 0.2);

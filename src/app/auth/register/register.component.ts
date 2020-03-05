@@ -184,7 +184,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			tap(user => {
 				this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
 				setTimeout(() => {
-					this.router.navigateByUrl('/main/merchants');
+					this.router.navigateByUrl('/auth/login');
 				}, 2500);
 			},
 				error => {

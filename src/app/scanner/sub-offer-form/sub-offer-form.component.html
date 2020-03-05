@@ -1,37 +1,47 @@
-<div>
-	<p>ID: {{transaction.offer_id}}</p>
-	<p>Cost: {{transaction.cost}}</p>
-	<p>Customer Points: {{transaction.points}}</p>
+<div class="container">
+	<h5 class="heading">{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.HEADING_MAIN' | translate }}</h5>
+	<div class="">
+		<div class="row scanner-offer-info">
+			<div class="col-md-6">
+				<div class="col-head offer-id">{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.ID' | translate }}</div>
+				<div class="offer-num small">{{transaction.offer_id}}</div>
+			</div>
+			<div class="col-md-2">
+				<div class="col-head cost">{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.COST' | translate }}</div>
+				<div class="offer-num">{{transaction.cost}}</div>
+			</div>
+			<div class="col-md-4">
+				<div class="col-head points">{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.POINTS' | translate }}</div>
+				<div class="offer-num">{{transaction.points}}</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf='!transaction.possible_quantity'>
+			<p class="merchant-alert">
+					{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.ALERT' | translate }}
+			</p>
+	</div>
+	<form *ngIf='transaction.possible_quantity' [formGroup]="submitForm">
+			<div class="col-xl-6 mx-auto">
+					<h5>{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.HEADING' | translate }}</h5>
+					<div class="form-group">
+							<!--<label>{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.TITLE' | translate }}</label>-->
+							<div class="input-group">
+									<span class="input-group-text">€</span>
+									<input type="number" class="form-control" name="quantity" formControlName="quantity">
+							</div>
+							<span *ngIf="isControlHasError('quantity','required')"
+									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+							<span *ngIf="isControlHasError('quantity','min')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
+									{{ '1' }}</span>
+							<span *ngIf="isControlHasError('quantity','max')"
+									class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
+									{{ transaction.possible_quantity }}</span>
+							<span class="form-text text-muted">{{ 'MERCHANT.SCANNER.SUB_OFFER_FORM.HINT' | translate }}</span>
+					</div>
+			</div>
+	</form>
+	<button mat-raised-button class="mr-2" type="button" awPreviousStep>{{ 'MERCHANT.SCANNER.PREVIOUS_STEP' | translate }}</button>
+	<button *ngIf='transaction.possible_quantity' mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.COMPLETE' | translate }}</button>
 </div>
-<div *ngIf='!transaction.possible_quantity'>
-    <p class="merchant-alert">
-        Not enough points
-    </p>
-</div>
-<form *ngIf='transaction.possible_quantity' [formGroup]="submitForm">
-    <!--begin: Form Wizard Step 1-->
-    <div class="col-xl-6">
-        <h5>Transaction quantity</h5>
-        <div class="form-group">
-            <label>Quantity</label>
-            <div class="input-group">
-                <span class="input-group-text">€</span>
-                <input type="number" class="form-control" name="quantity" formControlName="quantity"
-                    placeholder="Quantity" value="0">
-            </div>
-            <span *ngIf="isControlHasError('quantity','required')"
-                class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-            <span *ngIf="isControlHasError('quantity','min')"
-                class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
-                {{ '1' }}</span>
-            <span *ngIf="isControlHasError('quantity','max')"
-                class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
-                {{ transaction.possible_quantity }}</span>
-            <span class="form-text text-muted">Please enter
-                transaction's
-                quantity.</span>
-        </div>
-    </div>
-</form>
-<button mat-raised-button class="mr-2" type="button" awPreviousStep>Previous Step</button>
-<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>

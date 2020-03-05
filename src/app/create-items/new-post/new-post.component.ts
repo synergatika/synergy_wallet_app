@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -19,7 +20,7 @@ import { ItemsService } from '../../core/services/items.service';
   styleUrls: ['./new-post.component.sass']
 })
 export class NewPostComponent implements OnInit, OnDestroy {
-
+  @ViewChild('image', {static: true}) image: ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -34,7 +35,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-
+	fileDataEmptied: boolean;
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -54,6 +55,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
+		private router: Router,
   ) {
     this.unsubscribe = new Subject();
   }
@@ -82,6 +84,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
+			itemAbstract: [''],
       content: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.content.minLength),
@@ -89,6 +92,10 @@ export class NewPostComponent implements OnInit, OnDestroy {
       ])
       ],
       access: ['public', Validators.compose([
+        Validators.required
+      ])
+      ],
+			profile_avatar: ['', Validators.compose([
         Validators.required
       ])
       ],
@@ -106,6 +113,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
 		  return;
 	  }
 	  this.originalImage = false;
+		this.fileDataEmptied = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -125,6 +133,9 @@ export class NewPostComponent implements OnInit, OnDestroy {
     this.previewUrl = null;
     this.fileData = null;
     this.originalImage = true;
+		this.image.nativeElement.value = null;
+		this.fileDataEmptied = true;
+		this.cdRef.markForCheck();
   }
 
 	/**
@@ -141,15 +152,23 @@ export class NewPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
+		if(!this.fileData) {
+			console.log('no image');
+			return;
+		}
     this.loading = true;
     this.submitted = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+		formData.append('subtitle', controls.itemAbstract.value);
     formData.append('content', controls.content.value);
     formData.append('access', controls.access.value);
-
+		/*for (var pair of formData.entries()) {
+			console.log(pair[0]+ ', ' + pair[1]); 
+		}*/
+		//return;
     this.itemsService.createPost(formData)
       .pipe(
         tap(
@@ -158,7 +177,10 @@ export class NewPostComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
               'success'
-            );
+            ).then((result) => {
+							console.log('deleted');
+							this.router.navigate(['/m-posts']);
+						});
           },
           error => {
             Swal.fire(

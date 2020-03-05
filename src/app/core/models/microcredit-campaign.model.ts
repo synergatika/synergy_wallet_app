@@ -14,6 +14,7 @@ export interface MicrocreditCampaign {
     campaign_id: string,
     campaign_imageURL: string,
     title: string,
+		subtitle: string;
     terms: string,
     description: string,
     category: string,
@@ -23,7 +24,8 @@ export interface MicrocreditCampaign {
     minAllowed: number,
     maxAllowed: number,
     maxAmount: number,
-
+		
+		startsAt: number,
     redeemStarts: number,
     redeemEnds: number,
     expiresAt: number,

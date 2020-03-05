@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
-import { ScannerService } from '../../scanner/_scanner.service';
 
 //Modal
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -18,57 +17,63 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-import { Offer } from '../../scanner/_scanner.interface';
-import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-offer',
-  templateUrl: './edit-offer.component.html',
-  styleUrls: ['./edit-offer.component.scss']
+  selector: 'app-edit-event',
+  templateUrl: './edit-event.component.html',
+  styleUrls: ['./edit-event.component.scss']
 })
-export class EditOfferComponent implements OnInit, OnDestroy {
+
+export class EditEventComponent implements OnInit {
+	@ViewChild('remove_item', {static: false}) remove_item;
 	@ViewChild('fileInput', {static: false}) imageInput : ElementRef;
-  @ViewChild('remove_item', {static: false}) remove_item;
   public validator: any = {
     title: {
       minLength: 3,
-      maxLenth: 150
+      maxLenth: 250
     },
     description: {
       minLength: 3,
-      maxLenth: 150
+      maxLenth: 2500
     },
-    cost: {
-      minValue: 0,
-      maxValue: 100000
+    location: {
+      minLength: 3,
+      maxLenth: 250
     }
   };
-
-  date: any;
-  offer_id: string;
+	timePickerTheme: any = {
+			container: {
+					bodyBackgroundColor: '#0c1a33',
+					buttonColor: '#fff'
+			},
+			dial: {
+					dialBackgroundColor: '#415daa',
+			},
+			clockFace: {
+					clockFaceBackgroundColor: '#415daa',
+					clockHandColor: '#e4509e',
+					clockFaceTimeInactiveColor: '#fff'
+			}
+	};
+  event_id: string;
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-  offerExpires: Date;
+  event: any;
   title: string;
 	itemAbstract: string;
   description: string;
-  cost: number;
+  access: string;
+  location: string;
+  eventDate: Date;
+	eventTime: string;
   submitForm: FormGroup;
   submitted: boolean = false;
-  offer: Offer;
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
-
-  /**
-    * Component constructor
-    *
-    * @param cdRef: ChangeDetectorRef
-    * @param itemsService: ItemsService
-    * @param fb: FormBuilder
-    * @param translate: TranslateService
-    */
-  constructor(
+  
+  constructor(  
     private cdRef: ChangeDetectorRef,
     private itemsService: ItemsService,
     private fb: FormBuilder,
@@ -77,22 +82,18 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private authenticationService: AuthenticationService,
 		private router: Router,
-		private datePipe: DatePipe,
-		private scannerService: ScannerService
   ) {
-	this.activatedRoute.params.subscribe(params => {
-      this.offer_id = params['_id'];
+		this.activatedRoute.params.subscribe(params => {
+      this.event_id = params['_id'];
     });
     this.unsubscribe = new Subject();
-	//this.scannerService.offers.subscribe(offers => this.offer = offers);
   }
 
 	/**
 	 * On init
 	 */
   ngOnInit() {
-	this.fetchOfferData();
-    //this.initForm();
+    this.fetchEventData();
   }
 
 	/**
@@ -119,13 +120,21 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      cost: [this.cost, Validators.compose([
-        Validators.required,
-        Validators.min(this.validator.cost.minValue),
-        Validators.max(this.validator.cost.maxValue)
+      access: [this.access, Validators.compose([
+        Validators.required
       ])
       ],
-      expiration: [this.offerExpires, Validators.compose([
+      location: [this.location, Validators.compose([
+        Validators.required,
+        Validators.minLength(this.validator.location.minLength),
+        Validators.maxLength(this.validator.location.maxLength)
+      ])
+      ],
+      eventDate: [this.eventDate, Validators.compose([
+        Validators.required
+      ])
+      ],
+			eventTime: [this.eventTime, Validators.compose([
         Validators.required
       ])
       ],
@@ -133,8 +142,12 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
+		console.log(fileInput);
+    if (fileInput) {
+      this.fileData = <File>fileInput.target.files[0];
+      this.originalImage = false;
+      this.preview();
+    }
   }
 
   preview() {
@@ -159,20 +172,67 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
-		this.previewUrl = this.offer.offer_imageURL;
+		console.log('Image canceled');
+    this.previewUrl = this.event.event_imageURL;
     this.fileData = null;
     this.originalImage = true;
 		this.imageInput.nativeElement.value = null;
   }
 
-  /**
+  fetchEventData() {
+    this.itemsService.readEvent(this.authenticationService.currentUserValue.user["_id"],this.event_id)
+      .pipe(
+        tap(
+          data => {
+            this.event = data;
+            console.log(this.event);
+						this.title = this.event.title;
+						this.itemAbstract = this.event.subtitle;
+						this.description = this.event.description;
+						this.access = this.event.access;
+						this.location = this.event.location;
+						
+						const dateTime = this.event.dateTime;
+						//this.eventDate = '';
+						const eventDate = new Date(dateTime);
+						/*console.log(eventDate);
+						console.log(eventDate.getTime());
+						console.log(eventDate.getHours());
+						console.log(eventDate.getMinutes());*/
+						this.eventTime = eventDate.getHours().toString() + ':' + eventDate.getMinutes().toString();
+						this.eventDate = new Date(eventDate.setHours(0,0,0,0));
+						//console.log(this.eventDate.getTime());
+						this.previewUrl = this.event.event_imageURL;						
+						this.initForm();
+						this.cdRef.markForCheck();
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+  
+	/**
 	 * On Form Submit
 	 */
   onSubmit() {
     if (this.submitted) return;
-
     const controls = this.submitForm.controls;
-		console.log(controls);
+		/*console.log(controls.eventDate.value);
+		console.log(controls.eventDate.value.getTime());
+		console.log(controls.eventDate.value);
+		console.log(controls.eventTime.value);	*/
+		const timeArray = controls.eventTime.value.split(':');
+		var timeInMiliseconds = ((timeArray[0])* 60 * 60 + (+timeArray[1]) * 60 ) * 1000;
+		//console.log(timeInMiliseconds);
+		//console.log(controls.eventDate.value.getTime());
+		var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
+		//console.log(new Date(totalMiliseconds));		
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -180,31 +240,32 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    this.loading = true;
+
     this.submitted = true;
+    this.loading = true;
 
     const formData = new FormData();
-		formData.append('imageURL', this.fileData);
-		formData.append('title', controls.title.value);
+    formData.append('imageURL', this.fileData);
+    formData.append('title', controls.title.value);
 		formData.append('subtitle', controls.itemAbstract.value);
-    formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
-		formData.append('expiresAt', controls.expiration.value.getTime().toString());
-		console.log(controls.expiration.value.getTime());
+    formData.append('access', controls.access.value);
+    formData.append('location', controls.location.value);
+    formData.append('dateTime', totalMiliseconds.toString());
 		/*for (var pair of formData.entries()) {
 			console.log(pair[0]+ ', ' + pair[1]);
 		}*/
 		//return;
-    this.itemsService.editOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id, formData)
+    this.itemsService.editEvent(this.authenticationService.currentUserValue.user["_id"], this.event_id, formData)
       .pipe(
         tap(
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.EVENT_UPDATED'),
               'success'
             );
-						setTimeout(()=>{
+						setTimeout(()=> {
 							Swal.close();
 						},2000);
           },
@@ -224,49 +285,18 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-
-  fetchOfferData() {
-    this.itemsService.readOffer(this.authenticationService.currentUserValue.user["_id"],this.offer_id)
-      .pipe(
-        tap(
-          data => {
-            this.offer = data;
-            console.log(this.offer);
-						this.title = this.offer.title;
-						this.itemAbstract = this.offer.subtitle;
-						this.description = this.offer.description;
-						this.cost = this.offer.cost;
-						this.offerExpires = new Date(this.offer.expiresAt);
-						console.log(this.offerExpires.getTime());
-						this.previewUrl = this.offer.offer_imageURL;
-						this.initForm();
-						this.cdRef.markForCheck();
-          },
-          error => {
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
 	
 	deleteItemModal() {
 		this.modalService.open(this.remove_item).result.then((result) => {
-		//this.searchText = '';
 		console.log('closed');
-		//this.showList = false;
 		}, (reason) => {
 			console.log('dismissed');
-			//this.showList = false;
 		});
 	}
 	
 	deleteItem() {
 		console.log('delete');
-		this.itemsService.deleteOffer(this.authenticationService.currentUserValue.user["_id"], this.offer_id)
+		this.itemsService.deleteEvent(this.authenticationService.currentUserValue.user["_id"], this.event_id)
       .pipe(
         tap(
           data => {
@@ -276,7 +306,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
               'success'
             ).then((result) => {
 							console.log('deleted');
-							this.router.navigate(['/m-offers']);
+							this.router.navigate(['/m-events']);
 						});
           },
           error => {
@@ -310,4 +340,5 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     const result = control.hasError(validationType) && (control.dirty || control.touched);
     return result;
   }
+
 }

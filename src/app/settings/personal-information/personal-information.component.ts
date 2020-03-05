@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -24,7 +24,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./personal-information.component.scss']
 })
 export class PersonalInformationComponent implements OnInit, OnDestroy {
-
+  @ViewChild('fileInputMerch', {static: false}) imageInputMerch : ElementRef;
+	@ViewChild('fileInput', {static: false}) imageInput : ElementRef;
   public customer: Customer = {
     name: '',
     imageURL: null
@@ -122,7 +123,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
           tap(
             data => {
               this.merchant = Object.assign({}, this.merchant, data);
-			  console.log(this.merchant);
+							console.log(this.merchant);
              // this.merchant.sector = (this.sectorsArray.indexOf(this.merchant.sector)).toString();
               this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.png';
             },
@@ -199,9 +200,10 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   onImageCancel() {
     if (this.access === 'merchant') {
       this.previewUrl = this.merchant.imageURL || '../../../../assets/media/users/default.jpg';
-
+			this.imageInputMerch.nativeElement.value = null;
     } else {
       this.previewUrl = this.customer.imageURL || '../../../../assets/media/users/default.jpg';
+			this.imageInput.nativeElement.value = null;
     }
     this.fileData = null;
     this.originalImage = true;
