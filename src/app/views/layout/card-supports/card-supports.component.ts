@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CardSupportsComponent implements OnInit {
 	@Input() supportItem: any;
 
+  type: any;
+
 	constructor() { }
 
 	ngOnInit() {
