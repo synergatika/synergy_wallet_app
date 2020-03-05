@@ -2,7 +2,8 @@ export interface Offer {
     merchant_id: string;
     merchant_name: string;
     merchant_imageURL: string;
-	title: string;
+		title: string;
+		subtitle: string;
     offer_id: string;
     description: string;
     cost: number;

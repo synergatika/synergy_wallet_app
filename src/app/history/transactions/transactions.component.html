@@ -35,9 +35,11 @@
 
 	<div *ngIf="access === 'merchant'">
 		<div>
-			<ng-container *ngFor="let item of transactions | paginate: { id: 'mr_paginator', itemsPerPage: 10, currentPage: p }">
-				<ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
-			</ng-container>
+			<div class="table container">	
+				<ng-container *ngFor="let item of transactions | paginate: { id: 'mr_paginator', itemsPerPage: 10, currentPage: p }">
+					<ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
+				</ng-container>
+			</div>
 		</div>
 		<div class="pagination-wrapper">
 			<pagination-controls autoHide="true" id='mr_paginator' (pageChange)="p=$event"></pagination-controls>
@@ -58,7 +60,7 @@
 					<span class="transaction-title"><span class="title">Customer:</span> {{item.info.to_email}}</span>
 				</div>
 				<div class="transaction-info col">
-					<span class="transaction-number" [ngClass]="(item.type==='EarnPoints') ? 'font-info' : 'font-focus'">
+					<span class="transaction-number" [ngClass]="(item.type==='EarnPoints') ? 'font-success' : 'font-danger'">
 						<!--{{ (item.type==='EarnPoints') ? '-' : '+' }}-->
 						{{item.info.points}} points
 					</span>

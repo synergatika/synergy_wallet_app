@@ -1,9 +1,9 @@
 <div class="new-event">
 	<mat-card>
 		<mat-card-content>
-			<form class="form container single-form" [formGroup]="submitForm">
+			<form *ngIf="event" class="form container single-form" [formGroup]="submitForm">
 				<div class="row">
-					<div class="heading col-md-12">Create a new Event</div>
+					<div class="heading col-md-12">Edit Event</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
@@ -82,7 +82,7 @@
 										<input matInput [matDatepicker]="eventDate" formControlName="eventDate" placeholder="Date">
 										<mat-datepicker-toggle matSuffix [for]="eventDate"></mat-datepicker-toggle>
 										<mat-datepicker #eventDate ></mat-datepicker>
-										<mat-error *ngIf="isControlHasError('eventDate','required')"
+										<mat-error *ngIf="isControlHasError('Access','required')"
 											class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 										<mat-hint class="form-text text-muted">Please enter post's/events's date time.</mat-hint>
 									</mat-form-field>
@@ -91,7 +91,7 @@
 									<mat-form-field>
 										<mat-label>Time</mat-label>
 										<input matInput [ngxTimepicker]="timePicker" formControlName="eventTime" [format]="24">
-										<ngx-material-timepicker #timePicker [theme]="timePickerTheme" [minutesGap]="5">
+										<ngx-material-timepicker #timePicker [theme]="timePickerTheme">
 										</ngx-material-timepicker>
 										<mat-error *ngIf="isControlHasError('eventTime','required')"
 											class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
@@ -100,25 +100,24 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">      
+						<div class="form-group">
 							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
-								<div class="upload-img">
+								<div class="upload-img" >
 									<div class="upload-img-container">
-										<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+										<img *ngIf="event.event_imageURL" class="upload-img-holder" [src]="previewUrl">
 										<div *ngIf="!originalImage" class="image-cancel">
 											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
 											</span>
 										</div>
 									</div>
 								</div>
-								<button class="upload-img-btn" type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar__upload">
-									<input #image type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-										formControlName="profile_avatar" accept=".png, .jpg, .jpeg" #fileInput>
-								</label>
-								<mat-error *ngIf="isControlHasError('profile_avatar','required') || fileDataEmptied"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>								
+								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								<label class="avatar__upload" data-toggle="tooltip" title=""
+									data-original-title="Change avatar">
+									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+										accept=".png, .jpg, .jpeg" #fileInput>
+								</label>						
 							</div>
 						</div>
 					</div>
@@ -138,3 +137,25 @@
 		</mat-card-content>
 	</mat-card>
 </div>
+<div class="single-delete">
+	<button mat-raised-button class="delete-text"(click)="deleteItemModal()">
+		Delete Item
+	</button>
+</div>
+
+<!-- Remove Item Modal -->
+<ng-template #remove_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Delete Event</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div *ngIf="event" class="modal-body">
+		Are you sure you would like to delete '{{event.title}}'?
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>

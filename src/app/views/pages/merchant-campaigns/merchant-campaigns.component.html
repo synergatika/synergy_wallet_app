@@ -15,8 +15,8 @@
 						<div class="col-sm-12 item-img-container">
 							<div class="item-img">
 								<img *ngIf="item.campaign_imageURL" src={{item.campaign_imageURL}} alt={{item.title}} />	
-								<div class="item-expires">έως {{item.expiresAt | date: 'd.M'}}</div>
-								<div *ngIf="item.status=='draft'" class="item-draft">Draft</div>								
+								<div class="item-expires">{{'OFFERS.UNTIL' | translate}} {{item.expiresAt | date: 'd.M'}}</div>
+								<div *ngIf="item.status=='draft'" class="item-draft">{{'CAMPAIGN.DRAFT' | translate}}</div>								
 							</div>				
 						</div>
 						<div class="col-sm-12 item-details">				
@@ -26,8 +26,8 @@
 									<span class="points">{{item.cost}}</span>
 								</div>
 							</div>
-							<div class="item-description">
-								{{item.description}}
+							<div class="item-description merchant">
+								{{item.subtitle}}
 							</div>
 							<!--<button mat-raised-button routerLink="edit/{{item.campaign_id}}"> Edit Campaign</button>-->
 						</div>

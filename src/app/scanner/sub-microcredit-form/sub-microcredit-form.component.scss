@@ -1,3 +1,5 @@
+@import "../../../variables.scss";
+
 .extra-details {
 	font-size: 12px;
 	color: #aaa;
@@ -13,17 +15,17 @@
 
 
 .token-info {
-	font-size: 22px;
+	font-size: 20px;
 	font-weight: 600;
 	.col-head {
 		&.init {
-			color: #e6c615;
+			color: $tertiary;
 		}
 		&.redeemed {
-			color: #f14551;
+			color: $secondary;
 		}
 		&.remaining {
-			color: #37aba7;
+			color: $primary;
 		}
 		.token-num {
 			font-size: 36px;

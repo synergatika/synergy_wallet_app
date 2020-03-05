@@ -19,49 +19,61 @@ import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Component({
-  selector: 'app-edit-post',
-  templateUrl: './edit-post.component.html',
-  styleUrls: ['./edit-post.component.sass']
+  selector: 'app-edit-event',
+  templateUrl: './edit-event.component.html',
+  styleUrls: ['./edit-event.component.scss']
 })
 
-export class EditPostComponent implements OnInit, OnDestroy {
-	@ViewChild('remove_item', {static: false}) remove_item;	
-  @ViewChild('fileInput', {static: false}) imageInput : ElementRef;
+export class EditEventComponent implements OnInit {
+	@ViewChild('remove_item', {static: false}) remove_item;
+	@ViewChild('fileInput', {static: false}) imageInput : ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
       maxLenth: 250
     },
-    content: {
+    description: {
       minLength: 3,
       maxLenth: 2500
+    },
+    location: {
+      minLength: 3,
+      maxLenth: 250
     }
   };
-  
-  post_id: string;
+	timePickerTheme: any = {
+			container: {
+					bodyBackgroundColor: '#0c1a33',
+					buttonColor: '#fff'
+			},
+			dial: {
+					dialBackgroundColor: '#415daa',
+			},
+			clockFace: {
+					clockFaceBackgroundColor: '#415daa',
+					clockHandColor: '#e4509e',
+					clockFaceTimeInactiveColor: '#fff'
+			}
+	};
+  event_id: string;
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-
-  submitForm: FormGroup;
-  submitted: boolean = false;
-  post: any;
+  event: any;
   title: string;
 	itemAbstract: string;
-	access: string;
-  content: string;
+  description: string;
+  access: string;
+  location: string;
+  eventDate: Date;
+	eventTime: string;
+  submitForm: FormGroup;
+  submitted: boolean = false;
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
-
-  /**
-    * Component constructor
-    *
-    * @param cdRef: ChangeDetectorRef
-    * @param itemsService: ItemsService
-    * @param fb: FormBuilder
-    * @param translate: TranslateService
-    */
-  constructor(
+  
+  constructor(  
     private cdRef: ChangeDetectorRef,
     private itemsService: ItemsService,
     private fb: FormBuilder,
@@ -71,8 +83,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
 		private authenticationService: AuthenticationService,
 		private router: Router,
   ) {
-	this.activatedRoute.params.subscribe(params => {
-      this.post_id = params['_id'];
+		this.activatedRoute.params.subscribe(params => {
+      this.event_id = params['_id'];
     });
     this.unsubscribe = new Subject();
   }
@@ -81,8 +93,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
   ngOnInit() {
-	this.fetchPostData();
-    //this.initForm();
+    this.fetchEventData();
   }
 
 	/**
@@ -103,13 +114,27 @@ export class EditPostComponent implements OnInit, OnDestroy {
       ])
       ],
 			itemAbstract: [this.itemAbstract],
-      content: [this.content, Validators.compose([
+      description: [this.description, Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.content.minLength),
-        Validators.maxLength(this.validator.content.maxLength)
+        Validators.minLength(this.validator.description.minLength),
+        Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
       access: [this.access, Validators.compose([
+        Validators.required
+      ])
+      ],
+      location: [this.location, Validators.compose([
+        Validators.required,
+        Validators.minLength(this.validator.location.minLength),
+        Validators.maxLength(this.validator.location.maxLength)
+      ])
+      ],
+      eventDate: [this.eventDate, Validators.compose([
+        Validators.required
+      ])
+      ],
+			eventTime: [this.eventTime, Validators.compose([
         Validators.required
       ])
       ],
@@ -117,7 +142,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   }
 
   fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
+		console.log(fileInput);
     if (fileInput) {
       this.fileData = <File>fileInput.target.files[0];
       this.originalImage = false;
@@ -147,27 +172,39 @@ export class EditPostComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
-    this.previewUrl = this.post.post_imageURL;
+		console.log('Image canceled');
+    this.previewUrl = this.event.event_imageURL;
     this.fileData = null;
     this.originalImage = true;
 		this.imageInput.nativeElement.value = null;
   }
-  
-  fetchPostData() {
-    this.itemsService.readPost(this.authenticationService.currentUserValue.user["_id"],this.post_id)
+
+  fetchEventData() {
+    this.itemsService.readEvent(this.authenticationService.currentUserValue.user["_id"],this.event_id)
       .pipe(
         tap(
           data => {
-            this.post = data;
-            console.log(this.post);
-						this.title = this.post.title;
-						this.content = this.post.content;
-						this.access = this.post.access;
-						this.itemAbstract = this.post.subtitle;
-						this.previewUrl = this.post.post_imageURL;	
+            this.event = data;
+            console.log(this.event);
+						this.title = this.event.title;
+						this.itemAbstract = this.event.subtitle;
+						this.description = this.event.description;
+						this.access = this.event.access;
+						this.location = this.event.location;
+						
+						const dateTime = this.event.dateTime;
+						//this.eventDate = '';
+						const eventDate = new Date(dateTime);
+						/*console.log(eventDate);
+						console.log(eventDate.getTime());
+						console.log(eventDate.getHours());
+						console.log(eventDate.getMinutes());*/
+						this.eventTime = eventDate.getHours().toString() + ':' + eventDate.getMinutes().toString();
+						this.eventDate = new Date(eventDate.setHours(0,0,0,0));
+						//console.log(this.eventDate.getTime());
+						this.previewUrl = this.event.event_imageURL;						
 						this.initForm();
 						this.cdRef.markForCheck();
-            //this.scannerService.changeOffers(this.post);
           },
           error => {
           }),
@@ -185,8 +222,17 @@ export class EditPostComponent implements OnInit, OnDestroy {
 	 */
   onSubmit() {
     if (this.submitted) return;
-
     const controls = this.submitForm.controls;
+		/*console.log(controls.eventDate.value);
+		console.log(controls.eventDate.value.getTime());
+		console.log(controls.eventDate.value);
+		console.log(controls.eventTime.value);	*/
+		const timeArray = controls.eventTime.value.split(':');
+		var timeInMiliseconds = ((timeArray[0])* 60 * 60 + (+timeArray[1]) * 60 ) * 1000;
+		//console.log(timeInMiliseconds);
+		//console.log(controls.eventDate.value.getTime());
+		var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
+		//console.log(new Date(totalMiliseconds));		
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -194,29 +240,34 @@ export class EditPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    this.loading = true;
+
     this.submitted = true;
+    this.loading = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
 		formData.append('subtitle', controls.itemAbstract.value);
-    formData.append('content', controls.content.value);
+    formData.append('description', controls.description.value);
     formData.append('access', controls.access.value);
+    formData.append('location', controls.location.value);
+    formData.append('dateTime', totalMiliseconds.toString());
 		/*for (var pair of formData.entries()) {
 			console.log(pair[0]+ ', ' + pair[1]);
 		}*/
 		//return;
-    this.itemsService.editPost(this.authenticationService.currentUserValue.user["_id"], this.post_id, formData)
+    this.itemsService.editEvent(this.authenticationService.currentUserValue.user["_id"], this.event_id, formData)
       .pipe(
         tap(
           data => {
-            Swal.fire({
-              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              text: this.translate.instant('MESSAGE.SUCCESS.POST_UPDATED'),
-              icon: 'success',
-							timer: 2000
-            });
+            Swal.fire(
+              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              this.translate.instant('MESSAGE.SUCCESS.EVENT_UPDATED'),
+              'success'
+            );
+						setTimeout(()=> {
+							Swal.close();
+						},2000);
 						this.submitted = false;
           },
           error => {
@@ -235,7 +286,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-  
+	
 	deleteItemModal() {
 		this.modalService.open(this.remove_item).result.then((result) => {
 		console.log('closed');
@@ -246,21 +297,21 @@ export class EditPostComponent implements OnInit, OnDestroy {
 	
 	deleteItem() {
 		console.log('delete');
-		this.itemsService.deletePost(this.authenticationService.currentUserValue.user["_id"], this.post_id)
+		this.itemsService.deleteEvent(this.authenticationService.currentUserValue.user["_id"], this.event_id)
       .pipe(
         tap(
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.POST_DELETED'),
+              this.translate.instant('MESSAGE.SUCCESS.EVENT_DELETED'),
               'success'
             ).then((result) => {
 							console.log('deleted');
-							this.router.navigate(['/m-posts']);
+							this.router.navigate(['/m-events']);
 						});
 						setTimeout(()=>{
 							Swal.close();
-							this.router.navigate(['/m-posts']);
+							this.router.navigate(['/m-events']);
 						},2000);
           },
           error => {
@@ -294,4 +345,5 @@ export class EditPostComponent implements OnInit, OnDestroy {
     const result = control.hasError(validationType) && (control.dirty || control.touched);
     return result;
   }
+
 }

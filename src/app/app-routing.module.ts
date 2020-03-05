@@ -17,6 +17,7 @@ import { NewPostComponent } from './create-items/new-post/new-post.component';
 import { EditPostComponent } from './edit-items/edit-post/edit-post.component';
 import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
 import { NewEventComponent } from './create-items/new-event/new-event.component';
+import { EditEventComponent } from './edit-items/edit-event/edit-event.component';
 import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
 import { NewMicrocreditCampaignComponent } from './create-items/new-microcredit-campaign/new-microcredit-campaign.component';
 import { EditMicrocreditCampaignComponent } from './microcredit/edit-microcredit-campaign/edit-microcredit-campaign.component';
@@ -121,7 +122,7 @@ const routes: Routes = [
 						path: 'create', component: NewEventComponent
 					},
 					{
-						path: 'edit/:_id', component: EditOfferComponent
+						path: 'edit/:_id', component: EditEventComponent
 					},
 				]
 			},

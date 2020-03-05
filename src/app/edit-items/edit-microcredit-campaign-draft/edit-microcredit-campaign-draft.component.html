@@ -23,6 +23,13 @@
 						</div>
 						<div class="form-group">
 							<mat-form-field>
+								<mat-label>Abstract</mat-label>
+							<input matInput type="text" formControlName="itemAbstract" placeholder="Abstract">
+							<mat-hint class="form-text text-muted">Please enter event Abstract.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.TITLE' | translate}}</mat-label>
 								<input matInput type="text" name="Category" formControlName="category"
 									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.CATEGORY.PLACEHOLDER' | translate}}">
@@ -71,7 +78,7 @@
 								{{'FIELDS.MICROCREDIT_CAMPAIGN.QUANTITATIVE' | translate}}
 							</mat-checkbox>
 						</div>
-						<div *ngIf="isQuantitative" class="quantitative-fields">
+						<div *ngIf="isQuantitative;else non_quantitative" class="quantitative-fields">
 							<div class="form-group">
 								<mat-form-field>
 									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.TITLE' | translate}}</mat-label>
@@ -92,15 +99,27 @@
 									<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.DESC' | translate}}</mat-hint>
 								</mat-form-field>
 							</div>
-							<!--<div class="form-group">
+							<div class="form-group">
 								<mat-form-field>
 									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.STEP.TITLE' | translate}}</mat-label>
 									<input matInput type="number" name="step" formControlName="step"
 										placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.STEP.PLACEHOLDER' | translate}}">
 									<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.STEP.DESC' | translate}}</mat-hint>
 								</mat-form-field>
-							</div>-->
+							</div>
 						</div>
+						<ng-template #non_quantitative>
+							<div class="form-group">
+								<mat-form-field>
+									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED_PRICE.TITLE' | translate}}</mat-label>
+									<input matInput type="number" name="MinAllowed" formControlName="minAllowed"
+										placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED_PRICE.PLACEHOLDER' | translate}}">
+									<mat-error *ngIf="isControlHasError('minAllowed','required')"
+										class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+									<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED_PRICE.DESC' | translate}}</mat-hint>
+								</mat-form-field>
+							</div>				
+						</ng-template>
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.TITLE' | translate}}</mat-label>
@@ -151,6 +170,8 @@
 								<mat-datepicker #expirationPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('expiration','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="submitForm.get('expiration').errors && submitForm.get('expiration').errors.endDateLessThanStartDate"
+									class="error text-danger">{{ 'FIELDS.MICROCREDIT_CAMPAIGN.DATE_TOO_EARLY' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.EXPIRATION.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
@@ -171,31 +192,36 @@
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.TITLE' | translate}}</mat-label>
 								<!--<input matInput type="text" name="RedeemEnds" formControlName="redeemEnds"
 									placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.PLACEHOLDER' | translate}}">-->
-								<input matInput [matDatepicker]="redeemEndsPicker" name="RedeemEnds" formControlName="redeemEnds"  >
+								<input matInput [matDatepicker]="redeemEndsPicker" name="RedeemEnds" formControlName="redeemEnds">
 								<mat-datepicker-toggle matSuffix [for]="redeemEndsPicker"></mat-datepicker-toggle>
 								<mat-datepicker #redeemEndsPicker ></mat-datepicker>
 								<mat-error *ngIf="isControlHasError('redeemEnds','required')"
 									class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+								<mat-error *ngIf="submitForm.get('expiration').errors && submitForm.get('expiration').errors.endDateLessThanStartDate"
+									class="error text-danger">{{ 'FIELDS.MICROCREDIT_CAMPAIGN.DATE_TOO_EARLY' | translate }}</mat-error>
 								<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.REDEEM_ENDS.DESC' | translate}}</mat-hint>
 							</mat-form-field>
 						</div>
 						<div class="form-group">
 							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
-								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+								<div class="upload-img">
+									<div class="upload-img-container">
+										<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+										<div *ngIf="!originalImage" class="image-cancel">
+											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+											</span>
+										</div>
+									</div>
 								</div>
-								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar_upload" data-toggle="tooltip" title=""
-									data-original-title="Change avatar">
-									<i class="fa fa-pen"></i>
+								<div>
+									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+								</div>
+								<label class="avatar_upload">
 									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										accept=".png, .jpg, .jpeg" #fileInput>
 								</label>
-								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-									<i class="fa fa-times"></i>
-								</span>								
+															
 							</div>
 						</div>
 					</div>
@@ -208,9 +234,8 @@
 						data-ktwizard-type="action-submit">
 						{{ 'FORM.BUTTONS.SAVE' | translate }}
 					</button>
-					<button mat-raised-button (click)="onSubmit('public')" (keyup.enter)="onSubmit('public')"
-						class="btn btn-primary"
-						data-ktwizard-type="action-submit">
+					<button mat-raised-button type="button" (click)="publishItemModal()" (keyup.enter)="publishItemModal()"
+						class="btn btn-primary">
 						{{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
 					</button>
 				</div>
@@ -220,3 +245,45 @@
 		</mat-card-content>
 	</mat-card>
 </div>
+
+<!-- Publish Item Modal -->
+<ng-template #publish_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Publish campaign</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div *ngIf="campaign" class="modal-body">
+		Are you sure you would like to publish the campaign '{{campaign.title}}'?
+		<br>
+		You won't be able to make any further changes after your campaign has been published.
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="publishItem();c('Close click'); ">Publish</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>
+
+<div class="single-delete">
+	<button mat-raised-button class="delete-text"(click)="deleteItemModal()">
+		Delete Item
+	</button>
+</div>
+
+<!-- Remove Item Modal -->
+<ng-template #remove_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Delete Campaign</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div *ngIf="campaign" class="modal-body">
+		Are you sure you would like to delete '{{campaign.title}}'?
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>

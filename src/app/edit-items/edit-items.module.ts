@@ -10,6 +10,7 @@ import { EditPostComponent } from './edit-post/edit-post.component';
 import { EditMicrocreditCampaignComponentDraft } from './edit-microcredit-campaign-draft/edit-microcredit-campaign-draft.component';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { EditEventComponent } from './edit-event/edit-event.component';
 
 const routes: Routes = [
     {
@@ -55,7 +56,8 @@ const routes: Routes = [
     declarations: [
         EditOfferComponent,
 		EditPostComponent,
-		EditMicrocreditCampaignComponentDraft
+		EditMicrocreditCampaignComponentDraft,
+		EditEventComponent
     ],
     entryComponents: [
     ]

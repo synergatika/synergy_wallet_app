@@ -56,7 +56,8 @@ export const locale = {
 		OFFERS: {
 			TITLE: 'ΠΡΟΣΦΟΡΕΣ',
 			SUBTITLE: 'Δημιουργία νέας Προσφοράς',
-			DESC: 'Δώσε στο λαό!'
+			DESC: 'Δώσε στο λαό!',
+			UNTIL: 'έως'
 		},
 		POSTS: {
 			TITLE: 'ΑΝΑΡΤΗΣΕΙΣ / ΓΕΓΟΝΟΤΑ',
@@ -135,13 +136,24 @@ export const locale = {
             },
             SUCCESS: {
                 TITLE: 'All good!',
-                OFFER_CREATED: 'A new Offer has been successfully created!',
-                POST_CREATED: 'A new Post/Event has been successfully created!',
+                OFFER_CREATED: 'Η προσφορά δημιουργήθηκε επιτυχώς!',
+								OFFER_UPDATED: 'Η προσφορά ανανεώθηκε επιτυχώς!',
+								OFFER_DELETED: 'Η προσφορά διεγράφη επιτυχώς!',
+                POST_CREATED: 'Το άρθρο δημιουργήθηκε επιτυχώς!',
+								POST_UPDATED: 'Το άρθρο ανανεώθηκε επιτυχώς!',
+								POST_DELETED: 'Το άρθρο διεγράφη επιτυχώς!',
+								EVENT_CREATED: 'Η εκδήλωση δημιουργήθηκε επιτυχώς!',
+								EVENT_UPDATED: 'Η εκδήλωση ανανεώθηκε επιτυχώς!',
+								EVENT_DELETED: 'Η εκδήλωση διεγράφη επιτυχώς!',
+								CAMPAIGN_CREATED: 'Η καμπάνια δημιουργήθηκε επιτυχώς!',
+								CAMPAIGN_PUBLISHED: 'Η καμπάνια δημοσιεύθηκε επιτυχώς!',
+								CAMPAIGN_UPDATED: 'Η καμπάνια ανανεώθηκε επιτυχώς!',
+								CAMPAIGN_DELETED: 'Η προσφορά διεγράφη επιτυχώς!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',
                 PROFILE_UPDATED: 'Your Personal Information has been successfully updated!',
                 POINTS: 'Points Used: ',
-                AMOUNT: 'Amount: €'
+                AMOUNT: 'Ποσό: €'
             }
         },
         FIELDS: {
@@ -175,11 +187,11 @@ export const locale = {
             },
             CONFIRM_PASSWORD: {
                 TITLE: '',
-				PLACEHOLDER: 'Όνομα',
+						PLACEHOLDER: 'Όνομα',
                 DESC: ''
             },
             IMAGE: {
-				TITLE: 'Εικόνα',
+						TITLE: 'Εικόνα',
             },
             PHONE: {
 
@@ -238,7 +250,7 @@ export const locale = {
             POST_ACCESS: {
 
             },
-			POST: {
+						POST: {
                 TITLE: {
                     TITLE: 'Τίτλος Ανάρτησης',
                     PLACEHOLDER: 'Τίτλος',
@@ -254,91 +266,97 @@ export const locale = {
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Offer will be expired.'
                 },
-				ACCESS: {
-                    TITLE: 'Πρόσβαση',
-                    PLACEHOLDER: 'Πρόσβαση',
-                    DESC: 'Πρόσβαση'
-                },
-				ACCESS_CHOICES: {
-                    A: 'Δημόσια',
-                    B: 'Προσωπική',
-                    C: 'Συνάδελφοι'					
-                },
+								ACCESS: {
+														TITLE: 'Πρόσβαση',
+														PLACEHOLDER: 'Πρόσβαση',
+														DESC: 'Πρόσβαση'
+												},
+								ACCESS_CHOICES: {
+														A: 'Δημόσια',
+														B: 'Προσωπική',
+														C: 'Συνάδελφοι'					
+												},
             },
-			MICROCREDIT_CAMPAIGN:{
-                TITLE: {
-                    TITLE: 'Post Title',
-                    PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Post Title.'
-                },
-                TERMS: {
-                    TITLE: 'Περιγραφή Όρων',
-                    PLACEHOLDER: '10 κιλά καφέ',
-                    DESC: 'Περιγραφή του τι θα λάβουν οι υποστηρικτές.'
-                },
-				DESCRIPTION: {
-                    TITLE: 'Περιγραφή Καμπάνιας',
-                    PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Campaign Description.'
-                },
-                CATEGORY: {
-                    TITLE: 'Category',
-                    PLACEHOLDER: 'Category',
-                    DESC: 'Please, enter when the Campaign Category.'
-                },
-				MIN_ALLOWED: {
+				MICROCREDIT_CAMPAIGN: {
+						TITLE: {
+								TITLE: 'Post Title',
+								PLACEHOLDER: 'Title',
+								DESC: 'Please, enter Post Title.'
+						},
+						TERMS: {
+								TITLE: 'Περιγραφή Όρων',
+								PLACEHOLDER: '10 κιλά καφέ',
+								DESC: 'Περιγραφή του τι θα λάβουν οι υποστηρικτές.'
+						},
+						DESCRIPTION: {
+								TITLE: 'Περιγραφή Καμπάνιας',
+								PLACEHOLDER: 'Περιγραφή',
+								DESC: 'Παρακαλούμε εισάγετε την περιγραφή της καμπάνιας.'
+						},
+						CATEGORY: {
+								TITLE: 'Κατηγορία',
+								PLACEHOLDER: 'Υπηρεσίες',
+								DESC: 'Παρακαλούμε εισάγετε την κατηγορία της καμπάνιας'
+						},
+						MIN_ALLOWED_PRICE: {
+								TITLE: 'Price',
+								PLACEHOLDER: '1000',
+								DESC: 'Please, enter the price.'
+						},
+						MIN_ALLOWED: {
                     TITLE: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος',
                     PLACEHOLDER: '10',
                     DESC: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος.'
                 },
-				MAX_ALLOWED: {
+						MAX_ALLOWED: {
                     TITLE: 'Ανώ Όριο το οποίο μπορεί να πάρει κάποιος',
                     PLACEHOLDER: '20',
                     DESC: 'Ανώ Όριο το οποίο μπορεί να πάρει κάποιος.'
                 },
-				STEP: {
+						STEP: {
                     TITLE: 'Βήμα',
                     PLACEHOLDER: '20',
-                    DESC: 'Βήμα.'
+                    DESC: 'Βήμα(προαιρετικό).'
                 },
-				MAX_AMOUNT: {
+						MAX_AMOUNT: {
                     TITLE: 'Ανώ Όριο πωλήσεων',
                     PLACEHOLDER: '2000',
                     DESC: 'Ανώ Όριο πωλήσεων.'
                 },
-				ACCESS: {
+						ACCESS: {
                     TITLE: 'Πρόσβαση',
                     PLACEHOLDER: 'Πρόσβαση',
                     DESC: 'Πρόσβαση'
                 },
-				ACCESS_CHOICES: {
+						ACCESS_CHOICES: {
                     A: 'Δημόσια',
                     B: 'Προσωπική',
                     C: 'Συνάδελφοι'					
                 },
-				INITIATION: {
-                    TITLE: 'Initiation Date',
+						INITIATION: {
+                    TITLE: 'Έναρξη Καμπάνιας',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Campaign will begin.'
+                    DESC: 'Παρακαλούμε εισάγετε την ημερομηνία έναρξης της καμπάνιας.'
                 },
-				EXPIRATION: {
-                    TITLE: 'Expiration Date',
+						EXPIRATION: {
+                    TITLE: 'Λήξη Καμπάνιας',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                    DESC: 'Παρακαλούμε εισάγετε την ημερομηνία λήξεως της καμπάνιας.'
                 },
-				REDEEM_STARTS: {
-                    TITLE: 'Expiration Date',
+						REDEEM_STARTS: {
+                    TITLE: 'Έναρξη Εξαργύρωσης',
                     PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                    DESC: 'Παρακαλούμε εισάγετε την ημερομηνία έναρξης εξαργύρωσης.'
                 },
-                REDEEM_ENDS: {
-                    TITLE: 'Expiration Date',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
-                },
-				QUANTITATIVE: 'Είναι ποσοτική (μειώνεται η ποσότητα καθώς ξοδεύεις);',
-				SUBMIT_DRAFT: 'Αποθήκευση ως Πρόχειρο',
-				SUBMIT_CAMPAIGN: 'Δημοσίευση Καμπάνιας',
+							REDEEM_ENDS: {
+									TITLE: 'Λήξη Εξαργύρωσης',
+									PLACEHOLDER: 'Date',
+									DESC: 'Παρακαλούμε εισάγετε την ημερομηνία λήξεως εξαργύρωσης.'
+							},
+							QUANTITATIVE: 'Είναι ποσοτική (μειώνεται η ποσότητα καθώς ξοδεύεις);',
+							DATE_TOO_EARLY: 'Η ημερομηνία λέξεως πρέπει να είναι μετά την ημερομηνία έναρξης',
+							SUBMIT_DRAFT: 'Αποθήκευση ως Πρόχειρο',
+							SUBMIT_CAMPAIGN: 'Δημοσίευση Καμπάνιας',
             }
         },
         FORM: {
@@ -359,35 +377,37 @@ export const locale = {
         },
         AUTH: {
             MESSAGES: {
-                HAVE_ACCOUNT: 'Ακόμα δεν έχεις Λογαρισμό;',
+								WELCOME_TITLE: 'Καλωσήρθατε στο Synergy!',
+								WELCOME_SUBTITLE: 'Ένα Οικονομικό Εργαλείο για Συνεταιρισμούς',
+                HAVE_ACCOUNT: 'Ακόμα δεν έχεις Λογαριασμό;',
                 ALREADY_VALIDATED: 'Έχεις ήδη επαληθεύσει το email σου;',
                 ALREADY_UPDATED: 'Έχεις ήδη αλλάξει το password σου;',
 
             },
             GENERAL: {
-                OR: 'Or',
-                SUBMIT_BUTTON: 'Submit',
-                SIGNUP_BUTTON: 'Sign Up',
-                FORGOT_BUTTON: 'Forgot Password',
-                BACK_BUTTON: 'Back',
+                OR: 'Ή',
+                SUBMIT_BUTTON: 'Υποβολή',
+                SIGNUP_BUTTON: 'Κάνε Εγγραφή',
+                FORGOT_BUTTON: 'Ανάκτηση Κωδικού',
+                BACK_BUTTON: 'Πίσω',
                 PRIVACY: 'Privacy',
-                LEGAL: 'Legal',
-                CONTACT: 'Contact',
+                LEGAL: 'Νομικά',
+                CONTACT: 'Επικοινωνία',
             },
             LOGIN: {
-                TITLE: 'Sign In',
-                BUTTON: 'Sign In',
+                TITLE: 'Σύνδεση',
+                BUTTON: 'Σύνδεση',
                 EMAIL_NEEDS_VERIFICATION: 'You have to verify your email address',
                 PASSWORD_NEEDS_UPDATE: 'You have to update your password'
             },
             FORGOT: {
-                TITLE: 'Forgotten Password?',
-                DESC: 'Enter your email to reset your password',
-                SUCCESS: 'Your account has been successfully reset.'
+                TITLE: 'Ξεχάσατε τον κωδικό σας;',
+                DESC: 'Εισάγετε το E-mail σας για να αλλάξετε τον κωδικό σας.',
+                SUCCESS: 'Ο λογαριασμός σας ανανεώθηκε επιτυχώς.'
             },
             REGISTER: {
-                TITLE: 'Sign Up',
-                BUTTON: 'Sign Up',
+                TITLE: 'Εγγραφή',
+                BUTTON: 'Εγγραφή',
                 DESC: 'Enter your details to create your account',
                 SUCCESS: 'Your account has been successfuly registered. We have send an email in your address. Please follow the link to verify your account',
                 ERROR: 'Something went wrong during your registration. Please repeat the process'
@@ -399,8 +419,8 @@ export const locale = {
                 ERROR: 'Your password is wrong or the process has already completed!',
             },
             FORGOT_PASSWORD: {
-                TITLE_ASK: 'Απώλεια Password;',
-                DESC: 'Εισάγεται το email σας για να επαναφέρεται το password σας',
+                TITLE_ASK: 'Απώλεια κωδικού;',
+                DESC: 'Εισάγετε το email σας για να επαναφέρετε τον κωδικό σας',
                 SUCCESS_SEND: 'You will receive an email! Follow the link to reset your password!',
                 ERROR_SEND: 'Email address is wrong!',
                 SUCCESS_CHECK: 'Your can procceed to reseting password!',
@@ -418,11 +438,11 @@ export const locale = {
             },
             INPUT: {
                 EMAIL: 'Email',
-                FULLNAME: 'Fullname',
-                PASSWORD: 'Password',
-                NEW_PASSWORD: 'New Password',
-                CONFIRM_PASSWORD: 'Confirm Password',
-                USERNAME: 'Username'
+                FULLNAME: 'Πλήρες όνομα',
+                PASSWORD: 'Κωδικός',
+                NEW_PASSWORD: 'Νέος Κωδικός',
+                CONFIRM_PASSWORD: 'Επιβεβαίωση Κωδικού',
+                USERNAME: 'Όνομα Χρήστη'
             },
             VALIDATION: {
                 INVALID: '{{name}} is not valid',
@@ -440,14 +460,73 @@ export const locale = {
         },
 		MERCHANT: {
 			SCANNER: {
-				LOYALTY_TITLE: 'Πληρωμή με Loyalty'
+				LOYALTY_TITLE: 'Πληρωμή με Loyalty',
+				BACK_TO_SCANNER: 'Πίσω στη Σάρωση',
+				PREVIOUS_STEP: 'Προηγούμενο Βήμα',
+				NEXT_STEP: 'Επόμενο Βήμα',
+				COMPLETE: 'Ολοκλήρωση Συναλλαγής',
+				CLOSE: 'Κλείσιμο',
+				SCAN_LOYALTY: {
+					HEADING: 'Σάρωση νέας Κάρτας/ Εφαρμογής Πελάτη / Κάρτας Πελάτη',
+					ALT_PROMPT: 'Εισάγετε νέο E-mail / νέα Κάρτα / E-mail Πελάτη / Κάρτας Πελάτη',
+				},
+				SUB_IDENTIFIER_FORM: {
+					HEADING: 'Φόρμα Εισαγωγής Αναγνωριστικών Στοιχείων',
+					TITLE: 'Αναγνωριστικό Στοιχείο',
+					HINT: 'Παρακαλούμε εισάγετε E-mail ή άριθμό κάρτας.'
+				},
+				SUB_EMAIL_FORM: {
+					HEADING: 'Σαρωση του barcode ή εισαγωγή του E-mail του πελάτη',
+					HINT: 'Παρακαλούμε εισάγετε τη διεύθυνση E-mail του πελάτη.'
+				},
+				SUB_AMOUNT_FORM: {
+					HEADING: 'Ποσό Συναλλαγής',
+					TITLE: 'Ποσό',
+					HINT: 'Παρακαλούμε εισάγετε το ποσό συναλλαγής.'
+				},
+				SUB_DISCOUNT_FORM: {
+					HEADING: 'Ποσό Συναλλαγής',
+					TITLE: 'Έχετε έκπτωση',
+					CTA: 'Τσεκάρετε για να εξαργυρώσετε την έκπτωση'
+				},
+				SUB_OFFER_FORM: {
+					HEADING_MAIN: 'Λεπτομέρειες Προσφοράς',
+					HEADING: 'Ποσό Συναλλαγής',
+					TITLE: 'Ποσότητα',
+					HINT: 'Παρακαλούμε εισάγετε το ποσό συναλλαγής.',
+					ALERT: 'Δε φτάνουν οι πόντοι.',
+					ID: 'Ταυτότητα Πληρωμής',
+					COST: 'Κόστος',
+					POINTS: 'Πόντοι Πελάτη'
+				},
+				SUB_FINAL_STEP: {
+					AMOUNT: 'Ποσό Συναλλαγής',
+					POINTS_TO_REDEEM: 'Πόντοι που θα χρησιμοποιηθούν',
+					QUANTITY: 'Ποσότητα',
+					TOKENS_BEFORE: 'Αρχικοί Πόντοι',
+					TOKENS_REDEEMED: 'Πόντοι που Χρησιμοποιήθηκαν', 
+					TOKENS_REMAINING: 'Εναπομείναντες Πόντοι'
+				},
+				SUB_MICROCREDIT_FORM: {
+					HEADING: 'Τεμάχια Συναλλαγής',
+					CAMPAIGN_ID: 'Ταυτότητα Καμπάνιας',
+					HEADING_2: 'Πόντοι',
+					SUPPORT_ID: 'Ταυτότητα Συναλλαγής',
+					INITIAL: 'αρχικοί',
+					REDEEMED: 'χρησιμοποιήθηκαν',
+					REMAINING: 'εναπομείναντες',
+					ALERT: 'Δεν υπάρχουν συναλλαγές. Αδυναμία ολοκήρωσης της διαδικασίας.',
+					HEADING_3: 'Πόντοι Συναλλαγής',
+					HINT: 'Παρακαλούμε εισάγετε τους πόντους συναλλαγής.'
+				}
 			}
 		},
 		OFFER: {
 			TITLE: 'ΠΡΟΣΦΟΡΑ'
 		},
 		CAMPAIGN: {
-			TITLE: 'ΚΑΜΠΑΝΙΑ'
+			TITLE: 'ΚΑΜΠΑΝΙΑ',
+			DRAFT: 'πρόχειρο'
 		},
     }
 };

@@ -25,6 +25,13 @@
 						</div>
 						<div class="form-group">
 							<mat-form-field>
+								<mat-label>Abstract</mat-label>
+							<input matInput type="text" formControlName="itemAbstract" placeholder="Abstract">
+							<mat-hint class="form-text text-muted">Please enter event Abstract.</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="form-group">
+							<mat-form-field>
 								<mat-label>{{'FIELDS.OFFER.DESCRIPTION.TITLE' | translate}}</mat-label>
 								<textarea matInput name="Description" formControlName="description"
 									placeholder="{{'FIELDS.OFFER.DESCRIPTION.PLACEHOLDER' | translate}}"></textarea>
@@ -71,34 +78,34 @@
 						<div class="form-group">      
 							<label class="col-form-label">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
 							<div class="">
-								<div class="upload-img" id="kt_user_avatar">
-									<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="offer.offer_imageURL">
+								<div class="upload-img" >
+									<div class="upload-img-container">
+										<img *ngIf="offer.offer_imageURL" class="upload-img-holder" [src]="previewUrl">
+										<div *ngIf="!originalImage" class="image-cancel">
+											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+											</span>
+										</div>
+									</div>
 								</div>
 								<div>
 									<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
 								</div>
-								<label class="avatar__upload" data-toggle="tooltip" title=""
-									data-original-title="Change avatar">
-									<i class="fa fa-pen"></i>
+								<label class="avatar_upload">
 									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										accept=".png, .jpg, .jpeg" #fileInput>
-								</label>
-								<span *ngIf="!originalImage" class="avatar__cancel" (click)="onImageCancel()"
-									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-									<span class="mdi mdi-close-circle-outline"></span>
-								</span>		
+								</label>	
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!--begin: Form Actions -->
-				<div class="form-actions">
-					<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()"
-						class="btn btn-success btn-md btn-tall btn-wide font-bold font-transform-u"
-						data-ktwizard-type="action-submit">
-						{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-					</button>
+				<div class="row">
+					<div class="form-actions col-md-12">
+						<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-primary">
+							{{ 'FORM.BUTTONS.SUBMIT' | translate }}
+						</button>
+					</div>
 				</div>
 				<!--end: Form Actions -->
 
@@ -106,3 +113,25 @@
 		</mat-card-content>
 	</mat-card>
 </div>
+<div class="single-delete">
+	<button mat-raised-button class="delete-text"(click)="deleteItemModal()">
+		Delete Item
+	</button>
+</div>
+
+<!-- Remove Item Modal -->
+<ng-template #remove_item let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Delete Offer</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div *ngIf="offer" class="modal-body">
+		Are you sure you would like to delete '{{offer.title}}'?
+	</div>
+	<div class="modal-footer">
+		<button mat-raised-button class="btn btn-secondary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
+		<button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+	</div>
+</ng-template>

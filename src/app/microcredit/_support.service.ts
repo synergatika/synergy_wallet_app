@@ -28,6 +28,7 @@ export class SupportService {
         campaign_id: '',
         campaign_imageURL: '',
         title: '',
+				subtitle: '',
         terms: '',
         description: '',
         category: '',
@@ -36,6 +37,7 @@ export class SupportService {
         minAllowed: 0,
         maxAllowed: 0,
         maxAmount: 0,
+				startsAt: 0,
         redeemStarts: 0,
         redeemEnds: 0,
         supports: [{

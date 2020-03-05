@@ -6,7 +6,7 @@
 			<mat-form-field>
 				<mat-label>Identifier</mat-label>
 				<input matInput type="text" name="identifier" formControlName="identifier"
-					placeholder="Identifier" value="1234567891234567">
+					placeholder="Identifier">
 				<mat-error *ngIf="isControlHasError('identifier','required')"
 					class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
 				<mat-error *ngIf="isControlHasError('identifier','min')"

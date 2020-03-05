@@ -1,7 +1,7 @@
 
 <div *ngIf="access === 'merchant'">
-	<div class="grid__item grid__item--fluid wizard-v3__wrapper">
-		<form class="form" id="personal_form">
+	<div class="">
+		<form class="form " id="personal_form">
 			<div class="heading">Setup Your Personal Information</div>
 			<div class="form_section">
 				<div class="wizard-v3__form">
@@ -10,18 +10,20 @@
 							<label class="col-form-label">Avatar</label>
 							<div class="">
 								<div class="avatar" id="merchat_avatar">
-									<img class="avatar-holder" [src]="previewUrl">
+									<div class="avatar-img" >
+										<div class="avatar-container">
+											<img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
+											<div *ngIf="!originalImage" class="image-cancel">
+												<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+												</span>
+											</div>											
+										</div>
+									</div>
 									<button type="button" mat-raised-button (click)="fileInputMerch.click()">Choose File</button>
-									<label class="avatar-upload" data-toggle="tooltip" title=""
-										data-original-title="Change avatar">
-										<i class="fa fa-pen"></i>
-										<input type="file" (change)="fileProgress($event)" name="profile_avatar"
+									<label class="avatar-upload">									
+										<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 											accept=".png, .jpg, .jpeg" #fileInputMerch>
 									</label>
-									<span *ngIf="!originalImage" class="avatar-cancel" (click)="onImageCancel()"
-										data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-										<i class="fa fa-times"></i>X
-									</span>
 								</div>
 							</div>
 						</div>
@@ -33,6 +35,21 @@
 								<mat-hint class="form-text text-muted">Please enter your Name.</mat-hint>
 							</mat-form-field>
 						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12 form-group">
+							<mat-form-field>
+								<mat-label>{{'FIELDS.SECTOR' | translate}}</mat-label>
+								<!--<mat-select name="sector" [(ngModel)]="merchant.sector">-->
+								<mat-select [(value)]="merchant.sector">
+									<mat-option value="{{item.value}}" *ngFor="let item of menu" >{{item.title | translate}}
+									</mat-option>
+								</mat-select>
+								<mat-hint class="form-text text-muted">Please enter your sector.</mat-hint>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="row">															
 						<div class="form-group col-md-12">
 							<mat-form-field>
 								<mat-label>Address</mat-label>
@@ -78,19 +95,6 @@
 							</mat-form-field>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-xl-12 form-group">
-							<mat-form-field>
-								<mat-label>{{'FIELDS.SECTOR' | translate}}</mat-label>
-								<!--<mat-select name="sector" [(ngModel)]="merchant.sector">-->
-								<mat-select [(value)]="merchant.sector">
-									<mat-option value="{{item.value}}" *ngFor="let item of menu" >{{item.title | translate}}
-									</mat-option>
-								</mat-select>
-								<mat-hint class="form-text text-muted">Please enter your sector.</mat-hint>
-							</mat-form-field>
-						</div>
-					</div>
 				</div>
 			</div>
 
@@ -112,32 +116,33 @@
 
 
 <div *ngIf="access !== 'merchant'">
-	<div class="grid__item">
-		<form class="form" id="user_form">
-			<div class="heading heading--md">Setup Your Personal Information</div>
+	<div class="">
+		<form class="form">
+			<div class="heading">Setup Your Personal Information</div>
 			<div class="form_section">
-				<div class="">
-					<div class="">
+				<div class="row">
+					<div class="form-group col-md-12">
 						<label class="">Avatar.</label>
 						<div class="">
 							<div class="avatar" id="user_avatar">
-								<img class="avatar-holder" [src]="previewUrl">
+								<div class="avatar-img" >
+									<div class="avatar-container">
+										<img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
+										<div *ngIf="!originalImage" class="image-cancel">
+											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
+											</span>
+										</div>
+									</div>
+								</div>
 								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar-upload" data-toggle="tooltip" title=""
-									data-original-title="Change avatar">
-									<i class="fa fa-pen"></i>
-									
+								<label class="avatar-upload">
 									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
 										accept=".png, .jpg, .jpeg" id="profile_avatar_file" #fileInput>
 								</label>
-								<span *ngIf="!originalImage" class="avatar-cancel" (click)="onImageCancel()"
-									data-toggle="tooltip" title="" data-original-title="Cancel avatar">
-									<i class="fa fa-times"></i>
-								</span>
 							</div>
 						</div>
 					</div>
-					<div class="">
+					<div class="form-group col-md-12">
 						<mat-form-field>
 							<mat-label>Name</mat-label>
 							<input matInput type="text" name="name" [(ngModel)]="customer.name"
@@ -150,13 +155,11 @@
 
 			<!--begin: Form Actions -->
 			<div class="form-actions">
-
 				<button (click)="onSubmit()" mat-raised-button (keyup.enter)="onSubmit()"
 					class="btn-md btn-tall btn-wide font-bold font-transform-u"
 					data-ktwizard-type="action-submit">
 					{{ 'FORM.BUTTONS.SUBMIT' | translate }}
 				</button>
-
 			</div>
 			<!--end: Form Actions -->
 		</form>

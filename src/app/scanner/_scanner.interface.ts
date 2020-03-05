@@ -26,7 +26,8 @@ export interface Offer {
     merchant_name: string;
     merchant_imageURL: string;
     offer_id: string;
-	title: string;
+		title: string;
+		subtitle: string;
     description: string;
     cost: number;
     expiresAt: number;

@@ -1,19 +1,18 @@
 <form [formGroup]="submitForm">
-    <!--begin: Form Wizard Step 1-->
     <div>
-        <h5>Scan your barcode or enter a customer's e-mail</h5>
+        <h5 class="heading">{{ 'MERCHANT.SCANNER.SUB_EMAIL_FORM.HEADING' | translate }}</h5>
         <div class="form-group">
-		<mat-form-field>
-		<mat-label>Email</mat-label>
+					<mat-form-field>
+						<mat-label>Email</mat-label>
             <input matInput type="email" name="email" formControlName="email" placeholder="Email">
             <mat-error *ngIf="isControlHasError('email','email')"
                 class="error text-danger">{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</mat-error>
             <mat-error *ngIf="isControlHasError('email','email')"
                 class="error text-danger">{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</mat-error>
-            <mat-hint class="form-text text-muted">Please enter client's email address.</mat-hint>
-			</mat-form-field>
+            <mat-hint class="form-text text-muted">{{ 'MERCHANT.SCANNER.SUB_EMAIL_FORM.HINT' | translate }}</mat-hint>
+					</mat-form-field>
         </div>
     </div>
 </form>
-<button class="mr-2" mat-raised-button type="button" awPreviousStep>Previous Step</button>
-<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
+<button class="mr-2" mat-raised-button type="button" awPreviousStep>{{ 'MERCHANT.SCANNER.PREVIOUS_STEP' | translate }}</button>
+<button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.NEXT_STEP' | translate }}</button>
