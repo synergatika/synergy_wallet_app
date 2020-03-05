@@ -196,9 +196,13 @@ export class NewOfferComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
               'success'
             ).then((result) => {
-							console.log('deleted');
+							console.log('created');
 							this.router.navigate(['/m-offers']);
 						});
+						setTimeout(()=>{
+							Swal.close();
+							this.router.navigate(['/m-offers']);
+						},2000);
           },
           error => {
             Swal.fire(

@@ -78,7 +78,7 @@
 								{{'FIELDS.MICROCREDIT_CAMPAIGN.QUANTITATIVE' | translate}}
 							</mat-checkbox>
 						</div>
-						<div *ngIf="isQuantitative" class="quantitative-fields">
+						<div *ngIf="isQuantitative;else non_quantitative" class="quantitative-fields">
 							<div class="form-group">
 								<mat-form-field>
 									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.TITLE' | translate}}</mat-label>
@@ -108,6 +108,18 @@
 								</mat-form-field>
 							</div>
 						</div>
+						<ng-template #non_quantitative>
+							<div class="form-group">
+								<mat-form-field>
+									<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED_PRICE.TITLE' | translate}}</mat-label>
+									<input matInput type="number" name="MinAllowed" formControlName="minAllowed"
+										placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED_PRICE.PLACEHOLDER' | translate}}">
+									<mat-error *ngIf="isControlHasError('minAllowed','required')"
+										class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+									<mat-hint class="form-text text-muted">{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED_PRICE.DESC' | translate}}</mat-hint>
+								</mat-form-field>
+							</div>				
+						</ng-template>
 						<div class="form-group">
 							<mat-form-field>
 								<mat-label>{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.TITLE' | translate}}</mat-label>

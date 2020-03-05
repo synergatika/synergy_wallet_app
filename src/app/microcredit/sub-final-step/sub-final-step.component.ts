@@ -26,7 +26,8 @@ export class SubFinalStepComponent implements OnInit {
 	 */
   ngOnInit() {
     if (this.type === 1) {
-      this.supportService.microcreditSupport.subscribe(support => this.support = support)
+      this.supportService.microcreditSupport.subscribe(support => this.support = support);
+			console.log(this.support);
     } else if (this.type === 2) {
       // For Future Microcredit
     }

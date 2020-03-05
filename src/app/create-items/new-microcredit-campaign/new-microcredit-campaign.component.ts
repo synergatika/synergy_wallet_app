@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import Swal from 'sweetalert2';
+import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Component({
   selector: 'app-new-microcredit-campaign',
@@ -59,6 +60,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private itemsService: ItemsService,
     private fb: FormBuilder,
+		private authenticationService: AuthenticationService,
     private translate: TranslateService,
 		private modalService: NgbModal,
 		private router: Router,
@@ -119,10 +121,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
         Validators.required,
       ])
       ],
-      maxAllowed: [0, Validators.compose([
-        Validators.required,
-      ])
-      ],
+      maxAllowed: [0],
 			step: [''],
       maxAmount: [0, Validators.compose([
         Validators.required,
@@ -225,12 +224,14 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     formData.append('description', controls.description.value);
     formData.append('category', controls.category.value);
     formData.append('access', controls.access.value);
-		formData.append('status', campaignStatus);
+		//formData.append('status', campaignStatus);
     formData.append('quantitative', controls.quantitative.value);
-		if (controls.quantitative.value) {
-			formData.append('minAllowed', controls.minAllowed.value);
+		formData.append('minAllowed', controls.minAllowed.value);
+		if (controls.quantitative.value) {			
 			formData.append('maxAllowed', controls.maxAllowed.value);
 			formData.append('stepAmount', controls.step.value);
+		} else {
+			formData.append('maxAllowed', controls.minAllowed.value);
 		}
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
@@ -241,10 +242,51 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
 			console.log(pair[0]+ ', ' + pair[1]); 
 		}*/
 		//return;
+		console.log('createMicrocreditCampaign');
     this.itemsService.createMicrocreditCampaign(formData)
       .pipe(
         tap(
           data => {
+						console.log('data');
+						console.log(data);
+							if (campaignStatus == 'publish') {
+								console.log(data.data._id);
+								var campaign_id = data.data._id;
+								this.itemsService.publishCampaign(this.authenticationService.currentUserValue.user["_id"], campaign_id, formData)
+								.pipe(
+									tap(
+										data => {
+											console.log('success');
+											console.log(data);
+											Swal.fire(
+												this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+												this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
+												'success'
+											);
+											setTimeout(()=>{
+												Swal.close();
+												this.router.navigate(['/m-campaigns']);
+											},2000);
+										},
+										error => {
+											console.log(error);
+											Swal.fire(
+												this.translate.instant('MESSAGE.ERROR.TITLE'),
+												this.translate.instant('MESSAGE.ERROR.SERVER'),
+												'error'
+											);
+											this.submitted = false;
+										}),
+									takeUntil(this.unsubscribe),
+									finalize(() => {
+										this.loading = false;
+										this.cdRef.markForCheck();
+									})
+								)
+								.subscribe();
+								return;
+							}
+						
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_CREATED'),
@@ -297,7 +339,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
 	
 	publishItem() {
 		console.log('publishItem');
-		this.onSubmit('public');
+		this.onSubmit('publish');
 	}
 	
 	endDateAfterOrEqualValidator(formGroup): any {

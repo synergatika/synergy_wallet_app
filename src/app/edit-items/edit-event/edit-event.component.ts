@@ -268,6 +268,7 @@ export class EditEventComponent implements OnInit {
 						setTimeout(()=> {
 							Swal.close();
 						},2000);
+						this.submitted = false;
           },
           error => {
             Swal.fire(
@@ -302,12 +303,16 @@ export class EditEventComponent implements OnInit {
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.OFFER_DELETED'),
+              this.translate.instant('MESSAGE.SUCCESS.EVENT_DELETED'),
               'success'
             ).then((result) => {
 							console.log('deleted');
 							this.router.navigate(['/m-events']);
 						});
+						setTimeout(()=>{
+							Swal.close();
+							this.router.navigate(['/m-events']);
+						},2000);
           },
           error => {
             Swal.fire(

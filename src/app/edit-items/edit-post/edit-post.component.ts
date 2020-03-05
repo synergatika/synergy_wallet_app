@@ -258,6 +258,10 @@ export class EditPostComponent implements OnInit, OnDestroy {
 							console.log('deleted');
 							this.router.navigate(['/m-posts']);
 						});
+						setTimeout(()=>{
+							Swal.close();
+							this.router.navigate(['/m-posts']);
+						},2000);
           },
           error => {
             Swal.fire(

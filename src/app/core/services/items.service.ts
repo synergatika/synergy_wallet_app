@@ -259,7 +259,7 @@ export class ItemsService {
       }));
   }
   
-  createMicrocreditCampaign(formData: FormData): Observable<Message[]> {
+  createMicrocreditCampaign(formData: FormData): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/campaigns`, formData)
       .pipe(map(response => {
         return response;
@@ -273,6 +273,12 @@ export class ItemsService {
       }));
   }
 	
+	publishCampaign(merchant_id: string, campaign_id: string, formData: FormData ): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}/publish`, formData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }	
   readCampaign(merchant_id: string, campaign_id: string): Observable<MicrocreditCampaign> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`)
       .pipe(map(response => {

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
@@ -71,6 +72,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
+		private router: Router,
   ) {
     this.unsubscribe = new Subject();
   }
@@ -215,9 +217,15 @@ export class NewEventComponent implements OnInit, OnDestroy {
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.EVENT_CREATED'),
               'success'
-            );
+            ).then((result) => {
+							this.router.navigate(['/m-events']);
+						});
+						setTimeout(()=>{
+							Swal.close();
+							this.router.navigate(['/m-events']);
+						},2000);
           },
           error => {
             Swal.fire(

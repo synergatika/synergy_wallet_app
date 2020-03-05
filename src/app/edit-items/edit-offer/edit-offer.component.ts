@@ -201,12 +201,13 @@ export class EditOfferComponent implements OnInit, OnDestroy {
           data => {
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.OFFER_UPDATED'),
               'success'
             );
-						setTimeout(()=>{
+						setTimeout(()=> {
 							Swal.close();
 						},2000);
+						this.submitted = false;
           },
           error => {
             Swal.fire(
@@ -278,6 +279,10 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 							console.log('deleted');
 							this.router.navigate(['/m-offers']);
 						});
+						setTimeout(()=>{
+							Swal.close();
+							this.router.navigate(['/m-offers']);
+						},2000);
           },
           error => {
             Swal.fire(

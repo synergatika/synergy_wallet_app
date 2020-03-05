@@ -146,6 +146,7 @@ export const locale = {
 								EVENT_UPDATED: 'Η εκδήλωση ανανεώθηκε επιτυχώς!',
 								EVENT_DELETED: 'Η εκδήλωση διεγράφη επιτυχώς!',
 								CAMPAIGN_CREATED: 'Η καμπάνια δημιουργήθηκε επιτυχώς!',
+								CAMPAIGN_PUBLISHED: 'Η καμπάνια δημοσιεύθηκε επιτυχώς!',
 								CAMPAIGN_UPDATED: 'Η καμπάνια ανανεώθηκε επιτυχώς!',
 								CAMPAIGN_DELETED: 'Η προσφορά διεγράφη επιτυχώς!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
@@ -249,7 +250,7 @@ export const locale = {
             POST_ACCESS: {
 
             },
-			POST: {
+						POST: {
                 TITLE: {
                     TITLE: 'Τίτλος Ανάρτησης',
                     PLACEHOLDER: 'Τίτλος',
@@ -265,38 +266,43 @@ export const locale = {
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Offer will be expired.'
                 },
-				ACCESS: {
-                    TITLE: 'Πρόσβαση',
-                    PLACEHOLDER: 'Πρόσβαση',
-                    DESC: 'Πρόσβαση'
-                },
-				ACCESS_CHOICES: {
-                    A: 'Δημόσια',
-                    B: 'Προσωπική',
-                    C: 'Συνάδελφοι'					
-                },
+								ACCESS: {
+														TITLE: 'Πρόσβαση',
+														PLACEHOLDER: 'Πρόσβαση',
+														DESC: 'Πρόσβαση'
+												},
+								ACCESS_CHOICES: {
+														A: 'Δημόσια',
+														B: 'Προσωπική',
+														C: 'Συνάδελφοι'					
+												},
             },
 				MICROCREDIT_CAMPAIGN: {
-                TITLE: {
-                    TITLE: 'Post Title',
-                    PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Post Title.'
-                },
-                TERMS: {
-                    TITLE: 'Περιγραφή Όρων',
-                    PLACEHOLDER: '10 κιλά καφέ',
-                    DESC: 'Περιγραφή του τι θα λάβουν οι υποστηρικτές.'
-                },
-								DESCRIPTION: {
-                    TITLE: 'Περιγραφή Καμπάνιας',
-                    PLACEHOLDER: 'Περιγραφή',
-                    DESC: 'Παρακαλούμε εισάγετε την περιγραφή της καμπάνιας.'
-                },
-                CATEGORY: {
-                    TITLE: 'Κατηγορία',
-                    PLACEHOLDER: 'Υπηρεσίες',
-                    DESC: 'Παρακαλούμε εισάγετε την κατηγορία της καμπάνιας'
-                },
+						TITLE: {
+								TITLE: 'Post Title',
+								PLACEHOLDER: 'Title',
+								DESC: 'Please, enter Post Title.'
+						},
+						TERMS: {
+								TITLE: 'Περιγραφή Όρων',
+								PLACEHOLDER: '10 κιλά καφέ',
+								DESC: 'Περιγραφή του τι θα λάβουν οι υποστηρικτές.'
+						},
+						DESCRIPTION: {
+								TITLE: 'Περιγραφή Καμπάνιας',
+								PLACEHOLDER: 'Περιγραφή',
+								DESC: 'Παρακαλούμε εισάγετε την περιγραφή της καμπάνιας.'
+						},
+						CATEGORY: {
+								TITLE: 'Κατηγορία',
+								PLACEHOLDER: 'Υπηρεσίες',
+								DESC: 'Παρακαλούμε εισάγετε την κατηγορία της καμπάνιας'
+						},
+						MIN_ALLOWED_PRICE: {
+								TITLE: 'Price',
+								PLACEHOLDER: '1000',
+								DESC: 'Please, enter the price.'
+						},
 						MIN_ALLOWED: {
                     TITLE: 'Κάτω Όριο το οποίο μπορεί να πάρει κάποιος',
                     PLACEHOLDER: '10',
@@ -310,7 +316,7 @@ export const locale = {
 						STEP: {
                     TITLE: 'Βήμα',
                     PLACEHOLDER: '20',
-                    DESC: 'Βήμα.'
+                    DESC: 'Βήμα(προαιρετικό).'
                 },
 						MAX_AMOUNT: {
                     TITLE: 'Ανώ Όριο πωλήσεων',

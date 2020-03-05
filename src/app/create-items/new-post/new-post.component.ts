@@ -178,9 +178,12 @@ export class NewPostComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
               'success'
             ).then((result) => {
-							console.log('deleted');
 							this.router.navigate(['/m-posts']);
 						});
+						setTimeout(()=>{
+							Swal.close();
+							this.router.navigate(['/m-posts']);
+						},2000);
           },
           error => {
             Swal.fire(

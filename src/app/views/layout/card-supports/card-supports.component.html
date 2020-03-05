@@ -1,36 +1,64 @@
-<mat-card class="dashboard-card supports-card" *ngIf="supportItem">
-  <mat-card-content>
-	  <!-- start::Content-->
-		<div class="wallet_supports_wrapper">
-			<div class="supports row" >
-				<div class="col-sm-12 supports-img-container">
-					<div class="supports-img">
-						<img src={{supportItem.campaign_imageURL}} alt={{supportItem.title}} />
-					</div>
-					
-				</div>
-				<div class="col-sm-12 supports-amount">
-					<div class="supports-heading">
-						<div class="supports-title">{{supportItem.title}}</div>
-						<div>
-							<span class="points">{{ supportItem.initialTokens - supportItem.redeemedTokens | currency:'EUR'}}</span><br>
-							<span class="points">από {{supportItem.initialTokens | currency:'EUR'}}</span>
+<mat-card class="synergy-card supports-card" *ngIf="supportItem">
+	<mat-card-content>
+		<!--begin::Content-->
+		<div class="wallet_microcredit_wrapper s_archive_wrapper">
+			<div class="microcredit s_archive row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-sm-12 s_archive-img-container">
+							<div class="s_archive-img">
+								<img src={{supportItem.campaign_imageURL}} alt={{supportItem.title}} />
+							</div>
 						</div>
 					</div>
-					<div class="supports-description">
-						{{supportItem.terms}}
-						<div class="supports-reddem">
-							Εξαργύρωση από {{supportItem.redeemStarts | date: 'd.M.y'}} εώς {{ supportItem.redeemEnds | date: 'd.M.y'}}
+					<div class="s_archive-content container-fluid">
+						<div class="s_archive-heading row">
+							<h4 class="s_archive-title col-12">{{supportItem.title}}</h4>
+
 						</div>
-					</div>
-					
-					
-					<div class="supports-info">
-				
+						<div class="s_archive-credit-info row">
+							<div class="s_archive-dates col-6">
+								<span class="tag">Redeem Period:</span> {{supportItem.redeemStarts | date: 'd.M.y'}} -
+								{{supportItem.redeemEnds | date: 'd.M.y'}}<br>
+								<span class="desc">This is the period in which you can get the items you pledged
+									for</span>
+							</div>
+							<div class="s_archive-points col-6">
+								<div class="init-amount">
+									<span class="hypertitle">
+										{{'GENERAL.FROM' | translate}}
+									</span>
+									<span>
+										{{supportItem.initialTokens | currency:'EUR'}}
+									</span>
+								</div>
+								<div class="current-amount">
+									<span>{{ supportItem.initialTokens - supportItem.redeemedTokens | currency:'EUR'}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="s_archive-subtitle row">
+							<div class="col-md-12">
+								<p [innerHTML]="supportItem.terms"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 s_archive-info">
+								<div class="s_archive-merchant" *ngIf="type!='single'">
+									<div class="s_archive-merch-name">
+										<span class="mdi mdi-shopping"></span> {{supportItem.merchant_name}}
+									</div>
+									<div class="s_archive-merch-adress" *ngIf="supportItem.address">
+										<span class="mdi mdi-pin"></span> {{supportItem.address.street}} ,
+										{{supportItem.address.city}}
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- end::Content-->
-  </mat-card-content>
+		<!--end::Content-->
+	</mat-card-content>
 </mat-card>
