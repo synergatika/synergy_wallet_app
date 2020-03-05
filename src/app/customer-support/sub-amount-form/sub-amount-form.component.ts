@@ -20,6 +20,8 @@ export class SubAmountFormComponent implements OnInit {
 
   support: MicrocreditSupport;
   campaign: MicrocreditCampaign;
+  campaignType: any;
+  tempAmount: any;
 
   submitForm: FormGroup;
   submitted: boolean = false;
@@ -35,10 +37,11 @@ export class SubAmountFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-	console.log(this.campaign);
+    console.log(this.campaign);
   }
 
   initForm() {
+    //Submit Form
     this.submitForm = this.fb.group({
       amount: [0, Validators.compose([
         Validators.required,
@@ -52,6 +55,25 @@ export class SubAmountFormComponent implements OnInit {
       ])
       ]
     });
+    const controls = this.submitForm.controls;
+    controls['amount'].setValue(this.campaign.minAllowed);
+  }
+
+
+  addStep() {
+    const controls = this.submitForm.controls;
+    this.tempAmount = controls.amount.value + this.campaign.stepAmount;
+    if (this.tempAmount <= this.campaign.maxAllowed) {
+      controls['amount'].setValue(this.tempAmount);
+    }
+  }
+
+  removeStep() {
+    const controls = this.submitForm.controls;
+    this.tempAmount = controls.amount.value - this.campaign.stepAmount;
+    if (this.tempAmount >= this.campaign.minAllowed) {
+      controls['amount'].setValue(this.tempAmount);
+    }
   }
 
   onNextStep() {

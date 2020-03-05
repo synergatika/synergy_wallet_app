@@ -1,12 +1,20 @@
 <form [formGroup]="submitForm">
     <!--begin: Form Wizard Step 1-->
-	<h5>Transaction amount</h5>
+	<h5>Pledge you Support</h5>
 	<div class="form-group">
 		<label>Amount</label>
 		<div class="input-group">
 			<span class="input-group-text">€</span>
-			<input type="number" class="form-control" name="amount" formControlName="amount" placeholder="Amount"
+			<input [readonly]="campaign.quantitative==false||campaign.stepAmount>0" readonly readotype="number" class="form-control" name="amount" formControlName="amount" placeholder="Amount"
 				value="0">
+			<div class="amount-controller">
+				<button  mat-mini-fab class="add" (click)="addStep()">
+					+
+				</button>
+				<button mat-mini-fab class="remove" (click)="removeStep()">
+					-
+				</button>
+			</div>
 		</div>
 		<span *ngIf="isControlHasError('amount','required')"
 			class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
@@ -16,9 +24,6 @@
 		<span *ngIf="isControlHasError('amount','max')"
 			class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
 			{{ campaign.maxAllowed | currency: 'EUR'}}</span>
-		<span class="form-text text-muted">Please enter
-			transaction's
-			amount.</span>
 	</div>
 	<div class="form-group">
 		<label>Payment Method</label>
@@ -36,7 +41,6 @@
 		</select>
 		<span *ngIf="isControlHasError('method','required')"
 			class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-		<span class="form-text text-muted">Please enter your payment method.</span>
 	</div>
 </form>
 <button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
