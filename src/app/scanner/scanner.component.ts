@@ -86,7 +86,6 @@ export class ScannerComponent implements OnInit, OnDestroy {
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-component";
-    dialogConfig.height = "350px";
     dialogConfig.width = "600px";
 
     // https://material.angular.io/components/dialog/overview
@@ -98,7 +97,6 @@ export class ScannerComponent implements OnInit, OnDestroy {
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-component";
-    dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {
       offer_id: offer_id//'5e3298c9ba608903716b09c2'
@@ -112,7 +110,6 @@ export class ScannerComponent implements OnInit, OnDestroy {
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-component";
-    dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {
       campaign_id: campaign_id//'5e3298c9ba608903716b09c2'

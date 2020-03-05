@@ -468,7 +468,7 @@ export const locale = {
 				CLOSE: 'Κλείσιμο',
 				SCAN_LOYALTY: {
 					HEADING: 'Σάρωση νέας Κάρτας/ Εφαρμογής Πελάτη / Κάρτας Πελάτη',
-					ALT_PROMPT: 'Εισάγετε νέο E-mail / νέα Κάρτα / E-mail Πελάτη / Κάρτας Πελάτη',
+					ALT_PROMPT: 'Εισάγετε Αναγνωριστικό Στοιχείο',
 				},
 				SUB_IDENTIFIER_FORM: {
 					HEADING: 'Φόρμα Εισαγωγής Αναγνωριστικών Στοιχείων',

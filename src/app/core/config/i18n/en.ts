@@ -511,7 +511,7 @@ export const locale = {
 				CLOSE: 'Close Window',
 				SCAN_LOYALTY: {
 					HEADING: 'Scan a new Card, Scan User App, Scan User Card',
-					ALT_PROMPT: 'Enter new Email / new Card / user Email / user Card',
+					ALT_PROMPT: 'Identifier',
 				},
 				SUB_IDENTIFIER_FORM: {
 					HEADING: 'Identifier Form',
