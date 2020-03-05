@@ -146,6 +146,7 @@ export const locale = {
 								EVENT_UPDATED: 'The Event has been successfully updated!',
 								EVENT_DELETED: 'The Event has been successfully deleted!',
 								CAMPAIGN_CREATED: 'A new Campaign has been successfully created!',
+								CAMPAIGN_PUBLISHED: 'The Campaign has been successfully published!',
 								CAMPAIGN_UPDATED: 'The Campaign has been successfully updated!',
 								CAMPAIGN_DELETED: 'The Campaign has been successfully deleted!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
@@ -192,7 +193,7 @@ export const locale = {
                 DESC: ''
             },
             IMAGE: {
-				TITLE: 'Image',
+							TITLE: 'Image',
             },
             PHONE: {
 
@@ -210,16 +211,16 @@ export const locale = {
 
             },
             SECTOR: 'Sector',
-			SECTOR_CHOICES: {
-				_: 'Other',
-				A: 'Β2Β Services',
-				B: 'Durables',
-				C: 'Durables (Technology)',
-				D: 'Education',
-				E: 'Food',
-				F: 'Hotels, Cafés and Restaurants',
-				G: 'Recreation and Culture',
-			},
+						SECTOR_CHOICES: {
+							_: 'Other',
+							A: 'Β2Β Services',
+							B: 'Durables',
+							C: 'Durables (Technology)',
+							D: 'Education',
+							E: 'Food',
+							F: 'Hotels, Cafés and Restaurants',
+							G: 'Recreation and Culture',
+						},
             SUPPORT: {
                 PAYMENT_CHOICES: {
                     A: 'Paypal',
@@ -297,7 +298,7 @@ export const locale = {
                     DESC: 'Please, enter Post Title.'
                 },
                 CONTENT: {
-                    TITLE: 'Offer Description',
+                    TITLE: 'Post Description',
                     PLACEHOLDER: 'Description',
                     DESC: 'Please, enter Post Description.'
                 },
@@ -339,6 +340,11 @@ export const locale = {
                     PLACEHOLDER: 'Category',
                     DESC: 'Please, enter the Campaign Category.'
                 },
+								MIN_ALLOWED_PRICE: {
+                    TITLE: 'Price',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter the price.'
+                },
 								MIN_ALLOWED: {
                     TITLE: 'Min Allowed',
                     PLACEHOLDER: '1000',
@@ -352,7 +358,7 @@ export const locale = {
 								STEP: {
                     TITLE: 'Step',
                     PLACEHOLDER: '20',
-                    DESC: 'Step.'
+                    DESC: 'Please, enter payment step (Optional).'
                 },
 								MAX_AMOUNT: {
                     TITLE: 'Max Amount',

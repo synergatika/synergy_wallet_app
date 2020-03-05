@@ -97,8 +97,8 @@ export class AddSupportComponent implements OnInit, OnDestroy {
         tap(
           data => {
 			  console.log(data);
-			  if(data.code == 200) {
-				this.onNextStep();
+			  if((data.code == 201) || (data.code == 200)) {
+					this.onNextStep();
 			  } else {
 				  this.rejected = true;
 				  console.log('no user');

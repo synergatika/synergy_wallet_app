@@ -283,15 +283,17 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
     formData.append('description', controls.description.value);
     formData.append('category', controls.category.value);
     formData.append('access', controls.access.value);
-		formData.append('status', campaignStatus);
+		//formData.append('status', campaignStatus);
 		formData.append('stepAmount', '20');
     formData.append('quantitative', controls.quantitative.value);
-		if (controls.quantitative.value) {
-			formData.append('minAllowed', controls.minAllowed.value);
+		formData.append('minAllowed', controls.minAllowed.value);
+		if (controls.quantitative.value) {		
 			formData.append('maxAllowed', controls.maxAllowed.value);
 			if(controls.step.value) {
 				formData.append('stepAmount', controls.step.value.toString());
 			}
+		} else {
+			formData.append('maxAllowed', controls.minAllowed.value);
 		}
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
@@ -333,25 +335,25 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
       )
       .subscribe();
 		}
-		if (campaignStatus == 'public') {
-			this.itemsService.createMicrocreditCampaign(formData)
+		if (campaignStatus == 'publish') {
+			this.itemsService.publishCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, formData)
       .pipe(
         tap(
           data => {
+						console.log('success');
+						console.log(data);
             Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_CREATED'),
+              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
               'success'
-            ).then((result) => {
-							this.router.navigate(['/m-campaigns']);
-						});
-						setTimeout(()=> {
+            );
+						setTimeout(()=>{
 							Swal.close();
 							this.router.navigate(['/m-campaigns']);
 						},2000);
           },
           error => {
-            console.log(error);
+						console.log(error);
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
               this.translate.instant('MESSAGE.ERROR.SERVER'),
@@ -387,7 +389,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 	
 	publishItem() {
 		console.log('publishItem');
-		this.onSubmit('public');
+		this.onSubmit('publish');
 	}
 	
 	deleteItemModal() {
@@ -412,6 +414,10 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 							console.log('deleted');
 							this.router.navigate(['/m-campaigns']);
 						});
+						setTimeout(()=>{
+							Swal.close();
+							this.router.navigate(['/m-campaigns']);
+						},2000);
           },
           error => {
             Swal.fire(
