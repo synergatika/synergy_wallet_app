@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ItemsService } from '../../../core/services/items.service';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { PostEvent } from '../../../core/models/post_event.model';
 
 @Component({
   selector: 'app-archive-posts',
@@ -9,7 +10,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./archive-posts.component.scss']
 })
 export class ArchivePostsComponent implements OnInit {
-	posts: any;
+	posts: PostEvent[];
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 	
@@ -42,7 +43,7 @@ export class ArchivePostsComponent implements OnInit {
 		  )
 		  .subscribe();
 	}
-	
+	/*
 	fetchPostsData() {
 		this.itemsService.readAllPrivatePosts()
 		  .pipe(
@@ -62,7 +63,7 @@ export class ArchivePostsComponent implements OnInit {
 			})
 		  )
 		  .subscribe();
-	}
+	}*/
 	
 	ngOnDestroy() {
 		this.unsubscribe.next();

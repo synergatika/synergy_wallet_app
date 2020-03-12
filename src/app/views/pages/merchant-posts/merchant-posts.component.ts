@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { Post } from '../../../core/models/post.model';
 
 import { ItemsService } from '../../../core/services/items.service';
 import { AuthenticationService } from '../../../core/services/authentication.service';
@@ -13,7 +14,7 @@ import { AuthenticationService } from '../../../core/services/authentication.ser
 export class MerchantPostsComponent implements OnInit {
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
-	posts: any;
+	posts: Post[];
 	
 	constructor(private itemsService: ItemsService, private cdRef: ChangeDetectorRef, private authenticationService: AuthenticationService,) { 
 		this.unsubscribe = new Subject();

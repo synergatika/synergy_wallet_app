@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Offer } from '../../../core/models/offer.model';
 
 @Component({
   selector: 'app-card-offer',
@@ -6,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./card-offer.component.scss']
 })
 export class CardOfferComponent implements OnInit {
-	@Input() offer: any;
-	@Input() type: any;
+	@Input() offer: Offer;
+	@Input() type: string;
 	
 	constructor() { }
 

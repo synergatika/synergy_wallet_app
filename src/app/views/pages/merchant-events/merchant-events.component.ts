@@ -4,6 +4,7 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 
 import { ItemsService } from '../../../core/services/items.service';
 import { AuthenticationService } from '../../../core/services/authentication.service';
+import { Event } from '../../../core/models/event.model';
 
 @Component({
   selector: 'app-merchant-events',
@@ -13,7 +14,7 @@ import { AuthenticationService } from '../../../core/services/authentication.ser
 export class MerchantEventsComponent implements OnInit {
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
-	events: any;
+	events: Event[];
 	
 	constructor(private itemsService: ItemsService, private cdRef: ChangeDetectorRef, private authenticationService: AuthenticationService) { 
 		this.unsubscribe = new Subject();
