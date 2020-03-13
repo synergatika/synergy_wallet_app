@@ -18,11 +18,11 @@ const routes: Routes = [
             {
                 path: '',
                 redirectTo: 'basket',
-                pathMatch: 'full'
             },
             {
                 path: 'transactions',
                 component: TransactionsComponent,
+								data: { title: 'Transactions' }
             },
             {
                 path: 'basket',

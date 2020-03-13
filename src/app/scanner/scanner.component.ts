@@ -61,8 +61,8 @@ export class ScannerComponent implements OnInit, OnDestroy {
     private scannerService: ScannerService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
-	private translate: TranslateService,
-	private modalService: NgbModal,
+		private translate: TranslateService,
+		private modalService: NgbModal,
   ) {
     this.scannerService.offers.subscribe(offers => this.offers = offers)
     this.scannerService.microcredit.subscribe(microcredit => this.microcredit = microcredit)
