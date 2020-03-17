@@ -1,7 +1,7 @@
 export const locale = {
     lang: 'en',
     data: {
-        GENERAL:{
+        GENERAL: {
             FROM: 'from',
             TO: 'until'
         },
@@ -12,7 +12,7 @@ export const locale = {
             WALLET: 'Wallet',
             DISCOVER: 'Discover',
             SUPPORT: 'Suppport',
-          },
+        },
         MENU: {
             NEW: 'new',
             ACTIONS: 'Actions',
@@ -20,81 +20,83 @@ export const locale = {
             FEATURES: 'Features',
             APPS: 'Apps',
             DASHBOARD: 'Dashboard',
-			HOME: 'Home',
-			CAMPAIGNS: 'Campaigns',
-			EVENTS: 'Events',
-			POSTS: 'Posts',
-			OFFERS: 'Offers',
+            HOME: 'Home',
+            CAMPAIGNS: 'Campaigns',
+            EVENTS: 'Events',
+            POSTS: 'Posts',
+            OFFERS: 'Offers',
         },
-		COMMUNITY: {
-			TITLE: 'COMMUNITY',
-			SUBTITLE: 'Meet our partners!',
-			DESC: 'Who we are!'
-		},
-		BALANCE: {
-			TITLE: 'BALANCE',
-			SUBTITLE: 'across the network',
-		},
-		QR: {
-			TITLE: 'This is your QR code',
-		},
-		SCAN: {
-			TITLE: 'SCAN',
-			SUBTITLE: '',
-			DESC: ''
-		},
-		SCAN_POINTS: {
-			TITLE: 'Scan for Points',
-			SUBTITLE: '',
-			DESC: ''
-		},
-		SCAN_OFFERS: {
-			TITLE: 'Scan for Offers',
-			SUBTITLE: '',
-			DESC: ''
-		},
-		OFFERS: {
-			TITLE: 'OFFERS',
-			SUBTITLE: 'Create a new Offer',
-			DESC: 'Reward your customer for being loyal!',
-			UNTIL: 'until'
-		},
-		POSTS: {
-			TITLE: 'POSTS / EVENTS',
-			SUBTITLE: 'Upload a new Post / Event',
-			DESC: 'Make your thoughts or an upcoming event public!'
-		},
-		PROFILE: {
-			TITLE: 'PROFILE',
-			SUBTITLE: '',
-			DESC: ''
-		},
-		PERSONAL_INFO: {
-			TITLE: 'Personal information',
-			SUBTITLE: 'Personal information',
-			DESC: 'Update for Personal Information'
-		},
-		CHANGE_PASSWORD: {
-			TITLE: 'Change Password',
-			SUBTITLE: 'Update Password',
-			DESC: ''
-		},
-		TRANSACTIONS: {
-			TITLE: 'Transactions',
-			SUBTITLE: '',
-			DESC: ''
-		},
-		PARTNERS: {
-			TITLE: 'PARTNERS',
-			SUBTITLE: '',
-			DESC: ''
-		},
-		HEADER: {
-			MESSAGE: 'Welcome'
-		},
+        COMMUNITY: {
+            TITLE: 'COMMUNITY',
+            SUBTITLE: 'Meet our partners!',
+            DESC: 'Who we are!'
+        },
+        BALANCE: {
+            TITLE: 'BALANCE',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        QR: {
+            TITLE: 'QR',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        SCAN: {
+            TITLE: 'SCAN',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        SCAN_POINTS: {
+            TITLE: 'Scan for Points',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        SCAN_OFFERS: {
+            TITLE: 'Scan for Offers',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        OFFERS: {
+            TITLE: 'OFFERS',
+            SUBTITLE: 'Create a new Offer',
+            DESC: 'Reward your customer for being loyal!'
+        },
+        POSTS: {
+            TITLE: 'POSTS / EVENTS',
+            SUBTITLE: 'Upload a new Post / Event',
+            DESC: 'Make your thoughts or an upcoming event public!'
+        },
+        PROFILE: {
+            TITLE: 'PROFILE',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        PERSONAL_INFO: {
+            TITLE: 'Personal information',
+            SUBTITLE: 'Personal information',
+            DESC: 'Update for Personal Information'
+        },
+        CHANGE_PASSWORD: {
+            TITLE: 'Change Password',
+            SUBTITLE: 'Update Password',
+            DESC: ''
+        },
+        TRANSACTIONS: {
+            TITLE: 'Transactions',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        PARTNERS: {
+            TITLE: 'PARTNERS',
+            SUBTITLE: '',
+            DESC: ''
+        },
+        HEADER: {
+            MESSAGE: 'Welcome'
+        },
         PAGES: {
-            CUSTOMER_DASHBOARD:{
-                WALLET_TITLE:'My Wallet'
+            CUSTOMER_DASHBOARD: {
+                WALLET_TITLE: 'My Wallet'
             },
             COMMUNITY: {
                 OUR_COMMUNITY: 'Our Community!',
@@ -111,15 +113,15 @@ export const locale = {
                 EVENT: 'Event',
             }
         },
-        LISTS:{
-            OFFERS_LIST:'Offers',
-            OFFERS_LIST_LINK:'All Offers',
-            CAMPAIGN_LIST:'Campaigns',
-            CAMPAIGN_LIST_LINK:'All Campaigns',
-            NEWSEVENTS_LIST:'News & Events',
-            NEWSEVENTS_LIST_LINK:'All News & Events',
-            MERCHANT_LIST:'Cooperatives',
-            MERCHANT_LIST_LINK:'All Cooperatives'
+        LISTS: {
+            OFFERS_LIST: 'Offers',
+            OFFERS_LIST_LINK: 'All Offers',
+            CAMPAIGN_LIST: 'Campaigns',
+            CAMPAIGN_LIST_LINK: 'All Campaigns',
+            NEWSEVENTS_LIST: 'News & Events',
+            NEWSEVENTS_LIST_LINK: 'All News & Events',
+            MERCHANT_LIST: 'Cooperatives',
+            MERCHANT_LIST_LINK: 'All Cooperatives'
         },
         MESSAGE: {
             WARNING: {
@@ -137,18 +139,18 @@ export const locale = {
             SUCCESS: {
                 TITLE: 'All good!',
                 OFFER_CREATED: 'A new Offer has been successfully created!',
-								OFFER_UPDATED: 'The Offer has been successfully updated!',
-								OFFER_DELETED: 'The Offer has been successfully deleted!',
+                OFFER_UPDATED: 'The Offer has been successfully updated!',
+                OFFER_DELETED: 'The Offer has been successfully deleted!',
                 POST_CREATED: 'A new Post has been successfully created!',
-								POST_UPDATED: 'The Post has been successfully updated!',
-								POST_DELETED: 'The Post has been successfully deleted!',
-								EVENT_CREATED: 'A new Event has been successfully created!',
-								EVENT_UPDATED: 'The Event has been successfully updated!',
-								EVENT_DELETED: 'The Event has been successfully deleted!',
-								CAMPAIGN_CREATED: 'A new Campaign has been successfully created!',
-								CAMPAIGN_PUBLISHED: 'The Campaign has been successfully published!',
-								CAMPAIGN_UPDATED: 'The Campaign has been successfully updated!',
-								CAMPAIGN_DELETED: 'The Campaign has been successfully deleted!',
+                POST_UPDATED: 'The Post has been successfully updated!',
+                POST_DELETED: 'The Post has been successfully deleted!',
+                EVENT_CREATED: 'A new Event has been successfully created!',
+                EVENT_UPDATED: 'The Event has been successfully updated!',
+                EVENT_DELETED: 'The Event has been successfully deleted!',
+                CAMPAIGN_CREATED: 'A new Campaign has been successfully created!',
+                CAMPAIGN_PUBLISHED: 'The Campaign has been successfully published!',
+                CAMPAIGN_UPDATED: 'The Campaign has been successfully updated!',
+                CAMPAIGN_DELETED: 'The Campaign has been successfully deleted!',
                 MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',
                 PROFILE_UPDATED: 'Your Personal Information has been successfully updated!',
@@ -193,7 +195,7 @@ export const locale = {
                 DESC: ''
             },
             IMAGE: {
-							TITLE: 'Image',
+                TITLE: 'Image',
             },
             PHONE: {
 
@@ -211,16 +213,16 @@ export const locale = {
 
             },
             SECTOR: 'Sector',
-						SECTOR_CHOICES: {
-							_: 'Other',
-							A: 'Β2Β Services',
-							B: 'Durables',
-							C: 'Durables (Technology)',
-							D: 'Education',
-							E: 'Food',
-							F: 'Hotels, Cafés and Restaurants',
-							G: 'Recreation and Culture',
-						},
+            SECTOR_CHOICES: {
+                _: 'Other',
+                A: 'Β2Β Services',
+                B: 'Durables',
+                C: 'Durables (Technology)',
+                D: 'Education',
+                E: 'Food',
+                F: 'Hotels, Cafés and Restaurants',
+                G: 'Recreation and Culture',
+            },
             SUPPORT: {
                 PAYMENT_CHOICES: {
                     A: 'Paypal',
@@ -232,6 +234,7 @@ export const locale = {
             },
 
             OFFER: {
+                DESC: 'Create a new Offer',
                 TITLE: {
                     TITLE: 'Offer Title',
                     PLACEHOLDER: 'Title',
@@ -260,154 +263,155 @@ export const locale = {
                 },
             },
 
-            OFFER_DESCRIPTION: {
-                TITLE: 'Offer\'s Description',
-                PLACEHOLDER: 'Description',
-                DESC: 'Please, enter Offer\'s Description.'
-            },
-            OFFER_EXPIRATION: {
-                TITLE: 'Expiration Date',
-                PLACEHOLDER: 'Date',
-                DESC: 'Please, enter when your Offer will be expired.'
-            },
-            OFFER_COST: {
-                TITLE: 'Cost in points',
-                PLACEHOLDER: 'Points',
-                DESC: 'Please enter offer\'s required points.'
-            },
-            EXPIRATION_CHOICES: {
-                A: 'In one Week',
-                B: 'In one Month',
-                C: 'In three Months',
-                D: 'In six Months'
-            },
-
-            POST_CONTENT: {
-
-            },
-            POST_TYPE: {
-
-            },
-            POST_ACCESS: {
-
-            },
-			POST: {
+            POST: {
+                DESC: 'Create a new Post',
                 TITLE: {
-                    TITLE: 'Post Title',
+                    TITLE: 'Post\'s Title',
                     PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Post Title.'
+                    DESC: 'Please, enter Post\'s Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Post\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Post\'s Iamge.'
                 },
                 CONTENT: {
-                    TITLE: 'Post Description',
-                    PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Post Description.'
-                },
-                DATE: {
-                    TITLE: 'Expiration Date',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
-                },
-				ACCESS: {
-                    TITLE: 'Access',
-                    PLACEHOLDER: 'Access',
-                    DESC: 'Please, enter when your Access.'
-					
-                },
-				ACCESS_CHOICES: {
-                    A: 'Public',
-                    B: 'Private',
-                    C: 'Partners'					
-                },
-            },
-				MICROCREDIT_CAMPAIGN:{
-                TITLE: {
-                    TITLE: 'Campaign Title',
+                    TITLE: 'Post\'s Contents',
                     PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Campaign Title.'
+                    DESC: 'Please, enter Post\'s Content.'
+                },
+                ACCESS: {
+                    TITLE: 'Post\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter Post\'s Access.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Open to all',
+                    B: 'Only registered members',
+                    C: 'Only merchants'
+                }
+            },
+
+            EVENT: {
+                DESC: 'Create a new Event',
+                TITLE: {
+                    TITLE: 'Event\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Event\'s Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Event\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Event\'s Imamge.'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Event\'s Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Event\'s Description.'
+                },
+                ACCESS: {
+                    TITLE: 'Event\'s Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter Event\'s Access.'
+                },
+                LOCATION: {
+                    TITLE: 'Event\'s Location',
+                    PLACEHOLDER: 'Location',
+                    DESC: 'Please, enter Event\'s Location.'
+                },
+                DATETIME: {
+                    TITLE: 'Event\'s Datetime',
+                    PLACEHOLDER: 'Datetime',
+                    DESC: 'Please, enter Event\'s Datetime.'
+                },
+                ACCESS_CHOICES: {
+                    A: 'Open to all',
+                    B: 'Only registered members',
+                    C: 'Only merchants'
+                }
+            },
+
+            MICROCREDIT_CAMPAIGN: {
+                DESC: 'Create a new Microcredit Campaign',
+                TITLE: {
+                    TITLE: 'Campaign\'s Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Campaign\'s Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Campaign\'s Image',
+                    PLACEHOLDER: 'Image',
+                    DESC: 'Please, upload Campaign\'s Imamge.'
                 },
                 TERMS: {
-                    TITLE: 'Terms Description',
-                    PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Terms Description.'
+                    TITLE: 'Campaign\'s Terms',
+                    PLACEHOLDER: 'Terms',
+                    DESC: 'Please, enter Campaign\'s Terms.'
                 },
-								DESCRIPTION: {
-                    TITLE: 'Campaign Description',
+                DESCRIPTION: {
+                    TITLE: 'Campaign\'s Description',
                     PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter a Campaign Description.'
+                    DESC: 'Please, enter Campaign\'s Description.'
                 },
-								CATEGORY: {
-                    TITLE: 'Category',
+                CATEGORY: {
+                    TITLE: 'Campaign\'s Category',
                     PLACEHOLDER: 'Category',
-                    DESC: 'Please, enter the Campaign Category.'
+                    DESC: 'Please, enter Campaign\'s Category.'
                 },
-								MIN_ALLOWED_PRICE: {
-                    TITLE: 'Price',
-                    PLACEHOLDER: '1000',
-                    DESC: 'Please, enter the price.'
+                QUANTITATIVE: {
+                    TITLE: 'Quantitative',
+                    PLACEHOLDER: 'Quantitative',
+                    DESC: 'Quantitative'
                 },
-								MIN_ALLOWED: {
-                    TITLE: 'Min Allowed',
-                    PLACEHOLDER: '1000',
-                    DESC: 'Please, enter your Min Allowed.'
+                MIN_ALLOWED: {
+                    TITLE: 'Min Allowed Support',
+                    PLACEHOLDER: 'Minimum',
+                    DESC: 'Enter minimum allowed amount per support.'
                 },
-								MAX_ALLOWED: {
-                    TITLE: 'Max Allowed',
-                    PLACEHOLDER: '1000',
-                    DESC: 'Please, enter your Max Allowed.'
+                MAX_ALLOWED: {
+                    TITLE: 'Max Allowed Support',
+                    PLACEHOLDER: 'Maximum',
+                    DESC: 'Enter maximum allowed amount per support.'
                 },
-								STEP: {
-                    TITLE: 'Step',
-                    PLACEHOLDER: '20',
-                    DESC: 'Please, enter payment step (Optional).'
+                MAX_AMOUNT: {
+                    TITLE: 'Max Sum Amount',
+                    PLACEHOLDER: 'Amount',
+                    DESC: 'Enter up limit.'
                 },
-								MAX_AMOUNT: {
-                    TITLE: 'Max Amount',
-                    PLACEHOLDER: '1000',
-                    DESC: 'Please, enter when your Max Amount.'
-                },
-								ACCESS: {
-                    TITLE: 'Access',
+                ACCESS: {
+                    TITLE: 'Campaign\'s Access',
                     PLACEHOLDER: 'Access',
-                    DESC: 'Please, enter when your Access.'
-					
+                    DESC: 'Please, enter who can see your Campaign.'
                 },
-								ACCESS_CHOICES: {
-                    A: 'Public',
-                    B: 'Private',
-                    C: 'Partners'					
+                REDEEM_STARTS: {
+                    TITLE: 'Redeem Starting Date',
+                    PLACEHOLDER: 'Redeem Starting',
+                    DESC: 'Please, enter when your Campaign will be collectible.'
                 },
-								INITIATION: {
-                    TITLE: 'Initiation Date',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Campaign will begin.'
+                REDEEM_ENDS: {
+                    TITLE: 'Redeem Ending Date',
+                    PLACEHOLDER: 'Redeem Ending',
+                    DESC: 'Please, enter when your Campaign will be stop being collectible.'
                 },
-								EXPIRATION: {
+                EXPIRES: {
                     TITLE: 'Expiration Date',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Campaign will expire.'
+                    PLACEHOLDER: 'Camapign Expiring',
+                    DESC: 'Please, enter when your Campaign will be expired.'
                 },
-								REDEEM_STARTS: {
-                    TITLE: 'Date redeem starts',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when redeem can begin.'
-                },
-								REDEEM_ENDS: {
-										TITLE: 'Date redeem ends',
-										PLACEHOLDER: 'Date',
-										DESC: 'Please, enter when redeem can end.'
-								},
-								QUANTITATIVE: 'Is it Quantitative?',
-								DATE_TOO_EARLY: 'The end date cannot be earlier tha th start date',
-								SUBMIT_DRAFT: 'Save as Draft',
-								SUBMIT_CAMPAIGN: 'Publish Campaign',
-            }
+                ACCESS_CHOICES: {
+                    A: 'Open to all',
+                    B: 'Only registered members',
+                    C: 'Only merchants'
+                }
+            },
+
         },
         FORM: {
             BUTTONS: {
                 SUBMIT: 'Submit',
                 PREVIOUS: 'Previous',
                 NEXT_STEP: 'Next Step',
-				SAVE: 'Save',
+                SAVE: 'Save',
             },
             VALIDATION: {
                 REQUIRED_FIELD: 'Required field.',
@@ -420,8 +424,8 @@ export const locale = {
         },
         AUTH: {
             MESSAGES: {
-								WELCOME_TITLE: 'Welcome to Synergy!',
-								WELCOME_SUBTITLE: 'A Financial Toolkit for Cooperatives',
+                WELCOME_TITLE: 'Welcome to Synergy!',
+                WELCOME_SUBTITLE: 'A Financial Toolkit for Cooperatives',
                 HAVE_ACCOUNT: 'Don\'t have an account yet?',
                 ALREADY_VALIDATED: 'Do you have already validated your email address?',
                 ALREADY_UPDATED: 'Do you have already updated your password?',
@@ -501,75 +505,16 @@ export const locale = {
                 INVALID_FIELD: 'Field is not valid',
             }
         },
-		MERCHANT: {
-			SCANNER: {
-				LOYALTY_TITLE: 'Scan for Points',
-				BACK_TO_SCANNER: 'Back to Scanner',
-				PREVIOUS_STEP: 'Go back',
-				NEXT_STEP: 'Go to next step',
-				COMPLETE: 'Complete Transaction',
-				CLOSE: 'Close Window',
-				SCAN_LOYALTY: {
-					HEADING: 'Scan a new Card, Scan User App, Scan User Card',
-					ALT_PROMPT: 'Identifier',
-				},
-				SUB_IDENTIFIER_FORM: {
-					HEADING: 'Identifier Form',
-					TITLE: 'Identifier',
-					HINT: 'Please enter email or card number.'
-				},
-				SUB_EMAIL_FORM: {
-					HEADING: 'Scan your barcode or enter a customer E-mail',
-					HINT: 'Please enter client\'s email address.'
-				},
-				SUB_AMOUNT_FORM: {
-					HEADING: 'Transaction amount',
-					TITLE: 'Amount',
-					HINT: 'Please enter transaction amount.'
-				},
-				SUB_DISCOUNT_FORM: {
-					HEADING: 'Transaction amount',
-					TITLE: 'You can have a discount of',
-					CTA: 'Check to Redeem discount'
-				},
-				SUB_OFFER_FORM: {
-					HEADING_MAIN: 'Offer Transaction Details',
-					HEADING: 'Transaction quantity',
-					TITLE: 'Quantity',
-					HINT: 'Please enter transaction quantity.',
-					ALERT: 'Not enough points',
-					ID: 'ID',
-					COST: 'Cost',
-					POINTS: 'Customer Points'
-				},
-				SUB_FINAL_STEP: {
-					AMOUNT: 'Transaction Amount',
-					POINTS_TO_REDEEM: 'Points to Redeem',
-					QUANTITY: 'Quantity',
-					TOKENS_BEFORE: 'Initial Tokens',
-					TOKENS_REDEEMED: 'Tokens Redeemed', 
-					TOKENS_REMAINING: 'Tokens Remaining'
-				},
-				SUB_MICROCREDIT_FORM: {
-					HEADING: 'Support items',
-					CAMPAIGN_ID: 'Campaign ID',
-					HEADING_2: 'Tokens',
-					SUPPORT_ID: 'Support ID',
-					INITIAL: 'initial',
-					REDEEMED: 'redeemed',
-					REMAINING: 'remaining',
-					ALERT: 'No Transactions. Unable to proceed.',
-					HEADING_3: 'Transaction Tokens',
-					HINT: 'Please enter transaction tokens.'
-				}
-			}
-		},
-		OFFER: {
-			TITLE: 'OFFER'
-		},
-		CAMPAIGN: {
-			TITLE: 'CAMPAIGN',
-			DRAFT: 'draft'
-		},
+        MERCHANT: {
+            SCANNER: {
+                LOYALTY_TITLE: 'Scan for Points'
+            }
+        },
+        OFFER: {
+            TITLE: 'OFFER'
+        },
+        CAMPAIGN: {
+            TITLE: 'CAMPAIGN'
+        },
     }
 };
