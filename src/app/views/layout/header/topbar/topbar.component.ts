@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 // RxJS
 import { Observable, of } from 'rxjs';
@@ -13,7 +13,6 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
   styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
-	@ViewChild('header', {static: true}) htmlTitle: ElementRef;
 	user: any;
 	title: string;
 	
@@ -30,6 +29,7 @@ export class TopbarComponent implements OnInit {
 			map(() => {
 				let route = this.activatedRoute;
 				while (route.firstChild) route = route.firstChild;
+				console.log('route');
 				return route;
 			}),
 			filter((route) => route.outlet === 'primary'),
@@ -45,24 +45,24 @@ export class TopbarComponent implements OnInit {
 						return acc + frag;
 					});
 				}
+				//
 			})
-		).subscribe(val => {this.title = val;console.log(val)});
+		).subscribe(val => {
+			this.title = val;
+			console.log(val);
+			this.cDRef.markForCheck();
+			translate.get(val).subscribe((translation:string) => {
+				console.log(translation);
+				this.titleService.setTitle(translation);
+			});
+			
+		});
 	}
 
 	ngOnInit() {
 		this.user = this.authenticationService.currentUserValue.user;
-		//console.log(this.titleService.getTitle());
 		
-		//this.titleService.setTitle(this.htmlTitle.nativeElement.innerText);
-		this.cDRef.markForCheck();	
 	}
 	
-	ngAfterContentInit(){
-		console.log(this.htmlTitle);
-		console.log(this.htmlTitle.nativeElement);
-		console.log(this.htmlTitle.nativeElement.textContent);
-		console.log(this.htmlTitle.nativeElement.innerText);
-    this.titleService.setTitle(this.htmlTitle.nativeElement.innerText);
-  }
 	
 }

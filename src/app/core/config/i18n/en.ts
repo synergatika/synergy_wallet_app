@@ -1,31 +1,31 @@
 export const locale = {
-    lang: 'en',
-    data: {
-        GENERAL:{
-            FROM: 'from',
-            TO: 'until'
-        },
-        TRANSLATOR: {
-            SELECT: 'Select your language',
-        },
-        MENU_CLIENT: {
-            WALLET: 'Wallet',
-            DISCOVER: 'Discover',
-            SUPPORT: 'Suppport',
-          },
-        MENU: {
-            NEW: 'new',
-            ACTIONS: 'Actions',
-            PAGES: 'Pages',
-            FEATURES: 'Features',
-            APPS: 'Apps',
-            DASHBOARD: 'Dashboard',
+	lang: 'en',
+	data: {
+		GENERAL:{
+				FROM: 'from',
+				TO: 'until'
+		},
+		TRANSLATOR: {
+				SELECT: 'Select your language',
+		},
+		MENU_CLIENT: {
+				WALLET: 'Wallet',
+				DISCOVER: 'Discover',
+				SUPPORT: 'Suppport',
+			},
+		MENU: {
+			NEW: 'new',
+			ACTIONS: 'Actions',
+			PAGES: 'Pages',
+			FEATURES: 'Features',
+			APPS: 'Apps',
+			DASHBOARD: 'Dashboard',
 			HOME: 'Home',
 			CAMPAIGNS: 'Campaigns',
 			EVENTS: 'Events',
 			POSTS: 'Posts',
 			OFFERS: 'Offers',
-        },
+		},
 		COMMUNITY: {
 			TITLE: 'COMMUNITY',
 			SUBTITLE: 'Meet our partners!',

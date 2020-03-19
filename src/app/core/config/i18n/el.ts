@@ -1,31 +1,31 @@
 export const locale = {
-    lang: 'el',
-    data: {
-        GENERAL:{
-            FROM: 'από',
-            ΤΟ: 'εώς'
-        },
-        TRANSLATOR: {
-            SELECT: 'Επιλογή γλώσσας',
-        },
-        MENU_CLIENT: {
-          WALLET: 'Πορτοφόλι',
-          DISCOVER: 'Ανακάλυψε',
-          SUPPORT: 'Υποστήριξε',
-        },
-        MENU: {
-            NEW: 'new',
-            ACTIONS: 'Actions',
-            PAGES: 'Pages',
-            FEATURES: 'Features',
-            APPS: 'Apps',
-            DASHBOARD: 'Dashboard',
+	lang: 'el',
+	data: {
+		GENERAL:{
+				FROM: 'από',
+				ΤΟ: 'εώς'
+		},
+		TRANSLATOR: {
+				SELECT: 'Επιλογή γλώσσας',
+		},
+		MENU_CLIENT: {
+			WALLET: 'Πορτοφόλι',
+			DISCOVER: 'Ανακάλυψε',
+			SUPPORT: 'Υποστήριξε',
+		},
+		MENU: {
+			NEW: 'new',
+			ACTIONS: 'Actions',
+			PAGES: 'Pages',
+			FEATURES: 'Features',
+			APPS: 'Apps',
+			DASHBOARD: 'Dashboard',
 			HOME: 'Αρχική',
 			CAMPAIGNS: 'Καμπάνιες',
 			EVENTS: 'Εκδηλώσεις',
 			POSTS: 'Αναρτήσεις',
 			OFFERS: 'Προσφορές',
-        },
+		},
 		COMMUNITY: {
 			TITLE: 'ΚΟΙΝΟΤΗΤΑ',
 			SUBTITLE: 'Αυτοί είμαστε!',

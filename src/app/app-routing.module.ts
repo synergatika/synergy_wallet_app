@@ -43,7 +43,7 @@ const routes: Routes = [
 			},*/
 			{
 				path: 'dashboard', component: CustomerDashboardComponent,
-				canActivate: [UserGuard], data: { title: 'HEADER.MESSAGE' }
+				canActivate: [UserGuard], data: { title: 'MENU.HOME' }
 			},
 			{
 				path: 'explore', component: CustomerExploreComponent, data: { title: 'Discover' }
@@ -56,13 +56,13 @@ const routes: Routes = [
 			//{ path: 'history', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
 			//{ path: 'settings', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
 			{
-				path: 'coops', component: ArchiveCoopsComponent, data: { title: 'coops' }
+				path: 'coops', component: ArchiveCoopsComponent, data: { title: 'MENU.COMMUNITY' }
 			},
 			{
-				path: 'offers', component: ArchiveOffersComponent, data: { title: 'offers' }
+				path: 'offers', component: ArchiveOffersComponent, data: { title: 'MENU.OFFERS' }
 			},
 			{
-				path: 'posts', component: ArchivePostsComponent, data: { title: 'posts' }
+				path: 'posts', component: ArchivePostsComponent, data: { title: 'MENU.POSTS' }
 			},
 			{
 				path: 'invitation', component: InvitationComponent, data: { title: 'invitation' }
@@ -79,7 +79,7 @@ const routes: Routes = [
 					{
 						path: 'edit/:_id', component: EditOfferComponent
 					},
-				], data: { title: 'Offers' }
+				], data: { title: 'MENU.OFFERS' }
 			},
 			{
 				path: 'm-campaigns',
@@ -96,7 +96,7 @@ const routes: Routes = [
 					{
 						path: 'edit-draft/:_id', component: EditMicrocreditCampaignComponentDraft
 					},
-				], data: { title: 'Campaigns' }
+				], data: { title: 'MENU.CAMPAIGNS' }
 			},
 			{
 				path: 'm-posts',
@@ -110,7 +110,7 @@ const routes: Routes = [
 					{
 						path: 'edit/:_id', component: EditPostComponent
 					},
-				], data: { title: 'Posts' }
+				], data: { title: 'MENU.POSTS' }
 			},
 			{
 				path: 'm-events',
@@ -124,7 +124,7 @@ const routes: Routes = [
 					{
 						path: 'edit/:_id', component: EditEventComponent
 					},
-				], data: { title: 'Events' }
+				], data: { title: 'MENU.EVENTS' }
 			},
 			/*{
 				path: '**', component: NotFoundComponent
