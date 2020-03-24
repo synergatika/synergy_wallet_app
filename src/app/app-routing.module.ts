@@ -42,8 +42,10 @@ const routes: Routes = [
 			path: 'qr-code', component: QrCodeComponent
 			},*/
 			{
-				path: 'dashboard', component: CustomerDashboardComponent,
-				canActivate: [UserGuard], data: { title: 'MENU.HOME' }
+				path: 'dashboard', 
+				component: CustomerDashboardComponent,
+				canActivate: [UserGuard], 
+				data: { title: 'MENU.HOME' }
 			},
 			{
 				path: 'explore', component: CustomerExploreComponent, data: { title: 'Discover' }
