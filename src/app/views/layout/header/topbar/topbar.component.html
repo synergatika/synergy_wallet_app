@@ -1,1 +1,1 @@
-<div class="topbar">{{ 'HEADER.MESSAGE' | translate }} <span *ngIf="user">{{user.name}}</span>!</div>
+<div *ngIf="title" class="topbar">{{title | translate}} <span *ngIf="user && title=='HEADER.MESSAGE'">{{user.name}}!</span></div>

@@ -24,23 +24,27 @@ const routes: Routes = [
             {
                 path: '',
                 redirectTo: 'profile',
-                pathMatch: 'full'
+                pathMatch: 'full', 
             },
             {
                 path: 'profile',
                 component: PersonalInformationComponent,
+								data: { title: 'Profile' }
             },
             {
                 path: 'change-password',
-                component: ChangePasswordComponent
+                component: ChangePasswordComponent,
+								data: { title: 'Profile' }
             },
             {
                 path: 'account-settings',
                 component: AccountSettingsComponent,
+								data: { title: 'Profile' }
             },
             {
                 path: 'email-settings',
                 component: EmailSettingsComponent,
+								data: { title: 'Profile' }
             },
 			{
                 path: 'history',

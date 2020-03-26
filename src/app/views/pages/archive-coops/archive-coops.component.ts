@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { MerchantsService } from '../../../core/services/merchants.service';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Merchant } from '../../../core/models/merchant.model';
 
 @Component({
 	selector: 'app-archive-coops',
@@ -9,7 +10,7 @@ import { Subject } from 'rxjs';
 	styleUrls: ['./archive-coops.component.scss']
 })
 export class ArchiveCoopsComponent implements OnInit {
-	merchants: any;
+	merchants: Merchant[];
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 

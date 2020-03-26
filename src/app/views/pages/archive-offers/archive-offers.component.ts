@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ItemsService } from '../../../core/services/items.service';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Offer } from '../../../core/models/offer.model';
 
 @Component({
 	selector: 'app-archive-offers',
@@ -9,7 +10,7 @@ import { Subject } from 'rxjs';
 	styleUrls: ['./archive-offers.component.scss']
 })
 export class ArchiveOffersComponent implements OnInit {
-	offers: any;
+	offers: Offer[];
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 

@@ -42,30 +42,32 @@ const routes: Routes = [
 			path: 'qr-code', component: QrCodeComponent
 			},*/
 			{
-				path: 'dashboard', component: CustomerDashboardComponent,
-				canActivate: [UserGuard],
+				path: 'dashboard', 
+				component: CustomerDashboardComponent,
+				canActivate: [UserGuard], 
+				data: { title: 'MENU.HOME' }
 			},
 			{
-				path: 'explore', component: CustomerExploreComponent
+				path: 'explore', component: CustomerExploreComponent, data: { title: 'Discover' }
 			},
 			{ path: 'microcredit', loadChildren: () => import('./microcredit/microcredit.module').then(m => m.MicrocreditModule) },
 			{ path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(m => m.CustomerSupportModule) },
 			{ path: 'create', loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule) },
-			{ path: 'scanner', loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule) },
-			{ path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
+			{ path: 'scanner', loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule), data: { title: 'HEADER.MESSAGE' } },
+			{ path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule), data: { title: 'settings' } },
 			//{ path: 'history', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
 			//{ path: 'settings', loadChildren: () => import('./history/history.module').then(m => m.HistoryModule) },
 			{
-				path: 'coops', component: ArchiveCoopsComponent
+				path: 'coops', component: ArchiveCoopsComponent, data: { title: 'MENU.COMMUNITY' }
 			},
 			{
-				path: 'offers', component: ArchiveOffersComponent
+				path: 'offers', component: ArchiveOffersComponent, data: { title: 'MENU.OFFERS' }
 			},
 			{
-				path: 'posts', component: ArchivePostsComponent
+				path: 'posts', component: ArchivePostsComponent, data: { title: 'MENU.POSTS' }
 			},
 			{
-				path: 'invitation', component: InvitationComponent
+				path: 'invitation', component: InvitationComponent, data: { title: 'invitation' }
 			},
 			{
 				path: 'm-offers',
@@ -79,7 +81,7 @@ const routes: Routes = [
 					{
 						path: 'edit/:_id', component: EditOfferComponent
 					},
-				]
+				], data: { title: 'MENU.OFFERS' }
 			},
 			{
 				path: 'm-campaigns',
@@ -96,7 +98,7 @@ const routes: Routes = [
 					{
 						path: 'edit-draft/:_id', component: EditMicrocreditCampaignComponentDraft
 					},
-				]
+				], data: { title: 'MENU.CAMPAIGNS' }
 			},
 			{
 				path: 'm-posts',
@@ -110,7 +112,7 @@ const routes: Routes = [
 					{
 						path: 'edit/:_id', component: EditPostComponent
 					},
-				]
+				], data: { title: 'MENU.POSTS' }
 			},
 			{
 				path: 'm-events',
@@ -124,7 +126,7 @@ const routes: Routes = [
 					{
 						path: 'edit/:_id', component: EditEventComponent
 					},
-				]
+				], data: { title: 'MENU.EVENTS' }
 			},
 			/*{
 				path: '**', component: NotFoundComponent

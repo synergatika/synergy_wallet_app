@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { Post } from '../../../core/models/post.model';
 
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { ItemsService } from '../../../core/services/items.service';
-
-import { Post } from '../../../core/models/post.model';
 
 @Component({
 	selector: 'app-merchant-posts',

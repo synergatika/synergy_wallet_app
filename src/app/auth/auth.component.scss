@@ -27,7 +27,19 @@
 }
 .footer {
   margin-top: 40px;
-  img {
-    width: 250px;
-  }
+	padding-bottom: 20px;
+		.row {
+			max-width: 900px;
+			margin: 0 auto;
+		img {
+			max-width: 250px;
+		}
+		.eu-img-container {
+			text-align: center;
+			.eu-img {
+				max-width: 110px;
+				margin: 0 auto;
+			}
+		 }
+	}
 }
