@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ScannerService } from '../_scanner.service';
-import { OfferTransaction } from '../_scanner.interface';
+import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-offer-form',
@@ -12,8 +12,10 @@ export class SubOfferFormComponent implements OnInit {
 
   @Output()
   add_offer: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  previous_step: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  transaction: OfferTransaction;
+  public transaction: ScannerInterface["OfferTransaction"];
 
   submitted: boolean = false;
   submitForm: FormGroup;
@@ -56,6 +58,10 @@ export class SubOfferFormComponent implements OnInit {
     this.transaction.discount_points = this.transaction.cost * this.transaction.quantity;
     this.scannerService.changeOfferTransaction(this.transaction);
     this.add_offer.emit(controls.quantity.value);
+  }
+
+  onPreviousStep() {
+    this.previous_step.emit(true);
   }
 
   /**

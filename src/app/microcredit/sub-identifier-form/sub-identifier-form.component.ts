@@ -15,9 +15,9 @@ export class SubIdentifierFormComponent implements OnInit {
   @Output()
   add_identifier: EventEmitter<string> = new EventEmitter<string>();
 
-  scanned: boolean = false;
-  user: SupportInterface["User"];
+  public user: SupportInterface["User"];
 
+  scanned: boolean = false;
   submitted: boolean = false;
   submitForm: FormGroup;
 
@@ -28,6 +28,12 @@ export class SubIdentifierFormComponent implements OnInit {
     this.scannerService.user.subscribe(user => this.user = user)
   }
 
+	/**
+	 * On Init
+	 */
+  ngOnInit() {
+    this.initForm();
+  }
 
   scanSuccessHandler(result: string): void {
     if (this.scanned) return;
@@ -38,15 +44,10 @@ export class SubIdentifierFormComponent implements OnInit {
     console.log("Error");
   }
 
-  ngOnInit() {
-    this.initForm();
-  }
-
   initForm() {
     this.submitForm = this.fb.group({
       identifier: ['', Validators.compose([
-        Validators.required,
-      ])
+        Validators.required])
       ]
     });
   }

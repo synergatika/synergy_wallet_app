@@ -33,13 +33,10 @@ export const locale = {
         },
         BALANCE: {
             TITLE: 'ΠΟΝΤΟΙ',
-            SUBTITLE: '',
-            DESC: ''
+            SUBTITLE: 'όλο το δίκτυο',
         },
         QR: {
-            TITLE: 'QR',
-            SUBTITLE: '',
-            DESC: ''
+            TITLE: 'Αυτό είναι το QR code σας',
         },
         SCAN: {
             TITLE: 'ΣΑΡΩΣΗ',
@@ -59,7 +56,8 @@ export const locale = {
         OFFERS: {
             TITLE: 'ΠΡΟΣΦΟΡΕΣ',
             SUBTITLE: 'Δημιουργία νέας Προσφοράς',
-            DESC: 'Δώσε στο λαό!'
+            DESC: 'Δώσε στο λαό!',
+            UNTIL: 'έως'
         },
         POSTS: {
             TITLE: 'ΑΝΑΡΤΗΣΕΙΣ / ΓΕΓΟΝΟΤΑ',

@@ -13,7 +13,10 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 // Models
-import { AuthUser } from '../models/user.model';
+import { Message } from '../models/message.model';
+import { AuthUser } from '../models/auth.model';
+import { VerificationRequired } from '../models/verification_required.model';
+import { RegistrationStatus } from '../models/registration_status.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -22,7 +25,7 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-	private router: Router,
+    private router: Router,
   ) {
     this.currentUserSubject = new BehaviorSubject<AuthUser>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -55,88 +58,108 @@ export class AuthenticationService {
     this.currentUserSubject.next(user);
   }
 
-  authenticate(email: string, password: string) {
+  checkIdentifier(identifier: string): Observable<RegistrationStatus> {
+    return this.http.get<any>(`${environment.apiUrl}/auth/check_identifier/${identifier}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
+  linkCard(email: string, card: string): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/auth/link_card/${email}`, { card: card })
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  linkEmail(email: string, card: string): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/auth/link_email/${card}`, { email: email })
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  authenticate(email: string, password: string): Observable<AuthUser> {
     return this.http.post<any>(`${environment.apiUrl}/auth/authenticate`, { email, password })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response.data;
       }));
   }
 
-  register(name: string, email: string, password: string) {
+  register(name: string, email: string, password: string): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/auth/register`, { name, email, password })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  register_customer(email?: string, card?: string) {
+  register_customer(email?: string, card?: string): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/auth/register/customer`, { email: email, card: card })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  register_merchant(access: string, name: string, email: string, sector?: string) {
-    return this.http.post<any>(`${environment.apiUrl}/auth/register/${access}`, { name, email, sector })
-      .pipe(map(data => {
-        return data;
+  register_merchant(formData: FormData): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/merchant`, formData)
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  change_pass(oldPassword: string, newPassword: string) {
+  change_pass(oldPassword: string, newPassword: string): Observable<Message> {
     return this.http.put<any>(`${environment.apiUrl}/auth/change_pass`, { oldPassword, newPassword })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  verification_askEmail(email: string) {
+  verification_askEmail(email: string): Observable<Message> {
     return this.http.get<any>(`${environment.apiUrl}/auth/verify_email/${email}`)
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  verification_checkToken(token: string) {
+  verification_checkToken(token: string): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/auth/verify_email/`, { token })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  restoration_askEmail(email: string) {
+  restoration_askEmail(email: string): Observable<Message> {
     return this.http.get<any>(`${environment.apiUrl}/auth/forgot_pass/${email}`)
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  restoration_checkToken(token: string) {
+  restoration_checkToken(token: string): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/auth/forgot_pass/`, { token })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  restoration_updatePass(token: string, newPassword: string, verPassword: string) {
+  restoration_updatePass(token: string, newPassword: string, verPassword: string): Observable<Message> {
     return this.http.put<any>(`${environment.apiUrl}/auth/forgot_pass/`, { token, newPassword, verPassword })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  change_password(oldPassword: string, newPassword: string) {
+  change_password(oldPassword: string, newPassword: string): Observable<Message> {
     return this.http.put<any>(`${environment.apiUrl}/auth/change_pass/`, { oldPassword, newPassword })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
-  set_password(email: string, oldPassword: string, newPassword: string) {
-    console.log(email, oldPassword, newPassword)
+  set_password(email: string, oldPassword: string, newPassword: string): Observable<Message> {
     return this.http.put<any>(`${environment.apiUrl}/auth/set_pass/${email}`, { oldPassword, newPassword })
-      .pipe(map(data => {
-        return data;
+      .pipe(map(response => {
+        return response;
       }));
   }
 
@@ -144,6 +167,6 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-	this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/auth/login');
   }
 }

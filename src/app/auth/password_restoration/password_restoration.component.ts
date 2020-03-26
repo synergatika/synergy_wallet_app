@@ -3,20 +3,15 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } fr
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // RxJS
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
-// Store
-// import { Store } from '@ngrx/store';
-// import { AppState } from '../../../../core/reducers';
-// Auth
-//import { AuthNoticeService, AuthService, Register, User } from '../../../../core/auth';
-
-import { ConfirmPasswordValidator } from './confirm-password.validator';
-import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service';
+// Services
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-
+// Others
+import { ConfirmPasswordValidator } from './confirm-password.validator';
 // Environment
 import { environment } from '../../../environments/environment';
 
@@ -33,16 +28,12 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 			maxLength: 100
 		}
 	}
-	// Public params
 	passwordForm: FormGroup;
-	loading = false;
-
-	check = false;
-	isLoggedIn$: Observable<boolean>;
-	errors: any = [];
-
 	token: string = '';
+	check: boolean = false;
+
 	private unsubscribe: Subject<any>;
+	loading: boolean = false;
 
 	// Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -50,23 +41,21 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 	 * Component constructor
 	 *
 	 * @param router: Router
-	 * @param auth: AuthService
-	 * @param authNoticeService: AuthNoticeService
-	 * @param translate: TranslateService
-	 * @param store: Store<AppState>
 	 * @param fb: FormBuilder
-	 * @param cdr
-	 * @param activatedRoute
+	 * @param cdr: ChangeDetectorRef
+	 * @param activatedRoute: ActivatedRoute
+	 * @param translate: TranslateService
+	 * @param authNoticeService: AuthNoticeService
+	 * @param authenticationService: AuthenticationService
 	 */
 	constructor(
 		private router: Router,
-		private authenticationService: AuthenticationService,
-		private authNoticeService: AuthNoticeService,
-		private translate: TranslateService,
-		// private store: Store<AppState>,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private translate: TranslateService,
+		private authNoticeService: MessageNoticeService,
+		private authenticationService: AuthenticationService,
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -76,9 +65,9 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 	 */
 
 	/**
-	 * On init
+	 * On Init
 	 */
-	ngOnInit(): void {
+	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
 			this.token = params['token'];
 		});
@@ -94,27 +83,6 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
 		this.loading = false;
-	}
-
-	checkToken() {
-		this.authenticationService
-			.restoration_checkToken(this.token)
-			.pipe(
-				tap(data => {
-					this.authNoticeService.setNotice(this.translate.instant('AUTH.FORGOT_PASSWORD.SUCCESS_CHECK'), 'success');
-					this.check = true;
-				}, error => {
-					this.authNoticeService.setNotice(this.translate.instant('AUTH.FORGOT_PASSWORD.ERROR_CHECK'), 'danger');
-					setTimeout(() => {
-						this.router.navigateByUrl('/auth/forgot-pass');
-					}, environment.authTimeOuter);
-				}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.cdr.markForCheck();
-				})
-			)
-			.subscribe();
 	}
 
 	/**
@@ -141,10 +109,34 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	checkToken() {
+		this.authenticationService.restoration_checkToken(this.token)
+			.pipe(
+				tap(
+					data => {
+						this.authNoticeService.setNotice(this.translate.instant('AUTH.FORGOT_PASSWORD.SUCCESS_CHECK'), 'success');
+						this.check = true;
+					}, error => {
+						this.authNoticeService.setNotice(this.translate.instant('AUTH.FORGOT_PASSWORD.ERROR_CHECK'), 'danger');
+						setTimeout(() => {
+							this.router.navigateByUrl('/auth/forgot-pass');
+						}, environment.authTimeOuter);
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.cdr.markForCheck();
+				})
+			)
+			.subscribe();
+	}
+
 	/**
 	 * Form Submit
 	 */
 	submit() {
+		if (this.loading) return;
+		this.loading = true;
+
 		const controls = this.passwordForm.controls;
 		/** check form */
 		if (this.passwordForm.invalid) {
@@ -153,11 +145,6 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 			);
 			return;
 		}
-
-		if (this.loading) {
-			return;
-		}
-		this.loading = true;
 
 		const authData = {
 			newPassword: controls.newPassword.value,

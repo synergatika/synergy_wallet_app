@@ -6,7 +6,7 @@ import { SupportInterface } from '../_support.interface';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
 import { MicrocreditSupport } from 'src/app/core/models/microcredit-support.model';
-import { MicrocreditCampaign } from 'src/app/core/models/microcredit-campaign.model';
+import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.model';
 
 @Component({
   selector: 'app-sub-amount-form',
@@ -18,8 +18,8 @@ export class SubAmountFormComponent implements OnInit {
   @Output()
   add_amount: EventEmitter<number> = new EventEmitter<number>();
 
-  support: MicrocreditSupport;
-  campaign: MicrocreditCampaign;
+  public support: MicrocreditSupport;
+  public campaign: MicrocreditCampaign;
   campaignType: any;
   tempAmount: any;
 
@@ -41,7 +41,6 @@ export class SubAmountFormComponent implements OnInit {
   }
 
   initForm() {
-    //Submit Form
     this.submitForm = this.fb.group({
       amount: [0, Validators.compose([
         Validators.required,
@@ -57,6 +56,8 @@ export class SubAmountFormComponent implements OnInit {
     });
     const controls = this.submitForm.controls;
     controls['amount'].setValue(this.campaign.minAllowed);
+    controls['method'].setValue((Object.keys(this.campaign.merchant_payments)
+      .filter(key => this.campaign.merchant_payments[key]))[0]);
   }
 
 

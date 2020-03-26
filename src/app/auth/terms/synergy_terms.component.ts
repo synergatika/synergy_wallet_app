@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'kt-modal3',
@@ -8,7 +7,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class TermsComponent implements OnInit, OnDestroy {
 
-
+	/**
+	 * Component constructor
+	 *
+	 * @param dialog: MatDialog
+	 */
     constructor(
         public dialog: MatDialog,
     ) {

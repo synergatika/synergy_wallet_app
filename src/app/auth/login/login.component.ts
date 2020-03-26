@@ -3,30 +3,15 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } fr
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // RxJS
-import { Observable, Subject } from 'rxjs';
-import { finalize, takeUntil, tap, catchError } from 'rxjs/operators';
-import { first } from 'rxjs/operators';
-
+import { Subject } from 'rxjs';
+import { finalize, takeUntil, tap } from 'rxjs/operators';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
-// Store
-// import { Store } from '@ngrx/store';
-// import { AppState } from '../../../../core/reducers';
-// Auth
-//import { AuthNoticeService, AuthService, Login } from '../../../../core/auth';
-import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service';
+// Services
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-
 // Environment
 import { environment } from '../../../environments/environment';
-
-/**
- * ! Just example => Should be removed in development
- */
-const DEMO_PARAMS = {
-	EMAIL: 'admin@demo.com',
-	PASSWORD: 'demo'
-};
 
 @Component({
 	selector: 'kt-login',
@@ -46,15 +31,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 			maxLength: 100
 		}
 	}
-	// Public params
+
+	returnUrl: string;
 	loginForm: FormGroup;
-	loading = false;
-	isLoggedIn$: Observable<boolean>;
-	errors: any = [];
 
 	private unsubscribe: Subject<any>;
-
-	private returnUrl: any;
+	loading: boolean = false;
 
 	// Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -62,22 +44,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 * Component constructor
 	 *
 	 * @param router: Router
-	 * @param authenticationService: AuthenticationService,
-	 * @param authNoticeService: AuthNoticeService
+	 * @param fb: FormBuilder,
+	 * @param cdr: ChangeDetectorRef
+	 * @param route: ActivatedRoute
 	 * @param translate: TranslateService
-	 * @param store: Store<AppState>
-	 * @param fb: FormBuilder
-	 * @param cdr
-	 * @param route
+	 * @param authNoticeService: MessageNoticeService
+	 * @param authenticationService: AuthenticationService
 	 */
 	constructor(
 		private router: Router,
-		private authenticationService: AuthenticationService,
-		private authNoticeService: AuthNoticeService,
-		private translate: TranslateService,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private translate: TranslateService,
+		private authNoticeService: MessageNoticeService,
+		private authenticationService: AuthenticationService,
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -87,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 */
 
 	/**
-	 * On init
+	 * On Init
 	 */
 	ngOnInit(): void {
 		this.initLoginForm();
@@ -113,13 +94,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 * Default params, validators
 	 */
 	initLoginForm() {
-		// demo message to show
-		/*if (!this.authNoticeService.onNoticeChanged$.getValue()) {
-			const initialNotice = `Use account
-			<strong>${DEMO_PARAMS.EMAIL}</strong> and password
-			<strong>${DEMO_PARAMS.PASSWORD}</strong> to continue.`;
-			this.authNoticeService.setNotice(initialNotice, 'info');
-		}*/
 
 		this.loginForm = this.fb.group({
 			email: ['', Validators.compose([
@@ -142,6 +116,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 * Form Submit
 	 */
 	submit() {
+		if (this.loading) return;
+		this.loading = true;
+
 		const controls = this.loginForm.controls;
 		/** check form */
 		if (this.loginForm.invalid) {
@@ -150,8 +127,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 			);
 			return;
 		}
-
-		this.loading = true;
 
 		const authData = {
 			email: (controls.email.value).toLowerCase(),
@@ -162,19 +137,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(
 					data => {
-						if ((data.message) && (data.message === 'need_email_verification')) {
+						if ((data.action) && (data.action === 'need_email_verification')) {
 							this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.EMAIL_NEEDS_VERIFICATION'), 'success');
 						}
-						else if ((data.message) && (data.message === 'need_password_verification')) {
+						else if ((data.action) && (data.action === 'need_password_verification')) {
 							this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.PASSWORD_NEEDS_UPDATE'), 'success');
-							this.router.navigateByUrl('auth/verify-password/' + authData.email); // Main page
+							this.router.navigateByUrl('auth/verify-password/' + authData.email);
 						}
-						else if (data.data) {
-							this.authenticationService.setCurrentUserValue(data.data);
-							this.router.navigateByUrl('/'); // Main page
+						else if (data.user) {
+							this.authenticationService.setCurrentUserValue(data);
+							this.router.navigateByUrl('/');
 						}
-					},
-					error => {
+					}, error => {
 						this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
 					}),
 				takeUntil(this.unsubscribe),

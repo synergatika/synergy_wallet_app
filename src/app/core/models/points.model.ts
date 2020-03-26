@@ -1,3 +1,4 @@
-export class Points {
+export interface Points {
+    address: string;
     points: string;
 }

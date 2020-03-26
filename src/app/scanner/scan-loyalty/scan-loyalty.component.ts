@@ -6,16 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 // Services
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { LoyaltyService } from '../../core/services/loyalty.service';
 
 import { WizardComponent } from "angular-archwizard";
 import { tap, takeUntil, finalize } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { SubDiscountFormComponent } from "../sub-discount-form/sub-discount-form.component";
 import { ScannerService } from "../_scanner.service";
-import { User, PointsTransaction, Actions } from "../_scanner.interface";
+import { ScannerInterface } from "../_scanner.interface";
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -32,115 +33,128 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   @ViewChild(WizardComponent, { static: true })
   public wizard: WizardComponent;
 
+  showIdentifierForm: boolean = false;
+  showEmailForm: boolean = false;
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
+  private subscription: Subscription = new Subscription;
 
-  // submitted: boolean = false;
-  // submitForm: FormGroup;
-
-  showIdentifierForm = false;
-  showCardScanner = false;
-
-  public user: User;
-  public transaction: PointsTransaction;
-  public actions: Actions;
-
-  messages = {
-    stepB: '',
-    stepC: ''
-  }
+  public user: ScannerInterface["User"];
+  public transaction: ScannerInterface["PointsTransaction"];
+  public actions: ScannerInterface["Actions"];
 
   constructor(
     private cdRef: ChangeDetectorRef,
     private translate: TranslateService,
+    private scannerNoticeService: MessageNoticeService,
     private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService,
     private scannerService: ScannerService,
     public dialogRef: MatDialogRef<ScanLoyaltyComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.scannerService.user.subscribe(user => this.user = user);
-    this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction);
-    this.scannerService.actions.subscribe(actions => this.actions = actions);
+    this.subscription.add(this.scannerService.user.subscribe(user => this.user = user));
+    this.subscription.add(this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction));
+    this.subscription.add(this.scannerService.actions.subscribe(actions => this.actions = actions));
     this.unsubscribe = new Subject();
   }
 
 	/**
-	 * On init
+	 * On Init
 	 */
   ngOnInit() {
-    this.initForm();
   }
 
 	/**
 	 * On destroy
 	 */
   ngOnDestroy() {
+    this.scannerNoticeService.setNotice(null);
+    this.subscription.unsubscribe();
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
   }
 
-  /**
-   * States:
-   * no_identifier_field: 0,
-   * identifier_field: 1
-   *
-   * no_email_field: 0,
-   * email_field: 1
-   *
-   * CheckIdentifier:
-   * user_not_exists_A: 11.
-   * user_no_email_A: 10,
-   * user_no_card_A: 01,
-   * user_exists_A: 00
-   *
-   * CheckEmail:
-   * user_not_exists_B: 0,
-   * user_exists_B: 1
-   */
+  checkRegistrationOnIdentifier(status: string) {
+    let action: string = 'xxxx';
+    let type: string = '', message: string = '';
+    this.showEmailForm = false;
+
+    switch (status) {
+      case 'email_both': action = '011'; this.onAfterNextStep(2); break; // No action
+      case 'email_none': {
+        action = '000';
+        type = 'success';
+        message = this.translate.instant('WIZARD_MESSAGES.NEW_EMAIL');
+        this.onAfterNextStep(2);
+        break;
+      }
+      case 'email_no_card': action = '010'; this.onAfterNextStep(2); break;// No action
+      case 'card_both': action = '111'; this.onAfterNextStep(2); break;// No action
+      case 'card_none': {
+        action = '100';
+        type = 'success';
+        message = this.translate.instant('WIZARD_MESSAGES.NEW_CARD');
+        this.showEmailForm = true;
+        this.onNextStep();
+        break;
+      } // OR action = '0100' // Full Registration OR Link Card
+      case 'card_no_email': {
+        action = '101' // OR action = '0000' // Link Email OR No Action
+        type = 'success';
+        message = this.translate.instant('WIZARD_MESSAGES.EXISTING_CARD');
+        this.showEmailForm = true;
+        this.onNextStep();
+        break;
+      }
+    }
+    this.scannerNoticeService.setNotice(message, type);
+    return action;
+  }
+
+  checkRegistrationOnEmail(status: string) {
+    let action: string = 'xx';
+    let type: string = '', message: string = '';
+
+    switch (status) {
+      case 'email_both': {
+        action = '11';
+        type = 'danger';
+        message = this.translate.instant('WIZARD_MESSAGES.EMAIL_HAS_CARD');
+        break;
+      }
+      case 'email_none': {
+        action = '10'
+        type = 'success';
+        message = this.translate.instant('WIZARD_MESSAGES.EMAIL_WILL_LINK');
+        this.onNextStep();
+        break;
+      }
+      case 'email_no_card': {
+        action = '11';
+        type = 'success';
+        message = this.translate.instant('WIZARD_MESSAGES.CARD_WILL_LINK');
+        this.onNextStep();
+        break;
+      }
+      default: type = 'danger'; message = 'Something Went Wrong'; break;
+    }
+    this.scannerNoticeService.setNotice(message, type);
+    return action;
+  }
 
   onSuccessScanIdentifier(event: string) {
-
-    let action: string = '';
-
-    // 'a': 'Identifier OR Form',
-    // 'b': 'Was Email OR Card',
-    // 'c': Is Email Registered,
-    // 'd': Is Card Registered,
-
-    this.loyaltyService.checkIdentifier((this.user.identifier_scan).toLowerCase())
+    this.authenticationService.checkIdentifier((this.user.identifier_scan).toLowerCase())
       .pipe(
         tap(
           data => {
-            if (data.message === 'email_both') {
-              // Ok!
-              action = 'xx0011'; // No action
-              this.onAfterNextStep(3);
-            } else if (data.message === 'email_none') {
-              action = 'xx0000'; // Cannot Be Happened!
-            } else if (data.message === 'email_no_card') {
-              // Ok! Maybe ask card???
-              action = 'xx0010'; // No action
-              this.onAfterNextStep(3);
-            } else if (data.message === 'card_both') {
-              action = 'xx0111'; // No action
-              this.onAfterNextStep(3);
-            } else if (data.message === 'card_none') {
-              action = 'xx0100'; // OR action = '0100' // Full Registration OR Link Card
-              this.messages.stepB = 'New Card. If user is regitered enter email to link! If not ask email to register! Or procced and create a card account';
-              this.onNextStep();
-            } else if (data.message === 'card_no_email') {
-              action = 'xx0101'; // OR action = '0000' // Link Email OR No Action
-              this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
-              this.onNextStep();
-            } else {
-              // Cannot Be Happened!
-            }
-            this.actions.registration = action;
+            this.actions.registration = '0' + this.checkRegistrationOnIdentifier(data.status);
             this.scannerService.changeActions(this.actions);
           },
           error => {
             console.log(error);
+            this.scannerNoticeService.setNotice(this.translate.instant(error), 'danger');
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -153,50 +167,16 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 
   onSubmitIdentifierForm(event: string) {
 
-    let action: string = '0000';
-
-    // 'a': 'Identifier OR Form',
-    // 'b': 'Was Email OR Card',
-    // 'c': Is Email Registered,
-    // 'd': Is Card Registered,
-
-    this.loyaltyService.checkIdentifier((this.user.identifier_form).toLowerCase())
+    this.authenticationService.checkIdentifier((this.user.identifier_form).toLowerCase())
       .pipe(
         tap(
           data => {
-
-            if (data.message === 'email_both') {
-              action = 'xx1011'; // No action
-              this.onAfterNextStep(2);
-            } else if (data.message === 'email_none') {
-              action = 'xx1000'; // Need Registration
-              this.messages.stepC = 'User would be created';
-              this.onAfterNextStep(2);
-            } else if (data.message === 'email_no_card') {
-              action = 'xx1010'; // No Action
-              this.onAfterNextStep(2);
-            } else if (data.message === 'card_both') {
-              action = 'xx1111'; // No Action
-              this.onAfterNextStep(2);
-            } else if (data.message === 'card_none') {
-              this.messages.stepB = '<span class="message-highlight"><span class="mdi mdi-account-card-details"></span> New Card</span><br>If user is registered enter email to link! If not, ask email to register!<br>Or procced and create a card account';
-              action = 'xx1100'; // OR action = '0101' // Full Registration OR Link Card
-              this.onNextStep();
-            } else if (data.message === 'card_no_email') {
-              // Πληκτρολόγησε την κάρτα, Ζήτα Email
-              action = 'xx1101'; // OR action = '0000' // Link Email OR No Action
-              this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
-              this.onNextStep();
-            } else {
-              // Cannot Be Happened!
-            }
-            this.actions.registration = action;
-            console.log("Action on Identifier")
-            console.log(this.actions.registration);
+            this.actions.registration = '1' + this.checkRegistrationOnIdentifier(data.status);
             this.scannerService.changeActions(this.actions);
           },
           error => {
             console.log(error);
+            this.scannerNoticeService.setNotice(this.translate.instant(error), 'danger');
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -207,45 +187,22 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  onSubmitEmailForm(event) {
-    let action: string = '00';
-
-    // 'a': Form has Email
-    // 'b': Mail Exist?
-
-    // έρχεται εδώ όταν
-    // υπαρχουσα καρτα δεν έχει email
-    // νέα καρτα
+  onSubmitEmailForm(event: string) {
     if (event) {
-      this.loyaltyService.checkIdentifier((this.user.email).toLowerCase())
+      this.authenticationService.checkIdentifier((this.user.email).toLowerCase())
         .pipe(
           tap(
             data => {
-              console.log("On Email Message")
-              console.log(data.message);
-              if (data.message === 'email_both') {
-                this.messages.stepC = 'Your Email Has already a card. If you continue the card will be replaced';
-                action = '11' + this.actions.registration.substr(2, 4);
-
-              } else if (data.message === 'email_none') {
-                this.messages.stepC = 'Your Email Will Link With Card';
-                action = '10' + this.actions.registration.substr(2, 4);
-                console.log("2")
-              } else if (data.message === 'email_no_card') {
-                this.messages.stepC = 'Card Will Link With Your Email';
-                action = '11' + this.actions.registration.substr(2, 4);
-                console.log("3")
-              } else {
-                console.log("4")
-                // Cannot Be Happened!
-              }
-              this.actions.registration = action;
+              console.log(data);
+              this.actions.registration = this.checkRegistrationOnEmail(data.status) +
+                this.actions.registration.substr(this.actions.registration.length - 4);
               console.log("Action on Email")
               console.log(this.actions.registration);
               this.scannerService.changeActions(this.actions);
             },
             error => {
               console.log(error);
+              this.scannerNoticeService.setNotice(this.translate.instant(error), 'danger');
             }),
           takeUntil(this.unsubscribe),
           finalize(() => {
@@ -255,48 +212,15 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         )
         .subscribe();
     } else {
-      action = '00' + this.actions.registration.substr(2, 4);
-      this.actions.registration = action;
+      this.actions.registration = '00' + this.actions.registration.substr(this.actions.registration.length - 4);
       this.scannerService.changeActions(this.actions);
+      this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.NO_EMAIL_WILL_LINK'), 'warning');
+      this.onNextStep();
     }
-    console.log("Action on Email")
-    console.log(this.actions.registration);
-    this.onNextStep();
   }
 
   onSubmitAmountForm(event: number) {
-    this.discountForm.fetchBalanceData();
-    this.onNextStep();
-  }
-
-  onSubmitDiscountForm(event: any) {
-
-    console.log('Actions');
-    console.log("Registration: " + this.actions.registration);
-    console.log("Redeem: " + this.actions.redeem);
-
     this.actionsHandler();
-    //this.onNextStep();
-  }
-
-  onAfterNextStep(step: number) {
-    this.wizard.goToStep(step);
-  }
-
-  onNextStep() {
-    this.wizard.goToNextStep();
-  }
-
-  onPreviousStep() {
-    this.wizard.goToPreviousStep();
-  }
-
-  onShowIdentifierFormChange() {
-    this.showIdentifierForm = !this.showIdentifierForm;
-  }
-
-  initForm() {
-
   }
 
   actionsHandler() {
@@ -304,136 +228,163 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       identifier: this.user.identifier_scan || this.user.identifier_form,
       email: this.user.email
     };
-
-    let authData = {
-      email: '',
-      card: ''
-    };
-    // 'a': Form has Email
-    // 'b': Mail Exist?
-    // 'a': 'Identifier OR Form',
-    // 'b': 'Was Email OR Card',
-    // 'c': Is Email Registered,
-    // 'd': Is Card Registered,
-
-    // All States!!!
-    // xx0011, xx0000, xx0010, xx0111,
-    // 100100, 110100, 000100 // New Card
-    // 100101, 110101, 000101 // Card No Email
-    // xx1011, xx1000, xx1010, xx1111,
-    // 101100, 111100, 001100 // New Card
-    // 101101, 111101, 001101 // Card No Email
-
-    console.log("Code: ");
     console.log(this.actions.registration);
+    switch (this.actions.registration) {
+      case 'xx1000': { // only email
+        this.actionRegistration(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGE.USER_CREATED_EMAIL') }, user.identifier, null)
+        break;
+      }
+      case 'xx0000': { // only email
+        this.actionRegistration(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGE.USER_CREATED_EMAIL') }, user.identifier, null)
+        break;
+      }
+      case '000100': { // only card
+        this.actionRegistration(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.USER_CREATED_CARD') }, null, user.identifier);
+        break;
+      }
+      case '001100': { // only card
+        this.actionRegistration(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.USER_CREATED_CARD') }, null, user.identifier);
+        break;
+      }
+      case '100100': { // email_card
+        this.actionRegistration(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.USER_CREATED') }, user.email, user.identifier);
+        break;
+      }
+      case '101100': { // email_card
+        this.actionRegistration(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.USER_CREATED') }, user.email, user.identifier);
+        break;
+      }
+      case '100101': { //link_email
+        this.actionLinkEmail(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.LINK_EMAIL') }, user.email, user.identifier);
 
-    const states = {
-      do_nothing: {
-        has_both: ['xx0011', 'xx1011', 'xx0111', 'xx1111'],
-        do_not_want_to_link_email: ['000101', '001101'],
-        could_link_card: ['xx0010', 'xx1010'],
-      },
-      registration: {
-        only_email: ['xx0000', 'xx1000'],
-        only_card: ['000100', '001100'],
-        email_card: ['100100', '101100'],
-        need_merge: ['110101', '111101'] // This is a merge situation!!!
-      },
-      link: {
-        email: ['100101', '101101'],
-        card: ['110100', '111100']
+        break;
+      }
+      case '101101': { //link_email
+        this.actionLinkEmail(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.LINK_EMAIL') }, user.email, user.identifier);
+        break;
+      }
+      case '110100': { //link_card
+        this.actionLinkCard(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.LINK_CARD') }, user.email, user.identifier);
+        break;
+      }
+      case '111100': { //link_card
+        this.actionLinkCard(
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.LINK_CARD') }, user.email, user.identifier);
+        break;
+      }
+      default: {
+        this.discountForm.fetchBalanceData();
+        this.onNextStep();
+        break;
       }
     }
 
-    if (Array.prototype.concat.apply([],
-      [states.registration.only_email, states.registration.only_card, states.registration.email_card])
-      .includes(this.actions.registration)) {
-      console.log('Action: Registration');
-      if ((states.registration.only_email).includes(this.actions.registration)) {
-        console.log('A');
-        authData.email = user.identifier;
-      } else if ([...states.registration.only_card, ...states.registration.email_card].includes(this.actions.registration)) {
-        console.log('B');
-        authData.email = user.email;
-        authData.card = user.identifier;
-      }
+    // => registration with card,
+    // => registration with email,
+    // => registration with email, card
+    // => link a card
+    // => link an email
+  }
 
-      this.authenticationService.register_customer(authData.email, authData.card)
-        .pipe(
-          tap(
-            data => {
-              this.earnPoints(authData.email || authData.card);
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
+  onSubmitDiscountForm(event: boolean) {
 
-    } else if ((states.link.card).includes(this.actions.registration)) {
+    console.log('Actions');
+    console.log("Registration: " + this.actions.registration);
+    console.log("Redeem: " + this.actions.redeem);
 
-      authData.email = user.email;
-      authData.card = user.identifier;
-      console.log('Action: Link A Card');
+    this.earnPoints(this.user.identifier_form || this.user.identifier_scan);
+    //this.onNextStep();
+  }
 
-      this.loyaltyService.linkCard(authData.email, authData.card)
-        .pipe(
-          tap(
-            data => {
-              this.earnPoints(authData.email);
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-    } else if ((states.link.email).includes(this.actions.registration)) {
-      authData.email = user.email;
-      authData.card = user.identifier;
-      console.log('Action: Link An Email');
+  actionRegistration(notice: { type: string, message: string }, email: string, card: string) {
+    console.log('Reg', email + card)
+    this.authenticationService.register_customer(email, card)
+      .pipe(
+        tap(
+          data => {
+            console.log(data);
+            this.discountForm.fetchBalanceData();
+            this.onNextStep();
+          },
+          error => {
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.ERROR_REGISTRATION') + '<br>' +
+              this.translate.instant(error), 'danger');
+          }),
+        //this.earnPoints(email || card);
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
 
-      this.loyaltyService.linkEmail(authData.email, authData.card)
-        .pipe(
-          tap(
-            data => {
-              this.earnPoints(authData.card);
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-    } else {
-      this.earnPoints(user.identifier);
-    }
+  actionLinkCard(notice: { type: string, message: string }, email: string, card: string) {
+    console.log('Card', email + card)
+    this.authenticationService.linkCard(email, card)
+      .pipe(
+        tap(
+          data => {
+            console.log(data);
+            this.discountForm.fetchBalanceData();
+            this.onNextStep();
+          },
+          error => {
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.ERROR_LINK_CARD') + '<br>' +
+              this.translate.instant(error), 'danger');
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
+  actionLinkEmail(notice: { type: string, message: string }, email: string, card: string) {
+    console.log('Email', email + card);
+    this.authenticationService.linkEmail(email, card)
+      .pipe(
+        tap(
+          data => {
+            console.log(data);
+            this.discountForm.fetchBalanceData();
+            this.onNextStep();
+            //  this.earnPoints(card);
+          },
+          error => {
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.ERROR_LINK_EMAIL') + '<br>' +
+              this.translate.instant(error), 'danger');
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
   }
 
   earnPoints(_to: string) {
-    console.log('Send to: ' + _to);
 
     let earnPoints = {
+      password: 'all_ok',
       _to: _to,
-      _amount: this.transaction.final_amount,
-      password: 'all_ok'
+      _amount: this.transaction.final_amount
     };
-    console.log("Redeem")
-    console.log(this.actions.redeem);
-    this.loyaltyService.earnPoints(earnPoints._to, earnPoints._amount, earnPoints.password)
+
+    this.loyaltyService.earnPoints(earnPoints._to, earnPoints.password, earnPoints._amount)
       .pipe(
         tap(
           data => {
@@ -443,11 +394,14 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
               this.redeemPoints(_to);
             } else {
               console.log("Will Not Redeem");
+              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCESS_TRANSACTION'), 'success');
               this.onNextStep();
             }
           },
           error => {
-            console.log(error);
+            this.scannerNoticeService.setNotice(
+              this.translate.instant('WIZARD_MESSAGES.ERROR_EARN_POINTS') + '<br>' +
+              this.translate.instant(error), 'danger');
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -457,46 +411,27 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    // this.loyaltyService.earnPoints(earnPoints._to, earnPoints._amount, earnPoints.password)
-    //   .pipe(first())
-    //   .subscribe(
-    //     data => {
-    //       if (wantRedeem) {
-    //         this.redeemPoints(earnPoints, redeemPoints);
-    //       } else {
-    //         Swal.fire(
-    //           this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-    //           this.translate.instant('MESSAGE.SUCCESS.AMOUNT') + (earnPoints._amount).toFixed(2) + ' || ' + this.translate.instant('MESSAGE.SUCCESS.POINTS') + '0',
-    //           'success'
-    //         );
-    //       }
-    //     },
-    //     error => {
-    //       console.log(error);
-    //       Swal.fire(
-    //         this.translate.instant('MESSAGE.ERROR.TITLE'),
-    //         this.translate.instant('MESSAGE.ERROR.SERVER'),
-    //         'error'
-    //       );
-    //     });
   }
 
   redeemPoints(_to: string) {
 
     let redeemPoints = {
+      password: 'all_ok',
       _to: _to,
-      _points: this.transaction.discount_points,
-      password: 'all_ok'
+      _points: this.transaction.discount_points
     }
 
-    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
+    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints.password, redeemPoints._points)
       .pipe(
         tap(
           data => {
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCESS_TRANSACTION'), 'success');
             this.onNextStep();
           },
           error => {
-            console.log(error);
+            this.scannerNoticeService.setNotice(
+              this.translate.instant('WIZARD_MESSAGES.ERROR_REDEEM_POINTS') + '<br>' +
+              this.translate.instant(error), 'danger');
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -505,28 +440,326 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-
-    // this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
-    //   .pipe(first())
-    //   .subscribe(
-    //     data => {
-    //       Swal.fire(
-    //         this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-    //         this.translate.instant('MESSAGE.SUCCESS.AMOUNT') + (earnPoints._amount).toFixed(2) + ' || ' + this.translate.instant('MESSAGE.SUCCESS.POINTS') + (redeemPoints._points).toFixed(2),
-    //         'success'
-    //       );
-    //     },
-    //     error => {
-    //       console.log(error);
-    //       Swal.fire(
-    //         this.translate.instant('MESSAGE.ERROR.TITLE'),
-    //         this.translate.instant('MESSAGE.ERROR.SERVER'),
-    //         'error'
-    //       );
-    //     })
   }
 
-  onFinalStep(event=null) {
+  onShowIdentifierFormChange() {
+    this.showIdentifierForm = !this.showIdentifierForm;
+  }
+
+  onNextStep() {
+    this.wizard.goToNextStep();
+  }
+
+  onAfterNextStep(step: number) {
+    this.wizard.goToStep(step);
+  }
+
+  onPreviousStep() {
+    this.scannerNoticeService.setNotice(null);
+    if (this.wizard.currentStep.stepTitle === 'Amount' && !this.showEmailForm) {
+      this.onAfterNextStep(0);
+      return;
+    };
+    this.wizard.goToPreviousStep();
+  }
+
+  onFinalStep() {
     this.dialogRef.close();
   }
 }
+
+
+
+
+
+
+  // onSuccessScanIdentifier(event: string) {
+
+  //   let action: string = '';
+
+  //   // 'a': 'Identifier OR Form',
+  //   // 'b': 'Was Email OR Card',
+  //   // 'c': Is Email Registered,
+  //   // 'd': Is Card Registered,
+
+  //   this.loyaltyService.checkIdentifier((this.user.identifier_scan).toLowerCase())
+  //     .pipe(
+  //       tap(
+  //         data => {
+  //           if (data.status === 'email_both') {
+  //             // Ok!
+  //             action = 'xx0011'; // No action
+  //             this.onAfterNextStep(3);
+  //           } else if (data.status === 'email_none') {
+  //             action = 'xx0000'; // Cannot Be Happened!
+  //           } else if (data.status === 'email_no_card') {
+  //             // Ok! Maybe ask card???
+  //             action = 'xx0010'; // No action
+  //             this.onAfterNextStep(3);
+  //           } else if (data.status === 'card_both') {
+  //             action = 'xx0111'; // No action
+  //             this.onAfterNextStep(3);
+  //           } else if (data.status === 'card_none') {
+  //             action = 'xx0100'; // OR action = '0100' // Full Registration OR Link Card
+  //             this.messages.stepB = 'New Card. If user is regitered enter email to link! If not ask email to register! Or procced and create a card account';
+  //             this.onNextStep();
+  //           } else if (data.status === 'card_no_email') {
+  //             action = 'xx0101'; // OR action = '0000' // Link Email OR No Action
+  //             this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
+  //             this.onNextStep();
+  //           } else {
+  //             // Cannot Be Happened!
+  //           }
+  //           this.actions.registration = action;
+  //           this.scannerService.changeActions(this.actions);
+  //         },
+  //         error => {
+  //           console.log(error);
+  //         }),
+  //       takeUntil(this.unsubscribe),
+  //       finalize(() => {
+  //         this.loading = false;
+  //         this.cdRef.markForCheck();
+  //       })
+  //     )
+  //     .subscribe();
+  // }
+
+  // onSubmitIdentifierForm(event: string) {
+
+  //   let action: string = '0000';
+
+  //   // 'a': 'Identifier OR Form',
+  //   // 'b': 'Was Email OR Card',
+  //   // 'c': Is Email Registered,
+  //   // 'd': Is Card Registered,
+
+  //   this.loyaltyService.checkIdentifier((this.user.identifier_form).toLowerCase())
+  //     .pipe(
+  //       tap(
+  //         data => {
+
+  //           if (data.status === 'email_both') {
+  //             action = 'xx1011'; // No action
+  //             this.onAfterNextStep(2);
+  //           } else if (data.status === 'email_none') {
+  //             action = 'xx1000'; // Need Registration
+  //             this.messages.stepC = 'User would be created';
+  //             this.onAfterNextStep(2);
+  //           } else if (data.status === 'email_no_card') {
+  //             action = 'xx1010'; // No Action
+  //             this.onAfterNextStep(2);
+  //           } else if (data.status === 'card_both') {
+  //             action = 'xx1111'; // No Action
+  //             this.onAfterNextStep(2);
+  //           } else if (data.status === 'card_none') {
+  //             this.messages.stepB = '<span class="message-highlight"><span class="mdi mdi-account-card-details"></span> New Card</span><br>If user is registered enter email to link! If not, ask email to register!<br>Or procced and create a card account';
+  //             action = 'xx1100'; // OR action = '0101' // Full Registration OR Link Card
+  //             this.onNextStep();
+  //           } else if (data.status === 'card_no_email') {
+  //             // Πληκτρολόγησε την κάρτα, Ζήτα Email
+  //             action = 'xx1101'; // OR action = '0000' // Link Email OR No Action
+  //             this.messages.stepB = 'Existing Card. ! Ask email to link! Or procced!';
+  //             this.onNextStep();
+  //           } else {
+  //             // Cannot Be Happened!
+  //           }
+  //           this.actions.registration = action;
+  //           console.log("Action on Identifier")
+  //           console.log(this.actions.registration);
+  //           this.scannerService.changeActions(this.actions);
+  //         },
+  //         error => {
+  //           console.log(error);
+  //         }),
+  //       takeUntil(this.unsubscribe),
+  //       finalize(() => {
+  //         this.loading = false;
+  //         this.cdRef.markForCheck();
+  //       })
+  //     )
+  //     .subscribe();
+  // }
+
+  // onSubmitEmailForm(event) {
+  //   let action: string = '00';
+
+  //   // 'a': Form has Email
+  //   // 'b': Mail Exist?
+
+  //   // έρχεται εδώ όταν
+  //   // υπαρχουσα καρτα δεν έχει email
+  //   // νέα καρτα
+  //   if (event) {
+  //     this.loyaltyService.checkIdentifier((this.user.email).toLowerCase())
+  //       .pipe(
+  //         tap(
+  //           data => {
+  //             console.log("On Email Message")
+  //             console.log(data.status);
+  //             if (data.status === 'email_both') {
+  //               this.messages.stepC = 'Your Email Has already a card. If you continue the card will be replaced';
+  //               action = '11' + this.actions.registration.substr(2, 4);
+
+  //             } else if (data.status === 'email_none') {
+  //               this.messages.stepC = 'Your Email Will Link With Card';
+  //               action = '10' + this.actions.registration.substr(2, 4);
+  //               console.log("2")
+  //             } else if (data.status === 'email_no_card') {
+  //               this.messages.stepC = 'Card Will Link With Your Email';
+  //               action = '11' + this.actions.registration.substr(2, 4);
+  //               console.log("3")
+  //             } else {
+  //               console.log("4")
+  //               // Cannot Be Happened!
+  //             }
+  //             this.actions.registration = action;
+  //             console.log("Action on Email")
+  //             console.log(this.actions.registration);
+  //             this.scannerService.changeActions(this.actions);
+  //           },
+  //           error => {
+  //             console.log(error);
+  //           }),
+  //         takeUntil(this.unsubscribe),
+  //         finalize(() => {
+  //           this.loading = false;
+  //           this.cdRef.markForCheck();
+  //         })
+  //       )
+  //       .subscribe();
+  //   } else {
+  //     action = '00' + this.actions.registration.substr(2, 4);
+  //     this.actions.registration = action;
+  //     this.scannerService.changeActions(this.actions);
+  //   }
+  //   console.log("Action on Email")
+  //   console.log(this.actions.registration);
+  //   this.onNextStep();
+  // }
+
+
+  // actionsHandler() {
+  //   const user = {
+  //     identifier: this.user.identifier_scan || this.user.identifier_form,
+  //     email: this.user.email
+  //   };
+
+  //   let authData = {
+  //     email: '',
+  //     card: ''
+  //   };
+  //   // 'a': Form has Email
+  //   // 'b': Mail Exist?
+  //   // 'a': 'Identifier OR Form',
+  //   // 'b': 'Was Email OR Card',
+  //   // 'c': Is Email Registered,
+  //   // 'd': Is Card Registered,
+
+  //   // All States!!!
+  //   // xx0011, xx0000, xx0010, xx0111,
+  //   // 100100, 110100, 000100 // New Card
+  //   // 100101, 110101, 000101 // Card No Email
+  //   // xx1011, xx1000, xx1010, xx1111,
+  //   // 101100, 111100, 001100 // New Card
+  //   // 101101, 111101, 001101 // Card No Email
+
+  //   console.log("Code: ");
+  //   console.log(this.actions.registration);
+
+
+  //   const states = {
+  //     do_nothing: {
+  //       has_both: ['xx0011', 'xx1011', 'xx0111', 'xx1111'],
+  //       do_not_want_to_link_email: ['000101', '001101'],
+  //       could_link_card: ['xx0010', 'xx1010'],
+  //     },
+  //     registration: {
+  //       only_email: ['xx0000', 'xx1000'],
+  //       only_card: ['000100', '001100'],
+  //       email_card: ['100100', '101100'],
+  //       need_merge: ['110101', '111101'] // This is a merge situation!!!
+  //     },
+  //     link: {
+  //       email: ['100101', '101101'],
+  //       card: ['110100', '111100']
+  //     }
+  //   }
+
+  //   if (Array.prototype.concat.apply([],
+  //     [states.registration.only_email, states.registration.only_card, states.registration.email_card])
+  //     .includes(this.actions.registration)) {
+  //     console.log('Action: Registration');
+  //     if ((states.registration.only_email).includes(this.actions.registration)) {
+  //       console.log('A');
+  //       authData.email = user.identifier;
+  //     } else if ([...states.registration.only_card, ...states.registration.email_card].includes(this.actions.registration)) {
+  //       console.log('B');
+  //       authData.email = user.email;
+  //       authData.card = user.identifier;
+  //     }
+
+  //     this.authenticationService.register_customer(authData.email, authData.card)
+  //       .pipe(
+  //         tap(
+  //           data => {
+  //             this.earnPoints(authData.email || authData.card);
+  //           },
+  //           error => {
+  //             console.log(error);
+  //           }),
+  //         takeUntil(this.unsubscribe),
+  //         finalize(() => {
+  //           this.loading = false;
+  //           this.cdRef.markForCheck();
+  //         })
+  //       )
+  //       .subscribe();
+
+  //   } else if ((states.link.card).includes(this.actions.registration)) {
+
+  //     authData.email = user.email;
+  //     authData.card = user.identifier;
+  //     console.log('Action: Link A Card');
+
+  //     this.loyaltyService.linkCard(authData.email, authData.card)
+  //       .pipe(
+  //         tap(
+  //           data => {
+  //             this.earnPoints(authData.email);
+  //           },
+  //           error => {
+  //             console.log(error);
+  //           }),
+  //         takeUntil(this.unsubscribe),
+  //         finalize(() => {
+  //           this.loading = false;
+  //           this.cdRef.markForCheck();
+  //         })
+  //       )
+  //       .subscribe();
+  //   } else if ((states.link.email).includes(this.actions.registration)) {
+  //     authData.email = user.email;
+  //     authData.card = user.identifier;
+  //     console.log('Action: Link An Email');
+
+  //     this.loyaltyService.linkEmail(authData.email, authData.card)
+  //       .pipe(
+  //         tap(
+  //           data => {
+  //             this.earnPoints(authData.card);
+  //           },
+  //           error => {
+  //             console.log(error);
+  //           }),
+  //         takeUntil(this.unsubscribe),
+  //         finalize(() => {
+  //           this.loading = false;
+  //           this.cdRef.markForCheck();
+  //         })
+  //       )
+  //       .subscribe();
+  //   } else {
+  //     this.earnPoints(user.identifier);
+  //   }
+  // }

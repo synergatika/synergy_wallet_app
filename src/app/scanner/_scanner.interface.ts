@@ -1,33 +1,33 @@
-export interface User {
+interface User {
     identifier_scan: string;
     identifier_form: string;
     email: string | undefined;
 }
 
-export interface PointsTransaction {
+interface PointsTransaction {
     amount: number;
     final_amount: number;
     discount_amount: number;
     discount_points: number;
     points: number;
     quantity?: any;
-    initial_tokens? : any;
+    initial_tokens?: any;
     redeemed_tokens?: any;
     discount_tokens?: any;
 }
 
-export interface Actions {
+interface Actions {
     redeem: string; // '00', '10', '11' - Cannnot and Does Not Want, Can but Does Not Want, Can and Want
     registration: string; // '00', '01', '10', '11' - None, Link Card, Link Email, Full Registration
 }
 
-export interface Offer {
+interface Offer {
     merchant_id: string;
     merchant_name: string;
     merchant_imageURL: string;
     offer_id: string;
-		title: string;
-		subtitle: string;
+    title: string;
+    subtitle: string;
     description: string;
     cost: number;
     expiresAt: number;
@@ -37,7 +37,7 @@ export interface Offer {
 
 }
 
-export interface OfferTransaction {
+interface OfferTransaction {
     offer_id: string;
     cost: number;
     discount_points: number;
@@ -50,16 +50,16 @@ export interface OfferTransaction {
     discount_tokens?: number;
 }
 
-export interface MicrocreditSupport {
+interface MicrocreditSupport {
     campaign_id: string;
     support_id: string;
     backer_id: string;
     initialTokens: number;
     redeemedTokens: number;
-    status: boolean;
+    status: string;
 }
 
-export interface MicrocreditCampaign {
+interface MicrocreditCampaign {
     merchant_id: string;
     merchant_name: string;
     merchant_imageURL: string;
@@ -70,7 +70,7 @@ export interface MicrocreditCampaign {
     createdAt: Date;
 }
 
-export interface MicrocreditTransaction {
+interface MicrocreditTransaction {
     campaign_id: string;
     support_id: string;
     initial_tokens: number;
@@ -82,13 +82,13 @@ export interface MicrocreditTransaction {
     quantity?: any;
 }
 
-// export interface ScannerInterface {
-//     User: User;
-//     PointsTransaction: PointsTransaction;
-//     Actions: Actions;
-//     Offer: Offer;
-//     OfferTransaction: OfferTransaction;
-//     MicrocreditSupport: MicrocreditSupport;
-//     MicrocreditCampaign: MicrocreditCampaign;
-//     MicrocreditTransaction: MicrocreditTransaction;
-// }
+export interface ScannerInterface {
+    User: User;
+    PointsTransaction: PointsTransaction;
+    Actions: Actions;
+    Offer: Offer;
+    OfferTransaction: OfferTransaction;
+    MicrocreditSupport: MicrocreditSupport;
+    MicrocreditCampaign: MicrocreditCampaign;
+    MicrocreditTransaction: MicrocreditTransaction;
+}

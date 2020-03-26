@@ -1,10 +1,9 @@
 // Angular
-import { Component, ElementRef, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
-// Layout
-// import { LayoutConfigService, SplashScreenService, TranslationService } from '../../../core/_base/layout';
-
-import { AuthNoticeService } from '../core/helpers/auth-notice/auth-notice.service';
+import { Component, OnInit, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
+// Transalte
 import { TranslationService } from '../core/helpers/translation.service';
+// Services
+import { MessageNoticeService } from '../core/helpers/message-notice/message-notice.service';
 
 @Component({
 	selector: 'kt-auth',
@@ -20,20 +19,16 @@ export class AuthComponent implements OnInit {
 	/**
 	 * Component constructor
 	 *
-	 * @param el
-	 * @param render
-	 * @param layoutConfigService: LayoutConfigService
-	 * @param authNoticeService: authNoticeService
+	 * @param el: ElementRef
+	 * @param renderr: Renderer2
 	 * @param translationService: TranslationService
-	 * @param splashScreenService: SplashScreenService
+	 * @param authNoticeService: authNoticeService
 	 */
 	constructor(
 		private el: ElementRef,
 		private render: Renderer2,
-		// private layoutConfigService: LayoutConfigService,
-		public authNoticeService: AuthNoticeService,
 		private translationService: TranslationService,
-		// private splashScreenService: SplashScreenService
+		public authNoticeService: MessageNoticeService,
 	) {
 	}
 
@@ -42,17 +37,20 @@ export class AuthComponent implements OnInit {
 	 */
 
 	/**
-	 * On init
+	 * On Init
 	 */
-	ngOnInit(): void {
+	ngOnInit() {
 		this.translationService.setLanguage(this.translationService.getSelectedLanguage());
-		// this.headerLogo = this.layoutConfigService.getLogo();
 		this.render.addClass(document.body, 'auth-page');
-		// this.splashScreenService.hide();
 	}
+
+	/**
+	 * On Destroy
+	 */
 	ngOnDestroy() {
 		this.render.removeClass(document.body, 'auth-page');
 	}
+
 	/**
 	 * Load CSS for this specific page only, and destroy when navigate away
 	 * @param styleUrl

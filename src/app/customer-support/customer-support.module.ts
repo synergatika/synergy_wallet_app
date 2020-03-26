@@ -19,6 +19,8 @@ import { SubAmountFormComponent } from './sub-amount-form/sub-amount-form.compon
 import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component';
 import { SupportService } from './_support.service';
 
+import { SupportNoticeComponent } from './support-notice/support-notice.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -45,7 +47,7 @@ const routes: Routes = [
         MatFormFieldModule,
         MatCheckboxModule,
         MatDialogModule,
-		MatCardModule,
+        MatCardModule,
         TranslateModule.forChild()
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
@@ -59,7 +61,7 @@ const routes: Routes = [
         //     multi: true
         // },
     ],
-    exports: [CustomerSupportComponent,CardMicrocreditComponent,SingleMicrocreditComponent],
+    exports: [CustomerSupportComponent, CardMicrocreditComponent, SingleMicrocreditComponent],
     declarations: [
         CustomerSupportComponent,
         CardMicrocreditComponent,
@@ -67,7 +69,9 @@ const routes: Routes = [
         //Pledge Form
         SupportMicrocreditComponent,
         SubAmountFormComponent,
-        SubFinalStepComponent
+        SubFinalStepComponent,
+
+        SupportNoticeComponent
     ],
     entryComponents: [
         SupportMicrocreditComponent

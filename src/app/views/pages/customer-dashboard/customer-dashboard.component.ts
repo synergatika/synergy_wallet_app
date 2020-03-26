@@ -2,7 +2,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 import { Subject, Subscriber } from 'rxjs';
-import { AuthNotice } from 'src/app/core/helpers/auth-notice/auth-notice.interface';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 //Import System Services
 import { AuthenticationService } from '../../../core/services/authentication.service';
@@ -64,7 +63,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	* On init
+	* On Init
 	*/
 	ngOnInit() {
 		//Get Badge
@@ -87,7 +86,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	* Assets Function On init
+	* Assets Function On Init
 	*/
 
 	//Get the Badge of the Customer
@@ -181,7 +180,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
 	//Get the Offers
 	fetchOffersData() {
-		this.itemsService.readAllOffers()
+		this.itemsService.readAllOffers('0-0-0')
 			.pipe(
 				tap(
 					data => {

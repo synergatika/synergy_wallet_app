@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 // import { AppState } from '../../../../core/reducers';
 // Auth
 //import { AuthNoticeService, AuthService, Register, User } from '../../../../core/auth';
-import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service';
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 // Environment
@@ -30,7 +30,6 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 
 	check = false;
 	isLoggedIn$: Observable<boolean>;
-	errors: any = [];
 
 	token: string = '';
 	private unsubscribe: Subject<any>;
@@ -44,7 +43,6 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 	 * @param authenticationService: AuthenticationService
 	 * @param authNoticeService: AuthNoticeService
 	 * @param translate: TranslateService
-	//  * @param store: Store<AppState>
 	 * @param fb: FormBuilder
 	 * @param cdr: ChangeDetectorRef
 	 * @param activatedRoute: ActivatedRoute
@@ -52,9 +50,8 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 	constructor(
 		private router: Router,
 		private authenticationService: AuthenticationService,
-		private authNoticeService: AuthNoticeService,
+		private authNoticeService: MessageNoticeService,
 		private translate: TranslateService,
-		// private store: Store<AppState>,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
 		private activatedRoute: ActivatedRoute
@@ -67,7 +64,7 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 	 */
 
 	/**
-	 * On init
+	 * On Init
 	 */
 	ngOnInit(): void {
 		this.activatedRoute.params.subscribe(params => {

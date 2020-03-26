@@ -6,7 +6,7 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { ItemsService } from '../core/services/items.service';
 import { AuthenticationService } from '../core/services/authentication.service';
 
-import { Offer, MicrocreditCampaign } from './_scanner.interface';
+import { ScannerInterface } from './_scanner.interface';
 import { ScannerService } from './_scanner.service';
 
 import { ScanLoyaltyComponent } from './scan-loyalty/scan-loyalty.component';
@@ -25,56 +25,65 @@ import { PostEvent } from '../core/models/post_event.model';
   // providers: [LoyaltyLocalService]
 })
 export class ScannerComponent implements OnInit, OnDestroy {
+
   moved: boolean;
-  loading: boolean = false;
-  private unsubscribe: Subject<any>;
   posts: PostEvent[];
   singlePost: any;
-  offers: Offer[];
-  microcredit: MicrocreditCampaign[];
   singleMerchant = false;
 
-  @ViewChild('postModal', {static: false}) postModal;
-	customOptions: OwlOptions = {
-		loop: true,
-		mouseDrag: true,
-		touchDrag: false,
-		pullDrag: false,
-		dots: true,
-		navSpeed: 700,
-		navText: ['', ''],
-		responsive: {
-		  0: {
-			items: 1
-		  },
-		  940: {
-			items: 3
-		  }
-		},
-		margin:30,
-		nav: true
-	}
+  public offers: ScannerInterface["Offer"][];
+  public microcredit: ScannerInterface["MicrocreditCampaign"][];
+
+  loading: boolean = false;
+  private unsubscribe: Subject<any>;
+
+  @ViewChild('postModal', { static: false }) postModal;
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: false,
+    pullDrag: false,
+    dots: true,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      940: {
+        items: 3
+      }
+    },
+    margin: 30,
+    nav: true
+  }
 
   constructor(
-    public matDialog: MatDialog,
     private cdRef: ChangeDetectorRef,
+    private translate: TranslateService,
     private scannerService: ScannerService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
-	private translate: TranslateService,
-	private modalService: NgbModal,
+    public matDialog: MatDialog,
+    private modalService: NgbModal,
   ) {
     this.scannerService.offers.subscribe(offers => this.offers = offers)
     this.scannerService.microcredit.subscribe(microcredit => this.microcredit = microcredit)
     this.unsubscribe = new Subject();
   }
 
+	/**
+	 * On Init
+	 */
   ngOnInit() {
     this.fetchOffersData();
     this.fetchCampaignsData();
-	this.fetchPostsData();
+    this.fetchPostsData();
   }
 
+	/**
+	 * On Destroy
+	 */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -119,8 +128,8 @@ export class ScannerComponent implements OnInit, OnDestroy {
   }
 
   fetchCampaignsData() {
-	console.log('this.microcredit');
-    this.itemsService.readPublicMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"])
+    console.log('this.microcredit');
+    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
       .pipe(
         tap(
           data => {
@@ -141,7 +150,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
   }
 
   fetchOffersData() {
-    this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"])
+    this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
       .pipe(
         tap(
           data => {
@@ -160,68 +169,68 @@ export class ScannerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
- 	fetchPostsData() {
-		this.itemsService.readAllPrivatePostsEvents()
-		  .pipe(
-			tap(
-			  data => {
-				this.posts = data;
-				console.log('this.posts');
-				console.log(this.posts);
-				//this.scannerService.changeOffers(this.posts);
-			  },
-			  error => {
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
-	}
+  fetchPostsData() {
+    this.itemsService.readAllPrivatePostsEvents('0-0-0')
+      .pipe(
+        tap(
+          data => {
+            this.posts = data;
+            console.log('this.posts');
+            console.log(this.posts);
+            //this.scannerService.changeOffers(this.posts);
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
 
- 	openPost(post) {
-		console.log('post modal');
-		console.log(post);
-		this.singlePost = post;
-		this.modalService.open(
-			this.postModal,
-			{
-				ariaLabelledBy: 'modal-basic-title',
-				size: 'lg',
-				backdropClass: 'fullscrenn-backdrop',
-				//backdrop: 'static',
-				windowClass: 'fullscreen-modal',
-			}
-		).result.then((result) => {
-			console.log('closed');
+  openPost(post) {
+    console.log('post modal');
+    console.log(post);
+    this.singlePost = post;
+    this.modalService.open(
+      this.postModal,
+      {
+        ariaLabelledBy: 'modal-basic-title',
+        size: 'lg',
+        backdropClass: 'fullscrenn-backdrop',
+        //backdrop: 'static',
+        windowClass: 'fullscreen-modal',
+      }
+    ).result.then((result) => {
+      console.log('closed');
 
-			}, (reason) => {
-				console.log('dismissed');
+    }, (reason) => {
+      console.log('dismissed');
 
-		});
-	}
+    });
+  }
 
-	mousedown() {
-	  this.moved = false;
-	}
+  mousedown() {
+    this.moved = false;
+  }
 
-	mousemove() {
-	  this.moved = true;
-	}
+  mousemove() {
+    this.moved = true;
+  }
 
-	mouseup(data) {
-		if (this.moved) {
-			console.log('moved')
-		} else {
-			console.log('not moved');
-			console.log(data);
-			this.openPost(data);
-			//this.router.navigate(['/post', {id: mercId , id2: offerId}]);
+  mouseup(data) {
+    if (this.moved) {
+      console.log('moved')
+    } else {
+      console.log('not moved');
+      console.log(data);
+      this.openPost(data);
+      //this.router.navigate(['/post', {id: mercId , id2: offerId}]);
 
-		}
-		this.moved = false;
-	}
+    }
+    this.moved = false;
+  }
 
 }

@@ -20,7 +20,7 @@ import { ItemsService } from '../../core/services/items.service';
   styleUrls: ['./new-post.component.sass']
 })
 export class NewPostComponent implements OnInit, OnDestroy {
-  @ViewChild('image', {static: true}) image: ElementRef;
+  @ViewChild('image', { static: true }) image: ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -35,7 +35,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-	fileDataEmptied: boolean;
+  fileDataEmptied: boolean;
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -55,13 +55,13 @@ export class NewPostComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
-		private router: Router,
+    private router: Router,
   ) {
     this.unsubscribe = new Subject();
   }
 
 	/**
-	 * On init
+	 * On Init
 	 */
   ngOnInit() {
     this.initForm();
@@ -84,7 +84,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-			itemAbstract: [''],
+      itemAbstract: [''],
       content: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.content.minLength),
@@ -95,7 +95,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
         Validators.required
       ])
       ],
-			profile_avatar: ['', Validators.compose([
+      profile_avatar: ['', Validators.compose([
         Validators.required
       ])
       ],
@@ -108,12 +108,12 @@ export class NewPostComponent implements OnInit, OnDestroy {
   }
 
   preview() {
-	  if(this.fileData == null) {
-		  this.onImageCancel();
-		  return;
-	  }
-	  this.originalImage = false;
-		this.fileDataEmptied = false;
+    if (this.fileData == null) {
+      this.onImageCancel();
+      return;
+    }
+    this.originalImage = false;
+    this.fileDataEmptied = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -133,9 +133,9 @@ export class NewPostComponent implements OnInit, OnDestroy {
     this.previewUrl = null;
     this.fileData = null;
     this.originalImage = true;
-		this.image.nativeElement.value = null;
-		this.fileDataEmptied = true;
-		this.cdRef.markForCheck();
+    this.image.nativeElement.value = null;
+    this.fileDataEmptied = true;
+    this.cdRef.markForCheck();
   }
 
 	/**
@@ -152,23 +152,20 @@ export class NewPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
-		if(!this.fileData) {
-			console.log('no image');
-			return;
-		}
+    if (!this.fileData) {
+      console.log('no image');
+      return;
+    }
     this.loading = true;
     this.submitted = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
-		formData.append('subtitle', controls.itemAbstract.value);
+    formData.append('subtitle', controls.itemAbstract.value);
     formData.append('content', controls.content.value);
     formData.append('access', controls.access.value);
-		/*for (var pair of formData.entries()) {
-			console.log(pair[0]+ ', ' + pair[1]); 
-		}*/
-		//return;
+
     this.itemsService.createPost(formData)
       .pipe(
         tap(
@@ -178,17 +175,17 @@ export class NewPostComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.POST_CREATED'),
               'success'
             ).then((result) => {
-							this.router.navigate(['/m-posts']);
-						});
-						setTimeout(()=>{
-							Swal.close();
-							this.router.navigate(['/m-posts']);
-						},2000);
+              this.router.navigate(['/m-posts']);
+            });
+            setTimeout(() => {
+              Swal.close();
+              this.router.navigate(['/m-posts']);
+            }, 2000);
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
             this.submitted = false;

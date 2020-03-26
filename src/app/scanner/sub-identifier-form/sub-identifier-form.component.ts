@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { ScannerService } from "../_scanner.service";
-import { User } from "../_scanner.interface";
+import { ScannerInterface } from "../_scanner.interface";
 
 @Component({
   selector: 'app-sub-identifier-form',
@@ -14,9 +14,9 @@ export class SubIdentifierFormComponent implements OnInit {
   @Output()
   add_identifier: EventEmitter<string> = new EventEmitter<string>();
 
-  scanned: boolean = false;
-  user: User;
+  public user: ScannerInterface["User"];
 
+  scanned: boolean = false;
   submitted: boolean = false;
   submitForm: FormGroup;
 
@@ -27,20 +27,20 @@ export class SubIdentifierFormComponent implements OnInit {
     this.scannerService.user.subscribe(user => this.user = user)
   }
 
+	/**
+	 * On Init
+	 */
+  ngOnInit() {
+    this.initForm();
+  }
 
   scanSuccessHandler(result: string): void {
     if (this.scanned) return;
-
     this.scanned = true;
-
   }
 
   scanErrorHandler(error: any): void {
     console.log("Error");
-  }
-
-  ngOnInit() {
-    this.initForm();
   }
 
   initForm() {

@@ -5,8 +5,9 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AddSupportComponent } from '../add-support/add-support.component';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatCheckboxChange } from '@angular/material';
 
 // Translate
 import { TranslateService } from '@ngx-translate/core';
@@ -17,7 +18,6 @@ import { MicrocreditService } from '../../core/services/microcredit.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 // Models
-import { MicrocreditCampaign } from '../../core/models/microcredit-campaign.model';
 import { MicrocreditSupport } from 'src/app/core/models/microcredit-support.model';
 import { SupportService } from '../_support.service';
 import { SupportInterface } from '../_support.interface';
@@ -31,23 +31,19 @@ import Swal from 'sweetalert2';
   styleUrls: ['./edit-microcredit-campaign.component.scss']
 })
 export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   loading: boolean = false;
-  stateUpdateLoading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  campaign_id: string;
-  unpaidSupports: MicrocreditSupport[];
-  paidSupports: MicrocreditSupport[];
-  campaigns: MicrocreditCampaign[];
-  current: MicrocreditCampaign;
-  groupedSupports: Array<any> = [];
-  to_pay: string[] = [];
-  to_unpay: string[] = [];
-  displayedColumns: string[] = ['support_id', 'createdAt', 'method', 'initialTokens', 'status'];
-  dataSource:any;
-  
+  private campaign_id: string;
+  public campaigns: SupportInterface["MicrocreditCampaign"][];
+  public current: SupportInterface["MicrocreditCampaign"];
+  public supports: MicrocreditSupport[];
+
+  displayedColumns: string[] = ['payment_id', 'createdAt', 'method', 'initialTokens', 'status'];
+  dataSource: MatTableDataSource<any>;
+
   constructor(
     public matDialog: MatDialog,
     private cdRef: ChangeDetectorRef,
@@ -55,7 +51,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private microcreditService: MicrocreditService,
     private authenticationService: AuthenticationService,
-		private translate: TranslateService,
+    private translate: TranslateService,
     private supportService: SupportService
   ) {
     this.activatedRoute.params.subscribe(params => {
@@ -78,25 +74,13 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
 
   fetchSupportsData() {
-	 // console.log('this.campaign_id');
-	 // console.log(this.campaign_id);
     this.microcreditService.readAllSupportsByMicrocreditCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
       .pipe(
         tap(
           data => {
-            const groupedSupports = this.groupBy(data, 'status'); // => {orange:[...], banana:[...]}
-            this.paidSupports = groupedSupports.confirmation;
-            this.unpaidSupports = groupedSupports.order;
-			if (this.unpaidSupports) {
-				this.groupedSupports = this.groupedSupports.concat(this.unpaidSupports);
-			};
-			if (this.paidSupports) {
-				this.groupedSupports = this.groupedSupports.concat(this.paidSupports);
-			};
-			console.log(groupedSupports);
-			console.log(this.groupedSupports);
-			this.dataSource = new MatTableDataSource(this.groupedSupports);
-			this.dataSource.sort = this.sort;
+            this.supports = data;
+            this.dataSource = new MatTableDataSource(data);
+            this.dataSource.sort = this.sort;
           },
           error => {
           }),
@@ -110,58 +94,54 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
 
   }
 
-  initializeCurrentCampaignData() {   	
-	this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
-		  .pipe(
-			tap(
-			  data => {
-				this.current = data;
-				console.log('this.current');
-				console.log(this.current);
-				this.supportService.changeMicrocreditCurrent(this.current);		
-			  },
-			  error => {
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
-	/*const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
-    this.current = currentCampaign;	*/
-  }
-  
-  changeSupportState (backer, state) {
-	//console.log(backer);
-	//console.log(state.checked);
-	let pay: string;
-	//return;
-    if (state.checked == true) {
-     pay ="pay";
-    } else {
-      pay = 'unpay';
-    }
-	this.stateUpdateLoading = true;
-	//return;
-	this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, pay, backer)
+  initializeCurrentCampaignData() {
+    this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
       .pipe(
         tap(
           data => {
-						console.log('confirmPayment data');
+            this.current = data;
+            console.log('this.current');
+            console.log(this.current);
+            this.supportService.changeMicrocreditCurrent(this.current);
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
+  changeSupportState(support_id: string, event: MatCheckboxChange) {
+    this.loading = true;
+
+    this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, support_id)
+      .pipe(
+        tap(
+          data => {
+            console.log('confirmPayment data');
             console.log(data);
-						this.stateUpdateLoading = false;
-						Swal.fire(
+            Swal.fire(
               this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_UPDATED'),
               'success'
             );
-						setTimeout(()=>{
-							Swal.close();
-						},2000);
+            setTimeout(() => {
+              Swal.close();
+            }, 2000);
           },
           error => {
+            event.source.checked =
+              (this.supports[this.supports.map((x) => { return x.support_id; }).indexOf(support_id)].status === 'order') ?
+                false : true;
+            Swal.fire(
+              this.translate.instant('MESSAGE.ERROR.TITLE'),
+              this.translate.instant('NOT_FOUND_ERRORS.' + error),
+              'error'
+            );
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -171,32 +151,32 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-  
-  onToPayCheckBoxChange(backer) {
-    if (this.to_pay.indexOf(backer) < 0) {
-      this.to_pay.push(backer);
-    } else {
-      this.to_pay.splice(this.to_pay.indexOf(backer), 1);
-    }
-    console.log(this.to_pay);
-  }
 
-  onToUnpayCheckBoxChange(backer) {
-    if (this.to_unpay.indexOf(backer) < 0) {
-      this.to_unpay.push(backer);
-    } else {
-      this.to_unpay.splice(this.to_unpay.indexOf(backer), 1);
-    }
-    console.log(this.to_unpay);
-  }
+  // onToPayCheckBoxChange(backer) {
+  //   if (this.to_pay.indexOf(backer) < 0) {
+  //     this.to_pay.push(backer);
+  //   } else {
+  //     this.to_pay.splice(this.to_pay.indexOf(backer), 1);
+  //   }
+  //   console.log(this.to_pay);
+  // }
 
-  groupBy(arr, property) {
-    return arr.reduce(function (memo, x) {
-      if (!memo[x[property]]) { memo[x[property]] = []; }
-      memo[x[property]].push(x);
-      return memo;
-    }, {});
-  }
+  // onToUnpayCheckBoxChange(backer) {
+  //   if (this.to_unpay.indexOf(backer) < 0) {
+  //     this.to_unpay.push(backer);
+  //   } else {
+  //     this.to_unpay.splice(this.to_unpay.indexOf(backer), 1);
+  //   }
+  //   console.log(this.to_unpay);
+  // }
+
+  // groupBy(arr, property) {
+  //   return arr.reduce(function (memo, x) {
+  //     if (!memo[x[property]]) { memo[x[property]] = []; }
+  //     memo[x[property]].push(x);
+  //     return memo;
+  //   }, {});
+  // }
 
   openModal() {
     const dialogConfig = new MatDialogConfig();
@@ -206,12 +186,18 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {
-      campaign_id: this.campaign_id//'5e3298c9ba608903716b09c2'
+      campaign_id: this.campaign_id,//'5e3298c9ba608903716b09c2'
     };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(AddSupportComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe(value => {
+      if (value) this.fetchSupportsData();
+    });
   }
 
+  closeModal(event) {
+    console.log("NOOO", event);
+  }
   /*onSubmit() {
     this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, 'pay', this.to_pay)
       .pipe(

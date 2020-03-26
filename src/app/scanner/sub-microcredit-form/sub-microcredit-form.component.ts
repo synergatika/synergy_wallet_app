@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { ScannerService } from '../_scanner.service';
-import { MicrocreditTransaction, MicrocreditSupport } from '../_scanner.interface';
+import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-microcredit-form',
@@ -13,9 +13,11 @@ export class SubMicrocreditFormComponent implements OnInit {
 
   @Output()
   add_microcredit: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  previous_step: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  transaction: MicrocreditTransaction;
-  supports: MicrocreditSupport[];
+  public transaction: ScannerInterface["MicrocreditTransaction"];
+  public supports: ScannerInterface["MicrocreditSupport"][];
 
   submitted: boolean = false;
   submitForm: FormGroup;
@@ -33,8 +35,17 @@ export class SubMicrocreditFormComponent implements OnInit {
     this.initForm();
   }
 
-  onRadioButtonChange(support_id: string) {
-    const currentOrder = this.supports[this.supports.map(function (e) { return e.support_id; }).indexOf(support_id)];
+  isRadioButtonDisable(support: ScannerInterface["MicrocreditSupport"]) {
+    return (support.redeemedTokens === support.initialTokens) || (support.status === 'order');
+  }
+
+  isRadioButtonChecked(support: ScannerInterface["MicrocreditSupport"]) {
+    return (support.support_id === this.transaction.support_id);
+  }
+
+  onRadioButtonChange(support: ScannerInterface["MicrocreditSupport"]) {
+    if (this.isRadioButtonDisable(support)) return;
+    const currentOrder = this.supports[this.supports.map(function (e) { return e.support_id; }).indexOf(support.support_id)];
     this.transaction.initial_tokens = currentOrder.initialTokens;
     this.transaction.redeemed_tokens = currentOrder.redeemedTokens;
     this.transaction.possible_tokens = (this.transaction.initial_tokens - this.transaction.redeemed_tokens);
@@ -69,6 +80,10 @@ export class SubMicrocreditFormComponent implements OnInit {
     this.transaction.discount_tokens = controls.tokens.value;
     this.scannerService.changeMicrocreditTransaction(this.transaction);
     this.add_microcredit.emit(controls.tokens.value);
+  }
+
+  onPreviousStep() {
+    this.previous_step.emit(true);
   }
 
   /**

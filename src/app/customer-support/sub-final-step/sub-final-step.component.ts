@@ -22,7 +22,7 @@ export class SubFinalStepComponent implements OnInit {
   ) { }
 
 	/**
-	 * On init
+	 * On Init
 	 */
   ngOnInit() {
     if (this.type === 1) {

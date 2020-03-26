@@ -2,9 +2,9 @@
 import { Component, OnInit, OnDestroy, Output, ChangeDetectorRef } from '@angular/core';
 // RxJS
 import { Subscription } from 'rxjs';
-// Auth
-import { AuthNotice } from '../../core/helpers/auth-notice/auth-notice.interface'
-import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service'
+// Notice
+import { MessageNotice } from '../../core/helpers/message-notice/message-notice.interface'
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service'
 
 @Component({
 	selector: 'auth-notice',
@@ -14,16 +14,18 @@ export class AuthNoticeComponent implements OnInit, OnDestroy {
 	@Output() type: any;
 	@Output() message: any = '';
 
-	// Private properties
 	private subscriptions: Subscription[] = [];
 
 	/**
-	 * Component Constructure
+	 * Component Constructor
 	 *
-	 * @param authNoticeService
 	 * @param cdr
+	 * @param authNoticeService
 	 */
-	constructor(public authNoticeService: AuthNoticeService, private cdr: ChangeDetectorRef) {
+	constructor(
+		private cdr: ChangeDetectorRef,
+		public authNoticeService: MessageNoticeService
+	) {
 	}
 
 	/*
@@ -31,11 +33,11 @@ export class AuthNoticeComponent implements OnInit, OnDestroy {
     */
 
 	/**
-	 * On init
+	 * On Init
 	 */
 	ngOnInit() {
 		this.subscriptions.push(this.authNoticeService.onNoticeChanged$.subscribe(
-			(notice: AuthNotice) => {
+			(notice: MessageNotice) => {
 				notice = Object.assign({}, { message: '', type: '' }, notice);
 				this.message = notice.message;
 				this.type = notice.type;

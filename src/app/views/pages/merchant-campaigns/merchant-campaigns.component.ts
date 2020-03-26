@@ -5,35 +5,37 @@ import { takeUntil, tap, finalize } from 'rxjs/operators';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { ItemsService } from '../../../core/services/items.service';
 
-import { SupportService } from '../../../microcredit/_support.service';
-
-import { MicrocreditCampaign } from '../../../core/models/microcredit-campaign.model'
+import { MicrocreditCampaign } from '../../../core/models/microcredit_campaign.model'
 
 @Component({
-  selector: 'app-merchant-campaigns',
-  templateUrl: './merchant-campaigns.component.html',
-  styleUrls: ['./merchant-campaigns.component.scss']
+	selector: 'app-merchant-campaigns',
+	templateUrl: './merchant-campaigns.component.html',
+	styleUrls: ['./merchant-campaigns.component.scss']
 })
-export class MerchantCampaignsComponent implements OnInit {
-	  loading: boolean = false;
-	  private unsubscribe: Subject<any>;
+export class MerchantCampaignsComponent implements OnInit, OnDestroy {
+	loading: boolean = false;
+	private unsubscribe: Subject<any>;
 
-	  campaigns: MicrocreditCampaign[];
-	
+	public campaigns: MicrocreditCampaign[];
+
 	constructor(
 		private cdRef: ChangeDetectorRef,
 		private authenticationService: AuthenticationService,
-		private itemsService: ItemsService,
-		private supportService: SupportService
-	) { 
-		 this.supportService.microcreditCampaigns.subscribe(campaigns => this.campaigns = campaigns)
+		private itemsService: ItemsService
+	) {
 		this.unsubscribe = new Subject();
 	}
-	
+
+	/**
+	 * On Init
+	 */
 	ngOnInit() {
 		this.fetchCampaignsData();
 	}
 
+	/**
+	 * On Destroy
+	 */
 	ngOnDestroy() {
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
@@ -41,23 +43,22 @@ export class MerchantCampaignsComponent implements OnInit {
 	}
 
 	fetchCampaignsData() {
-		this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"])
-		  .pipe(
-			tap(
-			  data => {
-				this.campaigns = data;
-				console.log(this.campaigns);
-				this.supportService.changeMicrocreditCampaigns(this.campaigns);			
-			  },
-			  error => {
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
+		this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
+			.pipe(
+				tap(
+					data => {
+						this.campaigns = data;
+						console.log(this.campaigns);
+					},
+					error => {
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdRef.markForCheck();
+				})
+			)
+			.subscribe();
 	}
 
 }

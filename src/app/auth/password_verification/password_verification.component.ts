@@ -2,20 +2,16 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-
+import { MatDialog } from '@angular/material';
 // RxJS
+import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
-// NGRX
-// import { Store } from '@ngrx/store';
-// import { AppState } from '../../../../core/reducers';
-// Auth
-//import { AuthNoticeService, AuthService, Register, User } from '../../../../core/auth';
-import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service';
+// Services
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-import { Subject } from 'rxjs';
+// Others
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
 
@@ -34,33 +30,32 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	}
 
 	verifyForm: FormGroup;
-	loading = false;
-	errors: any = [];
-
 	token: string = '';
+
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+	loading: boolean = false;
 
 	/**
 	 * Component constructor
 	 *
-	 * @param authNoticeService: AuthNoticeService
-	 * @param translate: TranslateService
 	 * @param router: Router
-	 * @param auth: AuthService
-	 * @param store: Store<AppState>
 	 * @param fb: FormBuilder
-	 * @param cdr
+	 * @param cdr: ChangeDetectorRef
+	 * @param dialog: MatDialog
+	 * @param activatedRoute: ActivatedRoute
+	 * @param translate: TranslateService
+	 * @param authNoticeService: MessageNoticeService
+	 * @param authenticationService: AuthenticationService
 	 */
 	constructor(
-		public dialog: MatDialog,
-		private authNoticeService: AuthNoticeService,
-		private translate: TranslateService,
 		private router: Router,
-		private authenticationService: AuthenticationService,
-		// private store: Store<AppState>,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
+		public dialog: MatDialog,
 		private activatedRoute: ActivatedRoute,
+		private translate: TranslateService,
+		private authNoticeService: MessageNoticeService,
+		private authenticationService: AuthenticationService,
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -70,7 +65,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
     */
 
 	/**
-	 * On init
+	 * On Init
 	 */
 	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
@@ -83,6 +78,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
     * On destroy
     */
 	ngOnDestroy(): void {
+		this.authNoticeService.setNotice(null);
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
 		this.loading = false;
@@ -132,9 +128,11 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	 * Form Submit
 	 */
 	submit() {
-		const controls = this.verifyForm.controls;
+		if (this.loading) return;
+		this.loading = true;
 
-		// check form
+		const controls = this.verifyForm.controls;
+		/** check form */
 		if (this.verifyForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
@@ -143,12 +141,9 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 		}
 
 		if (!controls.agree.value) {
-			// you must agree the terms and condition
-			// checkbox cannot work inside mat-form-field https://github.com/angular/material2/issues/7891
 			this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
 			return;
 		}
-		this.loading = true;
 
 		const _user = {
 			old_password: controls.password.value,

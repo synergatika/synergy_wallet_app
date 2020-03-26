@@ -1,167 +1,228 @@
-
 <div *ngIf="access === 'merchant'">
-	<div class="">
-		<form class="form " id="personal_form">
-			<div class="heading">Setup Your Personal Information</div>
-			<div class="form_section">
-				<div class="wizard-v3__form">
-					<div class="row">
-						<div class="form-group col-md-12">
-							<label class="col-form-label">Avatar</label>
-							<div class="">
-								<div class="avatar" id="merchat_avatar">
-									<div class="avatar-img" >
-										<div class="avatar-container">
-											<img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
-											<div *ngIf="!originalImage" class="image-cancel">
-												<span class="mdi mdi-close-circle" (click)="onImageCancel()">
-												</span>
-											</div>											
-										</div>
-									</div>
-									<button type="button" mat-raised-button (click)="fileInputMerch.click()">Choose File</button>
-									<label class="avatar-upload">									
-										<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-											accept=".png, .jpg, .jpeg" #fileInputMerch>
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group col-md-12">
-							<mat-form-field>
-								<mat-label>Name</mat-label>
-								<input matInput type="text" name="name" [(ngModel)]="merchant.name"
-									placeholder="Name" value="Name">
-								<mat-hint class="form-text text-muted">Please enter your Name.</mat-hint>
-							</mat-form-field>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xl-12 form-group">
-							<mat-form-field>
-								<mat-label>{{'FIELDS.SECTOR' | translate}}</mat-label>
-								<!--<mat-select name="sector" [(ngModel)]="merchant.sector">-->
-								<mat-select [(value)]="merchant.sector">
-									<mat-option value="{{item.value}}" *ngFor="let item of menu" >{{item.title | translate}}
-									</mat-option>
-								</mat-select>
-								<mat-hint class="form-text text-muted">Please enter your sector.</mat-hint>
-							</mat-form-field>
-						</div>
-					</div>
-					<div class="row">															
-						<div class="form-group col-md-12">
-							<mat-form-field>
-								<mat-label>Address</mat-label>
-								<input matInput type="text" name="address" [(ngModel)]="merchant.address.street"
-									placeholder="Address Line" value="Address Line">
-								<mat-hint class="form-text text-muted">Please enter your Address.</mat-hint>
-							</mat-form-field>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xl-6 form-group">
-							<mat-form-field>
-								<mat-label>Postcode</mat-label>
-								<input matInput type="text" name="postcode"
-									[(ngModel)]="merchant.address.postCode" placeholder="Postcode" value="3000">
-								<mat-hint class="form-text text-muted">Please enter your Postcode.</mat-hint>
-							</mat-form-field>
-						</div>
-						<div class="col-xl-6 form-group">
-							<mat-form-field>
-								<mat-label>City</mat-label>
-								<input matInput type="text" name="city" [(ngModel)]="merchant.address.city"
-									placeholder="City" value="Athens">
-								<mat-hint class="form-text text-muted">Please enter your City.</mat-hint>
-							</mat-form-field>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xl-6 form-group">					
-							<mat-form-field>
-								<mat-label>Phone</mat-label>
-								<input matInput type="text" name="phone"
-									[(ngModel)]="merchant.contact.phone" placeholder="Phone" value="VIC">
-								<mat-hint class="form-text text-muted">Please enter your Phone.</mat-hint>
-							</mat-form-field>							
-						</div>
-						<div class="col-xl-6 form-group">
-							<mat-form-field>
-								<mat-label>Website</mat-label>
-								<input matInput type="text" name="web"
-									[(ngModel)]="merchant.contact.websiteURL" placeholder="Webpage" value="VIC">
-								<mat-hint class="form-text text-muted">Please enter your Webpage.</mat-hint>
-							</mat-form-field>
-						</div>
-					</div>
-				</div>
-			</div>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="merchantForm" class="form" id="personal_form">
+        <div class="row">
+          <div class="heading col-md-12">Setup Your Personal Information</div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label class="col-form-label">Avatar</label>
+            <div class="">
+              <div class="avatar" id="merchat_avatar">
+                <div class="avatar-img">
+                  <div class="avatar-container">
+                    <img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
+                    <div *ngIf="!originalImage" class="image-cancel">
+                      <span class="mdi mdi-close-circle" (click)="onImageCancel()">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" mat-raised-button (click)="fileInputMerch.click()">Choose File</button>
+                <label class="avatar-upload">
+                  <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+                    accept=".png, .jpg, .jpeg" #fileInputMerch>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput type="text" name="name" formControlName="name" placeholder="Name">
+                <mat-error *ngIf="isMerchantControlHasError('name','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+                <mat-error *ngIf="isMerchantControlHasError('name','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+                  {{validator.name.minLength}}</mat-error>
+                <mat-error *ngIf="isMerchantControlHasError('name','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+                  {{validator.name.maxLength}}</mat-error>
+                <mat-hint class="form-text text-muted">Please enter your Name.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Abstract</mat-label>
+                <input matInput type="text" formControlName="subtitle" placeholder="Abstract">
+                <mat-hint class="form-text text-muted">Please enter event Abstract.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput class="short" type="text" formControlName="description"
+                  placeholder="Description"></textarea>
+                <mat-hint class="form-text text-muted">Please enter Description.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.SECTOR' | translate}}</mat-label>
+                <!--<mat-select name="sector" [(ngModel)]="merchant.sector">-->
+                <mat-select formControlName="sector">
+                  <mat-option value="{{item.value}}" *ngFor="let item of menu">{{item.title | translate}}
+                  </mat-option>
+                </mat-select>
+                <mat-hint class="form-text text-muted">Please enter your sector.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Timetable</mat-label>
+                <textarea matInput class="short" type="text" formControlName="timetable"
+                  placeholder="Timetable"></textarea>
+                <mat-hint class="form-text text-muted">Please enter Timetable.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Address</mat-label>
+                <input matInput type="text" name="address" formControlName="street" placeholder="Address Line"
+                  value="Address Line">
+                <mat-hint class="form-text text-muted">Please enter your Address.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Postcode</mat-label>
+                <input matInput type="text" formControlName="postCode" placeholder="Postcode">
+                <mat-hint class="form-text text-muted">Please enter your Postcode.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>City</mat-label>
+                <input matInput type="text" name="city" formControlName="city" placeholder="City">
+                <mat-hint class="form-text text-muted">Please enter your City.</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" formControlName="phone" placeholder="Phone">
+                <mat-hint class="form-text text-muted">Please enter your Phone.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Website</mat-label>
+                <input matInput type="text" formControlName="websiteURL" placeholder="Webpage">
+                <mat-hint class="form-text text-muted">Please enter your Webpage.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>National Bank</mat-label>
+                <input matInput type="text" formControlName="nationalBank" placeholder="National Bank">
+                <mat-hint class="form-text text-muted">Please enter your National Bank.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Pireaus Bank</mat-label>
+                <input matInput type="text" formControlName="pireausBank" placeholder="Pireaus Bank">
+                <mat-hint class="form-text text-muted">Please enter your Pireaus Bank.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Eurobank</mat-label>
+                <input matInput type="text" formControlName="eurobank" placeholder="Eurobank">
+                <mat-hint class="form-text text-muted">Please enter your Eurobank.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Alpha Bank</mat-label>
+                <input matInput type="text" formControlName="alphaBank" placeholder="Alpha Bank">
+                <mat-hint class="form-text text-muted">Please enter your Alpha Bank.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Paypal</mat-label>
+                <input matInput type="text" formControlName="paypal" placeholder="Paypal">
+                <mat-hint class="form-text text-muted">Please enter your Paypal.</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
 
-			<!--begin: Form Actions -->
-			<div class="form-actions">
-
-				<button (click)="onSubmit()" mat-raised-button (keyup.enter)="onSubmit()"
-					class="btn-md btn-tall btn-wide font-bold font-transform-u"
-					data-ktwizard-type="action-submit">
-					{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-				</button>
-
-			</div>
-			<!--end: Form Actions -->
-		</form>
-	</div>
+        <!--begin: Form Actions -->
+        <div class="row">
+          <div class="form-actions col-md-12">
+            <button (click)="onMerchantSubmit()" mat-raised-button (keyup.enter)="onMerchantSubmit()"
+              class="btn-md btn-tall btn-wide font-bold font-transform-u" data-ktwizard-type="action-submit">
+              {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+            </button>
+          </div>
+        </div>
+        <!--end: Form Actions -->
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
 
-
-
 <div *ngIf="access !== 'merchant'">
-	<div class="">
-		<form class="form">
-			<div class="heading">Setup Your Personal Information</div>
-			<div class="form_section">
-				<div class="row">
-					<div class="form-group col-md-12">
-						<label class="">Avatar.</label>
-						<div class="">
-							<div class="avatar" id="user_avatar">
-								<div class="avatar-img" >
-									<div class="avatar-container">
-										<img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
-										<div *ngIf="!originalImage" class="image-cancel">
-											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
-											</span>
-										</div>
-									</div>
-								</div>
-								<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar-upload">
-									<input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-										accept=".png, .jpg, .jpeg" id="profile_avatar_file" #fileInput>
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group col-md-12">
-						<mat-form-field>
-							<mat-label>Name</mat-label>
-							<input matInput type="text" name="name" [(ngModel)]="customer.name"
-								placeholder="Name" value="Name">
-							<mat-hint class="form-text text-muted">Please enter your Name.</mat-hint>
-						</mat-form-field>
-					</div>
-				</div>
-			</div>
+  <div class="">
+    <form [formGroup]="customerForm" class="form" id="personal_form">
+      <div class="heading">Setup Your Personal Information</div>
+      <div class="form_section">
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label class="">Avatar.</label>
+            <div class="">
+              <div class="avatar" id="user_avatar">
+                <div class="avatar-img">
+                  <div class="avatar-container">
+                    <img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
+                    <div *ngIf="!originalImage" class="image-cancel">
+                      <span class="mdi mdi-close-circle" (click)="onImageCancel()">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                <label class="avatar-upload">
+                  <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+                    accept=".png, .jpg, .jpeg" id="profile_avatar_file" #fileInput>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input matInput type="text" name="name" formControlName="name" placeholder="Name" value="Name">
+              <mat-error *ngIf="isCustomerControlHasError('name','required')" class="error text-danger">
+                {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+              <mat-error *ngIf="isCustomerControlHasError('name','minlength')" class="error text-danger">
+                {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+                {{validator.name.minLength}}</mat-error>
+              <mat-error *ngIf="isCustomerControlHasError('name','maxlength')" class="error text-danger">
+                {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+                {{validator.name.maxLength}}</mat-error>
+              <mat-hint class="form-text text-muted">Please enter your Name.</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
 
-			<!--begin: Form Actions -->
-			<div class="form-actions">
-				<button (click)="onSubmit()" mat-raised-button (keyup.enter)="onSubmit()"
-					class="btn-md btn-tall btn-wide font-bold font-transform-u"
-					data-ktwizard-type="action-submit">
-					{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-				</button>
-			</div>
-			<!--end: Form Actions -->
-		</form>
-	</div>
+      <!--begin: Form Actions -->
+      <div class="form-actions">
+        <button (click)="onCustomerSubmit()" mat-raised-button (keyup.enter)="onCustomerSubmit()"
+          class="btn-md btn-tall btn-wide font-bold font-transform-u" data-ktwizard-type="action-submit">
+          {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+        </button>
+      </div>
+      <!--end: Form Actions -->
+    </form>
+  </div>
 </div>

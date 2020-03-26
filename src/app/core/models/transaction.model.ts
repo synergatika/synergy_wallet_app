@@ -1,14 +1,16 @@
 export interface Transaction {
     _id: string;
 
-    from_id: string;
-    to_id: string;
+    customer_id: string;
+    merchant_id: string;
 
-    info: {
-        from_name: string;
-        from_email: string;
-        to_email: string;
-        points: number;
+    data: {
+        merchant_name: string;
+        merchant_email: string;
+        points: number,
+        amount: number,
+        offer_id: string;
+        offer_title: string
     };
 
     tx: string;

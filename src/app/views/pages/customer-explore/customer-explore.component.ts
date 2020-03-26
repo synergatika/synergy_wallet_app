@@ -9,9 +9,9 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
-  selector: 'app-customer-explore',
-  templateUrl: './customer-explore.component.html',
-  styleUrls: ['./customer-explore.component.scss']
+	selector: 'app-customer-explore',
+	templateUrl: './customer-explore.component.html',
+	styleUrls: ['./customer-explore.component.scss']
 })
 export class CustomerExploreComponent implements OnInit, OnDestroy {
 	//Set Basic Variables 
@@ -30,9 +30,9 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	singlePost: any;
 
 	//Set Child Modals
-	@ViewChild('coopModal', {static: false}) coopModal;
-	@ViewChild('postModal', {static: false}) postModal;
-	
+	@ViewChild('coopModal', { static: false }) coopModal;
+	@ViewChild('postModal', { static: false }) postModal;
+
 	//Slider Options
 	customOptions: OwlOptions = {
 		loop: true,
@@ -43,26 +43,26 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		navSpeed: 700,
 		navText: ['', ''],
 		responsive: {
-		  0: {
-			items: 1
-		  },
-		  600: {
-			items: 2
-		  },
-		  940: {
-			items: 3
-		  }
+			0: {
+				items: 1
+			},
+			600: {
+				items: 2
+			},
+			940: {
+				items: 3
+			}
 		},
-		margin:30,
+		margin: 30,
 		nav: true
-	}	
+	}
 
 	constructor(
 		private cdRef: ChangeDetectorRef,
 		private merchantsService: MerchantsService,
 		private itemsService: ItemsService,
 		private modalService: NgbModal,
-		private elRef:ElementRef
+		private elRef: ElementRef
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -71,7 +71,7 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 		//Get Lists Data
 		this.fetchMerchantsData();
 		this.fetchOffersData();
-		this.fetchPostsEventsData();	
+		this.fetchPostsEventsData();
 	}
 
 	ngOnDestroy() {
@@ -81,139 +81,139 @@ export class CustomerExploreComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	* Assets Function On init
+	* Assets Function On Init
 	*/
 
 	//Get Merchants
 	fetchMerchantsData() {
-		this.merchantsService.readMerchants()
-		  .pipe(
-			tap(
-			  data => {
-				this.merchants = data;
-			  },
-			  error => {
-				  console.log(error);
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
+		this.merchantsService.readMerchants('0-0-0')
+			.pipe(
+				tap(
+					data => {
+						this.merchants = data;
+					},
+					error => {
+						console.log(error);
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdRef.markForCheck();
+				})
+			)
+			.subscribe();
 	}
 
 
 	//Get Posts & Events
 	fetchPostsEventsData() {
-		this.itemsService.readAllPublicPostsEvents()
-		  .pipe(
-			tap(
-			  data => {
-				this.posts = data;
-				//Temp for DEMO
-				if(this.posts.length<3){
-					this.posts.push(this.posts[0]);
-					this.posts.push(this.posts[0]);
-				}
-			  },
-			  error => {
-				console.log(error);
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
+		this.itemsService.readAllPrivatePostsEvents('0-0-0')
+			.pipe(
+				tap(
+					data => {
+						this.posts = data;
+						//Temp for DEMO
+						if (this.posts.length < 3) {
+							this.posts.push(this.posts[0]);
+							this.posts.push(this.posts[0]);
+						}
+					},
+					error => {
+						console.log(error);
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdRef.markForCheck();
+				})
+			)
+			.subscribe();
 	}
 
 	//Get Offers
 	fetchOffersData() {
-		this.itemsService.readAllOffers()
-		  .pipe(
-			tap(
-			  data => {
-				this.offers = data;
-			  },
-			  error => {
-				  console.log(error);
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
+		this.itemsService.readAllOffers('0-0-0')
+			.pipe(
+				tap(
+					data => {
+						this.offers = data;
+					},
+					error => {
+						console.log(error);
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdRef.markForCheck();
+				})
+			)
+			.subscribe();
 	}
-	
+
 
 	/*
 	/ Modals
 	*/
 
 	//Open Coop
-	openCoop(coop) {	  
+	openCoop(coop) {
 		this.singleCoop = coop;
 		this.modalService.open(
-			this.coopModal, 
+			this.coopModal,
 			{
-				ariaLabelledBy: 'modal-basic-title', 
-				size: 'lg', 
+				ariaLabelledBy: 'modal-basic-title',
+				size: 'lg',
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
 				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');
-			}, (reason) => {
-				console.log('dismissed');
+		}, (reason) => {
+			console.log('dismissed');
 		});
 	}
 
 
 	//Open Post
-	openPost(post) {	  
+	openPost(post) {
 		this.singlePost = post;
 		this.modalService.open(
-			this.postModal, 
+			this.postModal,
 			{
-				ariaLabelledBy: 'modal-basic-title', 
-				size: 'lg', 
+				ariaLabelledBy: 'modal-basic-title',
+				size: 'lg',
 				backdropClass: 'fullscrenn-backdrop',
 				//backdrop: 'static',
 				windowClass: 'fullscreen-modal',
 			}
 		).result.then((result) => {
 			console.log('closed');
-			}, (reason) => {
-				console.log('dismissed');
+		}, (reason) => {
+			console.log('dismissed');
 		});
 	}
 
 	//Actions to Open Modals from Carousel
 	mousedown() {
-	  this.moved = false;
+		this.moved = false;
 	}
 	mousemove() {
-	  this.moved = true;
+		this.moved = true;
 	}
 	mouseup(data, type) {
 		if (this.moved) {
 			//Do nothings
 		} else {
-			if(type == 'coop') {
+			if (type == 'coop') {
 				this.openCoop(data);
-			} else if(type=='post'){
+			} else if (type == 'post') {
 				this.openPost(data);
-			}else{
+			} else {
 				//Do nothing
 			}
 		}
 		this.moved = false;
 	}
-  
+
 }

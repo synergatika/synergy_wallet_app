@@ -2,20 +2,24 @@ import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } fr
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 // Global Services
+import { TranslateService } from '@ngx-translate/core';
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { LoyaltyService } from '../../core/services/loyalty.service';
 
 // Local Services
 import { ScannerService } from '../_scanner.service';
 
 // Local Models & Interfaces
-import { User, OfferTransaction } from '../_scanner.interface';
+import { ScannerInterface } from '../_scanner.interface';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WizardComponent } from 'angular-archwizard';
 import { Offer } from 'src/app/core/models/offer.model';
+
 @Component({
   selector: 'app-scan-offers',
   templateUrl: './scan-offers.component.html',
@@ -28,37 +32,45 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
   public wizard: WizardComponent;
 
   offer_id: string;
+  showIdentifierForm = false;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
+  private subscription: Subscription = new Subscription;
 
-  user: User;
-  offers: Offer[];
-  transaction: OfferTransaction;
-
-  submitted: boolean = false;
-
-  showIdentifierForm = false;
+  user: ScannerInterface["User"];
+  offers: ScannerInterface["Offer"][];
+  transaction: ScannerInterface["OfferTransaction"];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
+    private translate: TranslateService,
+    private scannerNoticeService: MessageNoticeService,
+    private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService,
     private scannerService: ScannerService,
     public dialogRef: MatDialogRef<ScanOffersComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.offer_id = this.data.offer_id;
-    this.scannerService.offers.subscribe(offers => this.offers = offers);
-    this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction);
-    this.scannerService.user.subscribe(user => this.user = user);
+    this.subscription.add(this.scannerService.offers.subscribe(offers => this.offers = offers));
+    this.subscription.add(this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction));
+    this.subscription.add(this.scannerService.user.subscribe(user => this.user = user));
     this.unsubscribe = new Subject();
   }
 
+	/**
+	 * On Init
+	 */
   ngOnInit() {
     this.initializeOfferData();
   }
 
+	/**
+	 * On destroy
+	 */
   ngOnDestroy() {
+    this.scannerNoticeService.setNotice(null);
+    this.subscription.unsubscribe();
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
@@ -77,18 +89,17 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            if (data.data) {
-              console.log(parseInt(data.data.points, 16));
-              this.transaction.points = parseInt(data.data.points, 16);
-              this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
-              this.scannerService.changeOfferTransaction(this.transaction);
-              this.onNextStep();
-            } else {
-              console.log("User not exist");
+            console.log(parseInt(data.points, 16));
+            this.transaction.points = parseInt(data.points, 16);
+            this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
+            if (!this.transaction.possible_quantity) {
+              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.NOT_ENOUGH_POINTS'), 'danger');
             }
-
+            this.scannerService.changeOfferTransaction(this.transaction);
+            this.onNextStep();
           },
           error => {
+            this.scannerNoticeService.setNotice(this.translate.instant(error), 'danger');
             console.log(error);
           }),
         takeUntil(this.unsubscribe),
@@ -110,21 +121,26 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   onSubmitOfferForm(event: number) {
     const identifier = this.user.identifier_scan || this.user.identifier_form;
-    const redeemPoints = {
+    const redeemOffer = {
+      password: 'all_ok',
       _to: (identifier).toLowerCase(),
       _points: this.transaction.discount_points,
-      password: 'all_ok'
+      offer_id: this.transaction.offer_id,
+      quanitive: this.transaction.quantity
     };
 
-    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints._points, redeemPoints.password)
+    this.loyaltyService.redeemOffer(this.authenticationService.currentUserValue.user["_id"], redeemOffer.offer_id, redeemOffer._to, redeemOffer.password, redeemOffer._points, redeemOffer.quanitive)
       .pipe(
         tap(
           data => {
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCESS_TRANSACTION'), 'success');
             this.onNextStep();
             console.log(data);
           },
           error => {
-            console.log(error);
+            this.scannerNoticeService.setNotice(
+              this.translate.instant('WIZARD_MESSAGES.ERROR_REDEEM_OFFER') + '<br>' +
+              this.translate.instant(error), 'danger');
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -143,11 +159,19 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     this.wizard.goToNextStep();
   }
 
-  onPreviousStep() {
+  onExternalPreviousStep(event: boolean) {
+    console.log('Back')
+    this.scannerNoticeService.setNotice(null);
     this.wizard.goToPreviousStep();
   }
 
-  onFinalStep(event=null) {
+  onPreviousStep() {
+    console.log('Back')
+    this.scannerNoticeService.setNotice(null);
+    this.wizard.goToPreviousStep();
+  }
+
+  onFinalStep(event = null) {
     this.dialogRef.close();
   }
 }

@@ -7,7 +7,7 @@ import { ItemsService } from '../core/services/items.service';
 
 import { SupportService } from './_support.service';
 
-import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
 
 
 @Component({
@@ -44,12 +44,12 @@ export class MicrocreditComponent implements OnInit, OnDestroy {
   }
 
   fetchCampaignsData() {
-    this.itemsService.readPublicMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"])
+    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
       .pipe(
         tap(
           data => {
             this.campaigns = data;
-			console.log(this.campaigns);
+            console.log(this.campaigns);
             this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {

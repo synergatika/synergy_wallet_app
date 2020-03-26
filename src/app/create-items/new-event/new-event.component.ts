@@ -20,7 +20,7 @@ import { ItemsService } from '../../core/services/items.service';
   styleUrls: ['./new-event.component.scss']
 })
 export class NewEventComponent implements OnInit, OnDestroy {
-  @ViewChild('image', {static: true}) image: ElementRef;
+  @ViewChild('image', { static: true }) image: ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -35,24 +35,25 @@ export class NewEventComponent implements OnInit, OnDestroy {
       maxLenth: 250
     }
   };
-	timePickerTheme: any = {
-			container: {
-					bodyBackgroundColor: '#0c1a33',
-					buttonColor: '#fff'
-			},
-			dial: {
-					dialBackgroundColor: '#415daa',
-			},
-			clockFace: {
-					clockFaceBackgroundColor: '#415daa',
-					clockHandColor: '#e4509e',
-					clockFaceTimeInactiveColor: '#fff'
-			}
-	};
+  timePickerTheme: any = {
+    container: {
+      bodyBackgroundColor: '#0c1a33',
+      buttonColor: '#fff'
+    },
+    dial: {
+      dialBackgroundColor: '#415daa',
+    },
+    clockFace: {
+      clockFaceBackgroundColor: '#415daa',
+      clockHandColor: '#e4509e',
+      clockFaceTimeInactiveColor: '#fff'
+    }
+  };
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-	fileDataEmptied: boolean;
+  fileDataEmptied: boolean;
+
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -72,13 +73,13 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private fb: FormBuilder,
     private translate: TranslateService,
-		private router: Router,
+    private router: Router,
   ) {
     this.unsubscribe = new Subject();
   }
 
 	/**
-	 * On init
+	 * On Init
 	 */
   ngOnInit() {
     this.initForm();
@@ -107,7 +108,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-			itemAbstract: [''],
+      itemAbstract: [''],
       access: ['public', Validators.compose([
         Validators.required
       ])
@@ -122,11 +123,11 @@ export class NewEventComponent implements OnInit, OnDestroy {
         Validators.required
       ])
       ],
-			eventTime: ['', Validators.compose([
+      eventTime: ['', Validators.compose([
         Validators.required
       ])
       ],
-			profile_avatar: ['', Validators.compose([
+      profile_avatar: ['', Validators.compose([
         Validators.required
       ])
       ],
@@ -139,12 +140,12 @@ export class NewEventComponent implements OnInit, OnDestroy {
   }
 
   preview() {
-	  if(this.fileData == null) {
-		  this.onImageCancel();
-		  return;
-	  }
-	  this.originalImage = false;
-		this.fileDataEmptied = false;
+    if (this.fileData == null) {
+      this.onImageCancel();
+      return;
+    }
+    this.originalImage = false;
+    this.fileDataEmptied = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -164,9 +165,9 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.previewUrl = null;
     this.fileData = null;
     this.originalImage = true;
-		this.image.nativeElement.value = null;
-		this.fileDataEmptied = true;
-		this.cdRef.markForCheck();
+    this.image.nativeElement.value = null;
+    this.fileDataEmptied = true;
+    this.cdRef.markForCheck();
   }
 
 
@@ -184,33 +185,30 @@ export class NewEventComponent implements OnInit, OnDestroy {
       );
       return;
     }
-		if(!this.fileData) {
-			console.log('no image');
-			return;
-		}
+    if (!this.fileData) {
+      console.log('no image');
+      return;
+    }
     this.submitted = true;
     this.loading = true;
-		console.log(controls.eventDate.value);
-		console.log(controls.eventTime.value);	
-		const timeArray = controls.eventTime.value.split(':');
-		var timeInMiliseconds = ((timeArray[0])* 60 * 60 + (+timeArray[1]) * 60 ) * 1000;
-		console.log(timeInMiliseconds);
-		console.log(controls.eventDate.value.getTime());
-		var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
-		console.log(new Date(totalMiliseconds));
+    console.log(controls.eventDate.value);
+    console.log(controls.eventTime.value);
+    const timeArray = controls.eventTime.value.split(':');
+    var timeInMiliseconds = ((timeArray[0]) * 60 * 60 + (+timeArray[1]) * 60) * 1000;
+    console.log(timeInMiliseconds);
+    console.log(controls.eventDate.value.getTime());
+    var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
+    console.log(new Date(totalMiliseconds));
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
-		formData.append('subtitle', controls.itemAbstract.value);
+    formData.append('subtitle', controls.itemAbstract.value);
     formData.append('description', controls.description.value);
     formData.append('access', controls.access.value);
     formData.append('location', controls.location.value);
     formData.append('dateTime', totalMiliseconds);
-		/*for (var pair of formData.entries()) {
-			console.log(pair[0]+ ', ' + pair[1]); 
-		}*/
-		//return;		
+
     this.itemsService.createEvent(formData)
       .pipe(
         tap(
@@ -220,17 +218,17 @@ export class NewEventComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.EVENT_CREATED'),
               'success'
             ).then((result) => {
-							this.router.navigate(['/m-events']);
-						});
-						setTimeout(()=>{
-							Swal.close();
-							this.router.navigate(['/m-events']);
-						},2000);
+              this.router.navigate(['/m-events']);
+            });
+            setTimeout(() => {
+              Swal.close();
+              this.router.navigate(['/m-events']);
+            }, 2000);
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
             this.submitted = false;

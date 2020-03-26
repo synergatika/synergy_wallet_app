@@ -74,17 +74,9 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-        // StoreModule.forFeature('auth', authReducer),
-        // EffectsModule.forFeature([AuthEffects]),
-		MatCardModule,
+        MatCardModule,
     ],
     providers: [
-        // InterceptService,
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: InterceptService,
-        //     multi: true
-        // },
     ],
     exports: [AuthComponent],
     declarations: [

@@ -1,4 +1,4 @@
-export interface AuthNotice {
+export interface MessageNotice {
     type?: string;
     message: string;
 }

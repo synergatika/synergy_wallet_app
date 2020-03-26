@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
 import { SupportInterface } from './_support.interface';
-import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
 import { MicrocreditSupport } from '../core/models/microcredit-support.model';
 
 @Injectable()
@@ -15,39 +15,51 @@ export class SupportService {
     private microcreditCurrentSource = new BehaviorSubject({
         merchant_id: '',
         merchant_name: '',
+        merchant_email: '',
+        merchant_slug: '',
         merchant_imageURL: '',
-        merchant_payment: {
-            Paypal: '',
-            NationalBank: '',
-            Eurobank: '',
-            AlphaBank: '',
-            PireausBank: ''
+        merchant_address: {
+            street: '',
+            city: '',
+            postCode: '',
+            coordinates: ['', '']
+        },
+        merchant_contact: {
+            phone: '',
+            websiteURL: ''
+        },
+        merchant_payments: {
+            paypal: '',
+            nationalBank: '',
+            eurobank: '',
+            alphaBank: '',
+            pireausBank: ''
         },
         campaign_id: '',
         campaign_imageURL: '',
         title: '',
-				subtitle: '',
+        campaign_slug: '',
+        subtitle: '',
         terms: '',
         description: '',
         category: '',
         access: 'public',
         quantitative: false,
+        stepAmount: 0,
         minAllowed: 0,
         maxAllowed: 0,
         maxAmount: 0,
-				startsAt: 0,
+        startsAt: 0,
+        expiresAt: 0,
         redeemStarts: 0,
         redeemEnds: 0,
-        supports: [{
-            _id: '', backer_id: '', initialTokens: 0, redeemedTokens: 0, payment_id: '', status: 'order'
-        }],
+
         confirmationTokens: {
             _id: '', initialTokens: 0, redeemedTokens: 0
         },
         orderedTokens: {
             _id: '', initialTokens: 0, redeemedTokens: 0
         },
-        expiresAt: 0,
         createdAt: new Date()
     });
     microcreditCurrent = this.microcreditCurrentSource.asObservable();
@@ -59,7 +71,7 @@ export class SupportService {
         payment_id: '',
         amount: 0,
         method: '',
-        how:''
+        how: ''
     });
     microcreditSupport = this.microcreditSupportSource.asObservable();
 

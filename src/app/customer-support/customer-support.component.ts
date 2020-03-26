@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 
 import { ItemsService } from '../core/services/items.service';
-import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
 import { SupportService } from './_support.service';
 
 @Component({
@@ -47,12 +47,12 @@ export class CustomerSupportComponent implements OnInit, OnDestroy {
   }
 
   /**
-	* Assets Function On init
+	* Assets Function On Init
 	*/
 
   //Get Microcredit Campaigns
   fetchMicrocreditData() {
-    this.itemsService.readAllPrivateMicrocreditCampaigns()
+    this.itemsService.readAllPrivateMicrocreditCampaigns('0-0-0')
       .pipe(
         tap(
           data => {

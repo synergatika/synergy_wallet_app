@@ -3,15 +3,13 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } fr
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 // RxJS
-import { finalize, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { finalize, takeUntil, tap } from 'rxjs/operators';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
-// Auth
-//import { AuthNoticeService, AuthService } from '../../../../core/auth';
-import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service';
+// Services
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-
 // Environment
 import { environment } from '../../../environments/environment';
 
@@ -29,30 +27,28 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Public params
 	emailForm: FormGroup;
-	loading = false;
-	errors: any = [];
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+	loading: boolean = false;
 
 	/**
 	 * Component constructor
 	 *
-	 * @param  authenticationService: AuthenticationService
-	 * @param authNoticeService: AuthNoticeService
-	 * @param translate: TranslateService
 	 * @param router: Router
 	 * @param fb: FormBuilder
 	 * @param cdr: ChangeDetectorRef
+	 * @param translate: TranslateService
+	 * @param authNoticeService: AuthNoticeService
+	 * @param authenticationService: AuthenticationService
 	 */
 	constructor(
-		private authenticationService: AuthenticationService,
-		public authNoticeService: AuthNoticeService,
-		private translate: TranslateService,
 		private router: Router,
 		private fb: FormBuilder,
-		private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef,
+		private translate: TranslateService,
+		public authNoticeService: MessageNoticeService,
+		private authenticationService: AuthenticationService,
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -62,7 +58,7 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	 */
 
 	/**
-	 * On init
+	 * On Init
 	 */
 	ngOnInit() {
 		this.initForm();
@@ -83,7 +79,6 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	 * Default params, validators
 	 */
 	initForm() {
-
 		this.emailForm = this.fb.group({
 			email: ['', Validators.compose([
 				Validators.required,
@@ -99,6 +94,9 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	 * Form Submit
 	 */
 	submit() {
+		if (this.loading) return;
+		this.loading = true;
+
 		const controls = this.emailForm.controls;
 		/** check form */
 		if (this.emailForm.invalid) {
@@ -107,11 +105,6 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 			);
 			return;
 		}
-
-		if (this.loading) {
-			return;
-		}
-		this.loading = true;
 
 		const authData = {
 			email: (controls.email.value).toLowerCase()

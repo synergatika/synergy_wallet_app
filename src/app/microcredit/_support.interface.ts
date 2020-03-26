@@ -1,18 +1,4 @@
-import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
-// interface MicrocreditCampaign {
-//     merchant_id: string;
-//     merchant_name: string;
-//     merchant_imageURL: string;
-//     campaign_id: string;
-//     title: string;
-//     terms: string;
-//     description: string;
-//     minAllowed: number;
-//     maxAllowed: number;
-//     maxAmount: number;
-//     expiresAt: number;
-//     createdAt: Date;
-// }
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
 
 interface User {
     identifier_scan: string;
@@ -20,17 +6,23 @@ interface User {
     email: string | undefined;
 }
 
+interface Actions {
+    registration: string; // '00', '01', '10', '11' - None, Link Card, Link Email, Full Registration
+}
+
 interface MicrocreditSupport {
     merchant_id: string;
     campaign_id: string;
     support_id: string;
-    payment: string;
+    payment_id: string;
+    method: string;
     amount: number;
     paid: boolean;
 }
 
 export interface SupportInterface {
     User: User;
+    Actions: Actions;
     MicrocreditCampaign: MicrocreditCampaign;
     MicrocreditSupport: MicrocreditSupport;
 }

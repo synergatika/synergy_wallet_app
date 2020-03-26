@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 // Models
-import { MicrocreditCampaign } from '../../core/models/microcredit-campaign.model';
+import { MicrocreditCampaign } from '../../core/models/microcredit_campaign.model';
 
 @Component({
   selector: 'app-edit-microcredit-campaign-draft',
@@ -25,9 +25,9 @@ import { MicrocreditCampaign } from '../../core/models/microcredit-campaign.mode
 })
 
 export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy {
-  @ViewChild('fileInput', {static: false}) imageInput: ElementRef;
-	@ViewChild('publish_item', {static: false}) publish_item;
-	@ViewChild('remove_item', {static: false}) remove_item;
+  @ViewChild('fileInput', { static: false }) imageInput: ElementRef;
+  @ViewChild('publish_item', { static: false }) publish_item: any;
+  @ViewChild('remove_item', { static: false }) remove_item: any;
   public validator: any = {
     title: {
       minLength: 3,
@@ -46,7 +46,43 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
       maxValue: 100000
     }
   };
-  campaign_id: string;
+  private campaign_id: string;
+  public campaign: MicrocreditCampaign = {
+    merchant_id: '',
+    merchant_name: '',
+    merchant_slug: '',
+    merchant_imageURL: '',
+    merchant_email: '',
+    merchant_address: { street: '', postCode: '', city: '', coordinates: [] },
+    merchant_contact: { phone: '', websiteURL: '' },
+    merchant_payments: { nationalBank: '', eurobank: '', alphaBank: '', pireausBank: '', paypal: '' },
+
+    campaign_id: '',
+    campaign_slug: '',
+    campaign_imageURL: '',
+
+    title: '',
+    subtitle: '',
+    terms: '',
+    description: '',
+    category: '',
+    access: '',
+    quantitative: false,
+    minAllowed: 0,
+    maxAllowed: 0,
+    stepAmount: 0,
+    maxAmount: 0,
+    redeemStarts: 0,
+    redeemEnds: 0,
+    startsAt: 0,
+    expiresAt: 0,
+
+    confirmationTokens: { _id: '', initialTokens: 0, redeemedTokens: 0 },
+    orderedTokens: { _id: '', initialTokens: 0, redeemedTokens: 0 },
+
+    createdAt: new Date
+  }
+
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
@@ -54,48 +90,48 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 
   submitForm: FormGroup;
   submitted: boolean = false;
-  campaign: MicrocreditCampaign;
-  title: string;
-	itemAbstract: string;
-  terms: string;
-  description: string;
-  category: string;
-  access: string;
-  quantitative: boolean;
-  minAllowed: number;
-  maxAllowed: number;
-	step: number;
-  maxAmount: number;
-  redeemStarts: Date;
-  redeemEnds: Date;
-  startsAt: Date;
-  expiresAt: Date;
+  //campaign: MicrocreditCampaign;
+  // title: string;
+  // itemAbstract: string;
+  // terms: string;
+  // description: string;
+  // category: string;
+  // access: string;
+  // quantitative: boolean;
+  // minAllowed: number;
+  // maxAllowed: number;
+  // step: number;
+  // maxAmount: number;
+  // redeemStarts: Date;
+  // redeemEnds: Date;
+  // startsAt: Date;
+  // expiresAt: Date;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
   constructor(
     private cdRef: ChangeDetectorRef,
-		private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private itemsService: ItemsService,
     private fb: FormBuilder,
-		private authenticationService: AuthenticationService,
-		private modalService: NgbModal,
-		private router: Router,
+    private authenticationService: AuthenticationService,
+    private modalService: NgbModal,
+    private router: Router,
     private translate: TranslateService
   ) {
-	this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       this.campaign_id = params['_id'];
     });
     this.unsubscribe = new Subject();
   }
 
   /**
-	 * On init
+	 * On Init
 	 */
   ngOnInit() {
-	this.fetchCampaignData();
-    //this.initForm();
+    this.fetchCampaignData();
+    this.initForm();
   }
 
 	/**
@@ -109,71 +145,71 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: [this.title, Validators.compose([
+      title: [this.campaign.title, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-			itemAbstract: [this.itemAbstract],
-      terms: [this.terms, Validators.compose([
+      subtitle: [this.campaign.subtitle],
+      terms: [this.campaign.terms, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.terms.minLength),
         Validators.maxLength(this.validator.terms.maxLength)
       ])
       ],
-      description: [this.description, Validators.compose([
+      description: [this.campaign.description, Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      category: [this.category, Validators.compose([
+      category: [this.campaign.category, Validators.compose([
         Validators.required,
       ])
       ],
-      access: [this.access, Validators.compose([
+      access: [this.campaign.access, Validators.compose([
         Validators.required,
       ])
       ],
-      quantitative: [this.quantitative, Validators.compose([
+      quantitative: [this.campaign.quantitative, Validators.compose([
         Validators.required,
       ])
       ],
-      minAllowed: [this.minAllowed, Validators.compose([
+      minAllowed: [this.campaign.minAllowed, Validators.compose([
         Validators.required,
       ])
       ],
-      maxAllowed: [this.maxAllowed, Validators.compose([
+      maxAllowed: [this.campaign.maxAllowed, Validators.compose([
         Validators.required,
       ])
       ],
-			step: [this.step],
-      maxAmount: [this.maxAmount, Validators.compose([
+      stepAmount: [this.campaign.stepAmount],
+      maxAmount: [this.campaign.maxAmount, Validators.compose([
         Validators.required,
         Validators.min(this.validator.maxAmount.minLength),
         Validators.max(this.validator.maxAmount.maxLength)
       ])
       ],
-      redeemStarts: [this.redeemStarts, Validators.compose([
+      redeemStarts: [this.campaign.redeemStarts, Validators.compose([
         Validators.required,
       ])
       ],
-      redeemEnds: [this.redeemEnds, Validators.compose([
+      redeemEnds: [this.campaign.redeemEnds, Validators.compose([
         Validators.required,
       ])
       ],
-			initiation: [this.startsAt, Validators.compose([
+      initiation: [this.campaign.startsAt, Validators.compose([
         Validators.required,
       ])
       ],
-      expiration: [this.expiresAt, Validators.compose([
+      expiration: [this.campaign.expiresAt, Validators.compose([
         Validators.required,
       ])
       ],
     },
-		{validator: this.endDateAfterOrEqualValidator}			
-		);
+      { validator: this.endDateAfterOrEqualValidator }
+    );
   }
 
   fileProgress(fileInput: any) {
@@ -185,11 +221,11 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   }
 
   preview() {
-		if(this.fileData == null) {
-		  this.onImageCancel();
-		  return;
-	  }
-		this.originalImage = false;
+    if (this.fileData == null) {
+      this.onImageCancel();
+      return;
+    }
+    this.originalImage = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -209,59 +245,139 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
     this.previewUrl = this.campaign.campaign_imageURL;
     this.fileData = null;
     this.originalImage = true;
-		this.imageInput.nativeElement.value = null;
+    this.imageInput.nativeElement.value = null;
   }
 
   fetchCampaignData() {
-		this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
-		  .pipe(
-			tap(
-			  data => {
-				this.campaign = data;
-					console.log('this.current');
-					console.log(this.campaign);
-				  this.title = this.campaign.title;
-					this.itemAbstract = this.campaign.subtitle;
-				  this.terms = this.campaign.terms;
-				  this.description = this.campaign.description;
-				  this.category = this.campaign.category;
-				  this.access = this.campaign.access;
-				  this.quantitative = this.campaign.quantitative;
-				  if (this.quantitative) {
-						this.isQuantitative = true;
-				  }
-				  this.minAllowed = this.campaign.minAllowed;
-				  this.maxAllowed = this.campaign.maxAllowed;
-					//this.step = this.campaign.stepAmount;
-				  this.maxAmount = this.campaign.maxAmount;
-				  this.redeemStarts = new Date(this.campaign.redeemStarts);
-				  this.redeemEnds = new Date(this.campaign.redeemEnds);
-				  this.startsAt = new Date(this.campaign.startsAt);
-				  this.expiresAt = new Date(this.campaign.expiresAt);
-					this.previewUrl = this.campaign.campaign_imageURL;	
-				  this.initForm();					
-			  },
-			  error => {
-			  }),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-			  this.loading = false;
-			  this.cdRef.markForCheck();
-			})
-		  )
-		  .subscribe();
-	/*const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
-    this.current = currentCampaign;	*/
+    this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
+      .pipe(
+        tap(
+          data => {
+            this.campaign = Object.assign({}, this.campaign, data);
+            console.log(this.campaign);
+
+            this.isQuantitative = this.campaign.quantitative;
+            this.previewUrl = this.campaign.campaign_imageURL;
+            this.submitForm.patchValue({
+              ...data,
+              initiation: new Date(this.campaign.startsAt),
+              expiration: new Date(this.campaign.expiresAt),
+              redeemStarts: new Date(this.campaign.redeemStarts),
+              redeemEnds: new Date(this.campaign.redeemEnds),
+            });
+
+            // this.title = this.campaign.title;
+            // this.itemAbstract = this.campaign.subtitle;
+            // this.terms = this.campaign.terms;
+            // this.description = this.campaign.description;
+            // this.category = this.campaign.category;
+            // this.access = this.campaign.access;
+            // this.quantitative = 
+
+            // this.minAllowed = this.campaign.minAllowed;
+            // this.maxAllowed = this.campaign.maxAllowed;
+            // //this.step = this.campaign.stepAmount;
+            // this.maxAmount = this.campaign.maxAmount;
+            // this.redeemStarts = new Date(this.campaign.redeemStarts);
+            // this.redeemEnds = new Date(this.campaign.redeemEnds);
+            // this.startsAt = new Date(this.campaign.startsAt);
+            // this.expiresAt = new Date(this.campaign.expiresAt);
+
+
+            // this.initForm();
+          },
+          error => {
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+    /*const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
+      this.current = currentCampaign;	*/
   }
 
   onIsQuantitativeCheckboxChange() {
     this.isQuantitative = !this.isQuantitative;
   }
 
+  editCampaign(formData: FormData, campaignStatus: string) {
+    this.itemsService.editCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, formData)
+      .pipe(
+        tap(
+          data => {
+            if (campaignStatus == 'publish') {
+              this.publishCampaign(formData)
+            } else {
+              Swal.fire(
+                this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+                this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_UPDATED'),
+                'success'
+              );
+              setTimeout(() => {
+                Swal.close();
+              }, 2000);
+            }
+            this.submitted = false;
+          },
+          error => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.ERROR.TITLE'),
+              this.translate.instant(error),
+              'error'
+            );
+            this.submitted = false;
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
+  publishCampaign(formDta: FormData) {
+    this.itemsService.publishCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, formDta)
+      .pipe(
+        tap(
+          data => {
+            console.log('success');
+            console.log(data);
+            Swal.fire(
+              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
+              'success'
+            );
+            setTimeout(() => {
+              Swal.close();
+              this.router.navigate(['/m-campaigns']);
+            }, 2000);
+          },
+          error => {
+            console.log(error);
+            Swal.fire(
+              this.translate.instant('MESSAGE.ERROR.TITLE'),
+              this.translate.instant(error),
+              'error'
+            );
+            this.submitted = false;
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
   /**
- * On Form Submit
- */
-  onSubmit(campaignStatus) {
+  * On Form Submit
+  */
+  onSubmit(campaignStatus: string) {
     if (this.submitted) return;
 
     const controls = this.submitForm.controls;
@@ -278,131 +394,57 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
-		formData.append('subtitle', controls.itemAbstract.value);
+    formData.append('subtitle', controls.subtitle.value);
     formData.append('terms', controls.terms.value);
     formData.append('description', controls.description.value);
     formData.append('category', controls.category.value);
     formData.append('access', controls.access.value);
-		//formData.append('status', campaignStatus);
-		formData.append('stepAmount', '20');
     formData.append('quantitative', controls.quantitative.value);
-		formData.append('minAllowed', controls.minAllowed.value);
-		if (controls.quantitative.value) {		
-			formData.append('maxAllowed', controls.maxAllowed.value);
-			if(controls.step.value) {
-				formData.append('stepAmount', controls.step.value.toString());
-			}
-		} else {
-			formData.append('maxAllowed', controls.minAllowed.value);
-		}
+    formData.append('stepAmount', (controls.quantitative.value) ? controls.stepAmount.value : '0');
+    formData.append('minAllowed', controls.minAllowed.value);
+    formData.append('maxAllowed', (controls.quantitative.value) ? controls.maxAllowed.value : controls.minAllowed.value);
     formData.append('maxAmount', controls.maxAmount.value);
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
     formData.append('redeemEnds', controls.redeemEnds.value.getTime().toString());
     formData.append('startsAt', controls.initiation.value.getTime().toString());
     formData.append('expiresAt', controls.expiration.value.getTime().toString());
-		/*for (var pair of formData.entries()) {
-			console.log(pair[0]+ ', ' + pair[1]); 
-		}*/
-	//return;
-		if(campaignStatus == 'draft') {
-			this.itemsService.editCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, formData)
-      .pipe(
-        tap(
-          data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_UPDATED'),
-              'success'
-            );
-						setTimeout(()=>{
-							Swal.close();
-						},2000);
-						this.submitted = false;
-          },
-          error => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
-              'error'
-            );
-            this.submitted = false;
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-		}
-		if (campaignStatus == 'publish') {
-			this.itemsService.publishCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, formData)
-      .pipe(
-        tap(
-          data => {
-						console.log('success');
-						console.log(data);
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
-              'success'
-            );
-						setTimeout(()=>{
-							Swal.close();
-							this.router.navigate(['/m-campaigns']);
-						},2000);
-          },
-          error => {
-						console.log(error);
-            Swal.fire(
-              this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
-              'error'
-            );
-            this.submitted = false;
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-		}
-  }
-  
-	publishItemModal() {
-		const controls1 = this.submitForm.controls;
 
+    this.editCampaign(formData, campaignStatus);
+  }
+
+  publishItemModal() {
+    const controls = this.submitForm.controls;
+    /** check form */
     if (this.submitForm.invalid) {
-      Object.keys(controls1).forEach(controlName =>
-        controls1[controlName].markAsTouched()
+      Object.keys(controls).forEach(controlName =>
+        controls[controlName].markAsTouched()
       );
       return;
     }
-		this.modalService.open(this.publish_item).result.then((result) => {
-		console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
-		});
-	}
-	
-	publishItem() {
-		console.log('publishItem');
-		this.onSubmit('publish');
-	}
-	
-	deleteItemModal() {
-		this.modalService.open(this.remove_item).result.then((result) => {
-		console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
-		});
-	}
-	
-	deleteItem() {
-		console.log('delete');
-		this.itemsService.deleteCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
+
+    this.modalService.open(this.publish_item).result.then((result) => {
+      console.log('closed');
+    }, (reason) => {
+      console.log('dismissed');
+    });
+  }
+
+  publishItem() {
+    console.log('publishItem');
+    this.onSubmit('publish');
+  }
+
+  deleteItemModal() {
+    this.modalService.open(this.remove_item).result.then((result) => {
+      console.log('closed');
+    }, (reason) => {
+      console.log('dismissed');
+    });
+  }
+
+  deleteItem() {
+    console.log('delete');
+    this.itemsService.deleteCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
       .pipe(
         tap(
           data => {
@@ -411,18 +453,18 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
               this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_DELETED'),
               'success'
             ).then((result) => {
-							console.log('deleted');
-							this.router.navigate(['/m-campaigns']);
-						});
-						setTimeout(()=>{
-							Swal.close();
-							this.router.navigate(['/m-campaigns']);
-						},2000);
+              console.log('deleted');
+              this.router.navigate(['/m-campaigns']);
+            });
+            setTimeout(() => {
+              Swal.close();
+              this.router.navigate(['/m-campaigns']);
+            }, 2000);
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              error,//this.translate.instant('MESSAGE.ERROR'),
               'error'
             );
             this.submitted = false;
@@ -434,47 +476,46 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         })
       )
       .subscribe();
-	}
-	
-	endDateAfterOrEqualValidator(formGroup): any {
-    var startDateTimestamp, endDateTimestamp, startRedeemDateTimestamp, endRedeemDateTimestamp;
-		var opts = { onlySelf: true, emitEvent: false };
-    for(var controlName in formGroup.controls) {
-      if(controlName.indexOf("initiation") !== -1) {
+  }
+
+  endDateAfterOrEqualValidator(formGroup: FormGroup): any {
+    var startDateTimestamp: number, endDateTimestamp: number, startRedeemDateTimestamp: number, endRedeemDateTimestamp: number;
+    var opts = { onlySelf: true, emitEvent: false };
+    for (var controlName in formGroup.controls) {
+      if (controlName.indexOf("initiation") !== -1) {
         startDateTimestamp = Date.parse(formGroup.controls[controlName].value);
       }
-      if(controlName.indexOf("expiration") !== -1) {
+      if (controlName.indexOf("expiration") !== -1) {
         endDateTimestamp = Date.parse(formGroup.controls[controlName].value);
       }
-			if(controlName.indexOf("redeemStarts") !== -1) {
+      if (controlName.indexOf("redeemStarts") !== -1) {
         startRedeemDateTimestamp = Date.parse(formGroup.controls[controlName].value);
       }
-      if(controlName.indexOf("redeemEnds") !== -1) {
+      if (controlName.indexOf("redeemEnds") !== -1) {
         endRedeemDateTimestamp = Date.parse(formGroup.controls[controlName].value);
       }
     }
-		if (endDateTimestamp < startDateTimestamp) {
-			//console.log("error init");
-			formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: true });
-		} else {
-			//console.log("init null");
-			formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: null });		
-			formGroup.controls['expiration'].updateValueAndValidity(opts);
-		} 
-		if (endRedeemDateTimestamp < startRedeemDateTimestamp) {
-			//console.log("error endRedeemDateTimestamp");
-			formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: true });
-		} else {
-			//console.log("redeemEnds null");
-			formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: null });
-			formGroup.controls['redeemEnds'].updateValueAndValidity(opts);
-		}
-		if((endDateTimestamp >= startDateTimestamp) && (endRedeemDateTimestamp >= startRedeemDateTimestamp)) {
-			return null;
-		}
-
+    if (endDateTimestamp < startDateTimestamp) {
+      //console.log("error init");
+      formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: true });
+    } else {
+      //console.log("init null");
+      formGroup.controls['expiration'].setErrors({ endDateLessThanStartDate: null });
+      formGroup.controls['expiration'].updateValueAndValidity(opts);
+    }
+    if (endRedeemDateTimestamp < startRedeemDateTimestamp) {
+      //console.log("error endRedeemDateTimestamp");
+      formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: true });
+    } else {
+      //console.log("redeemEnds null");
+      formGroup.controls['redeemEnds'].setErrors({ endRedeemDateLessThanStartDate: null });
+      formGroup.controls['redeemEnds'].updateValueAndValidity(opts);
+    }
+    if ((endDateTimestamp >= startDateTimestamp) && (endRedeemDateTimestamp >= startRedeemDateTimestamp)) {
+      return null;
+    }
   }
-	
+
   /**
    * Checking control validation
    *

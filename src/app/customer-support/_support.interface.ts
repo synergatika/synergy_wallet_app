@@ -1,4 +1,4 @@
-import { MicrocreditCampaign } from '../core/models/microcredit-campaign.model';
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
 
 interface MicrocreditSupport {
     merchant_id: string;
@@ -7,7 +7,7 @@ interface MicrocreditSupport {
     payment_id: string;
     amount: number;
     method: string;
-    how:string;
+    how: string;
 }
 
 export interface SupportInterface {

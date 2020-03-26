@@ -23,8 +23,8 @@ export class MerchantsService {
     private http: HttpClient
   ) { }
 
-  readMerchants(): Observable<Merchant[]> {
-    return this.http.get<any>(`${environment.apiUrl}/merchants/public/0-0-0`)
+  readMerchants(offset: string): Observable<Merchant[]> {
+    return this.http.get<any>(`${environment.apiUrl}/merchants/public/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));

@@ -33,13 +33,10 @@ export const locale = {
         },
         BALANCE: {
             TITLE: 'BALANCE',
-            SUBTITLE: '',
-            DESC: ''
+            SUBTITLE: 'across the network',
         },
         QR: {
-            TITLE: 'QR',
-            SUBTITLE: '',
-            DESC: ''
+            TITLE: 'This is your QR code',
         },
         SCAN: {
             TITLE: 'SCAN',
@@ -59,7 +56,8 @@ export const locale = {
         OFFERS: {
             TITLE: 'OFFERS',
             SUBTITLE: 'Create a new Offer',
-            DESC: 'Reward your customer for being loyal!'
+            DESC: 'Reward your customer for being loyal!',
+            UNTIL: 'until'
         },
         POSTS: {
             TITLE: 'POSTS / EVENTS',
@@ -234,7 +232,6 @@ export const locale = {
             },
 
             OFFER: {
-                DESC: 'Create a new Offer',
                 TITLE: {
                     TITLE: 'Offer Title',
                     PLACEHOLDER: 'Title',
@@ -263,148 +260,147 @@ export const locale = {
                 },
             },
 
+            OFFER_DESCRIPTION: {
+                TITLE: 'Offer\'s Description',
+                PLACEHOLDER: 'Description',
+                DESC: 'Please, enter Offer\'s Description.'
+            },
+            OFFER_EXPIRATION: {
+                TITLE: 'Expiration Date',
+                PLACEHOLDER: 'Date',
+                DESC: 'Please, enter when your Offer will be expired.'
+            },
+            OFFER_COST: {
+                TITLE: 'Cost in points',
+                PLACEHOLDER: 'Points',
+                DESC: 'Please enter offer\'s required points.'
+            },
+            EXPIRATION_CHOICES: {
+                A: 'In one Week',
+                B: 'In one Month',
+                C: 'In three Months',
+                D: 'In six Months'
+            },
+
+            POST_CONTENT: {
+
+            },
+            POST_TYPE: {
+
+            },
+            POST_ACCESS: {
+
+            },
             POST: {
-                DESC: 'Create a new Post',
                 TITLE: {
-                    TITLE: 'Post\'s Title',
+                    TITLE: 'Post Title',
                     PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Post\'s Title.'
-                },
-                IMAGE: {
-                    TITLE: 'Post\'s Image',
-                    PLACEHOLDER: 'Image',
-                    DESC: 'Please, upload Post\'s Iamge.'
+                    DESC: 'Please, enter Post Title.'
                 },
                 CONTENT: {
-                    TITLE: 'Post\'s Contents',
-                    PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Post\'s Content.'
-                },
-                ACCESS: {
-                    TITLE: 'Post\'s Access',
-                    PLACEHOLDER: 'Access',
-                    DESC: 'Please, enter Post\'s Access.'
-                },
-                ACCESS_CHOICES: {
-                    A: 'Open to all',
-                    B: 'Only registered members',
-                    C: 'Only merchants'
-                }
-            },
-
-            EVENT: {
-                DESC: 'Create a new Event',
-                TITLE: {
-                    TITLE: 'Event\'s Title',
-                    PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Event\'s Title.'
-                },
-                IMAGE: {
-                    TITLE: 'Event\'s Image',
-                    PLACEHOLDER: 'Image',
-                    DESC: 'Please, upload Event\'s Imamge.'
-                },
-                DESCRIPTION: {
-                    TITLE: 'Event\'s Description',
+                    TITLE: 'Post Description',
                     PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Event\'s Description.'
+                    DESC: 'Please, enter Post Description.'
+                },
+                DATE: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Post will be expired.'
                 },
                 ACCESS: {
-                    TITLE: 'Event\'s Access',
+                    TITLE: 'Access',
                     PLACEHOLDER: 'Access',
-                    DESC: 'Please, enter Event\'s Access.'
-                },
-                LOCATION: {
-                    TITLE: 'Event\'s Location',
-                    PLACEHOLDER: 'Location',
-                    DESC: 'Please, enter Event\'s Location.'
-                },
-                DATETIME: {
-                    TITLE: 'Event\'s Datetime',
-                    PLACEHOLDER: 'Datetime',
-                    DESC: 'Please, enter Event\'s Datetime.'
+                    DESC: 'Please, enter when your Access.'
+
                 },
                 ACCESS_CHOICES: {
-                    A: 'Open to all',
-                    B: 'Only registered members',
-                    C: 'Only merchants'
-                }
-            },
-
-            MICROCREDIT_CAMPAIGN: {
-                DESC: 'Create a new Microcredit Campaign',
-                TITLE: {
-                    TITLE: 'Campaign\'s Title',
-                    PLACEHOLDER: 'Title',
-                    DESC: 'Please, enter Campaign\'s Title.'
+                    A: 'Public',
+                    B: 'Private',
+                    C: 'Partners'
                 },
-                IMAGE: {
-                    TITLE: 'Campaign\'s Image',
-                    PLACEHOLDER: 'Image',
-                    DESC: 'Please, upload Campaign\'s Imamge.'
+            },
+            MICROCREDIT_CAMPAIGN: {
+                TITLE: {
+                    TITLE: 'Campaign Title',
+                    PLACEHOLDER: 'Title',
+                    DESC: 'Please, enter Campaign Title.'
                 },
                 TERMS: {
-                    TITLE: 'Campaign\'s Terms',
-                    PLACEHOLDER: 'Terms',
-                    DESC: 'Please, enter Campaign\'s Terms.'
+                    TITLE: 'Terms Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Terms Description.'
                 },
                 DESCRIPTION: {
-                    TITLE: 'Campaign\'s Description',
+                    TITLE: 'Campaign Description',
                     PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Campaign\'s Description.'
+                    DESC: 'Please, enter a Campaign Description.'
                 },
                 CATEGORY: {
-                    TITLE: 'Campaign\'s Category',
+                    TITLE: 'Category',
                     PLACEHOLDER: 'Category',
-                    DESC: 'Please, enter Campaign\'s Category.'
+                    DESC: 'Please, enter the Campaign Category.'
                 },
-                QUANTITATIVE: {
-                    TITLE: 'Quantitative',
-                    PLACEHOLDER: 'Quantitative',
-                    DESC: 'Quantitative'
+                MIN_ALLOWED_PRICE: {
+                    TITLE: 'Price',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter the price.'
                 },
                 MIN_ALLOWED: {
-                    TITLE: 'Min Allowed Support',
-                    PLACEHOLDER: 'Minimum',
-                    DESC: 'Enter minimum allowed amount per support.'
+                    TITLE: 'Min Allowed',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter your Min Allowed.'
                 },
                 MAX_ALLOWED: {
-                    TITLE: 'Max Allowed Support',
-                    PLACEHOLDER: 'Maximum',
-                    DESC: 'Enter maximum allowed amount per support.'
+                    TITLE: 'Max Allowed',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter your Max Allowed.'
+                },
+                STEP: {
+                    TITLE: 'Step',
+                    PLACEHOLDER: '20',
+                    DESC: 'Please, enter payment step (Optional).'
                 },
                 MAX_AMOUNT: {
-                    TITLE: 'Max Sum Amount',
-                    PLACEHOLDER: 'Amount',
-                    DESC: 'Enter up limit.'
+                    TITLE: 'Max Amount',
+                    PLACEHOLDER: '1000',
+                    DESC: 'Please, enter when your Max Amount.'
                 },
                 ACCESS: {
-                    TITLE: 'Campaign\'s Access',
+                    TITLE: 'Access',
                     PLACEHOLDER: 'Access',
-                    DESC: 'Please, enter who can see your Campaign.'
-                },
-                REDEEM_STARTS: {
-                    TITLE: 'Redeem Starting Date',
-                    PLACEHOLDER: 'Redeem Starting',
-                    DESC: 'Please, enter when your Campaign will be collectible.'
-                },
-                REDEEM_ENDS: {
-                    TITLE: 'Redeem Ending Date',
-                    PLACEHOLDER: 'Redeem Ending',
-                    DESC: 'Please, enter when your Campaign will be stop being collectible.'
-                },
-                EXPIRES: {
-                    TITLE: 'Expiration Date',
-                    PLACEHOLDER: 'Camapign Expiring',
-                    DESC: 'Please, enter when your Campaign will be expired.'
+                    DESC: 'Please, enter when your Access.'
+
                 },
                 ACCESS_CHOICES: {
-                    A: 'Open to all',
-                    B: 'Only registered members',
-                    C: 'Only merchants'
-                }
-            },
-
+                    A: 'Public',
+                    B: 'Private',
+                    C: 'Partners'
+                },
+                INITIATION: {
+                    TITLE: 'Initiation Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Campaign will begin.'
+                },
+                EXPIRATION: {
+                    TITLE: 'Expiration Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Campaign will expire.'
+                },
+                REDEEM_STARTS: {
+                    TITLE: 'Date redeem starts',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when redeem can begin.'
+                },
+                REDEEM_ENDS: {
+                    TITLE: 'Date redeem ends',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when redeem can end.'
+                },
+                QUANTITATIVE: 'Is it Quantitative?',
+                DATE_TOO_EARLY: 'The end date cannot be earlier tha th start date',
+                SUBMIT_DRAFT: 'Save as Draft',
+                SUBMIT_CAMPAIGN: 'Publish Campaign',
+            }
         },
         FORM: {
             BUTTONS: {
@@ -507,14 +503,145 @@ export const locale = {
         },
         MERCHANT: {
             SCANNER: {
-                LOYALTY_TITLE: 'Scan for Points'
+                LOYALTY_TITLE: 'Scan for Points',
+                BACK_TO_SCANNER: 'Back to Scanner',
+                PREVIOUS_STEP: 'Go back',
+                NEXT_STEP: 'Go to next step',
+                COMPLETE: 'Complete Transaction',
+                CLOSE: 'Close Window',
+                SCAN_LOYALTY: {
+                    HEADING: 'Scan a new Card, Scan User App, Scan User Card',
+                    ALT_PROMPT: 'Identifier',
+                },
+                SUB_IDENTIFIER_FORM: {
+                    HEADING: 'Identifier Form',
+                    TITLE: 'Identifier',
+                    HINT: 'Please enter email or card number.'
+                },
+                SUB_EMAIL_FORM: {
+                    HEADING: 'Scan your barcode or enter a customer E-mail',
+                    HINT: 'Please enter client\'s email address.'
+                },
+                SUB_AMOUNT_FORM: {
+                    HEADING: 'Transaction amount',
+                    TITLE: 'Amount',
+                    HINT: 'Please enter transaction amount.'
+                },
+                SUB_DISCOUNT_FORM: {
+                    HEADING: 'Transaction amount',
+                    TITLE: 'You can have a discount of',
+                    CTA: 'Check to Redeem discount'
+                },
+                SUB_OFFER_FORM: {
+                    HEADING_MAIN: 'Offer Transaction Details',
+                    HEADING: 'Transaction quantity',
+                    TITLE: 'Quantity',
+                    HINT: 'Please enter transaction quantity.',
+                    ALERT: 'Not enough points',
+                    ID: 'ID',
+                    COST: 'Cost',
+                    POINTS: 'Customer Points'
+                },
+                SUB_FINAL_STEP: {
+                    AMOUNT: 'Transaction Amount',
+                    POINTS_TO_REDEEM: 'Points to Redeem',
+                    QUANTITY: 'Quantity',
+                    TOKENS_BEFORE: 'Initial Tokens',
+                    TOKENS_REDEEMED: 'Tokens Redeemed',
+                    TOKENS_REMAINING: 'Tokens Remaining'
+                },
+                SUB_MICROCREDIT_FORM: {
+                    HEADING: 'Support items',
+                    CAMPAIGN_ID: 'Campaign ID',
+                    HEADING_2: 'Tokens',
+                    SUPPORT_ID: 'Support ID',
+                    INITIAL: 'initial',
+                    REDEEMED: 'redeemed',
+                    REMAINING: 'remaining',
+                    ALERT: 'No Transactions. Unable to proceed.',
+                    HEADING_3: 'Transaction Tokens',
+                    HINT: 'Please enter transaction tokens.'
+                }
             }
         },
         OFFER: {
             TITLE: 'OFFER'
         },
         CAMPAIGN: {
-            TITLE: 'CAMPAIGN'
+            TITLE: 'CAMPAIGN',
+            DRAFT: 'draft'
         },
+        //             EMAIL_HAS_CARD: 'Email address is already linked to a card',
+
+        NOT_FOUND_ERRORS: {
+            NOT_ENOUGH_POINTS: 'Not enough points to proccedd',
+            OFFER_EXPIRED: 'Offer has been expired',
+
+            CAMPAIGN_PUBLISHED: 'Camapign has already published',
+            CAMPAIGN_NOT_PUBLISHED: 'Campaign\'s has not been published yet',
+            CAMPAIGN_NOT_STARTED: 'Campaign\'s supporting period has not yet started',
+            CAMPAIGN_EXPIRED: 'Camapign\'s supporting period has expired',
+
+            OVER_MAX_AMOUNT: 'Support Fund cannot be more than max allowed amount',
+            UNDER_MIN_AMOUNT: 'Support Fund cannot be less than min allowed amount',
+            ZERO_AMOUNT: 'Amount cannot be equal or less than zero',
+            METHOD_INAVAILABLE: 'Method you choose in inavailable',
+
+            SUPPORT_NOT_PAID: 'Support is unpaid',
+            NOT_ENOUGH_TOKENS: 'Not Enough token to proccedd',
+
+            TOKENS_REDEEMED: 'You can not complete this action as tokens has redeemed from this support',
+            CAMPAIGN_REDEEM_STARTED: 'You can not complete this action as campaign\'s redeeming period is running',
+            CAMPAIGN_REDEEM_NOT_STARTED: 'Campaign\'s redeeming period has not started yet',
+            CAMPAIGN_REDEEM_ENDED: 'Campaign\'s redeeming period has expired',
+
+            WRONG_IDENTIFIER: 'Identifier must be an Email or a Card',
+            WRONG_CREDENTIALS: 'No user found with this credentials',
+            USER_EXISTS: 'A user with there credentials already exists',
+            USER_HAS_CARD: 'A card is already linked to this account',
+            USER_HAS_EMAIL: 'An email is already linked to this account'
+        },
+        HTTP_ERRORS: {
+            UNAUTHORIZED: 'You have not the authority to proceed',
+            BAD_REQUEST: 'Some of the parameters are missing',
+            FORBIDDEN: 'For some reason you cannot have access in this action',
+            NOT_FOUND: 'Service can not procced with your request',
+            UNPROCESSABLE_ENTITY: 'Some of the server services encountered a problem',
+            SERVER: 'Server is inaccessible'
+        },
+        WIZARD_MESSAGES: {
+            ERROR: 'Something went wrong',
+            ERROR_REGISTRATION: 'Error during registration',
+            ERROR_LINK_EMAIL: 'Error during linking email',
+            ERROR_LINK_CARD: 'Error during linking card',
+            ERROR_TRANSACTION: 'Transaction failed',
+            EMAIL_HAS_CARD: 'A card is already linked to this account',
+
+            ERROR_EARN_POINTS: '',
+            ERROR_REDEEM_POINTS: '',
+            ERROR_REDEEM_OFFER: '',
+            ERROR_EARN_TOKENS: '',
+            ERROR_REDEEM_TOKENS: '',
+
+            NOT_ENOUGH_POINTS: 'Unable to procced <br> Not enough points',
+            NOT_ENOUGH_TOKENS: 'Unable to procced <br> Not enough tokens',
+
+            // Step A
+            NEW_EMAIL: 'A New email detected',
+            NEW_CARD: 'New Card Number Detected<br>Please enter an existing Email address to link! If not, ask email to register! Or procced and create a card account',
+            EXISTING_CARD: 'An Existing Card Number Detected<br>Link an Email or continue',
+
+            EMAIL_WILL_LINK: 'Email address will link with the card',
+            CARD_WILL_LINK: 'Card will link with email address',
+            NO_EMAIL_WILL_LINK: 'No email will link',
+
+            USER_CREATED: 'A new user has been created',
+            USER_CREATED_CARD: 'A new user created only card',
+            USER_CREATED_EMAIL: 'A new user has been created only email',
+            LINK_EMAIL: 'A new email address has been linked to an existing account',
+            LINK_CARD: 'A new card has been linked to an existing account',
+
+            SUCESS_TRANSACTION: 'Transaction completed successfully',
+        }
     }
 };

@@ -2,21 +2,16 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-
+import { MatDialog, MatDialogRef } from '@angular/material';
 // RxJS
+import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
-// NGRX
-// import { Store } from '@ngrx/store';
-// import { AppState } from '../../../../core/reducers';
-// Auth
-//import { AuthNoticeService, AuthService, Register, User } from '../../../../core/auth';
-import { AuthNoticeService } from '../../core/helpers/auth-notice/auth-notice.service';
+// Services
+import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-
-import { Subject } from 'rxjs';
+// Others
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
 
@@ -42,31 +37,29 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		}
 	}
 	registerForm: FormGroup;
-	loading = false;
-	errors: any = [];
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+	loading: boolean = false;
 
 	/**
 	 * Component constructor
 	 *
-	 * @param authNoticeService: AuthNoticeService
-	 * @param translate: TranslateService
 	 * @param router: Router
-	 * @param auth: AuthService
-	 * @param store: Store<AppState>
 	 * @param fb: FormBuilder
-	 * @param cdr
+	 * @param cdr: ChangeDetectorRef
+	 * @param dialog: MatDialog
+	 * @param translate: TranslateService
+	 * @param authNoticeService: MessageNoticeService
+	 * @param authenticationService: AuthenticationService
 	 */
 	constructor(
-		public dialog: MatDialog,
-		private authNoticeService: AuthNoticeService,
-		private translate: TranslateService,
 		private router: Router,
-		private authenticationService: AuthenticationService,
-		// private store: Store<AppState>,
 		private fb: FormBuilder,
-		private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef,
+		public dialog: MatDialog,
+		private translate: TranslateService,
+		private authNoticeService: MessageNoticeService,
+		private authenticationService: AuthenticationService,
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -76,15 +69,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     */
 
 	/**
-	 * On init
+	 * On Init
 	 */
 	ngOnInit() {
-		// redirect back to the returnUrl before login
-		/*	
-		this.activatedRoute.queryParams.subscribe(params => {
-			this.returnPage = params.returnUrl || '/';
-		});
-		*/
 		this.initRegisterForm();
 	}
 
@@ -92,6 +79,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     * On destroy
     */
 	ngOnDestroy(): void {
+		this.authNoticeService.setNotice(null);
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
 		this.loading = false;
@@ -148,9 +136,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 * Form Submit
 	 */
 	submit() {
-		const controls = this.registerForm.controls;
+		if (this.loading) return;
+		this.loading = true;
 
-		// check form
+		const controls = this.registerForm.controls;
+		/** check form */
 		if (this.registerForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
@@ -159,43 +149,34 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		}
 
 		if (!controls.agree.value) {
-			// you must agree the terms and condition
-			// checkbox cannot work inside mat-form-field https://github.com/angular/material2/issues/7891
 			this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
 			this.loading = false;
 			return;
 		}
-		this.loading = true;
 
-		//	const _user: User = new User();
 		const _user = {
 			fullname: controls.fullname.value,
 			email: (controls.email.value).toLowerCase(),
 			password: controls.password.value
 		}
-		/*_user.clear();
-		_user.email = controls.email.value;
-		_user.username = controls.username.value;
-		_user.fullname = controls.fullname.value;
-		_user.password = controls.password.value;
-		_user.roles = [];
-		*/
-		this.authenticationService.register(_user.fullname, _user.email, _user.password).pipe(
-			tap(user => {
-				this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
-				setTimeout(() => {
-					this.router.navigateByUrl('/auth/login');
-				}, 2500);
-			},
-				error => {
-					this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.ERROR'), 'danger');
-				}),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-				this.loading = false;
-				this.cdr.markForCheck();
-			})
-		).subscribe();
+
+		this.authenticationService.register(_user.fullname, _user.email, _user.password)
+			.pipe(
+				tap(
+					user => {
+						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
+						setTimeout(() => {
+							this.router.navigateByUrl('/auth/login');
+						}, 2500);
+					}, error => {
+						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.ERROR'), 'danger');
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdr.markForCheck();
+				})
+			).subscribe();
 	}
 
 	/**

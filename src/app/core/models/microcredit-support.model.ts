@@ -5,12 +5,12 @@ export interface MicrocreditSupport {
     backer_id?: string;
     initialTokens?: number;
     redeemedTokens?: number;
-    status?: boolean;
+    status?: string;
 
-    amount: any;
-    method: any;
+    amount: number;
+    method: string;
 
-    merchant_id: any;
-    payment_id: any;
-    how: any;
+    merchant_id: string;
+    payment_id: string;
+    how: string;
 }

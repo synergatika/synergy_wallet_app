@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { ScannerService } from "../_scanner.service";
-import { User } from "../_scanner.interface";
+import { ScannerInterface } from "../_scanner.interface";
 
 @Component({
   selector: 'app-sub-email-form',
@@ -14,19 +14,24 @@ export class SubEmailFormComponent implements OnInit {
 
   @Output()
   add_email: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  previous_step: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   submitForm: FormGroup;
   submitted: boolean = false;
 
-  user: User;
+  public user: ScannerInterface["User"];
 
   constructor(
     private fb: FormBuilder,
     private scannerService: ScannerService
   ) {
-    this.scannerService.user.subscribe(user => this.user = user)
+    this.scannerService.user.subscribe(user => this.user = user);
   }
 
+	/**
+	 * On Init
+	 */
   ngOnInit() {
     this.initForm();
   }
@@ -43,7 +48,6 @@ export class SubEmailFormComponent implements OnInit {
   onNextStep() {
     // if (this.submitted) return;
     // this.submitted = true;
-    console.log("1");
     const controls = this.submitForm.controls;
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
@@ -51,10 +55,14 @@ export class SubEmailFormComponent implements OnInit {
       );
       return;
     };
-    console.log("2");
+
     this.user.email = controls.email.value;
     this.scannerService.changeUser(this.user);
     this.add_email.emit(this.user.email);
+  }
+
+  onPreviousStep() {
+    this.previous_step.emit(true);
   }
 
   /**

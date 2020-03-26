@@ -14,8 +14,11 @@ import { AddSupportComponent } from './add-support/add-support.component';
 
 import { SubScannerComponent } from './sub-scanner/sub-scanner.component';
 import { SubIdentifierFormComponent } from './sub-identifier-form/sub-identifier-form.component';
+import { SubEmailFormComponent } from './sub-email-form/sub-email-form.component';
 import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component';
 import { SubAmountFormComponent } from './sub-amount-form/sub-amount-form.component';
+
+import { SupportNoticeComponent } from './support-notice/support-notice.component';
 
 import { SupportService } from './_support.service';
 
@@ -41,7 +44,7 @@ const routes: Routes = [
     imports: [
         ZXingScannerModule,
         ArchwizardModule,
-		BrowserAnimationsModule,
+        BrowserAnimationsModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -52,11 +55,11 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-		MatCardModule,
-		MatTableModule,
-		MatSortModule,
-		MatProgressSpinnerModule,
-		
+        MatCardModule,
+        MatTableModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],
@@ -77,8 +80,11 @@ const routes: Routes = [
 
         SubScannerComponent,
         SubIdentifierFormComponent,
+        SubEmailFormComponent,
         SubAmountFormComponent,
-        SubFinalStepComponent
+        SubFinalStepComponent,
+
+        SupportNoticeComponent
     ],
     entryComponents: [
     ]

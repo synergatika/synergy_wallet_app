@@ -5,7 +5,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 
 import { LoyaltyService } from '../../core/services/loyalty.service';
 import { ScannerService } from '../_scanner.service';
-import { User, PointsTransaction, Actions } from '../_scanner.interface';
+import { ScannerInterface } from '../_scanner.interface';
 
 @Component({
   selector: 'app-sub-discount-form',
@@ -15,19 +15,20 @@ import { User, PointsTransaction, Actions } from '../_scanner.interface';
 export class SubDiscountFormComponent implements OnInit, OnDestroy {
 
   @Output()
-  add_discount: EventEmitter<object> = new EventEmitter<object>();
-
-  user: User;
-  transaction: PointsTransaction;
-  actions: Actions;
+  add_discount: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output()
+  previous_step: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  conversionRatiο = 0.01;
+  public user: ScannerInterface["User"];
+  public transaction: ScannerInterface["PointsTransaction"];
+  public actions: ScannerInterface["Actions"];
 
   submitted: boolean = false;
   submitForm: FormGroup;
+  conversionRatiο = 0.01;
 
   constructor(
     private loyaltyService: LoyaltyService,
@@ -42,7 +43,7 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   }
 
 	/**
-	 * On init
+	 * On Init
 	 */
   ngOnInit() {
     this.initForm();
@@ -72,22 +73,18 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
 
   fetchBalanceData() {
     this.initForm();
-    console.log("Action")
-    console.log(this.actions.registration);
-    let search_by = (['110100', '111100'].includes(this.actions.registration)) ?
-      this.user.email : (this.user.identifier_scan || this.user.identifier_form);
-    console.log("Search By")
-    console.log(search_by);
+    // console.log("Action")
+    // console.log(this.actions.registration);
+    // let search_by = (['110100', '111100'].includes(this.actions.registration)) ?
+    //   this.user.email : (this.user.identifier_scan || this.user.identifier_form);
+    // console.log("Search By")
+    // console.log(search_by);
     if (this.transaction.amount >= 5) {
-      this.loyaltyService.readBalanceByMerchant((search_by).toLowerCase())
+      this.loyaltyService.readBalanceByMerchant(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
         .pipe(
           tap(
             data => {
-              if (data.data) {
-                this.transaction.points = parseInt(data.data.points, 16);
-              } else {
-                this.transaction.points = 0;
-              }
+              this.transaction.points = parseInt(data.points, 16);
               this.initializeDiscountAmount();
             },
             error => {
@@ -106,6 +103,7 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   }
 
   initializeDiscountAmount() {
+    console.log(this.transaction.points);
     const maxAllowedDiscount: number = this.transaction.amount * 0.2;
     const maxPossibleDiscount: number = this.transaction.points * this.conversionRatiο;
     if (maxPossibleDiscount > maxAllowedDiscount) {
@@ -156,14 +154,14 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
       return;
     };
 
-    console.log(this.transaction);
     this.scannerService.changeActions(this.actions);
     this.scannerService.changePointsTransaction(this.transaction);
 
-    this.add_discount.emit({
-      final_amount: this.transaction.final_amount,
-      points: (this.actions.redeem === '11') ? this.transaction.discount_amount * this.conversionRatiο : 0
-    });
+    this.add_discount.emit(controls.wantRedeem.value);
+  }
+
+  onPreviousStep() {
+    this.previous_step.emit(true);
   }
 
   /**

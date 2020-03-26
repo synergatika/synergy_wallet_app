@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.synergatika.gr', //'http://192.168.1.160:3000',  ,//'http://79.129.47.140:3000',////'https://api.synergatika.gr' //'http://192.168.1.7:3000'//'http://192.168.1.9:3000' // 'http://localhost:3000'
+  apiUrl: 'http://localhost:3000',
+  //apiUrl: 'https://api.synergatika.gr', 
+  //apiUrl: 'http://192.168.1.160:3000',  
+  //apiUrl: 'http://192.168.1.7:3000',
+  //apiUrl: 'http://79.129.47.140:3000',
   authTimeOuter: 5000,
   staticUrl: 'https://wp.synergatika.gr/wp-json/wp/v2'
 };

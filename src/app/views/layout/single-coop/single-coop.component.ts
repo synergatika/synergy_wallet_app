@@ -24,10 +24,10 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	//Set Content Variables
 	singleOffers: any;
 	singlePosts: any; //Used to store posts
-	singlePost:any; //Used for the post to open in modal
-	singleMicrocredits:any; //Used to store microcredits
-  singleMicrocredit:any; //Used for the Microcreit to open in modal
-  hours: any;
+	singlePost: any; //Used for the post to open in modal
+	singleMicrocredits: any; //Used to store microcredits
+	singleMicrocredit: any; //Used for the Microcreit to open in modal
+	hours: any;
 
 	//Set Child Modals
 	@ViewChild('campaignModal', { static: false }) campaignModal;
@@ -79,19 +79,19 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	* Assets Function On init
+	* Assets Function On Init
 	*/
 
 	//Get Microcredit Campaigns of Coop
 	fetchSingleMicrocreditsData(merchant_id) {
 		this.singleMicrocredits = null;
-		this.itemsService.readPublicMicrocreditCampaignsByStore(merchant_id)
+		this.itemsService.readPrivateMicrocreditCampaignsByStore(merchant_id, '0-0-0')
 			.pipe(
 				tap(
 					data => {
 						this.singleMicrocredits = data;
 						//TEMP FOR DEMO
-						if(this.singleMicrocredits.length && this.singleMicrocredits.length<3){
+						if (this.singleMicrocredits.length && this.singleMicrocredits.length < 3) {
 							this.singleMicrocredits.push(this.singleMicrocredits[0]);
 							this.singleMicrocredits.push(this.singleMicrocredits[0]);
 						}
@@ -110,16 +110,16 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	//Get Offers of Coop
 	fetchSingleOffersData(merchant_id) {
 		this.singleOffers = null;
-		this.itemsService.readOffersByStore(merchant_id)
+		this.itemsService.readOffersByStore(merchant_id, '0-0-0')
 			.pipe(
 				tap(
 					data => {
 						this.singleOffers = data;
-							//TEMP FOR DEMO
-							if(this.singleOffers.length && this.singleOffers.length<3){
-								this.singleOffers.push(this.singleOffers[0]);
-								this.singleOffers.push(this.singleOffers[0]);
-							}
+						//TEMP FOR DEMO
+						if (this.singleOffers.length && this.singleOffers.length < 3) {
+							this.singleOffers.push(this.singleOffers[0]);
+							this.singleOffers.push(this.singleOffers[0]);
+						}
 					},
 					error => {
 						console.log(error);
@@ -135,13 +135,13 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	//Get Post & Events of Coop
 	fetchSinglePostEventsData(merchant_id) {
 		this.singlePosts = null;
-		this.itemsService.readPublicPostsEventsByStore(merchant_id)
+		this.itemsService.readPrivatePostsEventsByStore(merchant_id, '0-0-0')
 			.pipe(
 				tap(
 					data => {
 						this.singlePosts = data;
 						//TEMP FOR DEMO
-						if(this.singlePosts.length && this.singlePosts.length<3){
+						if (this.singlePosts.length && this.singlePosts.length < 3) {
 							this.singlePosts.push(this.singlePosts[0]);
 							this.singlePosts.push(this.singlePosts[0]);
 						}
@@ -176,8 +176,8 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 			}
 		).result.then((result) => {
 			console.log('closed');
-			}, (reason) => {
-				console.log('dismissed');
+		}, (reason) => {
+			console.log('dismissed');
 		});
 	}
 

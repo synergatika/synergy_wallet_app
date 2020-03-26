@@ -9,11 +9,11 @@ import { SupportInterface } from '../_support.interface';
   styleUrls: ['./sub-amount-form.component.scss']
 })
 export class SubAmountFormComponent implements OnInit {
-  @Input()
-  rejected: boolean = false;
-  
+
   @Output()
   add_amount: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  previous_step: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   support: SupportInterface["MicrocreditSupport"];
   campaign: SupportInterface["MicrocreditCampaign"];
@@ -31,7 +31,6 @@ export class SubAmountFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-	console.log(this.rejected);
   }
 
   initForm() {
@@ -65,6 +64,10 @@ export class SubAmountFormComponent implements OnInit {
     this.support.paid = controls.paid.value;
     this.supportService.changeMicrocreditSupport(this.support);
     this.add_amount.emit(this.support.amount);
+  }
+
+  onPreviousStep() {
+    this.previous_step.emit(true);
   }
 
   /**

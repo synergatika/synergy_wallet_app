@@ -21,7 +21,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
   styleUrls: ['./new-offer.component.sass']
 })
 export class NewOfferComponent implements OnInit, OnDestroy {
-  @ViewChild('fileInput', {static: true}) image: ElementRef;
+  @ViewChild('fileInput', { static: true }) image: ElementRef;
   public validator: any = {
     title: {
       minLength: 3,
@@ -40,7 +40,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-	fileDataEmptied: boolean;
+  fileDataEmptied: boolean;
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -59,15 +59,15 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private itemsService: ItemsService,
     private fb: FormBuilder,
-		private authenticationService: AuthenticationService,
-		private router: Router,
+    private authenticationService: AuthenticationService,
+    private router: Router,
     private translate: TranslateService
   ) {
     this.unsubscribe = new Subject();
   }
 
 	/**
-	 * On init
+	 * On Init
 	 */
   ngOnInit() {
     this.initForm();
@@ -90,7 +90,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-			itemAbstract: [''],
+      itemAbstract: [''],
       description: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
@@ -122,12 +122,12 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   }
 
   preview() {
-	  if(this.fileData == null) {
-		  this.onImageCancel();
-		  return;
-	  }
-	  this.originalImage = false;
-		this.fileDataEmptied = false;
+    if (this.fileData == null) {
+      this.onImageCancel();
+      return;
+    }
+    this.originalImage = false;
+    this.fileDataEmptied = false;
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -144,49 +144,46 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
-	  console.log('Image canceled');
+    console.log('Image canceled');
     this.previewUrl = null;
     this.fileData = null;
     this.originalImage = true;
-		this.image.nativeElement.value = null;
-		this.fileDataEmptied = true;
-		this.cdRef.markForCheck();
+    this.image.nativeElement.value = null;
+    this.fileDataEmptied = true;
+    this.cdRef.markForCheck();
   }
 
   /**
 	 * On Form Submit
 	 */
-  onSubmit() {	
+  onSubmit() {
     if (this.submitted) return;
-		console.log('onSubmit');
+    console.log('onSubmit');
     const controls = this.submitForm.controls;
     /** check form */
     if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
-			console.log('form invalid');
+      console.log('form invalid');
       return;
     }
-		if(!this.fileData) {
-			console.log('no image');
-			//controls['profile_avatar'].setErrors({'incorrect': true});
-			return;
-		}
+    if (!this.fileData) {
+      console.log('no image');
+      //controls['profile_avatar'].setErrors({'incorrect': true});
+      return;
+    }
     this.loading = true;
     this.submitted = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
-		formData.append('title', controls.title.value);
-		formData.append('subtitle', controls.itemAbstract.value);
+    formData.append('title', controls.title.value);
+    formData.append('subtitle', controls.itemAbstract.value);
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
     formData.append('expiresAt', controls.expiration.value.getTime().toString());
-		/*for (var pair of formData.entries()) {
-			console.log(pair[0]+ ', ' + pair[1]); 
-		}*/
-		//return;
+
     this.itemsService.createOffer(this.authenticationService.currentUserValue.user["_id"], formData)
       .pipe(
         tap(
@@ -196,18 +193,18 @@ export class NewOfferComponent implements OnInit, OnDestroy {
               this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
               'success'
             ).then((result) => {
-							console.log('created');
-							this.router.navigate(['/m-offers']);
-						});
-						setTimeout(()=>{
-							Swal.close();
-							this.router.navigate(['/m-offers']);
-						},2000);
+              console.log('created');
+              this.router.navigate(['/m-offers']);
+            });
+            setTimeout(() => {
+              Swal.close();
+              this.router.navigate(['/m-offers']);
+            }, 2000);
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
             this.submitted = false;

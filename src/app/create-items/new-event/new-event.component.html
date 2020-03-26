@@ -1,140 +1,141 @@
 <div class="new-event">
-	<mat-card>
-		<mat-card-content>
-			<form class="form container single-form" [formGroup]="submitForm">
-				<div class="row">
-					<div class="heading col-md-12">Create a new Event</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<mat-form-field>
-								<mat-label>Title</mat-label>
-							<input matInput type="text"  formControlName="title" placeholder="Title">
-							<mat-error *ngIf="isControlHasError('title','required')"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-							<mat-error *ngIf="isControlHasError('title','minlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-								{{validator.title.minLength}}</mat-error>
-							<mat-error *ngIf="isControlHasError('title','maxlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-								{{validator.title.maxLength}}</mat-error>
-							<mat-hint class="form-text text-muted">Please enter post's/event's Title.</mat-hint>
-							</mat-form-field>
-						</div>
-						<div class="form-group">
-							<mat-form-field>
-								<mat-label>Abstract</mat-label>
-							<input matInput type="text" formControlName="itemAbstract" placeholder="Abstract">
-							<mat-hint class="form-text text-muted">Please enter event Abstract.</mat-hint>
-							</mat-form-field>
-						</div>
-						<div class="form-group">
-							<mat-form-field>
-								<mat-label>Description</mat-label>
-							<textarea matInput type="text" formControlName="description" placeholder="Description" > </textarea>
-							<mat-error *ngIf="isControlHasError('description','required')"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-							<mat-error *ngIf="isControlHasError('description','minlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-								{{validator.description.minLength}}</mat-error>
-							<mat-error *ngIf="isControlHasError('description','maxlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-								{{validator.description.maxLength}}</mat-error>
-							<mat-hint class="form-text text-muted">Please enter post's/event's Description.</mat-hint>
-							</mat-form-field>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<mat-form-field>
-								<mat-label>Access</mat-label>
-							<mat-select name="access"  formControlName="access">
-								<mat-option value="public">Public to All</mat-option>
-								<mat-option value="private">Only for registered Members</mat-option>
-								<mat-option value="partners">Only for Coops</mat-option>
-							</mat-select>
-							<mat-error *ngIf="isControlHasError('Access','required')"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-							<mat-hint class="form-text text-muted">Please enter post's/events's access.</mat-hint>
-							</mat-form-field>
-						</div>
-						<div class="form-group">
-							<mat-form-field>
-								<mat-label>Location</mat-label>
-							<input matInput type="text"  formControlName="location" placeholder="Location">
-							<mat-error *ngIf="isControlHasError('location','required')"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-							<mat-error *ngIf="isControlHasError('location','minlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-								{{validator.location.minLength}}</mat-error>
-							<mat-error *ngIf="isControlHasError('location','maxlength')"
-								class="error text-danger">{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-								{{validator.location.maxLength}}</mat-error>
-							<mat-hint class="form-text text-muted">Please enter post's/events's location.</mat-hint>
-							</mat-form-field>
-						</div>
-						<div class="form-group">
-							<div class="form-group-inline">
-								<div class="form-group-inline-date">
-									<mat-form-field>
-										<mat-label>Date</mat-label>
-										<input matInput [matDatepicker]="eventDate" formControlName="eventDate" placeholder="Date">
-										<mat-datepicker-toggle matSuffix [for]="eventDate"></mat-datepicker-toggle>
-										<mat-datepicker #eventDate ></mat-datepicker>
-										<mat-error *ngIf="isControlHasError('eventDate','required')"
-											class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-										<mat-hint class="form-text text-muted">Please enter post's/events's date time.</mat-hint>
-									</mat-form-field>
-								</div>
-								<div class="form-group-inline-time">
-									<mat-form-field>
-										<mat-label>Time</mat-label>
-										<input matInput [ngxTimepicker]="timePicker" formControlName="eventTime" [format]="24">
-										<ngx-material-timepicker #timePicker [theme]="timePickerTheme" [minutesGap]="5">
-										</ngx-material-timepicker>
-										<mat-error *ngIf="isControlHasError('eventTime','required')"
-											class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
-									</mat-form-field>
-									<!--<ngx-timepicker-field [format]="24" [clockTheme]="timePickerTheme"></ngx-timepicker-field>-->
-								</div>
-							</div>
-						</div>
-						<div class="form-group">      
-							<label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
-							<div class="">
-								<div class="upload-img">
-									<div class="upload-img-container">
-										<img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
-										<div *ngIf="!originalImage" class="image-cancel">
-											<span class="mdi mdi-close-circle" (click)="onImageCancel()">
-											</span>
-										</div>
-									</div>
-								</div>
-								<button class="upload-img-btn" type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-								<label class="avatar__upload">
-									<input #image type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-										formControlName="profile_avatar" accept=".png, .jpg, .jpeg" #fileInput>
-								</label>
-								<mat-error *ngIf="isControlHasError('profile_avatar','required') || fileDataEmptied"
-								class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>								
-							</div>
-						</div>
-					</div>
-				</div>
+  <mat-card>
+    <mat-card-content>
+      <form class="form container single-form" [formGroup]="submitForm">
+        <div class="row">
+          <div class="heading col-md-12">Create a new Event</div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput type="text" formControlName="title" placeholder="Title">
+                <mat-error *ngIf="isControlHasError('title','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+                <mat-error *ngIf="isControlHasError('title','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+                  {{validator.title.minLength}}</mat-error>
+                <mat-error *ngIf="isControlHasError('title','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+                  {{validator.title.maxLength}}</mat-error>
+                <mat-hint class="form-text text-muted">Please enter post's/event's Title.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Abstract</mat-label>
+                <input matInput type="text" formControlName="itemAbstract" placeholder="Abstract">
+                <mat-hint class="form-text text-muted">Please enter event Abstract.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput type="text" formControlName="description" placeholder="Description"> </textarea>
+                <mat-error *ngIf="isControlHasError('description','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+                <mat-error *ngIf="isControlHasError('description','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+                  {{validator.description.minLength}}</mat-error>
+                <mat-error *ngIf="isControlHasError('description','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+                  {{validator.description.maxLength}}</mat-error>
+                <mat-hint class="form-text text-muted">Please enter post's/event's Description.</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Access</mat-label>
+                <mat-select name="access" formControlName="access">
+                  <mat-option value="public">Public to All</mat-option>
+                  <mat-option value="private">Only for registered Members</mat-option>
+                  <mat-option value="partners">Only for Coops</mat-option>
+                </mat-select>
+                <mat-error *ngIf="isControlHasError('Access','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+                <mat-hint class="form-text text-muted">Please enter post's/events's access.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Location</mat-label>
+                <input matInput type="text" formControlName="location" placeholder="Location">
+                <mat-error *ngIf="isControlHasError('location','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+                <mat-error *ngIf="isControlHasError('location','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+                  {{validator.location.minLength}}</mat-error>
+                <mat-error *ngIf="isControlHasError('location','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+                  {{validator.location.maxLength}}</mat-error>
+                <mat-hint class="form-text text-muted">Please enter post's/events's location.</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <div class="form-group-inline">
+                <div class="form-group-inline-date">
+                  <mat-form-field>
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="eventDate" formControlName="eventDate" placeholder="Date">
+                    <mat-datepicker-toggle matSuffix [for]="eventDate"></mat-datepicker-toggle>
+                    <mat-datepicker #eventDate></mat-datepicker>
+                    <mat-error *ngIf="isControlHasError('eventDate','required')" class="error text-danger">
+                      {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+                    <mat-hint class="form-text text-muted">Please enter post's/events's date time.</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="form-group-inline-time">
+                  <mat-form-field>
+                    <mat-label>Time</mat-label>
+                    <input matInput [ngxTimepicker]="timePicker" formControlName="eventTime" [format]="24">
+                    <ngx-material-timepicker #timePicker [theme]="timePickerTheme" [minutesGap]="5">
+                    </ngx-material-timepicker>
+                    <mat-error *ngIf="isControlHasError('eventTime','required')" class="error text-danger">
+                      {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+                  </mat-form-field>
+                  <!--<ngx-timepicker-field [format]="24" [clockTheme]="timePickerTheme"></ngx-timepicker-field>-->
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+              <div class="">
+                <div class="upload-img">
+                  <div class="upload-img-container">
+                    <img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+                    <div *ngIf="!originalImage" class="image-cancel">
+                      <span class="mdi mdi-close-circle" (click)="onImageCancel()">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button class="upload-img-btn" type="button" mat-raised-button (click)="fileInput.click()">Choose
+                  File</button>
+                <label class="avatar__upload">
+                  <input #image type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+                    formControlName="profile_avatar" accept=".png, .jpg, .jpeg" #fileInput>
+                </label>
+                <mat-error *ngIf="isControlHasError('profile_avatar','required') || fileDataEmptied"
+                  class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
 
-				<!--begin: Form Actions -->
-				<div class="row">
-					<div class="form-actions col-md-12">
-						<button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-primary">
-							{{ 'FORM.BUTTONS.SUBMIT' | translate }}
-						</button>
-					</div>
-				</div>
-				<!--end: Form Actions -->
+        <!--begin: Form Actions -->
+        <div class="row">
+          <div class="form-actions col-md-12">
+            <button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-primary">
+              {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+            </button>
+          </div>
+        </div>
+        <!--end: Form Actions -->
 
-			</form>
-		</mat-card-content>
-	</mat-card>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

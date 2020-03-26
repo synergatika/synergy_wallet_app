@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AuthNotice } from './auth-notice.interface';
+import { MessageNotice } from './message-notice.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthNoticeService {
-    onNoticeChanged$: BehaviorSubject<AuthNotice>;
+export class MessageNoticeService {
+    onNoticeChanged$: BehaviorSubject<MessageNotice>;
 
     constructor() {
         this.onNoticeChanged$ = new BehaviorSubject(null);
     }
 
     setNotice(message: string, type?: string) {
-        const notice: AuthNotice = {
+        const notice: MessageNotice = {
             message,
             type
         };

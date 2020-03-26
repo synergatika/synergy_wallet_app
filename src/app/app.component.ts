@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	 */
 
 	/**
-	 * On init
+	 * On Init
 	 */
   ngOnInit(): void {
     this.setSelectedLanguage();

@@ -22,6 +22,8 @@ import { SubIdentifierFormComponent } from './sub-identifier-form/sub-identifier
 import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component';
 import { SubMicrocreditFormComponent } from './sub-microcredit-form/sub-microcredit-form.component';
 
+import { ScannerNoticeComponent } from './scanner-notice/scanner-notice.component';
+
 import { ScannerService } from './_scanner.service';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
@@ -61,9 +63,9 @@ const routes: Routes = [
         MatFormFieldModule,
         MatCheckboxModule,
         MatDialogModule,
-		MatCardModule,
-		MatRadioModule,
-		CarouselModule,
+        MatCardModule,
+        MatRadioModule,
+        CarouselModule,
         TranslateModule.forChild()
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
@@ -90,7 +92,8 @@ const routes: Routes = [
         SubOfferFormComponent,
         SubIdentifierFormComponent,
         SubFinalStepComponent,
-        SubMicrocreditFormComponent
+        SubMicrocreditFormComponent,
+        ScannerNoticeComponent
     ],
     entryComponents: [
     ]

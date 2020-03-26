@@ -14,8 +14,8 @@ export class SubScannerComponent implements OnInit {
   @Output()
   scan_identifier: EventEmitter<string> = new EventEmitter<string>();
 
+  public user: SupportInterface["User"];
   scanned: boolean = false;
-  user: SupportInterface["User"];
 
   constructor(
     private supportService: SupportService
@@ -23,6 +23,11 @@ export class SubScannerComponent implements OnInit {
     this.supportService.user.subscribe(user => this.user = user)
   }
 
+	/**
+	 * On Init
+	 */
+  ngOnInit() {
+  }
 
   scanSuccessHandler(result: string): void {
     if (this.scanned) return
@@ -36,8 +41,4 @@ export class SubScannerComponent implements OnInit {
   scanErrorHandler(error: any): void {
     console.log("Error");
   }
-
-  ngOnInit() {
-  }
-
 }
