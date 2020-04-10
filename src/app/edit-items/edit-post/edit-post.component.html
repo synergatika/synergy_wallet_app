@@ -1,9 +1,9 @@
 <div class="edit-post">
   <mat-card>
     <mat-card-content>
-      <form *ngIf="post" class="form container single-form" [formGroup]="submitForm" id="kt_form">
+      <form class="form container single-form" [formGroup]="submitForm" id="kt_form">
         <div class="row">
-          <div class="heading col-md-12">Edit Post: {{post.title}}</div>
+          <div class="heading col-md-12">{{'POST.EDIT' | translate}}: {{title}}</div>
         </div>
         <div class="row">
           <div class="col-md-6">
@@ -25,9 +25,10 @@
             </div>
             <div class="form-group">
               <mat-form-field>
-                <mat-label>Abstract</mat-label>
-                <input matInput type="text" formControlName="subtitle" placeholder="Abstract">
-                <mat-hint class="form-text text-muted">Please enter post Abstract.</mat-hint>
+                <mat-label>{{'FIELDS.POST.SUBTITLE.TITLE' | translate}}</mat-label>
+                <input matInput type="text" formControlName="subtitle"
+                  placeholder="{{'FIELDS.POST.SUBTITLE.PLACEHOLDER' | translate}}">
+                <mat-hint class="form-text text-muted">{{'FIELDS.POST.SUBTITLE.DESC' | translate}}</mat-hint>
               </mat-form-field>
             </div>
             <div class="form-group">
@@ -52,9 +53,8 @@
               <mat-form-field>
                 <mat-label>{{'FIELDS.POST.ACCESS.TITLE' | translate}}</mat-label>
                 <mat-select name="access" formControlName="access">
-                  <mat-option value="public">{{'FIELDS.POST.ACCESS_CHOICES.A' | translate}}</mat-option>
-                  <mat-option value="private">{{'FIELDS.POST.ACCESS_CHOICES.B' | translate}}</mat-option>
-                  <mat-option value="partners">{{'FIELDS.POST.ACCESS_CHOICES.C' | translate}}</mat-option>
+                  <mat-option *ngFor="let item of accessList" value="{{item.value}}">{{item.title | translate}}
+                  </mat-option>
                 </mat-select>
                 <mat-error *ngIf="isControlHasError('access','required')" class="error text-danger">
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
@@ -62,18 +62,19 @@
               </mat-form-field>
             </div>
             <div class="form-group">
-              <label class="">{{'FIELDS.IMAGE.TITLE' | translate}}</label>
+              <label class="">{{'FIELDS.POST.IMAGE.TITLE' | translate}}</label>
               <div class="">
                 <div class="upload-img">
                   <div class="upload-img-container">
-                    <img *ngIf="post.post_imageURL" class="upload-img-holder" [src]="previewUrl">
+                    <img *ngIf="initialImage" class="upload-img-holder" [src]="previewUrl">
                     <div *ngIf="!originalImage" class="image-cancel">
                       <span class="mdi mdi-close-circle" (click)="onImageCancel()">
                       </span>
                     </div>
                   </div>
                 </div>
-                <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                <button type="button" mat-raised-button
+                  (click)="fileInput.click()">{{'FIELDS.POST.IMAGE.ACTION' | translate}}</button>
                 <label class="avatar__upload">
                   <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
                     accept=".png, .jpg, .jpeg" #fileInput>
@@ -99,23 +100,24 @@
 </div>
 <div class="single-delete">
   <button mat-raised-button class="delete-text" (click)="deleteItemModal()">
-    Delete Item
+    {{ 'POST.DELETE' | translate }}
   </button>
 </div>
 
 <!-- Remove Item Modal -->
 <ng-template #remove_item let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Delete Post</h4>
+    <h4 class="modal-title">{{ 'POST.DELETE' | translate }}</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div *ngIf="post" class="modal-body">
-    Are you sure you would like to delete '{{post.title}}'?
+  <div class="modal-body">
+    {{ 'POST.DELETE_CONFIRM' | translate }} '{{title}}'?
   </div>
   <div class="modal-footer">
-    <button mat-raised-button class="btn btn-secondary mr-3" (click)="deleteItem();c('Close click'); ">Delete</button>
-    <button mat-raised-button class="btn" (click)="c('Close click');">Close</button>
+    <button mat-raised-button class="btn btn-secondary mr-3"
+      (click)="deleteItem();c('Close click'); ">{{ 'POST.DELETE' | translate }}</button>
+    <button mat-raised-button class="btn" (click)="c('Close click');">{{ 'POST.CANCEL' | translate }}</button>
   </div>
 </ng-template>

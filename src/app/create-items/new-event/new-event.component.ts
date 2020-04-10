@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 // Services
 import { ItemsService } from '../../core/services/items.service';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 
 @Component({
   selector: 'app-new-event',
@@ -20,21 +21,7 @@ import { ItemsService } from '../../core/services/items.service';
   styleUrls: ['./new-event.component.scss']
 })
 export class NewEventComponent implements OnInit, OnDestroy {
-  @ViewChild('image', { static: true }) image: ElementRef;
-  public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 250
-    },
-    description: {
-      minLength: 3,
-      maxLenth: 2500
-    },
-    location: {
-      minLength: 3,
-      maxLenth: 250
-    }
-  };
+
   timePickerTheme: any = {
     container: {
       bodyBackgroundColor: '#0c1a33',
@@ -49,10 +36,12 @@ export class NewEventComponent implements OnInit, OnDestroy {
       clockFaceTimeInactiveColor: '#fff'
     }
   };
+
+  validator: any;
+
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = true;
-  fileDataEmptied: boolean;
+  showImageError: boolean = false;
 
   submitForm: FormGroup;
   submitted: boolean = false;
@@ -74,10 +63,11 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private translate: TranslateService,
     private router: Router,
+    private staticDataService: StaticDataService,
   ) {
+    this.validator = this.staticDataService.getEventValidator;
     this.unsubscribe = new Subject();
   }
-
 	/**
 	 * On Init
 	 */
@@ -144,8 +134,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
       this.onImageCancel();
       return;
     }
-    this.originalImage = false;
-    this.fileDataEmptied = false;
+    this.showImageError = false;
+
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -164,9 +154,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   onImageCancel() {
     this.previewUrl = null;
     this.fileData = null;
-    this.originalImage = true;
-    this.image.nativeElement.value = null;
-    this.fileDataEmptied = true;
+    this.showImageError = false;
     this.cdRef.markForCheck();
   }
 
@@ -175,30 +163,24 @@ export class NewEventComponent implements OnInit, OnDestroy {
 	 * On Form Submit
 	 */
   onSubmit() {
-    if (this.submitted) return;
+    if (this.submitted || this.loading) return;
 
     const controls = this.submitForm.controls;
     /** check form */
-    if (this.submitForm.invalid) {
+    if (this.submitForm.invalid || !this.fileData) {
+      if (!this.fileData) this.showImageError = true;
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
       return;
     }
-    if (!this.fileData) {
-      console.log('no image');
-      return;
-    }
+
     this.submitted = true;
     this.loading = true;
-    console.log(controls.eventDate.value);
-    console.log(controls.eventTime.value);
+
     const timeArray = controls.eventTime.value.split(':');
     var timeInMiliseconds = ((timeArray[0]) * 60 * 60 + (+timeArray[1]) * 60) * 1000;
-    console.log(timeInMiliseconds);
-    console.log(controls.eventDate.value.getTime());
     var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
-    console.log(new Date(totalMiliseconds));
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
@@ -213,17 +195,14 @@ export class NewEventComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.EVENT_CREATED'),
-              'success'
-            ).then((result) => {
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.EVENT_CREATED'),
+              icon: 'success',
+              timer: 2500
+            }).then((result) => {
               this.router.navigate(['/m-events']);
             });
-            setTimeout(() => {
-              Swal.close();
-              this.router.navigate(['/m-events']);
-            }, 2000);
           },
           error => {
             Swal.fire(
@@ -231,10 +210,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
               this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })

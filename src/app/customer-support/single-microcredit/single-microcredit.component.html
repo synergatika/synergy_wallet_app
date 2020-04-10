@@ -20,14 +20,14 @@
         <div class="row s_single-info-container">
           <div class="col-md-7 s_single-info">
             <div class="info-row terms">
-              <h4>What do I get ?</h4>
+              <h4>{{'CAMPAIGN.TERMS' | translate}}</h4>
               <p [innerHTML]="singleMicrocredit.terms"></p>
             </div>
             <div class="info-row">
-              <span class="tag">Redeem Period:</span> {{singleMicrocredit.redeemStarts | date: 'd.M.y'}} -
+              <span class="tag">{{'CAMPAIGN.REDEEM_PERIOD' | translate}}:</span>
+              {{singleMicrocredit.redeemStarts | date: 'd.M.y'}} -
               {{singleMicrocredit.redeemEnds | date: 'd.M.y'}}<br>
-              <span class="desc">This is the period in which you can get the items you pledged
-                for</span>
+              <span class="desc">{{'CAMPAIGN.REDEEM_PERIOD_SUB' | translate}}</span>
             </div>
           </div>
           <div class="col-md-5 s_single-credit">
@@ -40,22 +40,22 @@
               </span>
             </div>
             <div class="price-item">
-              <span class="hypertitle" *ngIf="singleMicrocredit.quantitative!=true">Price</span>
               <span class="hypertitle"
-                *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">Price per
-                item</span>
+                *ngIf="singleMicrocredit.quantitative!=true">{{'CAMPAIGN.PRICE' | translate}}</span>
+              <span class="hypertitle"
+                *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">{{'CAMPAIGN.PRICE_PER_ITEM' | translate}}</span>
               <span
                 *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">{{singleMicrocredit.stepAmount | currency:'EUR' }}</span>
               <span
                 *ngIf="singleMicrocredit.quantitative!=true">{{singleMicrocredit.minAllowed | currency:'EUR' }}</span>
             </div>
             <button class="plegde-button" mat-raised-button
-              (click)="pledgeModal(singleMicrocredit.merchant_id, singleMicrocredit.campaign_id)">Pledge</button>
+              (click)="pledgeModal(singleMicrocredit.merchant_id, singleMicrocredit.campaign_id)">{{'CAMPAIGN.PLEDGE' | translate}}</button>
           </div>
         </div>
         <div class="row s_single-description">
           <div class="col-md-4 merchant-info s_single-info-container ">
-            <h6>Merchant Info</h6>
+            <h6>{{'CAMPAIGN.MERCHANT' | translate}}</h6>
             <h5>{{singleMicrocredit.merchant_name}}</h5>
             <img src="{{singleMicrocredit.merchant_imageURL}}" alt="{{singleMicrocredit.merchant_name}}">
             <div *ngIf="singleMicrocredit.merchant_address" class="info-row"><span

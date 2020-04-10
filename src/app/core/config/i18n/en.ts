@@ -12,6 +12,7 @@ export const locale = {
             WALLET: 'Wallet',
             DISCOVER: 'Discover',
             SUPPORT: 'Suppport',
+            QR_CODE: 'Your QR Code'
         },
         MENU: {
             NEW: 'new',
@@ -25,6 +26,31 @@ export const locale = {
             EVENTS: 'Events',
             POSTS: 'Posts',
             OFFERS: 'Offers',
+            PROFILE: 'Account',
+            CUSTOMERS: 'Members',
+            MERCHANTS: 'Partners',
+            CONTENT: 'Content',
+        },
+        SETTINGS: {
+            SUBMENU: {
+                PERSONAL_INFORMATION: 'Personal Information',
+                CHANGE_PASSWORD: 'Change Password',
+                LOYALTY: 'Loyalty Transactions',
+                MICROCREDIT: 'Microcredit Transactions'
+            },
+            ACCOUNT: 'Account',
+            PERSONAL_INFO: 'Setup Your Personal Information',
+            CHANGE_PASSWORD: 'Update Your Password',
+            TRANSACTIONS: 'Your Recent Transactions',
+            RECEIPT: 'Receipt',
+            OFFER: 'Offer',
+            SUPPORT: 'Support',
+            POINTS: 'Points',
+            TOKENS: 'Tokens',
+            CUSTOMER: 'To',
+            MERCHANT: 'By',
+            PAID: 'Payment Confirmation',
+            UNPAID: 'Payment Withdrawal',
         },
         COMMUNITY: {
             TITLE: 'COMMUNITY',
@@ -37,57 +63,6 @@ export const locale = {
         },
         QR: {
             TITLE: 'This is your QR code',
-        },
-        SCAN: {
-            TITLE: 'SCAN',
-            SUBTITLE: '',
-            DESC: ''
-        },
-        SCAN_POINTS: {
-            TITLE: 'Scan for Points',
-            SUBTITLE: '',
-            DESC: ''
-        },
-        SCAN_OFFERS: {
-            TITLE: 'Scan for Offers',
-            SUBTITLE: '',
-            DESC: ''
-        },
-        OFFERS: {
-            TITLE: 'OFFERS',
-            SUBTITLE: 'Create a new Offer',
-            DESC: 'Reward your customer for being loyal!',
-            UNTIL: 'until'
-        },
-        POSTS: {
-            TITLE: 'POSTS / EVENTS',
-            SUBTITLE: 'Upload a new Post / Event',
-            DESC: 'Make your thoughts or an upcoming event public!'
-        },
-        PROFILE: {
-            TITLE: 'PROFILE',
-            SUBTITLE: '',
-            DESC: ''
-        },
-        PERSONAL_INFO: {
-            TITLE: 'Personal information',
-            SUBTITLE: 'Personal information',
-            DESC: 'Update for Personal Information'
-        },
-        CHANGE_PASSWORD: {
-            TITLE: 'Change Password',
-            SUBTITLE: 'Update Password',
-            DESC: ''
-        },
-        TRANSACTIONS: {
-            TITLE: 'Transactions',
-            SUBTITLE: '',
-            DESC: ''
-        },
-        PARTNERS: {
-            TITLE: 'PARTNERS',
-            SUBTITLE: '',
-            DESC: ''
         },
         HEADER: {
             MESSAGE: 'Welcome'
@@ -136,6 +111,8 @@ export const locale = {
             },
             SUCCESS: {
                 TITLE: 'All good!',
+                CUSTOMER_CREATED: 'A new Member has been successfully created!',
+                MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 OFFER_CREATED: 'A new Offer has been successfully created!',
                 OFFER_UPDATED: 'The Offer has been successfully updated!',
                 OFFER_DELETED: 'The Offer has been successfully deleted!',
@@ -149,93 +126,174 @@ export const locale = {
                 CAMPAIGN_PUBLISHED: 'The Campaign has been successfully published!',
                 CAMPAIGN_UPDATED: 'The Campaign has been successfully updated!',
                 CAMPAIGN_DELETED: 'The Campaign has been successfully deleted!',
-                MERCHANT_CREATED: 'A new Partner has been successfully created!',
                 PASSWORD_UPDATED: 'Your password has been successfully updated!',
                 PROFILE_UPDATED: 'Your Personal Information has been successfully updated!',
+                CONTENT_CREATED: 'Content has been successfully created!',
+                CONTENT_UPDATED: 'Content has been successfully updated!',
                 POINTS: 'Points Used: ',
                 AMOUNT: 'Amount: €'
             }
         },
         FIELDS: {
-            NAME: {
-                TITLE: 'Name',
-                PLACEHOLDER: 'Name',
-                DESC: 'Please, enter your name'
-            },
-            COMPANY_NAME: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
-            EMAIL: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
-            PASSWORD: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
-            CURRENT_PASSWORD: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
-            NEW_PASSWORD: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
-            CONFIRM_PASSWORD: {
-                TITLE: '',
-                PLACEHOLDER: 'Name',
-                DESC: ''
-            },
-            IMAGE: {
-                TITLE: 'Image',
-            },
-            PHONE: {
+            PROFILE: {
+                EMAIL: {
+                    TITLE: 'Email Address',
+                    PLACEHOLDER: 'Email',
+                    DESC: ''
+                },
+                PASSWORD: {
+                    TITLE: 'Password',
+                    PLACEHOLDER: 'Password',
+                    DESC: ''
+                },
+                CURRENT_PASSWORD: {
+                    TITLE: 'Current Password',
+                    PLACEHOLDER: 'Password',
+                    DESC: ''
+                },
+                NEW_PASSWORD: {
+                    TITLE: 'New Password',
+                    PLACEHOLDER: 'Password',
+                    DESC: ''
+                },
+                CONFIRM_PASSWORD: {
+                    TITLE: 'Confirm Password',
+                    PLACEHOLDER: 'Password',
+                    DESC: ''
+                },
+                CUSTOMER_NAME: {
+                    TITLE: 'Name',
+                    PLACEHOLDER: 'Name',
+                    DESC: 'Please, enter your name'
+                },
+                CUSTOMER_IMAGE: {
+                    TITLE: 'Avatar',
+                    ACTION: 'Choose File'
+                },
+                MERCHANT_NAME: {
+                    TITLE: 'Company Name',
+                    PLACEHOLDER: 'Name',
+                    DESC: 'Please, enter your company\'s name'
+                },
+                MERCHANT_IMAGE: {
+                    TITLE: 'Company\'s Logo',
+                    ACTION: 'Choose File'
+                },
+                SUBTITLE: {
+                    TITLE: 'Abstract',
+                    PLACEHOLDER: 'Abstract',
+                    DESC: 'Please, enter your company\'s abstract'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please choose your company\'s description'
+                },
+                SECTOR: {
+                    TITLE: 'Sector',
+                    PLACEHOLDER: '',
+                    DESC: 'Please choose your company\'s sector'
+                },
+                SECTOR_CHOICES: {
+                    _: 'Other',
+                    A: 'Β2Β Services',
+                    B: 'Durables',
+                    C: 'Durables (Technology)',
+                    D: 'Education',
+                    E: 'Food',
+                    F: 'Hotels, Cafés and Restaurants',
+                    G: 'Recreation and Culture',
+                },
+                TIMETABLE: {
+                    TITLE: 'Timetable',
+                    PLACEHOLDER: 'Timetable',
+                    DESC: 'Please enter your company\'s timetable'
+                },
+                PHONE: {
+                    TITLE: 'Phone',
+                    PLACEHOLDER: 'Phone',
+                    DESC: 'Please enter your company\'s phone'
+                },
+                WEBSITE: {
+                    TITLE: 'Website',
+                    PLACEHOLDER: 'Website',
+                    DESC: 'Please enter your company\'s website'
+                },
+                ADDRESS: {
+                    TITLE: 'Address',
+                    PLACEHOLDER: 'Address',
+                    DESC: 'Please enter your company\'s address'
+                },
+                POSTCODE: {
+                    TITLE: 'Postcode',
+                    PLACEHOLDER: 'Postcode',
+                    DESC: 'Please enter your company\'s postcode'
+                },
+                CITY: {
+                    TITLE: 'City',
+                    PLACEHOLDER: 'City',
+                    DESC: 'Please enter your company\'s city'
+                },
+                LAT: {
+                    TITLE: 'Coordinates (Latitude)',
+                    PLACEHOLDER: 'Latitude',
+                    DESC: 'Please enter your company\'s coordinates (Latitude)'
+                },
+                LONG: {
+                    TITLE: 'Coordinates (Longitude)',
+                    PLACEHOLDER: 'Longitude',
+                    DESC: 'Please enter your company\'s coordinates (Longitude)'
+                },
+                NATIONAL_BANK: {
+                    TITLE: 'National Bank',
+                    PLACEHOLDER: 'National Bank',
+                    DESC: 'IBAN or other info about bank account'
+                },
+                PIREAUS_BANK: {
+                    TITLE: 'Pireaus Bank',
+                    PLACEHOLDER: 'Pireaus Bank',
+                    DESC: 'IBAN or other info about bank account'
+                },
+                EUROBANK: {
+                    TITLE: 'Eurobank',
+                    PLACEHOLDER: 'Eurobank',
+                    DESC: 'IBAN or other info about bank account'
+                },
+                ALPHA_BANK: {
+                    TITLE: 'Alpha Bank',
+                    PLACEHOLDER: 'Alpha Bank',
+                    DESC: 'IBAN or other info about bank account'
+                },
+                PAYPAL: {
+                    TITLE: 'Paypal',
+                    PLACEHOLDER: 'Paypal',
+                    DESC: 'Paypal M information'
+                },
 
-            },
-            WEBSITE: {
-
-            },
-            ADDRESS: {
-
-            },
-            POSTCODE: {
-
-            },
-            CITY: {
-
-            },
-            SECTOR: 'Sector',
-            SECTOR_CHOICES: {
-                _: 'Other',
-                A: 'Β2Β Services',
-                B: 'Durables',
-                C: 'Durables (Technology)',
-                D: 'Education',
-                E: 'Food',
-                F: 'Hotels, Cafés and Restaurants',
-                G: 'Recreation and Culture',
-            },
-            SUPPORT: {
-                PAYMENT_CHOICES: {
-                    A: 'Paypal',
-                    B: 'National Bank',
-                    C: 'Eurobank',
-                    D: 'AlphaBank',
-                    E: 'Pireaus Bank'
+                SUPPORT: {
+                    PAYMENT_CHOICES: {
+                        A: 'Paypal',
+                        B: 'National Bank',
+                        C: 'Eurobank',
+                        D: 'AlphaBank',
+                        E: 'Pireaus Bank'
+                    },
                 },
             },
-
             OFFER: {
                 TITLE: {
                     TITLE: 'Offer Title',
                     PLACEHOLDER: 'Title',
                     DESC: 'Please, enter Offer Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Offer\'s Image',
+                    ACTION: 'Choose File'
+                },
+                SUBTITLE: {
+                    TITLE: 'Abstact',
+                    PLACEHOLDER: 'Abstact',
+                    DESC: 'Please, enter Offer\'s Abstact.'
                 },
                 DESCRIPTION: {
                     TITLE: 'Offer Description',
@@ -251,45 +309,7 @@ export const locale = {
                     TITLE: 'Expiration Date',
                     PLACEHOLDER: 'Date',
                     DESC: 'Please, enter when your Offer will be expired.'
-                },
-                EXPIRATION_CHOICES: {
-                    A: 'In one Week',
-                    B: 'In one Month',
-                    C: 'In three Months',
-                    D: 'In six Months'
-                },
-            },
-
-            OFFER_DESCRIPTION: {
-                TITLE: 'Offer\'s Description',
-                PLACEHOLDER: 'Description',
-                DESC: 'Please, enter Offer\'s Description.'
-            },
-            OFFER_EXPIRATION: {
-                TITLE: 'Expiration Date',
-                PLACEHOLDER: 'Date',
-                DESC: 'Please, enter when your Offer will be expired.'
-            },
-            OFFER_COST: {
-                TITLE: 'Cost in points',
-                PLACEHOLDER: 'Points',
-                DESC: 'Please enter offer\'s required points.'
-            },
-            EXPIRATION_CHOICES: {
-                A: 'In one Week',
-                B: 'In one Month',
-                C: 'In three Months',
-                D: 'In six Months'
-            },
-
-            POST_CONTENT: {
-
-            },
-            POST_TYPE: {
-
-            },
-            POST_ACCESS: {
-
+                }
             },
             POST: {
                 TITLE: {
@@ -297,21 +317,70 @@ export const locale = {
                     PLACEHOLDER: 'Title',
                     DESC: 'Please, enter Post Title.'
                 },
-                CONTENT: {
-                    TITLE: 'Post Description',
-                    PLACEHOLDER: 'Description',
-                    DESC: 'Please, enter Post Description.'
+                IMAGE: {
+                    TITLE: 'Post\'s Image',
+                    ACTION: 'Choose File'
                 },
-                DATE: {
-                    TITLE: 'Expiration Date',
-                    PLACEHOLDER: 'Date',
-                    DESC: 'Please, enter when your Post will be expired.'
+                SUBTITLE: {
+                    TITLE: 'Abstact',
+                    PLACEHOLDER: 'Abstact',
+                    DESC: 'Please, enter Post\'s abstact.'
+                },
+                CONTENT: {
+                    TITLE: 'Post Content',
+                    PLACEHOLDER: 'Content',
+                    DESC: 'Please, enter Post Content.'
                 },
                 ACCESS: {
                     TITLE: 'Access',
                     PLACEHOLDER: 'Access',
                     DESC: 'Please, enter when your Access.'
-
+                },
+                ACCESS_CHOICES: {
+                    A: 'Public',
+                    B: 'Private',
+                    C: 'Partners'
+                },
+            },
+            EVENT: {
+                TITLE: {
+                    TITLE: 'Event Title',
+                    PLACEHOLDER: 'Event',
+                    DESC: 'Please, enter Event Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Event\'s Image',
+                    ACTION: 'Choose File'
+                },
+                SUBTITLE: {
+                    TITLE: 'Abstact',
+                    PLACEHOLDER: 'Abstact',
+                    DESC: 'Please, enter Event\'s abstact.'
+                },
+                DESCRIPTION: {
+                    TITLE: 'Event Description',
+                    PLACEHOLDER: 'Description',
+                    DESC: 'Please, enter Event Description.'
+                },
+                DATE: {
+                    TITLE: 'Date',
+                    PLACEHOLDER: 'Date',
+                    DESC: 'Please, enter when your Event will take place'
+                },
+                TIME: {
+                    TITLE: 'Time',
+                    PLACEHOLDER: 'Time',
+                    DESC: 'Please, enter when your Event will take place'
+                },
+                LOCATION: {
+                    TITLE: 'Event\'s Location',
+                    PLACEHOLDER: 'Location',
+                    DESC: 'Please, enter where your Event will take place'
+                },
+                ACCESS: {
+                    TITLE: 'Access',
+                    PLACEHOLDER: 'Access',
+                    DESC: 'Please, enter when your Access.'
                 },
                 ACCESS_CHOICES: {
                     A: 'Public',
@@ -324,6 +393,15 @@ export const locale = {
                     TITLE: 'Campaign Title',
                     PLACEHOLDER: 'Title',
                     DESC: 'Please, enter Campaign Title.'
+                },
+                IMAGE: {
+                    TITLE: 'Campaign\'s Image',
+                    ACTION: 'Choose File'
+                },
+                SUBTITLE: {
+                    TITLE: 'Abstact',
+                    PLACEHOLDER: 'Abstact',
+                    DESC: 'Please, enter Campaign\'s abstact.'
                 },
                 TERMS: {
                     TITLE: 'Terms Description',
@@ -400,7 +478,34 @@ export const locale = {
                 DATE_TOO_EARLY: 'The end date cannot be earlier tha th start date',
                 SUBMIT_DRAFT: 'Save as Draft',
                 SUBMIT_CAMPAIGN: 'Publish Campaign',
-            }
+            },
+            CONTENT: {
+                NAME: {
+                    TITLE: 'Content Name',
+                    PLACEHOLDER: 'Name',
+                    DESC: 'Please, enter Content\'s Name'
+                },
+                EL_TITLE: {
+                    TITLE: 'Title in greek',
+                    PLACEHOLDER: 'Greek',
+                    DESC: 'Please, enter greek Title'
+                },
+                EN_TITLE: {
+                    TITLE: 'Title in english',
+                    PLACEHOLDER: 'English',
+                    DESC: 'Please, enter english Tiitle'
+                },
+                EL_CONTENT: {
+                    TITLE: 'Content in greek',
+                    PLACEHOLDER: 'Greek',
+                    DESC: 'Please, enter greek Content'
+                },
+                EN_CONTENT: {
+                    TITLE: 'Content in english',
+                    PLACEHOLDER: 'English',
+                    DESC: 'Please, enter english Content'
+                },
+            },
         },
         FORM: {
             BUTTONS: {
@@ -442,6 +547,9 @@ export const locale = {
                 BUTTON: 'Sign In',
                 EMAIL_NEEDS_VERIFICATION: 'You have to verify your email address',
                 PASSWORD_NEEDS_UPDATE: 'You have to update your password'
+            },
+            LOGOUT: {
+                BUTTON: 'Sign out'
             },
             FORGOT: {
                 TITLE: 'Forgotten Password?',
@@ -501,7 +609,28 @@ export const locale = {
                 INVALID_FIELD: 'Field is not valid',
             }
         },
+        CUSTOMER: {
+            STEPPER: {
+                NEXT_STEP: 'Go to next step',
+                CLOSE: 'Κλείσιμο',
+                SUB_AMOUNT: {
+                    PLEDGE: 'Pledge you Support',
+                    AMOUNT: 'Amount',
+                    PAYMENT: 'Payment Method'
+                },
+                SUB_FINAL: {
+                    AMOUNT: 'Transaction\'s Amount ',
+                    PAYMENT: 'Payment Method',
+                    PAYMENT_ID: 'Payment ID',
+                    INSTRUCTIONS: 'Instructions'
+                }
+            }
+        },
         MERCHANT: {
+            DASHBOARD: {
+                SCANNER: 'Scanner',
+                NEWS: 'News from the Community',
+            },
             SCANNER: {
                 LOYALTY_TITLE: 'Scan for Points',
                 BACK_TO_SCANNER: 'Back to Scanner',
@@ -564,14 +693,74 @@ export const locale = {
                 }
             }
         },
+        ADMIN: {
+            CREATE_MERCHANT: 'Add New User (Merchant)',
+            CREATE_CUSTOMER: 'Add New User (Customer)'
+        },
         OFFER: {
-            TITLE: 'OFFER'
+            TITLE: 'OFFER',
+            PLURAL: 'Offers',
+            CREATE: 'Add New Offer',
+            CREATE_SUB: 'Create a new Offer',
+            EDIT: 'Edit Offer',
+            DELETE: 'Delete Offer',
+            DELETE_CONFIRM: 'Are you sure that you want to delete ',
+            CANCEL: 'Cancel',
+        },
+        POST: {
+            TITLE: 'POST',
+            PLURAL: 'Posts',
+            CREATE: 'Add New Post',
+            CREATE_SUB: 'Create a new Post',
+            EDIT: 'Edit Post',
+            DELETE: 'Delete Post',
+            DELETE_CONFIRM: 'Are you sure that you want to delete ',
+            CANCEL: 'Cancel'
+        },
+        EVENT: {
+            TITLE: 'EVENT',
+            PLURAL: 'Events',
+            CREATE: 'Add New Event',
+            CREATE_SUB: 'Create a new Event',
+            EDIT: 'Edit Event',
+            DELETE: 'Delete Event',
+            DELETE_CONFIRM: 'Are you sure that you want to delete ',
+            CANCEL: 'Cancel'
         },
         CAMPAIGN: {
             TITLE: 'CAMPAIGN',
-            DRAFT: 'draft'
+            PLURAL: 'Campaigns',
+            CREATE: 'Add New Microcredit Campaign',
+            CREATE_SUB: 'Create a new Microcredit Campaign',
+            EDIT: 'Edit Campaign',
+            DELETE: 'Delete Campaign',
+            DELETE_CONFIRM: 'Are you sure that you want to delete ',
+            PUBLISH: 'Publish Campaign',
+            PUBLISH_CONFIRM_A: 'Are you sure you would like to publish the campaign',
+            PUBLISH_CONFIRM_B: 'You won\'t be able to make any further changes after your campaign has been published',
+            DRAFT: 'draft',
+            CANCEL: 'Cancel',
+
+            REDEEM_PERIOD: 'Redeem Period',
+            REDEEM_PERIOD_SUB: 'This is the period in which you can get the items you pledged for',
+            PRICE: 'Price',
+            PRICE_PER_ITEM: 'Price per item',
+            PLEDGE: 'Pledge',
+            MERCHANT: 'Merchant Info',
+            TERMS: 'What do I get?'
         },
-        //             EMAIL_HAS_CARD: 'Email address is already linked to a card',
+        USER: {
+            CREATE_CUSTOMER: 'Add New User (Member)',
+            CREATE_CUSTOMER_SUB: 'Create a new member of our community',
+            CREATE_MERCHANT: 'Add New User (Partner)',
+            CREATE_MERCHANT_SUB: 'Create a new partner of our community',
+        },
+        CONTENT: {
+            PLURAL: 'Content',
+            CREATE: 'Add new Content',
+            CREATE_SUB: 'Create a new content',
+            EDIT: 'Edit Content',
+        },
 
         NOT_FOUND_ERRORS: {
             NOT_ENOUGH_POINTS: 'Not enough points to proccedd',

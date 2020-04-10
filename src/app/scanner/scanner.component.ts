@@ -60,7 +60,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    private translate: TranslateService,
+    //private translate: TranslateService,
     private scannerService: ScannerService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,

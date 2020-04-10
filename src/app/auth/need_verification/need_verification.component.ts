@@ -12,6 +12,7 @@ import { MessageNoticeService } from '../../core/helpers/message-notice/message-
 import { AuthenticationService } from '../../core/services/authentication.service';
 // Environment
 import { environment } from '../../../environments/environment';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 
 @Component({
 	selector: 'kt-need-verification',
@@ -20,13 +21,7 @@ import { environment } from '../../../environments/environment';
 })
 export class NeedVerificationComponent implements OnInit, OnDestroy {
 
-	public validator = {
-		email: {
-			minLength: 3,
-			maxLength: 100
-		}
-	}
-
+	validator: any;
 	emailForm: FormGroup;
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -41,6 +36,7 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	 * @param translate: TranslateService
 	 * @param authNoticeService: AuthNoticeService
 	 * @param authenticationService: AuthenticationService
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
 		private router: Router,
@@ -49,7 +45,9 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 		private translate: TranslateService,
 		public authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService,
 	) {
+		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 

@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy, Output, ViewChild, ChangeDetectorRef, Inject, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-// Rxjs
 import { Subject, Subscription } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 // Global Services
@@ -8,9 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { MessageNoticeService } from 'src/app/core/helpers/message-notice/message-notice.service';
 import { MicrocreditService } from '../../core/services/microcredit.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-// Local Services
+// Local Services, Models & Interfaces
 import { SupportService } from '../_support.service';
-// Local Models & Interfaces
 import { SupportInterface } from '../_support.interface';
 // Others
 import { WizardComponent } from 'angular-archwizard';
@@ -215,15 +213,11 @@ export class AddSupportComponent implements OnInit, OnDestroy {
   }
 
   onSubmitAmountForm(event: number) {
-    this.actionsHandler();
-  }
-
-  actionsHandler() {
     const user = {
       identifier: this.user.identifier_scan || this.user.identifier_form,
       email: this.user.email
     };
-    console.log(this.actions.registration);
+
     switch (this.actions.registration) {
       case 'xx1000': { // only email
         this.actionRegistration(
@@ -283,11 +277,6 @@ export class AddSupportComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  // initializeSupportData() {
-  //   this.support.campaign_id = this.campaign_id;
-  //   this.supportService.changeMicrocreditSupport(this.support);
-  // }
 
   actionRegistration(notice: { type: string, message: string }, email: string, card: string) {
     console.log('Reg', email + card)
@@ -409,7 +398,7 @@ export class AddSupportComponent implements OnInit, OnDestroy {
     this.wizard.goToStep(step);
   }
 
-  onPreviousStep() {
+  onPreviousStep(event: boolean) {
     this.supportNoticeService.setNotice(null);
     if (this.wizard.currentStep.stepTitle === 'Amount' && !this.showEmailForm) {
       this.onAfterNextStep(0);

@@ -3,47 +3,46 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+	selector: 'app-settings',
+	templateUrl: './settings.component.html',
+	styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
 	currentRouteUrl: string = '';
 	menu = [
 		{
-			title: 'Profile',
-			link: 'profile',
-			icon: '',
-		},
-
-		{
-			title: 'Account settings',
-			link: 'account-settings',
-			icon: '',
-		},
-		/*{
-			title: 'Email settings',
-			link: 'email-settings',
+			title: 'SETTINGS.SUBMENU.PERSONAL_INFORMATION',//'Profile',
+			link: 'personal-information',
 			icon: '',
 		},
 		{
-			title: 'Change password',
+			title: 'SETTINGS.SUBMENU.CHANGE_PASSWORD',
 			link: 'change-password',
 			icon: '',
 		},
+		/*{
+			title: 'SETTINGS.SUBMENU.ACCOUNT',//'Account settings',
+			link: 'account-settings',
+			icon: '',
+		},
 		{
-			title: 'Basket',
-			link: 'history/basket',
+			title: 'Email settings',
+			link: 'email-settings',
 			icon: '',
 		},*/
 		{
-			title: 'Transactions',
-			link: 'history/transactions',
+			title: 'SETTINGS.SUBMENU.LOYALTY',
+			link: 'history/loyalty',
 			icon: '',
 		},
+		{
+			title: 'SETTINGS.SUBMENU.MICROCREDIT',
+			link: 'history/microcredit',
+			icon: '',
+		}
 	];
-	
-	constructor(private router: Router,private cdr: ChangeDetectorRef) { }
+
+	constructor(private router: Router, private cdr: ChangeDetectorRef) { }
 
 	ngOnInit() {
 		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
@@ -54,13 +53,13 @@ export class SettingsComponent implements OnInit {
 				this.cdr.markForCheck();
 			});
 	}
-	
+
 	getItemCssClasses(item) {
 		let classes = 'menu-item';
 		if (this.currentRouteUrl.indexOf(item) !== -1) {
 			classes += ' menu-item-active';
 		}
 		return classes;
-	}		
+	}
 
 }

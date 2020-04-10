@@ -12,6 +12,7 @@ import { MessageNoticeService } from '../../core/helpers/message-notice/message-
 import { AuthenticationService } from '../../core/services/authentication.service';
 // Environment
 import { environment } from '../../../environments/environment';
+import { StaticDataService } from '../../core/services/static-data.service';
 
 @Component({
 	selector: 'kt-login',
@@ -21,19 +22,9 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-	public validator = {
-		email: {
-			minLength: 3,
-			maxLength: 100
-		},
-		password: {
-			minLength: 3,
-			maxLength: 100
-		}
-	}
-
-	returnUrl: string;
+	validator: any;
 	loginForm: FormGroup;
+	returnUrl: string;
 
 	private unsubscribe: Subject<any>;
 	loading: boolean = false;
@@ -46,20 +37,23 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 * @param router: Router
 	 * @param fb: FormBuilder,
 	 * @param cdr: ChangeDetectorRef
-	 * @param route: ActivatedRoute
+	 * @param activatedRoute: ActivatedRoute
 	 * @param translate: TranslateService
 	 * @param authNoticeService: MessageNoticeService
-	 * @param authenticationService: AuthenticationService
+	 * @param authenticationService: AuthenticationService,
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
-		private route: ActivatedRoute,
+		private activatedRoute: ActivatedRoute,
 		private translate: TranslateService,
 		private authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService,
 	) {
+		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 
@@ -74,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.initLoginForm();
 
 		// redirect back to the returnUrl before login
-		this.route.queryParams.subscribe(params => {
+		this.activatedRoute.queryParams.subscribe(params => {
 			this.returnUrl = params.returnUrl || '/';
 		});
 	}

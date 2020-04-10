@@ -165,7 +165,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onPreviousStep() {
+  onPreviousStep(event: boolean) {
     console.log('Back')
     this.scannerNoticeService.setNotice(null);
     this.wizard.goToPreviousStep();

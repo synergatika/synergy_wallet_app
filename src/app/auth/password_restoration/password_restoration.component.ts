@@ -14,6 +14,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 // Environment
 import { environment } from '../../../environments/environment';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 
 @Component({
 	selector: 'kt-login',
@@ -22,14 +23,10 @@ import { environment } from '../../../environments/environment';
 })
 export class PasswordRestorationComponent implements OnInit, OnDestroy {
 
-	public validator = {
-		password: {
-			minLength: 3,
-			maxLength: 100
-		}
-	}
+	validator: any;
 	passwordForm: FormGroup;
-	token: string = '';
+
+	public token: string = '';
 	check: boolean = false;
 
 	private unsubscribe: Subject<any>;
@@ -47,6 +44,7 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 	 * @param translate: TranslateService
 	 * @param authNoticeService: AuthNoticeService
 	 * @param authenticationService: AuthenticationService
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
 		private router: Router,
@@ -56,7 +54,9 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 		private translate: TranslateService,
 		private authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService,
 	) {
+		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 

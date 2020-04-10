@@ -45,7 +45,7 @@ export class ItemsService {
       }));
   }
 
-  createOffer(merchant_id: string, formData: FormData): Observable<Message> {
+  createOffer(formData: FormData): Observable<Message> {
     //return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/`, formData)
     return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/`, formData)
       .pipe(map(data => {

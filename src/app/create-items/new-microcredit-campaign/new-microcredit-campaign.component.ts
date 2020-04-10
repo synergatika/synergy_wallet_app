@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ItemsService } from '../../core/services/items.service';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from '../../core/services/authentication.service';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 
 @Component({
   selector: 'app-new-microcredit-campaign',
@@ -23,31 +24,15 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 })
 
 export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild('fileInput', { static: true }) image: ElementRef;
   @ViewChild('publish_item', { static: false }) publish_item;
-  public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 150
-    },
-    terms: {
-      minLength: 3,
-      maxLenth: 1000
-    },
-    description: {
-      minLength: 3,
-      maxLenth: 1000
-    },
-    maxAmount: {
-      minValue: 0,
-      maxValue: 100000
-    }
-  };
+
+  validator: any;
 
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = true;
-  fileDataEmptied: boolean;
+  showImageError: boolean = false;
+
+  public title: string = '';
   isQuantitative = false;
 
   submitForm: FormGroup;
@@ -56,15 +41,29 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
+  /**
+    * Component constructor
+    *
+    * @param fb: FormBuilder
+    * @param cdRef: ChangeDetectorRef
+    * @param router: Router
+    * @param modalService: NgbModal
+    * @param translate: TranslateService
+    * @param authenticationService: AuthenticationService
+    * @param itemsService: ItemsService
+    * @param staticDataService: StaticDataService
+    */
   constructor(
-    private cdRef: ChangeDetectorRef,
-    private itemsService: ItemsService,
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private translate: TranslateService,
-    private modalService: NgbModal,
+    private cdRef: ChangeDetectorRef,
     private router: Router,
+    private modalService: NgbModal,
+    private translate: TranslateService,
+    private authenticationService: AuthenticationService,
+    private itemsService: ItemsService,
+    private staticDataService: StaticDataService
   ) {
+    this.validator = this.staticDataService.getMicrocreditValidator;
     this.unsubscribe = new Subject();
   }
 
@@ -164,8 +163,8 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
       this.onImageCancel();
       return;
     }
-    this.originalImage = false;
-    this.fileDataEmptied = false;
+    this.showImageError = false;
+
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -185,9 +184,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     console.log('Image canceled');
     this.previewUrl = null;
     this.fileData = null;
-    this.originalImage = true;
-    this.image.nativeElement.value = null;
-    this.fileDataEmptied = true;
+    this.showImageError = true;
     this.cdRef.markForCheck();
   }
 
@@ -205,17 +202,14 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
             if (campaignStatus == 'publish') {
               this.publishCampaign(formData, data._id);
             } else {
-              Swal.fire(
-                this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-                this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_CREATED'),
-                'success'
-              ).then((result) => {
+              Swal.fire({
+                title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+                text: this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_CREATED'),
+                icon: 'success',
+                timer: 2500
+              }).then((result) => {
                 this.router.navigate(['/m-campaigns']);
               });
-              setTimeout(() => {
-                Swal.close();
-                this.router.navigate(['/m-campaigns']);
-              }, 2000);
             }
           },
           error => {
@@ -225,10 +219,10 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
               this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
@@ -241,17 +235,14 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            console.log('success');
-            console.log(data);
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
-              'success'
-            );
-            setTimeout(() => {
-              Swal.close();
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
+              icon: 'success',
+              timer: 2500
+            }).then((result) => {
               this.router.navigate(['/m-campaigns']);
-            }, 2000);
+            });
           },
           error => {
             console.log(error);
@@ -260,10 +251,10 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
               this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
@@ -275,22 +266,22 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
    * On Form Submit
    */
   onSubmit(campaignStatus: string) {
-    if (this.submitted) return;
+    if (this.submitted || this.loading) return;
 
     const controls = this.submitForm.controls;
     /** check form */
-    if (this.submitForm.invalid) {
+    if (this.submitForm.invalid || !this.fileData) {
+      if (!this.fileData) this.showImageError = true;
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
       return;
     }
-    if (!this.fileData) {
-      console.log('no image');
-      return;
-    }
-    this.loading = true;
+
     this.submitted = true;
+    this.loading = true;
+
+    this.title = controls.title.value;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);

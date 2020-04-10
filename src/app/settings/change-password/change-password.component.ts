@@ -112,7 +112,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
             this.submitted = false;

@@ -1,8 +1,8 @@
 <form [formGroup]="submitForm">
   <!--begin: Form Wizard Step 1-->
-  <h5>Pledge you Support</h5>
+  <h5>{{'CUSTOMER.STEPPER.SUB_AMOUNT.PLEDGE' | translate}}</h5>
   <div class="form-group">
-    <label>Amount</label>
+    <label>{{'CUSTOMER.STEPPER.SUB_AMOUNT.AMOUNT' | translate}}</label>
     <div class="input-group">
       <span class="input-group-text">€</span>
       <input [readonly]="campaign.quantitative==false||campaign.stepAmount>0" type="number" class="form-control"
@@ -26,7 +26,7 @@
       {{ campaign.maxAllowed | currency: 'EUR'}}</span>
   </div>
   <div class="form-group">
-    <label>Payment Method</label>
+    <label>{{'CUSTOMER.STEPPER.SUB_AMOUNT.PAYMENT' | translate}}</label>
     <select name="method" formControlName="method" class="form-control">
       <option *ngIf="campaign.merchant_payments.paypal!==''" value="paypal">
         {{'FIELDS.SUPPORT.PAYMENT_CHOICES.A' | translate}}</option>
@@ -43,4 +43,4 @@
       class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
   </div>
 </form>
-<button mat-raised-button type="button" (click)="onNextStep()">Go to next step</button>
+<button mat-raised-button type="button" (click)="onNextStep()">{{'CUSTOMER.STERPPER.NEXT_STEP' | translate}}/button>

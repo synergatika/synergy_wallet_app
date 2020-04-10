@@ -1,31 +1,30 @@
-// Core
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-
-// Rxjs
-import { first, tap, takeUntil, finalize } from 'rxjs/operators';
+import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
 // Services
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { LoyaltyService } from '../../core/services/loyalty.service';
+import { MicrocreditService } from '../../core/services/microcredit.service';
+// Models
+import { MicrocreditTransaction } from '../../core/models/microcredit_transaction.model';
 
 @Component({
-  selector: 'app-transactions',
-  templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+  selector: 'app-microcredit-history',
+  templateUrl: './microcredit.component.html',
+  styleUrls: ['./microcredit.component.scss']
 })
-export class TransactionsComponent implements OnInit, OnDestroy {
+export class MicrocreditHistoryComponent implements OnInit, OnDestroy {
 
   access: string = '';
-  transactions = [];
+  public transactions: MicrocreditTransaction[];
   p: number = 1;
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
   constructor(
     private cdRef: ChangeDetectorRef,
     private authenticationService: AuthenticationService,
-    private loyaltyService: LoyaltyService
+    private microcreditService: MicrocreditService
   ) {
     this.unsubscribe = new Subject();
   }
@@ -33,15 +32,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.access = this.authenticationService.currentUserValue.user["access"];
 
-    this.loyaltyService.readTransactions()
+    this.microcreditService.readTransactions('0-0-0')
       .pipe(
         tap(
           data => {
             this.transactions = data;
           },
           error => {
-            // this.error = error.error.message || "Unknown Server Error";
-            //    this.loading = false;
             console.log(error);
           }),
         takeUntil(this.unsubscribe),

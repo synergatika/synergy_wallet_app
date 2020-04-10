@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment';
 import { Message } from '../models/message.model';
 import { Points } from '../models/points.model';
 import { Activity } from '../models/activity.model';
-import { Transaction } from '../models/transaction.model';
+import { LoyaltyTransaction } from '../models/loyalty_transaction.model';
 import { RegistrationStatus } from '../models/registration_status.model';
 
 @Injectable({
@@ -56,8 +56,8 @@ export class LoyaltyService {
       }));
   }
 
-  readTransactions(): Observable<Transaction[]> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/transactions/0-0-0`)
+  readTransactions(offset: string): Observable<LoyaltyTransaction[]> {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/transactions/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));

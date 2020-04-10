@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 // Models
-import { MicrocreditCampaign } from '../../core/models/microcredit_campaign.model';
+import { StaticDataService } from '../../core/services/static-data.service';
 
 @Component({
   selector: 'app-edit-microcredit-campaign-draft',
@@ -28,60 +28,13 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   @ViewChild('fileInput', { static: false }) imageInput: ElementRef;
   @ViewChild('publish_item', { static: false }) publish_item: any;
   @ViewChild('remove_item', { static: false }) remove_item: any;
-  public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 150
-    },
-    terms: {
-      minLength: 3,
-      maxLenth: 1000
-    },
-    description: {
-      minLength: 3,
-      maxLenth: 1000
-    },
-    maxAmount: {
-      minValue: 0,
-      maxValue: 100000
-    }
-  };
+
   private campaign_id: string;
-  public campaign: MicrocreditCampaign = {
-    merchant_id: '',
-    merchant_name: '',
-    merchant_slug: '',
-    merchant_imageURL: '',
-    merchant_email: '',
-    merchant_address: { street: '', postCode: '', city: '', coordinates: [] },
-    merchant_contact: { phone: '', websiteURL: '' },
-    merchant_payments: { nationalBank: '', eurobank: '', alphaBank: '', pireausBank: '', paypal: '' },
+  public initialImage: string = '';
+  public title: string = '';
 
-    campaign_id: '',
-    campaign_slug: '',
-    campaign_imageURL: '',
-
-    title: '',
-    subtitle: '',
-    terms: '',
-    description: '',
-    category: '',
-    access: '',
-    quantitative: false,
-    minAllowed: 0,
-    maxAllowed: 0,
-    stepAmount: 0,
-    maxAmount: 0,
-    redeemStarts: 0,
-    redeemEnds: 0,
-    startsAt: 0,
-    expiresAt: 0,
-
-    confirmationTokens: { _id: '', initialTokens: 0, redeemedTokens: 0 },
-    orderedTokens: { _id: '', initialTokens: 0, redeemedTokens: 0 },
-
-    createdAt: new Date
-  }
+  accessList: any;
+  validator: any;
 
   fileData: File = null;
   previewUrl: any = null;
@@ -110,19 +63,35 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
+  /**
+    * Component constructor
+    *
+    * @param router: Router
+    * @param fb: FormBuilder
+    * @param cdRef: ChangeDetectorRef
+    * @param modalService: NgbModal
+    * @param activatedRoute: ActivatedRoute
+    * @param translate: TranslateService
+    * @param authenticationService: AuthenticationService
+    * @param itemsService: ItemsService
+    * @param staticDataService: StaticDataService
+    */
   constructor(
-    private cdRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute,
-    private itemsService: ItemsService,
-    private fb: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private modalService: NgbModal,
     private router: Router,
-    private translate: TranslateService
+    private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef,
+    private modalService: NgbModal,
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
+    private authenticationService: AuthenticationService,
+    private itemsService: ItemsService,
+    private staticDataService: StaticDataService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.campaign_id = params['_id'];
     });
+    this.accessList = this.staticDataService.getAccessList;
+    this.validator = this.staticDataService.getMicrocreditValidator;
     this.unsubscribe = new Subject();
   }
 
@@ -145,65 +114,65 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: [this.campaign.title, Validators.compose([
+      title: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      subtitle: [this.campaign.subtitle],
-      terms: [this.campaign.terms, Validators.compose([
+      subtitle: [''],
+      terms: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.terms.minLength),
         Validators.maxLength(this.validator.terms.maxLength)
       ])
       ],
-      description: [this.campaign.description, Validators.compose([
+      description: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      category: [this.campaign.category, Validators.compose([
+      category: ['', Validators.compose([
         Validators.required,
       ])
       ],
-      access: [this.campaign.access, Validators.compose([
+      access: ['', Validators.compose([
         Validators.required,
       ])
       ],
-      quantitative: [this.campaign.quantitative, Validators.compose([
+      quantitative: ['', Validators.compose([
         Validators.required,
       ])
       ],
-      minAllowed: [this.campaign.minAllowed, Validators.compose([
+      minAllowed: ['', Validators.compose([
         Validators.required,
       ])
       ],
-      maxAllowed: [this.campaign.maxAllowed, Validators.compose([
+      maxAllowed: ['', Validators.compose([
         Validators.required,
       ])
       ],
-      stepAmount: [this.campaign.stepAmount],
-      maxAmount: [this.campaign.maxAmount, Validators.compose([
+      stepAmount: [''],
+      maxAmount: ['', Validators.compose([
         Validators.required,
         Validators.min(this.validator.maxAmount.minLength),
         Validators.max(this.validator.maxAmount.maxLength)
       ])
       ],
-      redeemStarts: [this.campaign.redeemStarts, Validators.compose([
+      redeemStarts: [new Date(), Validators.compose([
         Validators.required,
       ])
       ],
-      redeemEnds: [this.campaign.redeemEnds, Validators.compose([
+      redeemEnds: [new Date(), Validators.compose([
         Validators.required,
       ])
       ],
-      initiation: [this.campaign.startsAt, Validators.compose([
+      initiation: [new Date(), Validators.compose([
         Validators.required,
       ])
       ],
-      expiration: [this.campaign.expiresAt, Validators.compose([
+      expiration: [new Date(), Validators.compose([
         Validators.required,
       ])
       ],
@@ -242,7 +211,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   }
 
   onImageCancel() {
-    this.previewUrl = this.campaign.campaign_imageURL;
+    this.previewUrl = this.initialImage;
     this.fileData = null;
     this.originalImage = true;
     this.imageInput.nativeElement.value = null;
@@ -253,38 +222,18 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
       .pipe(
         tap(
           data => {
-            this.campaign = Object.assign({}, this.campaign, data);
-            console.log(this.campaign);
+            this.title = data.title;
+            this.initialImage = data.campaign_imageURL;
+            this.previewUrl = this.initialImage;
 
-            this.isQuantitative = this.campaign.quantitative;
-            this.previewUrl = this.campaign.campaign_imageURL;
+            this.isQuantitative = data.quantitative;
             this.submitForm.patchValue({
               ...data,
-              initiation: new Date(this.campaign.startsAt),
-              expiration: new Date(this.campaign.expiresAt),
-              redeemStarts: new Date(this.campaign.redeemStarts),
-              redeemEnds: new Date(this.campaign.redeemEnds),
+              initiation: new Date(data.startsAt),
+              expiration: new Date(data.expiresAt),
+              redeemStarts: new Date(data.redeemStarts),
+              redeemEnds: new Date(data.redeemEnds),
             });
-
-            // this.title = this.campaign.title;
-            // this.itemAbstract = this.campaign.subtitle;
-            // this.terms = this.campaign.terms;
-            // this.description = this.campaign.description;
-            // this.category = this.campaign.category;
-            // this.access = this.campaign.access;
-            // this.quantitative = 
-
-            // this.minAllowed = this.campaign.minAllowed;
-            // this.maxAllowed = this.campaign.maxAllowed;
-            // //this.step = this.campaign.stepAmount;
-            // this.maxAmount = this.campaign.maxAmount;
-            // this.redeemStarts = new Date(this.campaign.redeemStarts);
-            // this.redeemEnds = new Date(this.campaign.redeemEnds);
-            // this.startsAt = new Date(this.campaign.startsAt);
-            // this.expiresAt = new Date(this.campaign.expiresAt);
-
-
-            // this.initForm();
           },
           error => {
           }),
@@ -295,8 +244,6 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
         })
       )
       .subscribe();
-    /*const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
-      this.current = currentCampaign;	*/
   }
 
   onIsQuantitativeCheckboxChange() {
@@ -311,16 +258,15 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
             if (campaignStatus == 'publish') {
               this.publishCampaign(formData)
             } else {
-              Swal.fire(
-                this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-                this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_UPDATED'),
-                'success'
-              );
-              setTimeout(() => {
-                Swal.close();
-              }, 2000);
+              Swal.fire({
+                title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+                text: this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
+                icon: 'success',
+                timer: 2500
+              }).then((result) => {
+                this.router.navigate(['/m-campaigns']);
+              });
             }
-            this.submitted = false;
           },
           error => {
             Swal.fire(
@@ -328,10 +274,10 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
               this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
@@ -344,17 +290,14 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
       .pipe(
         tap(
           data => {
-            console.log('success');
-            console.log(data);
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
-              'success'
-            );
-            setTimeout(() => {
-              Swal.close();
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_PUBLISHED'),
+              icon: 'success',
+              timer: 2500
+            }).then((result) => {
               this.router.navigate(['/m-campaigns']);
-            }, 2000);
+            });
           },
           error => {
             console.log(error);
@@ -363,10 +306,10 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
               this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
@@ -378,7 +321,7 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
   * On Form Submit
   */
   onSubmit(campaignStatus: string) {
-    if (this.submitted) return;
+    if (this.submitted || this.loading) return;
 
     const controls = this.submitForm.controls;
     /** check form */
@@ -448,23 +391,19 @@ export class EditMicrocreditCampaignComponentDraft implements OnInit, OnDestroy 
       .pipe(
         tap(
           data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_DELETED'),
-              'success'
-            ).then((result) => {
-              console.log('deleted');
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_DELETED'),
+              icon: 'success',
+              timer: 2500
+            }).then((result) => {
               this.router.navigate(['/m-campaigns']);
             });
-            setTimeout(() => {
-              Swal.close();
-              this.router.navigate(['/m-campaigns']);
-            }, 2000);
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              error,//this.translate.instant('MESSAGE.ERROR'),
+              this.translate.instant(error),
               'error'
             );
             this.submitted = false;

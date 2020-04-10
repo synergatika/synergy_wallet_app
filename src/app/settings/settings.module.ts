@@ -12,8 +12,8 @@ import { PersonalInformationComponent } from './personal-information/personal-in
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { EmailSettingsComponent } from './email-settings/email-settings.component';
 
-import { BasketComponent } from '../history/basket/basket.component';
-import { TransactionsComponent } from '../history/transactions/transactions.component';
+// import { LoyaltyHistoryComponent } from '../history/loyalty/loyalty.component';
+// import { MicrocreditHistoryComponent } from '../history/microcredit/microcredit.component';
 import { HistoryModule } from "../history/history.module";
 
 const routes: Routes = [
@@ -23,30 +23,30 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'profile',
-                pathMatch: 'full', 
+                redirectTo: 'personal-information',
+                pathMatch: 'full',
             },
             {
-                path: 'profile',
+                path: 'personal-information',
                 component: PersonalInformationComponent,
-								data: { title: 'Profile' }
+                data: { title: 'MENU.PROFILE' }
             },
             {
                 path: 'change-password',
                 component: ChangePasswordComponent,
-								data: { title: 'Profile' }
+                data: { title: 'SETTINGS.SUBMENU.CHANGE_PASSWORD' }
             },
+            // {
+            //     path: 'account-settings',
+            //     component: AccountSettingsComponent,
+            //     data: { title: 'SETTINGS.SUBMENU.ACCOUNT' }
+            // },
+            // {
+            //     path: 'email-settings',
+            //     component: EmailSettingsComponent,
+            //     data: { title: 'SETTINGS.SUBMENU.EMAIL' }
+            // },
             {
-                path: 'account-settings',
-                component: AccountSettingsComponent,
-								data: { title: 'Profile' }
-            },
-            {
-                path: 'email-settings',
-                component: EmailSettingsComponent,
-								data: { title: 'Profile' }
-            },
-			{
                 path: 'history',
                 loadChildren: () => import('../history/history.module').then(m => m.HistoryModule)
             },
@@ -67,12 +67,12 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-		MatCardModule,
-		MatSelectModule,
-		//HistoryModule
+        MatCardModule,
+        MatSelectModule,
+        //HistoryModule
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
-		
+
     ],
     providers: [
         // InterceptService,

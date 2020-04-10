@@ -3,7 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { first, takeUntil, finalize, tap } from 'rxjs/operators';
+import { takeUntil, finalize, tap } from 'rxjs/operators';
 
 // Swal Alert
 import Swal from 'sweetalert2';
@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 
 @Component({
   selector: 'app-new-offer',
@@ -21,26 +22,13 @@ import { AuthenticationService } from '../../core/services/authentication.servic
   styleUrls: ['./new-offer.component.sass']
 })
 export class NewOfferComponent implements OnInit, OnDestroy {
-  @ViewChild('fileInput', { static: true }) image: ElementRef;
-  public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 150
-    },
-    description: {
-      minLength: 3,
-      maxLenth: 150
-    },
-    cost: {
-      minValue: 0,
-      maxValue: 100000
-    }
-  };
+
+  validator: any;
 
   fileData: File = null;
   previewUrl: any = null;
-  originalImage: boolean = true;
-  fileDataEmptied: boolean;
+  showImageError: boolean = false;
+
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -50,19 +38,22 @@ export class NewOfferComponent implements OnInit, OnDestroy {
   /**
     * Component constructor
     *
-    * @param cdRef: ChangeDetectorRef
-    * @param itemsService: ItemsService
     * @param fb: FormBuilder
+    * @param cdRef: ChangeDetectorRef
+    * @param router: Router
     * @param translate: TranslateService
+    * @param itemsService: ItemsService
+    * @param staticDataService: StaticDataService
     */
   constructor(
     private cdRef: ChangeDetectorRef,
-    private itemsService: ItemsService,
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private itemsService: ItemsService,
+    private staticDataService: StaticDataService,
   ) {
+    this.validator = this.staticDataService.getOfferValidator;
     this.unsubscribe = new Subject();
   }
 
@@ -126,8 +117,8 @@ export class NewOfferComponent implements OnInit, OnDestroy {
       this.onImageCancel();
       return;
     }
-    this.originalImage = false;
-    this.fileDataEmptied = false;
+    this.showImageError = false;
+
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -147,9 +138,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     console.log('Image canceled');
     this.previewUrl = null;
     this.fileData = null;
-    this.originalImage = true;
-    this.image.nativeElement.value = null;
-    this.fileDataEmptied = true;
+    this.showImageError = true;
     this.cdRef.markForCheck();
   }
 
@@ -157,24 +146,21 @@ export class NewOfferComponent implements OnInit, OnDestroy {
 	 * On Form Submit
 	 */
   onSubmit() {
-    if (this.submitted) return;
-    console.log('onSubmit');
+    if (this.submitted || this.loading) return;
+
     const controls = this.submitForm.controls;
     /** check form */
-    if (this.submitForm.invalid) {
+    if (this.submitForm.invalid || !this.fileData) {
+      if (!this.fileData) this.showImageError = true;
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
       console.log('form invalid');
       return;
     }
-    if (!this.fileData) {
-      console.log('no image');
-      //controls['profile_avatar'].setErrors({'incorrect': true});
-      return;
-    }
-    this.loading = true;
+
     this.submitted = true;
+    this.loading = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
@@ -184,22 +170,18 @@ export class NewOfferComponent implements OnInit, OnDestroy {
     formData.append('description', controls.description.value);
     formData.append('expiresAt', controls.expiration.value.getTime().toString());
 
-    this.itemsService.createOffer(this.authenticationService.currentUserValue.user["_id"], formData)
+    this.itemsService.createOffer(formData)
       .pipe(
         tap(
           data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
-              'success'
-            ).then((result) => {
-              console.log('created');
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.OFFER_CREATED'),
+              icon: 'success',
+              timer: 2500
+            }).then((result) => {
               this.router.navigate(['/m-offers']);
             });
-            setTimeout(() => {
-              Swal.close();
-              this.router.navigate(['/m-offers']);
-            }, 2000);
           },
           error => {
             Swal.fire(
@@ -207,10 +189,10 @@ export class NewOfferComponent implements OnInit, OnDestroy {
               this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })

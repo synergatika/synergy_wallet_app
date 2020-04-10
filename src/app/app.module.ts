@@ -74,6 +74,13 @@ import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-po
 import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
 import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
 
+// 3. Admin
+//import { NewCustomerComponent } from './create-users/new-customer/new-customer.component';
+//import { NewMerchantComponent } from './create-users/new-merchant/new-merchant.component';
+
+import { CreateUsersModule } from './create-users/create-users.module';
+import { AdminMerchantsComponent } from './views/pages/admin-merchants/admin-merchants.component';
+import { AdminCustomersComponent } from './views/pages/admin-customers/admin-customers.component';
 
 @NgModule({
 	declarations: [
@@ -111,17 +118,19 @@ import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/mer
 		//Basic Papes
 		CustomerDashboardComponent,
 		CustomerExploreComponent,
-	
+
 		//Archives
 		ArchiveCoopsComponent,
 		ArchiveOffersComponent,
 		ArchivePostsComponent,
-	
+
 		//2. Merchant		
 		MerchantOffersComponent,
 		MerchantPostsComponent,
 		MerchantEventsComponent,
 		MerchantCampaignsComponent,
+		AdminMerchantsComponent,
+		AdminCustomersComponent,
 
 	],
 	imports: [
@@ -138,7 +147,7 @@ import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/mer
 		BrowserAnimationsModule,
 		CarouselModule,
 		InfiniteScrollModule,
-		
+
 		//Materialize
 		MatDialogModule,
 		MatButtonModule,
@@ -152,7 +161,9 @@ import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/mer
 		CreateItemsModule,
 		ScannerModule,
 		EditItemsModule,
-		MicrocreditModule
+		MicrocreditModule,
+
+		CreateUsersModule,
 
 	],
 	providers: [

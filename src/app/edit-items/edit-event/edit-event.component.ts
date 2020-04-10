@@ -19,6 +19,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 import { ItemsService } from '../../core/services/items.service';
 
 import { Event } from '../../core/models/event.model';
+import { StaticDataService } from '../../core/services/static-data.service';
 
 @Component({
   selector: 'app-edit-event',
@@ -45,55 +46,16 @@ export class EditEventComponent implements OnInit {
     }
   };
 
-  public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 250
-    },
-    subtitle: {
-      minLength: 3,
-      maxLenth: 250
-    },
-    description: {
-      minLength: 3,
-      maxLenth: 2500
-    },
-    location: {
-      minLength: 3,
-      maxLenth: 250
-    }
-  };
-
   private event_id: string;
-  public event: Event = {
-    merchant_id: '',
-    merchant_name: '',
-    merchant_slug: '',
-    merchant_imageURL: '',
+  public initialImage: string = '';
+  public title: string = '';
 
-    event_id: '',
-    title: '',
-    event_slug: '',
-    event_imageURL: '',
-    subtitle: '',
-    description: '',
-    access: '',
-    dateTime: '',
-    location: '',
-
-    createdAt: ''
-  };
-
-  // eventDate: Date;
-  // eventTime: string;
+  accessList: any;
+  validator: any;
 
   fileData: File = null;
   previewUrl: any = null;
   originalImage: boolean = true;
-  //event: any;
-  // description: string;
-  //access: string;
-  //location: string;
 
   submitForm: FormGroup;
   submitted: boolean = false;
@@ -101,6 +63,19 @@ export class EditEventComponent implements OnInit {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
+  /**
+    * Component constructor
+    *
+    * @param router: Router
+    * @param fb: FormBuilder
+    * @param cdRef: ChangeDetectorRef
+    * @param modalService: NgbModal
+    * @param activatedRoute: ActivatedRoute
+    * @param translate: TranslateService
+    * @param authenticationService: AuthenticationService
+    * @param itemsService: ItemsService
+    * @param staticDataService: StaticDataService
+    */
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -110,10 +85,13 @@ export class EditEventComponent implements OnInit {
     private translate: TranslateService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
+    private staticDataService: StaticDataService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.event_id = params['_id'];
     });
+    this.accessList = this.staticDataService.getAccessList;
+    this.validator = this.staticDataService.getEventValidator;
     this.unsubscribe = new Subject();
   }
 
@@ -136,24 +114,24 @@ export class EditEventComponent implements OnInit {
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: [this.event.title, Validators.compose([
+      title: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      subtitle: [this.event.subtitle],
-      description: [this.event.description, Validators.compose([
+      subtitle: [''],
+      description: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.description.minLength),
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
-      access: [this.event.access, Validators.compose([
+      access: ['', Validators.compose([
         Validators.required
       ])
       ],
-      location: [this.event.location, Validators.compose([
+      location: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.location.minLength),
         Validators.maxLength(this.validator.location.maxLength)
@@ -202,7 +180,7 @@ export class EditEventComponent implements OnInit {
 
   onImageCancel() {
     console.log('Image canceled');
-    this.previewUrl = this.event.event_imageURL;
+    this.previewUrl = this.initialImage;
     this.fileData = null;
     this.originalImage = true;
     this.imageInput.nativeElement.value = null;
@@ -213,12 +191,12 @@ export class EditEventComponent implements OnInit {
       .pipe(
         tap(
           data => {
-            this.event = Object.assign({}, this.event, data);
-            console.log(this.event);
+            this.title = data.title;
+            this.initialImage = data.event_imageURL;
+            this.previewUrl = this.initialImage;
 
-            const eventDate = new Date(this.event.dateTime);
+            const eventDate = new Date(data.dateTime);
             const eventTime = eventDate.getHours().toString() + ':' + eventDate.getMinutes().toString();
-            this.previewUrl = this.event.event_imageURL;
             this.submitForm.patchValue({ ...data, eventTime: eventTime, eventDate: new Date(eventDate.setHours(0, 0, 0, 0)) })
           },
           error => {
@@ -236,7 +214,8 @@ export class EditEventComponent implements OnInit {
 	 * On Form Submit
 	 */
   onSubmit() {
-    if (this.submitted) return;
+    if (this.submitted || this.loading) return;
+
     const controls = this.submitForm.controls;
     /** check form */
     if (this.submitForm.invalid) {
@@ -246,12 +225,12 @@ export class EditEventComponent implements OnInit {
       return;
     }
 
+    this.submitted = true;
+    this.loading = true;
+
     const timeArray = controls.eventTime.value.split(':');
     const timeInMiliseconds = ((timeArray[0]) * 60 * 60 + (+timeArray[1]) * 60) * 1000;
     const totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
-
-    this.submitted = true;
-    this.loading = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
@@ -266,26 +245,25 @@ export class EditEventComponent implements OnInit {
       .pipe(
         tap(
           data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.EVENT_UPDATED'),
-              'success'
-            );
-            setTimeout(() => {
-              Swal.close();
-            }, 2000);
-            this.submitted = false;
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.EVENT_UPDATED'),
+              icon: 'success',
+              timer: 2500,
+            }).then((result) => {
+              this.router.navigate(['/m-events']);
+            });
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
@@ -307,29 +285,25 @@ export class EditEventComponent implements OnInit {
       .pipe(
         tap(
           data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.EVENT_DELETED'),
-              'success'
-            ).then((result) => {
-              console.log('deleted');
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.EVENT_DELETED'),
+              icon: 'success',
+              timer: 2500
+            }).then((result) => {
               this.router.navigate(['/m-events']);
             });
-            setTimeout(() => {
-              Swal.close();
-              this.router.navigate(['/m-events']);
-            }, 2000);
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
@@ -353,15 +327,3 @@ export class EditEventComponent implements OnInit {
     return result;
   }
 }
-
-            // this.title = this.event.title;
-            // this.itemAbstract = this.event.subtitle;
-            // this.description = this.event.description;
-            // this.access = this.event.access;
-            // this.location = this.event.location;
-            //const dateTime = this.event.dateTime;
-            //this.eventDate = '';
-/*console.log(eventDate);
-console.log(eventDate.getTime());
-console.log(eventDate.getHours());
-console.log(eventDate.getMinutes());*/

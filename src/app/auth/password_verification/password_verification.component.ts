@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 // Others
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
@@ -22,15 +23,10 @@ import { TermsComponent } from '../terms/synergy_terms.component';
 })
 export class PasswordVerificationComponent implements OnInit, OnDestroy {
 
-	public validator = {
-		password: {
-			minLength: 3,
-			maxLength: 100
-		}
-	}
-
+	validator: any;
 	verifyForm: FormGroup;
-	token: string = '';
+
+	public token: string = '';
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 	loading: boolean = false;
@@ -46,6 +42,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	 * @param translate: TranslateService
 	 * @param authNoticeService: MessageNoticeService
 	 * @param authenticationService: AuthenticationService
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
 		private router: Router,
@@ -56,7 +53,9 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 		private translate: TranslateService,
 		private authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService,
 	) {
+		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 

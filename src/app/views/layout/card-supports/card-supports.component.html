@@ -18,10 +18,10 @@
             </div>
             <div class="s_archive-credit-info row">
               <div class="s_archive-dates col-6">
-                <span class="tag">Redeem Period:</span> {{supportItem.redeemStarts | date: 'd.M.y'}} -
+                <span class="tag">{{'CAMPAIGN.REDEEM_PERIOD' | translate}}:</span>
+                {{supportItem.redeemStarts | date: 'd.M.y'}} -
                 {{supportItem.redeemEnds | date: 'd.M.y'}}<br>
-                <span class="desc">This is the period in which you can get the items you pledged
-                  for</span>
+                <span class="desc">{{'CAMPAIGN.REDEEM_PERIOD_SUB' | translate}}</span>
               </div>
               <div class="s_archive-points col-6">
                 <div class="init-amount">

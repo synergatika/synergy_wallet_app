@@ -8,21 +8,21 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-topbar',
-  templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+	selector: 'app-topbar',
+	templateUrl: './topbar.component.html',
+	styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
 	user: any;
 	title: string;
-	
+
 	constructor(
-		private translate: TranslateService, 
-		private authenticationService: AuthenticationService, 
-		private cDRef: ChangeDetectorRef, 
+		private translate: TranslateService,
+		private authenticationService: AuthenticationService,
+		private cDRef: ChangeDetectorRef,
 		private titleService: Title,
 		private router: Router,
-    private activatedRoute: ActivatedRoute,
+		private activatedRoute: ActivatedRoute,
 	) {
 		this.router.events.pipe(
 			filter((event) => event instanceof NavigationEnd),
@@ -36,11 +36,11 @@ export class TopbarComponent implements OnInit {
 			mergeMap((route) => route.data),
 			map((data) => {
 				console.log(data);
-				if ( data.title ) {
+				if (data.title) {
 					return data.title;
 				} else {
 					return this.router.url.split('/').reduce((acc, frag) => {
-						if ( acc && frag ) { acc += ' / '; }
+						if (acc && frag) { acc += ' / '; }
 						console.log(acc, frag)
 						return acc + frag;
 					});
@@ -51,18 +51,18 @@ export class TopbarComponent implements OnInit {
 			this.title = val;
 			console.log(val);
 			this.cDRef.markForCheck();
-			translate.get(val).subscribe((translation:string) => {
+			translate.get(val).subscribe((translation: string) => {
 				console.log(translation);
 				this.titleService.setTitle(translation);
 			});
-			
+
 		});
 	}
 
 	ngOnInit() {
 		this.user = this.authenticationService.currentUserValue.user;
-		
+
 	}
-	
-	
+
+
 }

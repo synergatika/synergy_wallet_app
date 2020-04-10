@@ -6,8 +6,8 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,
 import { TranslateModule } from '@ngx-translate/core';
 
 import { HistoryComponent } from './history.component';
-import { TransactionsComponent } from './transactions/transactions.component';
-import { BasketComponent } from './basket/basket.component';
+import { LoyaltyHistoryComponent } from './loyalty/loyalty.component';
+import { MicrocreditHistoryComponent } from './microcredit/microcredit.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 const routes: Routes = [
@@ -17,16 +17,17 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'basket',
+                redirectTo: 'loyalty',
             },
             {
-                path: 'transactions',
-                component: TransactionsComponent,
-								data: { title: 'Transactions' }
+                path: 'loyalty',
+                component: LoyaltyHistoryComponent,
+                data: { title: 'SETTINGS.SUBMENU.LOYALTY' }
             },
             {
-                path: 'basket',
-                component: BasketComponent
+                path: 'microcredit',
+                component: MicrocreditHistoryComponent,
+                data: { title: 'SETTINGS.SUBMENU.MICROCREDIT' }
             }
         ]
     }
@@ -45,7 +46,7 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-		NgxPaginationModule
+        NgxPaginationModule
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],
@@ -60,8 +61,8 @@ const routes: Routes = [
     exports: [HistoryComponent],
     declarations: [
         HistoryComponent,
-        TransactionsComponent,
-        BasketComponent
+        LoyaltyHistoryComponent,
+        MicrocreditHistoryComponent
     ],
     entryComponents: [
     ]

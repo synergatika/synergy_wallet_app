@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 // Models
-import { Customer } from '../models/customer.model'
+import { Customer } from '../models/customer.model';
 
 @Injectable({
   providedIn: 'root'

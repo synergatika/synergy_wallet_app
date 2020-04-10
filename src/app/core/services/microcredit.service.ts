@@ -15,6 +15,7 @@ import { environment } from '../../../environments/environment';
 import { Message } from '../models/message.model';
 import { MicrocreditSupport } from '../models/microcredit-support.model';
 import { Payment } from '../models/payment.model';
+import { MicrocreditTransaction } from '../models/microcredit_transaction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,8 @@ export class MicrocreditService {
   ) { }
 
 
-  readAllBackerSupports(): Observable<MicrocreditSupport[]> {
-    return this.http.get<any>(`${environment.apiUrl}/microcredit/supports`)
+  readAllBackerSupports(offset: string): Observable<MicrocreditSupport[]> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/supports/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
@@ -61,6 +62,13 @@ export class MicrocreditService {
   //       return response.data;
   //     }));
   // }
+
+  readTransactions(offset: string): Observable<MicrocreditTransaction[]> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/transactions/${offset}`)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
 
   earnTokens(merchant_id: string, campaign_id: string, _amount: number, method: string): Observable<Payment> {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${merchant_id}/${campaign_id}`, { _amount: _amount, method: method })

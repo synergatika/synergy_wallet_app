@@ -74,7 +74,7 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-        MatCardModule,
+        MatCardModule
     ],
     providers: [
     ],

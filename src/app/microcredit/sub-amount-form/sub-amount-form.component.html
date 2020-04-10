@@ -25,9 +25,9 @@
         labelPosition="before">Paid?</mat-checkbox>
     </div>
   </div>
-  <div *ngIf="rejected" class="merchant-alert">
+  <!-- <div *ngIf="rejected" class="merchant-alert">
     Unfortunately there is no user with the details you have entered.
-  </div>
+  </div> -->
 </form>
 <button mat-raised-button type="button" (click)="onPreviousStep()" class="mr-2">Previous Step</button>
-<button mat-raised-button type="button" (click)="onNextStep()" *ngIf="!rejected">Complete transaction</button>
+<button mat-raised-button type="button" (click)="onNextStep()">Complete transaction</button>

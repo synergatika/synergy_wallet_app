@@ -1,7 +1,7 @@
 <div *ngIf='type===1'>
-    <p>Transaction Amount: {{support.amount}}</p>
-    <p>Transaction Method: {{support.method}}</p>
-    <p>Payment ID: {{support.payment_id}}</p>
-    <p>How: {{support.how}}</p>
-    <button type="button" (click)="onNextStep()">Final</button>
+  <p>{{'CUSTOMER.STEPPER.SUB_FINAL.AMOUNT' | translate}}: {{support.amount}}</p>
+  <p>{{'CUSTOMER.STEPPER.SUB_FINAL.PAYMENT' | translate}}: {{support.method}}</p>
+  <p>{{'CUSTOMER.STEPPER.SUB_FINAL.PAYMENT_ID' | translate}}: {{support.payment_id}}</p>
+  <p>{{'CUSTOMER.STEPPER.SUB_FINAL.INSTRUCTIONS' | translate}}: {{support.how}}</p>
+  <button type="button" (click)="onNextStep()">{{'CUSTOMER.STEPPER.CLOSE' | translate}}</button>
 </div>

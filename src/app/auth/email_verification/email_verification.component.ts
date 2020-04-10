@@ -17,6 +17,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 
 // Environment
 import { environment } from '../../../environments/environment';
+import { StaticDataService } from '../../core/services/static-data.service';
 
 @Component({
 	selector: 'kt-login',
@@ -24,15 +25,14 @@ import { environment } from '../../../environments/environment';
 	encapsulation: ViewEncapsulation.None
 })
 export class EmailVerificationComponent implements OnInit, OnDestroy {
-	// Public params
+	validator: any;
 	verifyForm: FormGroup;
-	loading = false;
 
+	public token: string = '';
 	check = false;
-	isLoggedIn$: Observable<boolean>;
 
-	token: string = '';
 	private unsubscribe: Subject<any>;
+	loading: boolean = false;
 
 	// Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -40,22 +40,25 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 	 * Component constructor
 	 *
 	 * @param router: Router
-	 * @param authenticationService: AuthenticationService
-	 * @param authNoticeService: AuthNoticeService
-	 * @param translate: TranslateService
-	 * @param fb: FormBuilder
+	 * @param fb: FormBuilder,
 	 * @param cdr: ChangeDetectorRef
 	 * @param activatedRoute: ActivatedRoute
+	 * @param translate: TranslateService
+	 * @param authNoticeService: MessageNoticeService
+	 * @param authenticationService: AuthenticationService,
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
 		private router: Router,
-		private authenticationService: AuthenticationService,
-		private authNoticeService: MessageNoticeService,
-		private translate: TranslateService,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private translate: TranslateService,
+		private authNoticeService: MessageNoticeService,
+		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService,
 	) {
+		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 

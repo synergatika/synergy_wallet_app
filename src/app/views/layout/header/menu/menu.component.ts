@@ -4,15 +4,41 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from '../../../../core/services/authentication.service';
+
+interface Menu {
+	title: string,
+	link: string,
+	icon: string
+}
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+	selector: 'app-menu',
+	templateUrl: './menu.component.html',
+	styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
 	currentRouteUrl: string = '';
-	menu = [
+	public menu: Menu[];
+
+	menuAdmin: Menu[] = [
+		{
+			title: 'MENU.CUSTOMERS',
+			link: 'a-customers',
+			icon: 'account'
+		},
+		{
+			title: 'MENU.MERCHANTS',
+			link: 'a-merchants',
+			icon: 'handshake'
+		},
+		{
+			title: 'MENU.CONTENT',
+			link: 'a-content',
+			icon: 'content-paste'
+		}
+	];
+	menuMerchant: Menu[] = [
 		{
 			title: 'MENU.HOME',
 			link: 'scanner',
@@ -39,7 +65,16 @@ export class MenuComponent implements OnInit {
 			icon: 'calendar',
 		}
 	];
-	constructor(private menuService : MenuService, private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef) { }
+	constructor(
+		private cdr: ChangeDetectorRef,
+		private router: Router,
+		private translate: TranslateService,
+		private menuService: MenuService,
+		private authenticationService: AuthenticationService
+	) {
+		const currentUser = this.authenticationService.currentUserValue;
+		this.menu = (currentUser.user["access"] === 'merchant') ? this.menuMerchant : this.menuAdmin;
+	}
 
 	ngOnInit() {
 		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
@@ -50,7 +85,7 @@ export class MenuComponent implements OnInit {
 				this.cdr.markForCheck();
 			});
 	}
-	
+
 	openNav() {
 		this.menuService.openNav();
 		/*document.getElementById("mySidenav").style.width = "250px";
@@ -59,7 +94,7 @@ export class MenuComponent implements OnInit {
 		document.body.classList.add("menu-overlay");*/
 	}
 
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+	/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 	closeNav() {
 		this.menuService.closeNav();
 		/*
@@ -69,7 +104,7 @@ export class MenuComponent implements OnInit {
 		document.body.classList.remove("menu-overlay");
 		*/
 	}
-	
+
 	toggleNav() {
 		this.menuService.toggleNav();
 		/*
@@ -79,7 +114,7 @@ export class MenuComponent implements OnInit {
 		document.body.classList.remove("menu-overlay");
 		*/
 	}
-	
+
 	getItemCssClasses(item) {
 		let classes = '';
 		if (this.currentRouteUrl.indexOf(item) !== -1) {

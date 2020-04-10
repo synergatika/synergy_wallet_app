@@ -454,7 +454,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     this.wizard.goToStep(step);
   }
 
-  onPreviousStep() {
+  onPreviousStep(event: boolean) {
     this.scannerNoticeService.setNotice(null);
     if (this.wizard.currentStep.stepTitle === 'Amount' && !this.showEmailForm) {
       this.onAfterNextStep(0);
@@ -463,7 +463,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     this.wizard.goToPreviousStep();
   }
 
-  onFinalStep() {
+  onFinalStep(event: boolean) {
     this.dialogRef.close();
   }
 }

@@ -9,6 +9,8 @@ import { StaticContentService } from '../../../core/services/staticcontent.servi
 import { ItemsService } from '../../../core/services/items.service';
 import { LoyaltyService } from '../../../core/services/loyalty.service';
 import { MicrocreditService } from 'src/app/core/services/microcredit.service';
+import { ContentService } from 'src/app/core/services/content.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -22,11 +24,12 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
+	public badge: any; //The loyalty badge of customer
+	public balance: any; //The loyalty badge of customer
+	public qrcode: any; //The loyalty badge of customer
+
 	//Set Content Variables
-	balance: number = 0; //The points balance of customer
-	balanceText: any; //Static Text for Balance Modal
-	qrcodeText: any; //Static Text for QR Code Modal
-	badge: any; //The loyalty badge of customer
+	Text: any; //Static Text for QR Code Modal
 	supportsList: any; //The microcredits the customer supports
 	supportItem: any; //Currently Selected microcredit Support
 	offers: any; //Available Offers
@@ -56,8 +59,10 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 		private modalService: NgbModal,
 		private loyaltyService: LoyaltyService,
 		private staticContentService: StaticContentService,
+		public translate: TranslateService,
 		private itemsService: ItemsService,
 		private microcreditService: MicrocreditService,
+		private contentService: ContentService,
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -100,23 +105,28 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 						switch (this.badge.slug) {
 							case 1:
 								this.badge.image = this.badgesImages.supporter;
-								this.badge.text_id = 5;
+								//this.badge.text_id = 5;
+								this.badge.text_id = 'Supporter';
 								break;
 							case 2:
 								this.badge.image = this.badgesImages.helper;
-								this.badge.text_id = 7;
+								//this.badge.text_id = 7;
+								this.badge.text_id = 'Helper';
 								break;
 							case 3:
 								this.badge.image = this.badgesImages.one_of_us;
-								this.badge.text_id = 9;
+								//this.badge.text_id = 9;
+								this.badge.text_id = 'One of Us';
 								break;
 						}
 						//Get static content of Badge
-						this.staticContentService.readText(this.badge.text_id)
+						this.contentService.readContentById(this.badge.text_id)
+							//this.staticContentService.readText(this.badge.text_id)
 							.pipe(
 								tap(
 									data => {
 										this.badge.text = data;
+										console.log(this.translate.currentLang)
 									},
 									error => {
 										console.log(error);
@@ -147,13 +157,17 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(
 					data => {
-						this.balance = parseInt(data.points, 16);
+						this.balance = { points: parseInt(data.points, 16), address: data.address };
 						//Get static content of Balance Points
-						this.staticContentService.readText('18')
+						console.log(this.balance)
+						this.contentService.readContentById('Synergy Points')
+							//this.staticContentService.readText('18')
 							.pipe(
 								tap(
 									data => {
-										this.balanceText = data;
+
+										this.balance['text'] = data;
+										console.log(this.balance);
 									},
 									error => {
 										console.log(error);
@@ -200,7 +214,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 
 	//Get the Mircoredit the Customer supports
 	fetchSupportsData() {
-		this.microcreditService.readAllBackerSupports()
+		this.microcreditService.readAllBackerSupports('0-0-1')
 			.pipe(
 				tap(
 					data => {
@@ -229,11 +243,12 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
 			console.log('dismissed');
 		});
 		//Get static content of Balance Points
-		this.staticContentService.readText('23')
+		this.contentService.readContentById('QR Code')
+			//this.staticContentService.readText('23')
 			.pipe(
 				tap(
 					data => {
-						this.qrcodeText = data;
+						this.qrcode = { text: data };
 					},
 					error => {
 						console.log(error);

@@ -1,6 +1,6 @@
 // Angular
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 // RxJS
@@ -14,6 +14,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 // Others
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
+import { StaticDataService } from '../../core/services/static-data.service';
 
 @Component({
 	selector: 'kt-register',
@@ -22,20 +23,7 @@ import { TermsComponent } from '../terms/synergy_terms.component';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-	public validator = {
-		fullname: {
-			minLength: 3,
-			maxLength: 200
-		},
-		email: {
-			minLength: 3,
-			maxLength: 150
-		},
-		password: {
-			minLength: 3,
-			maxLength: 100
-		}
-	}
+	validator: any;
 	registerForm: FormGroup;
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -45,22 +33,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 * Component constructor
 	 *
 	 * @param router: Router
-	 * @param fb: FormBuilder
+	 * @param fb: FormBuilder,
 	 * @param cdr: ChangeDetectorRef
+	 * @param activatedRoute: ActivatedRoute
 	 * @param dialog: MatDialog
 	 * @param translate: TranslateService
 	 * @param authNoticeService: MessageNoticeService
-	 * @param authenticationService: AuthenticationService
+	 * @param authenticationService: AuthenticationService,
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
+		private activatedRoute: ActivatedRoute,
 		public dialog: MatDialog,
 		private translate: TranslateService,
 		private authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService,
 	) {
+		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 

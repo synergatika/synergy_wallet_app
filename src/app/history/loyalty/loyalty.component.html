@@ -1,5 +1,5 @@
 <div class="transaction">
-  <h1 class="heading">Your Recent Transactions</h1>
+  <h1 class="heading">{{ 'SETTINGS.TRANSACTIONS' | translate }} (Loyalty)</h1>
 
   <div *ngIf="access !== 'merchant'">
     <div>
@@ -16,18 +16,26 @@
 
     <ng-template #itemTemplate let-item="item">
       <div class="transaction-receipt row">
-        <div class="transaction-desc col"><span class="title">Receipt:</span> {{item.tx}}</div>
+        <div class="transaction-desc col"><span class="title">{{ 'SETTINGS.RECEIPT' | translate }}:</span> {{item.tx}}
+        </div>
       </div>
+      <div *ngIf="item.data.offer_id!='-1'" class="transaction-subtitle row">
+        <div class="transaction-info col">
+          <span class="transaction-desc">{{ 'SETTINGS.OFFER' | translate }}: {{item.data.offer_title}} <br> </span>
+        </div>
+      </div>
+
       <div class="transaction-details row">
         <div class="transaction-info col">
           <span class="transaction-title">{{item.createdAt | date:'medium' }}</span>
         </div>
         <div class="transaction-info col">
-          <span class="transaction-title"><span class="title">Store:</span> {{item.data.merchant_name}}</span>
+          <span class="transaction-title"><span class="title">{{ 'SETTINGS.MERCHANT' | translate }}:</span>
+            {{item.data.merchant_name}}</span>
         </div>
         <div class="transaction-number col" [ngClass]="(item.type==='EarnPoints') ? 'font-success' : 'font-danger'">
           {{ (item.type==='EarnPoints') ? '+' : '-' }}
-          {{item.data.points}} points
+          {{item.data.points}} {{ 'SETTINGS.POINTS' | translate }}
         </div>
       </div>
     </ng-template>
@@ -49,7 +57,12 @@
     <ng-template #itemTemplate let-item="item">
       <div class="transaction-item transaction-receipt row">
         <div class="transaction-info col">
-          <span class="transaction-desc">Receipt: {{item.tx}} <br> </span>
+          <span class="transaction-desc">{{ 'SETTINGS.RECEIPT' | translate }}: {{item.tx}} <br> </span>
+        </div>
+      </div>
+      <div *ngIf="item.data.offer_id!='-1'" class="transaction-item transaction-subtitle row">
+        <div class="transaction-info col">
+          <span class="transaction-desc">{{ 'SETTINGS.OFFER' | translate }}: {{item.data.offer_title}} <br> </span>
         </div>
       </div>
 
@@ -58,12 +71,13 @@
           <span class="transaction-title">{{item.createdAt | date:'medium' }}</span>
         </div>
         <div class="transaction-info col">
-          <span class="transaction-title"><span class="title">Customer:</span> {{item.customer_id}}</span>
+          <span class="transaction-title"><span class="title">{{ 'SETTINGS.CUSTOMER' | translate }}:</span>
+            {{item.customer_id}}</span>
         </div>
         <div class="transaction-info col">
           <span class="transaction-number" [ngClass]="(item.type==='EarnPoints') ? 'font-success' : 'font-danger'">
-            <!--{{ (item.type==='EarnPoints') ? '-' : '+' }}-->
-            {{item.data.points}} points
+            <div *ngIf="item.type==='EarnPoints'"> {{item.data.amount | currency: 'EUR'}} </div>
+            <div *ngIf="item.type!=='EarnPoints'"> ~ {{item.data.points}} {{'SETTINGS.POINTS' | translate}} </div>
           </span>
         </div>
       </div>

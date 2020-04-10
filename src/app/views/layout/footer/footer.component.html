@@ -1,12 +1,12 @@
-<div class="footer-wrapper" *ngIf="user.access != 'merchant'">
-	<div class="footer-content">
-		<div *ngFor="let item of menu" [ngClass]="getItemCssClasses(item.link)">
-			<a [routerLink]="['/'+item.link]">
-				<span class="mdi mdi-{{item.icon}}"></span>
-				<div>
-					{{item.title | translate}}
-				</div>
-			</a>
-		</div>
-	</div>
+<div class="footer-wrapper" *ngIf="user.access === 'customer'">
+  <div class="footer-content">
+    <div *ngFor="let item of menu" [ngClass]="getItemCssClasses(item.link)">
+      <a [routerLink]="['/'+item.link]">
+        <span class="mdi mdi-{{item.icon}}"></span>
+        <div>
+          {{item.title | translate}}
+        </div>
+      </a>
+    </div>
+  </div>
 </div>

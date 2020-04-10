@@ -19,6 +19,7 @@ import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 import { Post } from '../../core/models/post.model';
+import { StaticDataService } from '../../core/services/static-data.service';
 
 @Component({
   selector: 'app-edit-post',
@@ -29,37 +30,13 @@ import { Post } from '../../core/models/post.model';
 export class EditPostComponent implements OnInit, OnDestroy {
   @ViewChild('remove_item', { static: false }) remove_item;
   @ViewChild('fileInput', { static: false }) imageInput: ElementRef;
-  public validator: any = {
-    title: {
-      minLength: 3,
-      maxLenth: 250
-    },
-    subtitle: {
-
-    },
-    content: {
-      minLength: 3,
-      maxLenth: 2500
-    }
-  };
 
   private post_id: string;
-  public post: Post = {
-    merchant_id: '',
-    merchant_name: '',
-    merchant_slug: '',
-    merchant_imageURL: '',
+  public initialImage: string = '';
+  public title: string = '';
 
-    post_id: '',
-    title: '',
-    post_slug: '',
-    post_imageURL: '',
-    subtitle: '',
-    content: '',
-    access: '',
-
-    createdAt: ''
-  }
+  accessList: any;
+  validator: any;
 
   fileData: File = null;
   previewUrl: any = null;
@@ -67,35 +44,39 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
   submitForm: FormGroup;
   submitted: boolean = false;
-  //post: any;
-  // title: string;
-  // itemAbstract: string;
-  // access: string;
-  // content: string;
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
   /**
     * Component constructor
     *
-    * @param cdRef: ChangeDetectorRef
-    * @param itemsService: ItemsService
+    * @param router: Router
     * @param fb: FormBuilder
+    * @param cdRef: ChangeDetectorRef
+    * @param modalService: NgbModal
+    * @param activatedRoute: ActivatedRoute
     * @param translate: TranslateService
+    * @param authenticationService: AuthenticationService
+    * @param itemsService: ItemsService
+    * @param staticDataService: StaticDataService
     */
   constructor(
-    private cdRef: ChangeDetectorRef,
-    private itemsService: ItemsService,
+    private router: Router,
     private fb: FormBuilder,
-    private translate: TranslateService,
+    private cdRef: ChangeDetectorRef,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
     private authenticationService: AuthenticationService,
-    private router: Router,
+    private itemsService: ItemsService,
+    private staticDataService: StaticDataService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.post_id = params['_id'];
     });
+    this.accessList = this.staticDataService.getAccessList;
+    this.validator = this.staticDataService.getPostValidator;
     this.unsubscribe = new Subject();
   }
 
@@ -103,8 +84,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
   ngOnInit() {
-    this.fetchPostData();
     this.initForm();
+    this.fetchPostData();
   }
 
 	/**
@@ -118,20 +99,20 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.submitForm = this.fb.group({
-      title: [this.post.title, Validators.compose([
+      title: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.title.minLength),
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      subtitle: [this.post.subtitle],
-      content: [this.post.content, Validators.compose([
+      subtitle: [''],
+      content: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.content.minLength),
         Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
-      access: [this.post.access, Validators.compose([
+      access: ['public', Validators.compose([
         Validators.required
       ])
       ],
@@ -153,6 +134,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
       return;
     }
     this.originalImage = false;
+
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -169,7 +151,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
-    this.previewUrl = this.post.post_imageURL;
+    this.previewUrl = this.initialImage;
     this.fileData = null;
     this.originalImage = true;
     this.imageInput.nativeElement.value = null;
@@ -180,18 +162,10 @@ export class EditPostComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.post = Object.assign({}, this.post, data);
-            console.log(this.post);
-
-            this.previewUrl = this.post.post_imageURL;
+            this.title = data.title;
+            this.initialImage = data.post_imageURL;
+            this.previewUrl = this.initialImage;
             this.submitForm.patchValue({ ...data });
-
-            // this.title = this.post.title;
-            // this.content = this.post.content;
-            // this.access = this.post.access;
-            // this.itemAbstract = this.post.subtitle;
-
-            //this.scannerService.changeOffers(this.post);
           },
           error => {
           }),
@@ -208,7 +182,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
 	 * On Form Submit
 	 */
   onSubmit() {
-    if (this.submitted) return;
+    if (this.submitted || this.loading) return;
 
     const controls = this.submitForm.controls;
     /** check form */
@@ -218,8 +192,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    this.loading = true;
+
     this.submitted = true;
+    this.loading = true;
 
     const formData = new FormData();
     formData.append('imageURL', this.fileData);
@@ -227,10 +202,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
     formData.append('subtitle', controls.subtitle.value);
     formData.append('content', controls.content.value);
     formData.append('access', controls.access.value);
-		/*for (var pair of formData.entries()) {
-			console.log(pair[0]+ ', ' + pair[1]);
-		}*/
-    //return;
+
     this.itemsService.editPost(this.authenticationService.currentUserValue.user["_id"], this.post_id, formData)
       .pipe(
         tap(
@@ -239,20 +211,21 @@ export class EditPostComponent implements OnInit, OnDestroy {
               title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               text: this.translate.instant('MESSAGE.SUCCESS.POST_UPDATED'),
               icon: 'success',
-              timer: 2000
+              timer: 2500
+            }).then((result) => {
+              this.router.navigate(['/m-posts']);
             });
-            this.submitted = false;
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
@@ -274,35 +247,32 @@ export class EditPostComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            Swal.fire(
-              this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              this.translate.instant('MESSAGE.SUCCESS.POST_DELETED'),
-              'success'
-            ).then((result) => {
-              console.log('deleted');
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.POST_DELETED'),
+              icon: 'success',
+              timer: 2500
+            }).then((result) => {
               this.router.navigate(['/m-posts']);
             });
-            setTimeout(() => {
-              Swal.close();
-              this.router.navigate(['/m-posts']);
-            }, 2000);
           },
           error => {
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
-              this.translate.instant('MESSAGE.ERROR.SERVER'),
+              this.translate.instant(error),
               'error'
             );
-            this.submitted = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
+          this.submitted = false;
           this.loading = false;
           this.cdRef.markForCheck();
         })
       )
       .subscribe();
   }
+
   /**
    * Checking control validation
    *

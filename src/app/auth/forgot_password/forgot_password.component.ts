@@ -1,7 +1,7 @@
 // Angular
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 // RxJS
 import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import { MessageNoticeService } from '../../core/helpers/message-notice/message-
 import { AuthenticationService } from '../../core/services/authentication.service';
 // Environment
 import { environment } from '../../../environments/environment';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 
 @Component({
 	selector: 'kt-forgot-password',
@@ -20,13 +21,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
-	public validator: any = {
-		email: {
-			minLength: 3,
-			maxLength: 100
-		}
-	}
-
+	validator: any;
 	emailForm: FormGroup;
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -36,21 +31,25 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 	 * Component constructor
 	 *
 	 * @param router: Router
-	 * @param fb: FormBuilder
+	 * @param fb: FormBuilder,
 	 * @param cdr: ChangeDetectorRef
-	 * @param authenticationService: AuthenticationService
-	 * @param authNoticeService: AuthNoticeService
+	 * @param route: ActivatedRoute
 	 * @param translate: TranslateService
-
+	 * @param authNoticeService: MessageNoticeService
+	 * @param authenticationService: AuthenticationService,
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
+		private activatedRoute: ActivatedRoute,
 		private translate: TranslateService,
-		public authNoticeService: MessageNoticeService,
-		private authenticationService: AuthenticationService
+		private authNoticeService: MessageNoticeService,
+		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService,
 	) {
+		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 

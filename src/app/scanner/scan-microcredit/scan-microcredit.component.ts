@@ -164,7 +164,7 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
     this.wizard.goToNextStep();
   }
 
-  onPreviousStep() {
+  onPreviousStep(event: boolean) {
     this.scannerNoticeService.setNotice(null);
     this.wizard.goToPreviousStep();
   }
