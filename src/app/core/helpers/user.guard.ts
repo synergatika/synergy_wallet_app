@@ -22,7 +22,7 @@ export class UserGuard implements CanActivate {
             } else if (currentUser.user["access"] === 'merchant') {
                 this.router.navigate(['scanner']);
             } else if (currentUser.user["access"] === 'admin') {
-                this.router.navigate(['a-merchants']);
+                this.router.navigate(['a-users']);
             }
             return false;
         } else if (!currentUser) {

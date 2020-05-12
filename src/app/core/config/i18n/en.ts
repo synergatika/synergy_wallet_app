@@ -27,8 +27,7 @@ export const locale = {
             POSTS: 'Posts',
             OFFERS: 'Offers',
             PROFILE: 'Account',
-            CUSTOMERS: 'Members',
-            MERCHANTS: 'Partners',
+            USERS: 'Users',
             CONTENT: 'Content',
         },
         SETTINGS: {
@@ -131,7 +130,8 @@ export const locale = {
                 CONTENT_CREATED: 'Content has been successfully created!',
                 CONTENT_UPDATED: 'Content has been successfully updated!',
                 POINTS: 'Points Used: ',
-                AMOUNT: 'Amount: €'
+                AMOUNT: 'Amount: €',
+                USER_REACTIVATED: 'User is now \'Active\''
             }
         },
         FIELDS: {
@@ -750,9 +750,10 @@ export const locale = {
             TERMS: 'What do I get?'
         },
         USER: {
-            CREATE_CUSTOMER: 'Add New User (Member)',
+            PLURAL: 'Users',
+            CREATE_CUSTOMER: 'Add New Member',
             CREATE_CUSTOMER_SUB: 'Create a new member of our community',
-            CREATE_MERCHANT: 'Add New User (Partner)',
+            CREATE_MERCHANT: 'Add New Partner',
             CREATE_MERCHANT_SUB: 'Create a new partner of our community',
         },
         CONTENT: {

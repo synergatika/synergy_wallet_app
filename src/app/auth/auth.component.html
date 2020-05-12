@@ -1,43 +1,48 @@
 <div class="login">
-	<div class="">
-		<!--begin::Aside-->
-		<div class="page-wrapper">
-			<div class="auth-logo">
-				<a routerLink='' class="login-logo">
-					<img src="./assets/media/images/logo.png" alt="">
-				</a>
-			</div>
-			<mat-card class="auth-card">
-			  <mat-card-header class="auth-card-header">
-				<mat-card-title>{{ 'AUTH.MESSAGES.WELCOME_TITLE' | translate }}</mat-card-title>
-				<mat-card-subtitle>{{ 'AUTH.MESSAGES.WELCOME_SUBTITLE' | translate }}</mat-card-subtitle>
-			  </mat-card-header>
-			  <mat-card-content>
-					<!--begin::Content-->
-					<div class="login_wrapper">
-						<router-outlet></router-outlet>
-					</div>
-					<!--end::Content-->
-				</mat-card-content>
-			</mat-card>
-		</div>
-		<!--begin::Aside-->
-		<div class="container footer">
-			<div class="row">
-				<div class="col-md-6">
-					This application is part of a
-					project that has
-					received funding from the European Union’s Horizon 2020 research and
-					innovation programme under grant agreement No 825268”.
-				</div>
-				<div class="col-md-3">
-					<img src="../assets/media/images/ngi-logo.png"  />
-				</div>
-				<div class="col-md-3 eu-img-container">
-					<img class="eu-img" src="../assets/media/images/eu-logo.jpg"  />
-				</div>
-			</div>
-		</div>
+  <div class="">
+    <div class="header_right__wrapper">
+      <app-language-switcher></app-language-switcher>
+    </div>
 
-	</div>
+    <!--begin::Aside-->
+    <div class=" page-wrapper">
+      <div class="auth-logo">
+        <a routerLink='' class="login-logo">
+          <img src="./assets/media/images/logo.png" alt="">
+        </a>
+      </div>
+
+      <mat-card class="auth-card">
+        <mat-card-header class="auth-card-header">
+          <mat-card-title>{{ 'AUTH.MESSAGES.WELCOME_TITLE' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'AUTH.MESSAGES.WELCOME_SUBTITLE' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <!--begin::Content-->
+          <div class="login_wrapper">
+            <router-outlet></router-outlet>
+          </div>
+          <!--end::Content-->
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!--begin::Aside-->
+    <div class="container footer">
+      <div class="row">
+        <div class="col-md-6">
+          This application is part of a
+          project that has
+          received funding from the European Union’s Horizon 2020 research and
+          innovation programme under grant agreement No 825268”.
+        </div>
+        <div class="col-md-3">
+          <img src="../assets/media/images/ngi-logo.png" />
+        </div>
+        <div class="col-md-3 eu-img-container">
+          <img class="eu-img" src="../assets/media/images/eu-logo.jpg" />
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

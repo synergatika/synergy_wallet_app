@@ -29,9 +29,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                 error = 'HTTP_ERRORS.UNPROCESSABLE_ENTITY';
             } else if (err.status >= 500) {
                 error = 'HTTP_ERRORS.SERVER';
+            } else {
+                error = err.error.message || err.statusText;
             }
             // const error = err.error.message || err.statusText;
-            return throwError(error);
+            return throwError(err.status.toString() + " : " + JSON.stringify(err) + " : " + error);
         }))
     }
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
@@ -18,6 +19,8 @@ import { TermsComponent } from './terms/synergy_terms.component';
 
 import { AuthenticationService } from '../core/services/authentication.service';
 import { AuthGuard } from '../core/helpers/auth.guard';
+
+import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 
 const routes: Routes = [
     {
@@ -74,7 +77,9 @@ const routes: Routes = [
         MatCheckboxModule,
         TranslateModule.forChild(),
         MatDialogModule,
-        MatCardModule
+        MatCardModule,
+        NgbModalModule,
+        NgbDropdownModule
     ],
     providers: [
     ],
@@ -89,7 +94,8 @@ const routes: Routes = [
         NeedVerificationComponent,
         PasswordRestorationComponent,
         AuthNoticeComponent,
-        TermsComponent
+        TermsComponent,
+        LanguageSwitcherComponent
     ],
     entryComponents: [
         TermsComponent

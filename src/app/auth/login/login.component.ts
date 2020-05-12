@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	validator: any;
 	loginForm: FormGroup;
 	returnUrl: string;
+	test: string = 'No error yet';
 
 	private unsubscribe: Subject<any>;
 	loading: boolean = false;
@@ -141,8 +142,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 						else if (data.user) {
 							this.authenticationService.setCurrentUserValue(data);
 							this.router.navigateByUrl('/');
-						}
+						};
+
 					}, error => {
+						this.test = error;
 						this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
 					}),
 				takeUntil(this.unsubscribe),

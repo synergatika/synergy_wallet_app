@@ -86,8 +86,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		this.registerForm = this.fb.group({
 			fullname: ['', Validators.compose([
 				Validators.required,
-				Validators.minLength(this.validator.fullname.minLength),
-				Validators.maxLength(this.validator.fullname.maxLength)
+				Validators.minLength(this.validator.name.minLength),
+				Validators.maxLength(this.validator.name.maxLength)
 			])
 			],
 			email: ['', Validators.compose([

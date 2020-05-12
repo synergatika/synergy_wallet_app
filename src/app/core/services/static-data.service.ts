@@ -59,81 +59,105 @@ export class StaticDataService {
     userValidator = {
         email: {
             minLength: 3,
-            maxLength: 100
+            maxLength: 254
         },
         password: {
-            minLength: 3,
-            maxLength: 100
+            minLength: 5,
+            maxLength: 32
         },
         name: {
             minLength: 3,
-            maxLenth: 250
+            maxLenth: 254
         }
     };
 
     offerValidator = {
         title: {
             minLength: 3,
-            maxLenth: 150
+            maxLenth: 128
         },
         subtitle: {
-
+            minLength: 3,
+            maxLenth: 128
         },
         description: {
-            minLength: 3,
-            maxLenth: 150
+            minLength: 8,
+            maxLenth: 1024
         },
         cost: {
             minValue: 0,
             maxValue: 100000
+        },
+        expiresAt: {
+
         }
     };
 
     postValidator = {
         title: {
             minLength: 3,
-            maxLenth: 250
+            maxLenth: 128
         },
         subtitle: {
-
+            minLength: 3,
+            maxLenth: 128
         },
         content: {
-            minLength: 3,
-            maxLenth: 2500
+            minLength: 8,
+            maxLenth: 1024
         }
     };
 
     eventValidator = {
         title: {
             minLength: 3,
-            maxLenth: 250
+            maxLenth: 128
         },
         subtitle: {
             minLength: 3,
-            maxLenth: 250
+            maxLenth: 128
         },
         description: {
-            minLength: 3,
-            maxLenth: 2500
+            minLength: 8,
+            maxLenth: 1024
         },
         location: {
             minLength: 3,
-            maxLenth: 250
+            maxLenth: 264
         }
     };
 
     microcreditValidator = {
         title: {
             minLength: 3,
-            maxLenth: 150
+            maxLenth: 128
         },
-        terms: {
+        subtitle: {
             minLength: 3,
-            maxLenth: 1000
+            maxLenth: 128
         },
         description: {
+            minLength: 8,
+            maxLenth: 1024
+        },
+        terms: {
+            minLength: 8,
+            maxLenth: 1024
+        },
+        category: {
             minLength: 3,
-            maxLenth: 1000
+            maxLenth: 128
+        },
+        minAllowed: {
+
+        },
+        maxAllowed: {
+            minValue: 0,
+            maxValue: 100000
+        },
+        stepAmount: {
+            minValue: 0,
+            maxValue: 100000
         },
         maxAmount: {
             minValue: 0,
@@ -164,6 +188,7 @@ export class StaticDataService {
     public get getEventValidator() {
         return this.eventValidator;
     }
+
     public get getMicrocreditValidator() {
         return this.microcreditValidator;
     }

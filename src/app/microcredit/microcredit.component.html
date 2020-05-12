@@ -1,10 +1,10 @@
 <div class="microcredit">
-  <h2 class="section-heading"> Campaigns </h2>
+  <h2 class="section-heading"> {{'CAMPAIGN.PLURAL' | translate}} </h2>
   <div class="row" *ngIf="campaigns">
     <div class="item item-wrapper col-md-4" routerLink="create">
       <mat-card class="item-card new-item-card">
         <mat-card-content>
-          <div class="new-item">Add New Campaign</div>
+          <div class="new-item">{{'CAMPAIGN.CREATE' | translate}}</div>
         </mat-card-content>
       </mat-card>
     </div>
@@ -14,7 +14,7 @@
           <div class="col-sm-12 item-img-container">
             <div class="item-img">
               <img *ngIf="item.campaign_imageURL" src={{item.campaign_imageURL}} alt={{item.title}} />
-              <div class="item-expires">{{'GENERAL.UNTIL' | translate}} {{item.expiresAt | date: 'd.M'}}</div>
+              <div class="item-expires">{{'GENERAL.TO' | translate}} {{item.expiresAt | date: 'd.M'}}</div>
             </div>
           </div>
           <div class="col-sm-12 item-details">

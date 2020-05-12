@@ -23,12 +23,6 @@ import { NewMicrocreditCampaignComponent } from './create-items/new-microcredit-
 import { EditMicrocreditCampaignComponent } from './microcredit/edit-microcredit-campaign/edit-microcredit-campaign.component';
 import { EditMicrocreditCampaignComponentDraft } from './edit-items/edit-microcredit-campaign-draft/edit-microcredit-campaign-draft.component';
 
-import { AdminCustomersComponent } from './views/pages/admin-customers/admin-customers.component';
-import { NewCustomerComponent } from './create-users/new-customer/new-customer.component';
-
-import { AdminMerchantsComponent } from './views/pages/admin-merchants/admin-merchants.component';
-import { NewMerchantComponent } from './create-users/new-merchant/new-merchant.component';
-
 // Auth
 import { AuthGuard } from './core/helpers/auth.guard';
 import { UserGuard } from './core/helpers/user.guard';
@@ -39,6 +33,18 @@ const routes: Routes = [
 		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
 	},
 	{
+
+		/**
+		 * -- CUSTOMER --
+		 * Wallet - Open if 1 or 2 are true
+		 * Support - Open if 2 is true
+		 * Discover - Open if 0 or 1 are true 
+		 * 
+		 * -- MERCHANT --
+		 * Offers - Open if 1 is true
+		 * Campaigns - Open if 2 is true
+		 * Posts & Events - Open if 0 is true 
+		 */
 		path: '',
 		component: LayoutComponent,
 		canActivate: [AuthGuard],
@@ -198,34 +204,11 @@ const routes: Routes = [
 				}
 			},
 			{
-				path: 'a-customers',
-				children: [
-					{
-						path: '', component: AdminCustomersComponent,
-					},
-					{
-						path: 'create', component: NewCustomerComponent,
-					},
-				],
+				path: 'a-users',
+				loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
 				canActivate: [UserGuard],
 				data: {
-					title: 'MENU.CUSTOMERS',
-					expectedRole: 'admin'
-				}
-			},
-			{
-				path: 'a-merchants',
-				children: [
-					{
-						path: '', component: AdminMerchantsComponent,
-					},
-					{
-						path: 'create', component: NewMerchantComponent,
-					},
-				],
-				canActivate: [UserGuard],
-				data: {
-					title: 'MENU.MERCHANTS',
+					title: 'MENU.CONTENT',
 					expectedRole: 'admin'
 				}
 			},
@@ -234,7 +217,7 @@ const routes: Routes = [
 				loadChildren: () => import('./content/content.module').then(m => m.ContentModule),
 				canActivate: [UserGuard],
 				data: {
-					title: 'MENU.CONTENT',
+					title: 'MENU.USERS',
 					expectedRole: 'admin'
 				}
 			},

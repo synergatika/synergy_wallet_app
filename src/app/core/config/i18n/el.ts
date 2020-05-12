@@ -27,8 +27,7 @@ export const locale = {
             POSTS: 'Αναρτήσεις',
             OFFERS: 'Προσφορές',
             PROFILE: 'Λογαριασμός',
-            CUSTOMERS: 'Μέλη',
-            MERCHANTS: 'Συνεργάτες',
+            USERS: 'Χρήστες',
             CONTENT: 'Περιεχόμενο',
         },
         SETTINGS: {
@@ -132,7 +131,8 @@ export const locale = {
                 CONTENT_CREATED: 'Το περιεχόμενο δημιουργήθηκε επιτυχώς!',
                 CONTENT_UPDATED: 'Το περιεχόμενο ανανεώθηκε επιτυχώς!',
                 POINTS: 'Points Used: ',
-                AMOUNT: 'Ποσό: €'
+                AMOUNT: 'Ποσό: €',
+                USER_REACTIVATED: 'Η Κατάσταση του Χρήστη επανήλθε σε \'Ενεργή\''
             }
         },
         FIELDS: {
@@ -750,9 +750,10 @@ export const locale = {
             TERMS: 'Τι παίρνω;'
         },
         USER: {
-            CREATE_CUSTOMER: 'Προσθήκη Χρήστη (ως μέλος)',
+            PLURAL: 'Χρήστες',
+            CREATE_CUSTOMER: 'Προσθήκη Μέλους',
             CREATE_CUSTOMER_SUB: 'Δημιούργησε ένα νέο μέλος της κοινότητας',
-            CREATE_MERCHANT: 'Προσθήκη Χρήστη (ως συνεργάτης)',
+            CREATE_MERCHANT: 'Προσθήκη Συνεργάτη',
             CREATE_MERCHANT_SUB: 'Δημιούργησε έναν νέο συνεργάτη της κοινότητας',
         },
         CONTENT: {

@@ -1,0 +1,24 @@
+<div class="a-users">
+  <h2 class="section-heading"> {{'USER.PLURAL' | translate}} </h2>
+  <div class="row">
+    <div class="item item-wrapper col-md-4" [routerLink]="['merchants/create']">
+      <mat-card class="item-card new-item-card">
+        <mat-card-content>
+          <div class="new-item">{{'USER.CREATE_MERCHANT' | translate}}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="item item-wrapper col-md-4" [routerLink]="['customers/create']">
+      <mat-card class="item-card new-item-card">
+        <mat-card-content>
+          <div class="new-item">{{'USER.CREATE_CUSTOMER' | translate}}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row col-md-12">
+    <app-edit-users></app-edit-users>
+  </div>
+
+</div>

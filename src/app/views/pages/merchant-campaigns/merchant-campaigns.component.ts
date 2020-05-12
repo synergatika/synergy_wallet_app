@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, tap, finalize } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { ItemsService } from '../../../core/services/items.service';
 
@@ -20,6 +22,7 @@ export class MerchantCampaignsComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private cdRef: ChangeDetectorRef,
+		private translate: TranslateService,
 		private authenticationService: AuthenticationService,
 		private itemsService: ItemsService
 	) {

@@ -8,6 +8,7 @@ import { ItemsService } from '../core/services/items.service';
 import { SupportService } from './_support.service';
 
 import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class MicrocreditComponent implements OnInit, OnDestroy {
 
   constructor(
     private cdRef: ChangeDetectorRef,
+    private translate: TranslateService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
     private supportService: SupportService

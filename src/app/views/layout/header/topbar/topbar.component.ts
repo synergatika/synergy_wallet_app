@@ -61,8 +61,5 @@ export class TopbarComponent implements OnInit {
 
 	ngOnInit() {
 		this.user = this.authenticationService.currentUserValue.user;
-
 	}
-
-
 }

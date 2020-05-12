@@ -78,9 +78,7 @@ import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/mer
 //import { NewCustomerComponent } from './create-users/new-customer/new-customer.component';
 //import { NewMerchantComponent } from './create-users/new-merchant/new-merchant.component';
 
-import { CreateUsersModule } from './create-users/create-users.module';
-import { AdminMerchantsComponent } from './views/pages/admin-merchants/admin-merchants.component';
-import { AdminCustomersComponent } from './views/pages/admin-customers/admin-customers.component';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
 	declarations: [
@@ -129,9 +127,6 @@ import { AdminCustomersComponent } from './views/pages/admin-customers/admin-cus
 		MerchantPostsComponent,
 		MerchantEventsComponent,
 		MerchantCampaignsComponent,
-		AdminMerchantsComponent,
-		AdminCustomersComponent,
-
 	],
 	imports: [
 
@@ -163,7 +158,7 @@ import { AdminCustomersComponent } from './views/pages/admin-customers/admin-cus
 		EditItemsModule,
 		MicrocreditModule,
 
-		CreateUsersModule,
+		UsersModule,
 
 	],
 	providers: [

@@ -1,35 +1,41 @@
 @import "../../../../variables.scss";
 
 .app-header {
-	background-color:$primary;
-	padding: 6px 30px;
-	.logo{
-		padding-top: 5px;
-		width: 220px;
-	}
-	box-shadow: 1px 1px 10px #ddd;
-	.header__wrapper {
-		align-items: center;
-		justify-content: space-between;	    
-		.header_left__wrapper {
-			align-items: center;
-			display: flex;
-			a {
-				margin-right: 20px;
-			}
-		}   
-		.header_right__wrapper {
-			display: flex;
-		}
-	}
+  background-color: $primary;
+  padding: 6px 30px;
+
+  .logo {
+    padding-top: 5px;
+    width: 220px;
+  }
+
+  box-shadow: 1px 1px 10px #ddd;
+
+  .header__wrapper {
+    align-items: center;
+    justify-content: space-between;
+
+    .header_left__wrapper {
+      align-items: center;
+      display: flex;
+
+      a {
+        margin-right: 20px;
+      }
+    }
+
+    .header_right__wrapper {
+      display: flex;
+    }
+  }
 }
 
 @media (max-width: 576px) {
-	.app-header {
-		.header__wrapper {
-			.header_left__wrapper {
-				display: block;
-			}
-		}
-	}
+  .app-header {
+    .header__wrapper {
+      .header_left__wrapper {
+        display: block;
+      }
+    }
+  }
 }

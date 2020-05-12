@@ -23,13 +23,8 @@ export class MenuComponent implements OnInit {
 
 	menuAdmin: Menu[] = [
 		{
-			title: 'MENU.CUSTOMERS',
-			link: 'a-customers',
-			icon: 'account'
-		},
-		{
-			title: 'MENU.MERCHANTS',
-			link: 'a-merchants',
+			title: 'MENU.USERS',
+			link: 'a-users',
 			icon: 'handshake'
 		},
 		{

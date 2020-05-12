@@ -16,7 +16,7 @@
             <div class="col-sm-12 item-img-container">
               <div class="item-img">
                 <img *ngIf="item.campaign_imageURL" src={{item.campaign_imageURL}} alt={{item.title}} />
-                <div class="item-expires">{{'GENERAL.ΤΟ' | translate}} {{item.expiresAt | date: 'd.M'}}</div>
+                <div class="item-expires">{{'GENERAL.TO' | translate}} {{item.expiresAt | date: 'd.M'}}</div>
               </div>
             </div>
             <div class="col-sm-12 item-details">
@@ -34,4 +34,3 @@
     </ng-container>
   </div>
 </div>
-<router-outlet></router-outlet>
