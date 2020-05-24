@@ -19,6 +19,7 @@ import { TermsComponent } from '../terms/synergy_terms.component';
 @Component({
 	selector: 'kt-register',
 	templateUrl: './password_verification.component.html',
+	styleUrls: ['./password_verification.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class PasswordVerificationComponent implements OnInit, OnDestroy {
@@ -107,7 +108,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 				Validators.maxLength(this.validator.password.maxLength)
 			])
 			],
-			agree: [false, Validators.compose([Validators.required])]
+			agree: [false, Validators.compose([Validators.requiredTrue])]
 		}, {
 			validator: ConfirmPasswordValidator.MatchPassword
 		});
@@ -139,10 +140,10 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		if (!controls.agree.value) {
-			this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
-			return;
-		}
+		// if (!controls.agree.value) {
+		// 	this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
+		// 	return;
+		// }
 
 		const _user = {
 			old_password: controls.password.value,

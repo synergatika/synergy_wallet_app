@@ -1,8 +1,8 @@
 export interface MicrocreditTransaction {
     _id: string;
 
-    customer_id: string;
-    merchant_id: string;
+    member_id: string;
+    partner_id: string;
 
     data: {
         campaign_id: string;

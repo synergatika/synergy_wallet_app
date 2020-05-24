@@ -1,9 +1,9 @@
 export interface PostEvent {
 
-    merchant_id: string;
-    merchant_name: string;
-    merchant_slug: string;
-    merchant_imageURL: string;
+    partner_id: string;
+    partner_name: string;
+    partner_slug: string;
+    partner_imageURL: string;
 
     post_event_id: string;
     post_event_imageURL: string;

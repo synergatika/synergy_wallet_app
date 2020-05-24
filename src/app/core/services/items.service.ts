@@ -38,37 +38,37 @@ export class ItemsService {
       }));
   }
 
-  readOffersByStore(merchant_id: string, offset: string): Observable<Offer[]> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/public/${merchant_id}/${offset}`)
+  readOffersByStore(partner_id: string, offset: string): Observable<Offer[]> {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/public/${partner_id}/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
   createOffer(formData: FormData): Observable<Message> {
-    //return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/`, formData)
+    //return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/${partner_id}/`, formData)
     return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/`, formData)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  editOffer(merchant_id: string, offer_id: string, formData: FormData): Observable<Message> {
-    return this.http.put<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/${offer_id}`, formData)
+  editOffer(partner_id: string, offer_id: string, formData: FormData): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/loyalty/offers/${partner_id}/${offer_id}`, formData)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  readOffer(merchant_id: string, offer_id: string): Observable<Offer> {
-    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/${offer_id}`)
+  readOffer(partner_id: string, offer_id: string): Observable<Offer> {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/offers/${partner_id}/${offer_id}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  deleteOffer(merchant_id: string, offer_id: string): Observable<Offer> {
-    return this.http.delete<any>(`${environment.apiUrl}/loyalty/offers/${merchant_id}/${offer_id}`)
+  deleteOffer(partner_id: string, offer_id: string): Observable<Offer> {
+    return this.http.delete<any>(`${environment.apiUrl}/loyalty/offers/${partner_id}/${offer_id}`)
       .pipe(map(response => {
         return response.data;
       }));
@@ -92,16 +92,16 @@ export class ItemsService {
   //     }));
   // }
 
-  readPrivateEventsByStore(merchant_id: string, offset: string): Observable<Event[]> {
-    // return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
-    return this.http.get<any>(`${environment.apiUrl}/events/private/${merchant_id}/${offset}`)
+  readPrivateEventsByStore(partner_id: string, offset: string): Observable<Event[]> {
+    // return this.http.get<any>(`${environment.apiUrl}/community/private/${partner_id}`)
+    return this.http.get<any>(`${environment.apiUrl}/events/private/${partner_id}/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  // readPublicEventsByStore(merchant_id: string, offset: string): Observable<Event[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/events/public/${merchant_id}/${offset}`)
+  // readPublicEventsByStore(partner_id: string, offset: string): Observable<Event[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/events/public/${partner_id}/${offset}`)
   //     .pipe(map(response => {
   //       return response.data;
   //     }));
@@ -114,22 +114,22 @@ export class ItemsService {
       }));
   }
 
-  readEvent(merchant_id: string, post_id: string): Observable<Event> {
-    return this.http.get<any>(`${environment.apiUrl}/events/${merchant_id}/${post_id}`)
+  readEvent(partner_id: string, post_id: string): Observable<Event> {
+    return this.http.get<any>(`${environment.apiUrl}/events/${partner_id}/${post_id}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  editEvent(merchant_id: string, event_id: string, formData: FormData): Observable<Message> {
-    return this.http.put<any>(`${environment.apiUrl}/events/${merchant_id}/${event_id}`, formData)
+  editEvent(partner_id: string, event_id: string, formData: FormData): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/events/${partner_id}/${event_id}`, formData)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  deleteEvent(merchant_id: string, event_id: string): Observable<Offer> {
-    return this.http.delete<any>(`${environment.apiUrl}/events/${merchant_id}/${event_id}`)
+  deleteEvent(partner_id: string, event_id: string): Observable<Offer> {
+    return this.http.delete<any>(`${environment.apiUrl}/events/${partner_id}/${event_id}`)
       .pipe(map(response => {
         return response.data;
       }));
@@ -153,16 +153,16 @@ export class ItemsService {
   //     }));
   // }
 
-  readPrivatePostsByStore(merchant_id: string, offset: string): Observable<Post[]> {
-    //return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}`)
-    return this.http.get<any>(`${environment.apiUrl}/posts/private/${merchant_id}/${offset}`)
+  readPrivatePostsByStore(partner_id: string, offset: string): Observable<Post[]> {
+    //return this.http.get<any>(`${environment.apiUrl}/community/private/${partner_id}`)
+    return this.http.get<any>(`${environment.apiUrl}/posts/private/${partner_id}/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  // readPublicPostsByStore(merchant_id: string, offset: string): Observable<Post[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/posts/public/${merchant_id}/${offset}`)
+  // readPublicPostsByStore(partner_id: string, offset: string): Observable<Post[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/posts/public/${partner_id}/${offset}`)
   //     .pipe(map(response => {
   //       return response.data;
   //     }));
@@ -175,22 +175,22 @@ export class ItemsService {
       }));
   }
 
-  readPost(merchant_id: string, post_id: string): Observable<Post> {
-    return this.http.get<any>(`${environment.apiUrl}/posts/${merchant_id}/${post_id}`)
+  readPost(partner_id: string, post_id: string): Observable<Post> {
+    return this.http.get<any>(`${environment.apiUrl}/posts/${partner_id}/${post_id}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  editPost(merchant_id: string, post_id: string, formData: FormData): Observable<Message> {
-    return this.http.put<any>(`${environment.apiUrl}/posts/${merchant_id}/${post_id}`, formData)
+  editPost(partner_id: string, post_id: string, formData: FormData): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/posts/${partner_id}/${post_id}`, formData)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  deletePost(merchant_id: string, post_id: string): Observable<Offer> {
-    return this.http.delete<any>(`${environment.apiUrl}/posts/${merchant_id}/${post_id}`)
+  deletePost(partner_id: string, post_id: string): Observable<Offer> {
+    return this.http.delete<any>(`${environment.apiUrl}/posts/${partner_id}/${post_id}`)
       .pipe(map(response => {
         return response.data;
       }));
@@ -213,15 +213,15 @@ export class ItemsService {
   //     }));
   // }
 
-  readPrivatePostsEventsByStore(merchant_id: string, offset: string): Observable<PostEvent[]> {
-    return this.http.get<any>(`${environment.apiUrl}/community/private/${merchant_id}/${offset}`)
+  readPrivatePostsEventsByStore(partner_id: string, offset: string): Observable<PostEvent[]> {
+    return this.http.get<any>(`${environment.apiUrl}/community/private/${partner_id}/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  // readPublicPostsEventsByStore(merchant_id: string, offset: string): Observable<PostEvent[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/community/public/${merchant_id}/${offset}`)
+  // readPublicPostsEventsByStore(partner_id: string, offset: string): Observable<PostEvent[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/community/public/${partner_id}/${offset}`)
   //     .pipe(map(response => {
   //       return response.data;
   //     }));
@@ -244,15 +244,15 @@ export class ItemsService {
   //     }));
   // }
 
-  readPrivateMicrocreditCampaignsByStore(merchant_id: string, offset: string): Observable<MicrocreditCampaign[]> {
-    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/private/${merchant_id}/${offset}`)
+  readPrivateMicrocreditCampaignsByStore(partner_id: string, offset: string): Observable<MicrocreditCampaign[]> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/private/${partner_id}/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  // readPublicMicrocreditCampaignsByStore(merchant_id: string, offset: string): Observable<MicrocreditCampaign[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/${merchant_id}/${offset}`)
+  // readPublicMicrocreditCampaignsByStore(partner_id: string, offset: string): Observable<MicrocreditCampaign[]> {
+  //   return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/${partner_id}/${offset}`)
   //     .pipe(map(response => {
   //       return response.data;
   //     }));
@@ -265,29 +265,29 @@ export class ItemsService {
       }));
   }
 
-  editCampaign(merchant_id: string, campaign_id: string, formData: FormData): Observable<Message> {
-    return this.http.put<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`, formData)
+  editCampaign(partner_id: string, campaign_id: string, formData: FormData): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/microcredit/campaigns/${partner_id}/${campaign_id}`, formData)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  publishCampaign(merchant_id: string, campaign_id: string, formData: FormData): Observable<Message> {
-    return this.http.put<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}/publish`, formData)
+  publishCampaign(partner_id: string, campaign_id: string, formData: FormData): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/microcredit/campaigns/${partner_id}/${campaign_id}/publish`, formData)
       .pipe(map(data => {
         return data;
       }));
   }
 
-  readCampaign(merchant_id: string, campaign_id: string): Observable<MicrocreditCampaign> {
-    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`)
+  readCampaign(partner_id: string, campaign_id: string): Observable<MicrocreditCampaign> {
+    return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/${partner_id}/${campaign_id}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  deleteCampaign(merchant_id: string, campaign_id: string): Observable<Message> {
-    return this.http.delete<any>(`${environment.apiUrl}/microcredit/campaigns/${merchant_id}/${campaign_id}`)
+  deleteCampaign(partner_id: string, campaign_id: string): Observable<Message> {
+    return this.http.delete<any>(`${environment.apiUrl}/microcredit/campaigns/${partner_id}/${campaign_id}`)
       .pipe(map(response => {
         return response.data;
       }));

@@ -1,7 +1,7 @@
 <div class="transaction">
-  <h1 class="heading">{{ 'SETTINGS.TRANSACTIONS' | translate }} (Microcredit)</h1>
+  <h1 class="heading">{{ 'HISTORY.TRANSACTIONS' | translate }} (Microcredit)</h1>
 
-  <div *ngIf="access !== 'merchant'">
+  <div *ngIf="access !== 'partner'">
     <div>
       <div class="table container">
         <ng-container
@@ -16,12 +16,12 @@
 
     <ng-template #itemTemplate let-item="item">
       <div class="transaction-receipt row">
-        <div class="transaction-desc col"><span class="title">{{ 'SETTINGS.RECEIPT' | translate }}:</span> {{item.tx}}
+        <div class="transaction-desc col"><span class="title">{{ 'HISTORY.RECEIPT' | translate }}:</span> {{item.tx}}
         </div>
       </div>
       <div class="transaction-item transaction-subtitle row">
         <div class="transaction-info col">
-          <span class="transaction-desc">{{ 'SETTINGS.SUPPORT' | translate }}: {{item.data.support_id}} <br> </span>
+          <span class="transaction-desc">{{ 'HISTORY.SUPPORT' | translate }}: {{item.data.support_id}} <br> </span>
         </div>
       </div>
       <div class="transaction-details row">
@@ -29,25 +29,25 @@
           <span class="transaction-title">{{item.createdAt | date:'medium' }}</span>
         </div>
         <div class="transaction-info col">
-          <span class="transaction-title"><span class="title">{{ 'SETTINGS.MERCHANT' | translate }}:</span>
+          <span class="transaction-title"><span class="title">{{ 'HISTORY.PARTNER' | translate }}:</span>
             {{item.data.campaign_title}}</span>
         </div>
         <div *ngIf="(item.type === 'PromiseFund') || ((item.type === 'SpendFund'))" class="transaction-info col">
           <span class="transaction-number" [ngClass]="(item.type==='PromiseFund') ? 'font-success' : 'font-danger'">
             {{ (item.type==='SpendFund') ? '-' : '+' }}
-            {{item.data.tokens}} {{ 'SETTINGS.TOKENS' | translate }}
+            {{item.data.tokens}} {{ 'HISTORY.TOKENS' | translate }}
           </span>
         </div>
         <div *ngIf="(item.type === 'RevertFund') || ((item.type === 'ReceiveFund'))" class="transaction-info col">
           <span class="transaction-number" [ngClass]="(item.type==='ReceiveFund') ? 'font-success' : 'font-danger'">
-            {{ (item.type==='ReceiveFund') ? ('SETTINGS.PAID' | translate) :  ('SETTINGS.UNPAID' | translate) }}
+            {{ (item.type==='ReceiveFund') ? ('HISTORY.PAID' | translate) :  ('HISTORY.UNPAID' | translate) }}
           </span>
         </div>
       </div>
     </ng-template>
   </div>
 
-  <div *ngIf="access === 'merchant'">
+  <div *ngIf="access === 'partner'">
     <div>
       <div class="table container">
         <ng-container
@@ -63,12 +63,12 @@
     <ng-template #itemTemplate let-item="item">
       <div class="transaction-item transaction-receipt row">
         <div class="transaction-info col">
-          <span class="transaction-desc">{{ 'SETTINGS.RECEIPT' | translate }}: {{item.tx}} <br> </span>
+          <span class="transaction-desc">{{ 'HISTORY.RECEIPT' | translate }}: {{item.tx}} <br> </span>
         </div>
       </div>
       <div class="transaction-item transaction-subtitle row">
         <div class="transaction-info col">
-          <span class="transaction-desc">{{ 'SETTINGS.SUPPORT' | translate }}: {{item.data.support_id}} <br> </span>
+          <span class="transaction-desc">{{ 'HISTORY.SUPPORT' | translate }}: {{item.data.support_id}} <br> </span>
         </div>
       </div>
       <div class="transaction-details row">
@@ -76,18 +76,18 @@
           <span class="transaction-title">{{item.createdAt | date:'medium' }}</span>
         </div>
         <div class="transaction-info col">
-          <span class="transaction-title"><span class="title">{{ 'SETTINGS.MERCHANT' | translate }}:</span>
+          <span class="transaction-title"><span class="title">{{ 'HISTORY.PARTNER' | translate }}:</span>
             {{item.data.campaign_title}}</span>
         </div>
         <div *ngIf="(item.type === 'PromiseFund') || ((item.type === 'SpendFund'))" class="transaction-info col">
           <span class="transaction-number" [ngClass]="(item.type==='PromiseFund') ? 'font-success' : 'font-danger'">
             <div *ngIf="item.type==='PromiseFund'"> {{item.data.tokens | currency: 'EUR'}} </div>
-            <div *ngIf="item.type!=='PromiseFund'"> ~ {{item.data.tokens}} {{'SETTINGS.TOKENS' | translate}} </div>
+            <div *ngIf="item.type!=='PromiseFund'"> ~ {{item.data.tokens}} {{'HISTORY.TOKENS' | translate}} </div>
           </span>
         </div>
         <div *ngIf="(item.type === 'RevertFund') || ((item.type === 'ReceiveFund'))" class="transaction-info col">
           <span class="transaction-number" [ngClass]="(item.type==='ReceiveFund') ? 'font-success' : 'font-danger'">
-            {{ (item.type==='ReceiveFund') ? ('SETTINGS.PAID' | translate) :  ('SETTINGS.UNPAID' | translate) }}
+            {{ (item.type==='ReceiveFund') ? ('HISTORY.PAID' | translate) :  ('HISTORY.UNPAID' | translate) }}
           </span>
         </div>
       </div>

@@ -17,6 +17,7 @@ import { StaticDataService } from 'src/app/core/services/static-data.service';
 @Component({
 	selector: 'kt-need-verification',
 	templateUrl: './need_verification.component.html',
+	styleUrls: ['./need_verification.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class NeedVerificationComponent implements OnInit, OnDestroy {

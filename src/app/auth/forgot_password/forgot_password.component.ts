@@ -17,6 +17,7 @@ import { StaticDataService } from 'src/app/core/services/static-data.service';
 @Component({
 	selector: 'kt-forgot-password',
 	templateUrl: './forgot_password.component.html',
+	styleUrls: ['./forgot_password.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {

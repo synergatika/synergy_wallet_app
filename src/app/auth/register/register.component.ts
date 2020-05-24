@@ -19,6 +19,7 @@ import { StaticDataService } from '../../core/services/static-data.service';
 @Component({
 	selector: 'kt-register',
 	templateUrl: './register.component.html',
+	styleUrls: ['./register.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit, OnDestroy {
@@ -109,7 +110,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 				Validators.maxLength(this.validator.password.maxLength)
 			])
 			],
-			agree: [false, Validators.compose([Validators.required])]
+			agree: [false, Validators.compose([Validators.requiredTrue])]
 		}, {
 			validator: ConfirmPasswordValidator.MatchPassword
 		});
@@ -141,11 +142,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		if (!controls.agree.value) {
-			this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
-			this.loading = false;
-			return;
-		}
+		// if (!controls.agree.value) {
+		// 	this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.AGREEMENT_REQUIRED'), 'danger');
+		// 	this.loading = false;
+		// 	return;
+		// }
 
 		const _user = {
 			fullname: controls.fullname.value,
@@ -153,7 +154,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			password: controls.password.value
 		}
 
-		this.authenticationService.register(_user.fullname, _user.email, _user.password)
+		this.authenticationService.register_as_member(_user.fullname, _user.email, _user.password)
 			.pipe(
 				tap(
 					user => {

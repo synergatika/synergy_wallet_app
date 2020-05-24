@@ -23,11 +23,11 @@
             </div>
             <div class="row">
               <div class="col-md-12 s_archive-info">
-                <div class="s_archive-merchant">
+                <div class="s_archive-partner">
                   <div class="s_archive-merch-address" *ngIf="coop.address">
                     <span class="mdi mdi-pin"></span> {{coop.address.street}} , {{coop.address.city}}
                   </div>
-                  <div class="s_archive-merch-phone" *ngIf="coop.contact.phone">
+                  <div class="s_archive-merch-phone" *ngIf="coop.contact">
                     <a href="tel:+{{coop.contact.phone}}"><span class="mdi mdi-phone"></span> {{coop.contact.phone}}</a>
                   </div>
                   <!--

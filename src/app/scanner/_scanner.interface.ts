@@ -22,9 +22,9 @@ interface Actions {
 }
 
 interface Offer {
-    merchant_id: string;
-    merchant_name: string;
-    merchant_imageURL: string;
+    partner_id: string;
+    partner_name: string;
+    partner_imageURL: string;
     offer_id: string;
     title: string;
     subtitle: string;
@@ -60,9 +60,9 @@ interface MicrocreditSupport {
 }
 
 interface MicrocreditCampaign {
-    merchant_id: string;
-    merchant_name: string;
-    merchant_imageURL: string;
+    partner_id: string;
+    partner_name: string;
+    partner_imageURL: string;
     campaign_id: string;
     terms: string;
     description: string;

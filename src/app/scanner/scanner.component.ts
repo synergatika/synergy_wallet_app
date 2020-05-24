@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { PostEvent } from '../core/models/post_event.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-scanner',
@@ -26,10 +27,12 @@ import { PostEvent } from '../core/models/post_event.model';
 })
 export class ScannerComponent implements OnInit, OnDestroy {
 
+  public configAccess: Boolean[] = environment.access;
+
   moved: boolean;
   posts: PostEvent[];
   singlePost: any;
-  singleMerchant = false;
+  singlePartner = false;
 
   public offers: ScannerInterface["Offer"][];
   public microcredit: ScannerInterface["MicrocreditCampaign"][];

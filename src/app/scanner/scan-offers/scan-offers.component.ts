@@ -85,7 +85,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   fetchBalanceData() {
     const identifier = this.user.identifier_scan || this.user.identifier_form;
-    this.loyaltyService.readBalanceByMerchant((identifier).toLowerCase())
+    this.loyaltyService.readBalanceByPartner((identifier).toLowerCase())
       .pipe(
         tap(
           data => {
@@ -133,7 +133,7 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCESS_TRANSACTION'), 'success');
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
             this.onNextStep();
             console.log(data);
           },

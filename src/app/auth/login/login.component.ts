@@ -10,8 +10,6 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-// Environment
-import { environment } from '../../../environments/environment';
 import { StaticDataService } from '../../core/services/static-data.service';
 
 @Component({
@@ -133,10 +131,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						if ((data.action) && (data.action === 'need_email_verification')) {
-							this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.EMAIL_NEEDS_VERIFICATION'), 'success');
+							this.authNoticeService.setNotice(
+								this.translate.instant('AUTH.LOGIN.EMAIL_NEEDS_VERIFICATION'), 'warning');
+						}
+						else if ((data.action) && (data.action === 'need_account_activation')) {
+							this.authNoticeService.setNotice(
+								this.translate.instant('AUTH.LOGIN.ACCOUNT_NEEDS_ACTIVATION'), 'warning');
 						}
 						else if ((data.action) && (data.action === 'need_password_verification')) {
-							this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.PASSWORD_NEEDS_UPDATE'), 'success');
+							this.authNoticeService.setNotice(
+								this.translate.instant('AUTH.LOGIN.PASSWORD_NEEDS_UPDATE'), 'warning');
 							this.router.navigateByUrl('auth/verify-password/' + authData.email);
 						}
 						else if (data.user) {

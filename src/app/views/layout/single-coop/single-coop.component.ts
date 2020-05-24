@@ -83,9 +83,9 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	*/
 
 	//Get Microcredit Campaigns of Coop
-	fetchSingleMicrocreditsData(merchant_id) {
+	fetchSingleMicrocreditsData(partner_id) {
 		this.singleMicrocredits = null;
-		this.itemsService.readPrivateMicrocreditCampaignsByStore(merchant_id, '0-0-0')
+		this.itemsService.readPrivateMicrocreditCampaignsByStore(partner_id, '0-0-0')
 			.pipe(
 				tap(
 					data => {
@@ -108,9 +108,9 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	}
 
 	//Get Offers of Coop
-	fetchSingleOffersData(merchant_id) {
+	fetchSingleOffersData(partner_id) {
 		this.singleOffers = null;
-		this.itemsService.readOffersByStore(merchant_id, '0-0-0')
+		this.itemsService.readOffersByStore(partner_id, '0-0-0')
 			.pipe(
 				tap(
 					data => {
@@ -133,9 +133,9 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 	}
 
 	//Get Post & Events of Coop
-	fetchSinglePostEventsData(merchant_id) {
+	fetchSinglePostEventsData(partner_id) {
 		this.singlePosts = null;
-		this.itemsService.readPrivatePostsEventsByStore(merchant_id, '0-0-0')
+		this.itemsService.readPrivatePostsEventsByStore(partner_id, '0-0-0')
 			.pipe(
 				tap(
 					data => {

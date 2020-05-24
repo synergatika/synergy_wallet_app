@@ -1,6 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { StaticDataService } from '../core/services/static-data.service';
+
+interface Menu {
+	title?: string,
+	link?: string,
+	icon?: string
+}
 
 @Component({
 	selector: 'app-settings',
@@ -9,40 +16,15 @@ import { filter } from 'rxjs/operators';
 })
 export class SettingsComponent implements OnInit {
 	currentRouteUrl: string = '';
-	menu = [
-		{
-			title: 'SETTINGS.SUBMENU.PERSONAL_INFORMATION',//'Profile',
-			link: 'personal-information',
-			icon: '',
-		},
-		{
-			title: 'SETTINGS.SUBMENU.CHANGE_PASSWORD',
-			link: 'change-password',
-			icon: '',
-		},
-		/*{
-			title: 'SETTINGS.SUBMENU.ACCOUNT',//'Account settings',
-			link: 'account-settings',
-			icon: '',
-		},
-		{
-			title: 'Email settings',
-			link: 'email-settings',
-			icon: '',
-		},*/
-		{
-			title: 'SETTINGS.SUBMENU.LOYALTY',
-			link: 'history/loyalty',
-			icon: '',
-		},
-		{
-			title: 'SETTINGS.SUBMENU.MICROCREDIT',
-			link: 'history/microcredit',
-			icon: '',
-		}
-	];
+	public menu: Menu[];
 
-	constructor(private router: Router, private cdr: ChangeDetectorRef) { }
+	constructor(
+		private router: Router,
+		private cdr: ChangeDetectorRef,
+		private staticDataService: StaticDataService
+	) {
+		this.menu = this.staticDataService.getSettingsSubMenu;
+	}
 
 	ngOnInit() {
 		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];

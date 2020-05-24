@@ -1,12 +1,12 @@
 export interface LoyaltyTransaction {
     _id: string;
 
-    customer_id: string;
-    merchant_id: string;
+    member_id: string;
+    partner_id: string;
 
     data: {
-        merchant_name: string;
-        merchant_email: string;
+        partner_name: string;
+        partner_email: string;
         points: number,
         amount: number,
         offer_id: string;

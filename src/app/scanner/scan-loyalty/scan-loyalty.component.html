@@ -3,21 +3,23 @@
     <span aria-hidden="true">&times;</span>
   </button>
   <aw-wizard>
+
+    <!--start::Step A - Scan/Enter Identifier-->
     <aw-wizard-step stepTitle="Scan Or Add">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
         <div class="col-md-8">
           <div *ngIf="!showIdentifierForm">
-            <h3 class="heading">{{ 'MERCHANT.SCANNER.SCAN_LOYALTY.HEADING' | translate }}</h3>
+            <h3 class="heading">{{ 'PARTNER.WIZARD.SCAN_LOYALTY.HEADING' | translate }}</h3>
             <app-sub-scanner (scan_identifier)="onSuccessScanIdentifier($event)">
             </app-sub-scanner>
           </div>
           <button class="btn btn-primary" type="button" (click)="onShowIdentifierFormChange()">
             <span *ngIf="!showIdentifierForm; else back_to_scanner">
-              {{ 'MERCHANT.SCANNER.SCAN_LOYALTY.ALT_PROMPT' | translate }}
+              {{ 'PARTNER.WIZARD.SCAN_LOYALTY.ALT_PROMPT' | translate }}
             </span>
             <ng-template #back_to_scanner>
-              <span>{{ 'MERCHANT.SCANNER.BACK_TO_SCANNER' | translate }}</span>
+              <span>{{ 'PARTNER.WIZARD.BACK_TO_SCANNER' | translate }}</span>
             </ng-template>
           </button>
           <div *ngIf="showIdentifierForm">
@@ -28,6 +30,9 @@
         </div>
       </div>
     </aw-wizard-step>
+    <!--end::Step A - Scan/Enter Identifier-->
+
+    <!--start::Step B - Enter Email (Optional)-->
     <aw-wizard-step stepTitle="Email" awOptionalStep>
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -36,6 +41,9 @@
         </app-sub-email-form>
       </div>
     </aw-wizard-step>
+    <!--end::Step B - Enter Email (Optional)-->
+
+    <!--start::Step C - Enter Amount-->
     <aw-wizard-step stepTitle="Amount">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -44,6 +52,9 @@
         </app-sub-amount-form>
       </div>
     </aw-wizard-step>
+    <!--end::Step C - Enter Amount-->
+
+    <!--start::Step D - Enter Discount-->
     <aw-wizard-step stepTitle="Discount">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -51,11 +62,16 @@
         </app-sub-discount-form>
       </div>
     </aw-wizard-step>
+    <!--end::Step D - Enter Discount-->
+
+    <!--start::Step E - Final-->
     <aw-wizard-step stepTitle="Final">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
         <app-sub-final-step (finalize)="onFinalStep($event)" [type]=1></app-sub-final-step>
       </div>
     </aw-wizard-step>
+    <!--end::Step E - Final-->
+
   </aw-wizard>
 </div>

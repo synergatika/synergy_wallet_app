@@ -4,7 +4,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 // Translate
 import { TranslateService } from '@ngx-translate/core';
+
 import { AuthenticationService } from '../../../../core/services/authentication.service';
+import { StaticDataService } from '../../../../core/services/static-data.service';
 
 interface Menu {
 	title: string,
@@ -21,54 +23,17 @@ export class MenuComponent implements OnInit {
 	currentRouteUrl: string = '';
 	public menu: Menu[];
 
-	menuAdmin: Menu[] = [
-		{
-			title: 'MENU.USERS',
-			link: 'a-users',
-			icon: 'handshake'
-		},
-		{
-			title: 'MENU.CONTENT',
-			link: 'a-content',
-			icon: 'content-paste'
-		}
-	];
-	menuMerchant: Menu[] = [
-		{
-			title: 'MENU.HOME',
-			link: 'scanner',
-			icon: 'home-roof',
-		},
-		{
-			title: 'MENU.OFFERS',
-			link: 'm-offers',
-			icon: 'muffin',
-		},
-		{
-			title: 'MENU.CAMPAIGNS',
-			link: 'm-campaigns',
-			icon: 'set-none',
-		},
-		{
-			title: 'MENU.POSTS',
-			link: 'm-posts',
-			icon: 'file-document',
-		},
-		{
-			title: 'MENU.EVENTS',
-			link: 'm-events',
-			icon: 'calendar',
-		}
-	];
 	constructor(
 		private cdr: ChangeDetectorRef,
 		private router: Router,
 		private translate: TranslateService,
 		private menuService: MenuService,
-		private authenticationService: AuthenticationService
+		private authenticationService: AuthenticationService,
+		private staticDataService: StaticDataService
 	) {
 		const currentUser = this.authenticationService.currentUserValue;
-		this.menu = (currentUser.user["access"] === 'merchant') ? this.menuMerchant : this.menuAdmin;
+		this.menu = (currentUser.user["access"] === 'partner') ?
+			this.staticDataService.getPartnerMenu : this.staticDataService.getAdminMenu;
 	}
 
 	ngOnInit() {

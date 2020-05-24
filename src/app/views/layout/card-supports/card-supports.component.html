@@ -8,10 +8,19 @@
             <div class="col-sm-12 s_archive-img-container">
               <div class="s_archive-img">
                 <img src={{supportItem.campaign_imageURL}} alt={{supportItem.title}} />
+                <div class="s_archive-date" *ngIf="supportItem.status=='completed'">
+                  {{'SUPPORT.STATUS.COMPLETED' | translate}}
+                </div>
+                <div class="s_archive-date" *ngIf="supportItem.status=='order'">
+                  {{'SUPPORT.STATUS.PENDING' | translate}}
+                </div>
+                <div class="s_archive-date" *ngIf="supportItem.status=='confirmation'">
+                  {{'SUPPORT.STATUS.CONFIRMED' | translate}}
+                </div>
               </div>
             </div>
           </div>
-          <div class="s_archive-content container-fluid">
+          <div class=" s_archive-content container-fluid">
             <div class="s_archive-heading row">
               <h4 class="s_archive-title col-12">{{supportItem.title}}</h4>
 
@@ -44,13 +53,20 @@
             </div>
             <div class="row">
               <div class="col-md-12 s_archive-info">
-                <div class="s_archive-merchant" *ngIf="type!='single'">
-                  <div class="s_archive-merch-name">
-                    <span class="mdi mdi-shopping"></span> {{supportItem.merchant_name}}
+                <div class="s_archive-partner" *ngIf="type!='single'">
+                  <div class="s_archive-merch-name" *ngIf="supportItem.method!='store'">
+                    <span class="mdi mdi-cash"></span>{{'SUPPORT.PAYMENT.BANK' | translate}} ||
+                    {{supportItem.how.title | translate}} : {{supportItem.how.value}}
                   </div>
-                  <div class="s_archive-merch-adress" *ngIf="supportItem.merchant_address">
-                    <span class="mdi mdi-pin"></span> {{supportItem.merchant_address.street}} ,
-                    {{supportItem.merchant_address.city}}
+                  <div class="s_archive-merch-name" *ngIf="supportItem.method=='store'">
+                    <span class="mdi mdi-cash"></span> {{'SUPPORT.PAYMENT.STORE' | translate}}
+                  </div>
+                  <div class="s_archive-merch-name">
+                    <span class="mdi mdi-shopping"></span> {{supportItem.partner_name}}
+                  </div>
+                  <div class="s_archive-merch-adress" *ngIf="supportItem.partner_address">
+                    <span class="mdi mdi-pin"></span> {{supportItem.partner_address.street}} ,
+                    {{supportItem.partner_address.city}}
                   </div>
                 </div>
               </div>

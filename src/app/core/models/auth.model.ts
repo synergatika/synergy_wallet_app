@@ -3,7 +3,7 @@ interface User {
     email: string;
     name: string;
     imageURL: string;
-    access: 'admin' | 'merchant' | 'customer';
+    access: 'admin' | 'partner' | 'member';
 }
 
 interface Token {
@@ -14,7 +14,7 @@ interface Token {
 export interface AuthUser {
     user?: User;
     token?: Token;
-    action?: 'need_password_verification' | 'need_email_verification';
+    action?: 'need_password_verification' | 'need_email_verification' | 'need_account_activation';
 }
 
 

@@ -1,0 +1,75 @@
+<div class="wallet_s_single_wrapper synergy-single microcredit-single row">
+  <div class="s_single col-md-12">
+    <div appSticky position="top" class="row s_single-title-container">
+      <div class="col-md-12">
+        <h1 class="s_single-title">{{singleMicrocredit.title}}</h1>
+      </div>
+    </div>
+    <div class="row s_single-img-area">
+      <div class="col-md-12 s_single-img-container">
+        <div class="s_single-img">
+          <img src={{singleMicrocredit.campaign_imageURL}} alt={{singleMicrocredit.title}} />
+        </div>
+        <div *ngIf="singleMicrocredit.expiresAt" class="s_single-date">
+          {{'GENERAL.TO' | translate}} {{singleMicrocredit.expiresAt | date: 'd.M.y'}}
+        </div>
+      </div>
+    </div>
+    <div class="row s_single-details">
+      <div class="col-md-12">
+        <div class="row s_single-info-container">
+          <div class="col-md-7 s_single-info">
+            <div class="info-row terms">
+              <h4>{{'CAMPAIGN.TERMS' | translate}}</h4>
+              <p [innerHTML]="singleMicrocredit.terms"></p>
+            </div>
+            <div class="info-row">
+              <span class="tag">{{'CAMPAIGN.REDEEM_PERIOD' | translate}}:</span>
+              {{singleMicrocredit.redeemStarts | date: 'd.M.y'}} -
+              {{singleMicrocredit.redeemEnds | date: 'd.M.y'}}<br>
+              <span class="desc">{{'CAMPAIGN.REDEEM_PERIOD_SUB' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-md-5 s_single-credit">
+            <div class="min-amount" *ngIf="singleMicrocredit.quantitative==true">
+              <span class="hypertitle">
+                {{'GENERAL.FROM' | translate}}
+              </span>
+              <span>
+                {{singleMicrocredit.minAllowed | currency:'EUR' }}
+              </span>
+            </div>
+            <div class="price-item">
+              <span class="hypertitle"
+                *ngIf="singleMicrocredit.quantitative!=true">{{'CAMPAIGN.PRICE' | translate}}</span>
+              <span class="hypertitle"
+                *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">{{'CAMPAIGN.PRICE_PER_ITEM' | translate}}</span>
+              <span
+                *ngIf="singleMicrocredit.quantitative==true&&singleMicrocredit.stepAmount>0">{{singleMicrocredit.stepAmount | currency:'EUR' }}</span>
+              <span
+                *ngIf="singleMicrocredit.quantitative!=true">{{singleMicrocredit.minAllowed | currency:'EUR' }}</span>
+            </div>
+            <button class="plegde-button" mat-raised-button
+              (click)="pledgeModal(singleMicrocredit.partner_id, singleMicrocredit.campaign_id)">{{'CAMPAIGN.PLEDGE' | translate}}</button>
+          </div>
+        </div>
+        <div class="row s_single-description">
+          <div class="col-md-4 partner-info s_single-info-container ">
+            <h6>{{'CAMPAIGN.PARTNER' | translate}}</h6>
+            <h5>{{singleMicrocredit.partner_name}}</h5>
+            <img src="{{singleMicrocredit.partner_imageURL}}" alt="{{singleMicrocredit.partner_name}}">
+            <div *ngIf="singleMicrocredit.partner_address" class="info-row"><span
+                class="mdi mdi-pin"></span>{{singleMicrocredit.partner_address.street}},
+              {{singleMicrocredit.partner_address.city}}</div>
+            <div *ngIf="singleMicrocredit.partner_contact" class="info-row"><span
+                class="mdi mdi-phone"></span>{{singleMicrocredit.partner_contact.phone}}</div>
+            <div class="info-row"><span class="mdi mdi-email"></span>{{singleMicrocredit.partner_email}}</div>
+          </div>
+          <div class="col-md-8">
+            <p [innerHTML]="singleMicrocredit.description"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

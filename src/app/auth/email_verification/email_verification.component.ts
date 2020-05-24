@@ -22,6 +22,7 @@ import { StaticDataService } from '../../core/services/static-data.service';
 @Component({
 	selector: 'kt-login',
 	templateUrl: './email_verification.component.html',
+	styleUrls: ['./email_verification.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class EmailVerificationComponent implements OnInit, OnDestroy {

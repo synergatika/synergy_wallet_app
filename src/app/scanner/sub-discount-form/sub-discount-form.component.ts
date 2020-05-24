@@ -80,7 +80,7 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     // console.log("Search By")
     // console.log(search_by);
     if (this.transaction.amount >= 5) {
-      this.loyaltyService.readBalanceByMerchant(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
+      this.loyaltyService.readBalanceByPartner(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
         .pipe(
           tap(
             data => {

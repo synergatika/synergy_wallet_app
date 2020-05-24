@@ -1,10 +1,223 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+
+
+interface Menu {
+    title: string,
+    link: string,
+    icon: string,
+    enable?: boolean
+}
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class StaticDataService {
+
+    memberMenu: Menu[] = [
+        {
+            title: 'MENU.WALLET',
+            link: 'dashboard',
+            icon: 'wallet-outline',
+            enable: true
+        },
+        {
+            title: 'MENU.DISCOVER',
+            link: 'explore',
+            icon: 'compass-outline',
+            enable: true
+        },
+        {
+            title: 'MENU.SUPPORT',
+            link: 'support',
+            icon: 'handshake',
+            enable: environment.access[2]
+        },
+    ];
+
+    public get getMemberMenu() {
+
+        return this.memberMenu.filter((el) => {
+            return el.enable === true
+        });
+    };
+
+    adminMenu: Menu[] = [
+        {
+            title: 'MENU.PARTNERS',
+            link: 'a-partners',
+            icon: 'handshake',
+            enable: true
+        },
+        {
+            title: 'MENU.MEMBERS',
+            link: 'a-members',
+            icon: 'handshake',
+            enable: true
+        },
+        {
+            title: 'MENU.CONTENT',
+            link: 'a-content',
+            icon: 'content-paste',
+            enable: true
+        }
+    ];
+
+    public get getAdminMenu() {
+        return this.adminMenu.filter((el) => {
+            return el.enable === true
+        });
+    };
+
+    partnerMenu: Menu[] = [
+        {
+            title: 'MENU.HOME',
+            link: 'scanner',
+            icon: 'home-roof',
+            enable: true
+        },
+        {
+            title: 'MENU.OFFERS',
+            link: 'm-offers',
+            icon: 'muffin',
+            enable: environment.access[1]
+        },
+        {
+            title: 'MENU.CAMPAIGNS',
+            link: 'm-campaigns',
+            icon: 'set-none',
+            enable: environment.access[2]
+        },
+        {
+            title: 'MENU.POSTS',
+            link: 'm-posts',
+            icon: 'file-document',
+            enable: environment.access[0]
+        },
+        {
+            title: 'MENU.EVENTS',
+            link: 'm-events',
+            icon: 'calendar',
+            enable: environment.access[0]
+        }
+    ];
+
+    public get getPartnerMenu() {
+        return this.partnerMenu.filter((el) => {
+            return el.enable === true
+        });
+    };
+
+    subMenuSettings = [
+        {
+            title: 'SETTINGS.SUBMENU.PERSONAL_INFORMATION',
+            link: 'personal-information',
+            icon: '',
+            enable: true
+        },
+        {
+            title: 'SETTINGS.SUBMENU.CHANGE_PASSWORD',
+            link: 'change-password',
+            icon: '',
+            enable: true
+        },
+        {
+            title: 'SETTINGS.SUBMENU.ACCOUNT_SETTINGS',
+            link: 'account-settings',
+            icon: '',
+            enable: true
+        }
+    ];
+
+    public get getSettingsSubMenu() {
+        return this.subMenuSettings.filter((el) => {
+            return el.enable === true
+        });
+    };
+
+    subMenuHistory = [
+        {
+            title: 'HISTORY.SUBMENU.LOYALTY',
+            link: 'loyalty',
+            icon: '',
+            enable: environment.access[1]
+        },
+        {
+            title: 'HISTORY.SUBMENU.MICROCREDIT',
+            link: 'microcredit',
+            icon: '',
+            enable: environment.access[2]
+        }
+    ];
+
+    public get getHistorySubMenu() {
+        return this.subMenuHistory.filter((el) => {
+            return el.enable === true
+        });
+    };
+
+    subUserHistory = [
+        {
+            title: 'MENU.SETTINGS',
+            link: 'settings',
+            icon: '',
+            enable: true
+        },
+        {
+            title: 'MENU.HISTORY',
+            link: 'history',
+            icon: '',
+            enable: (environment.access[1] || environment.access[2])
+        }
+    ];
+
+    public get getUserSubMenu() {
+        return this.subUserHistory.filter((el) => {
+            return el.enable === true
+        });
+    };
+
+    paymentsList = [
+        {
+            bic: 'ETHNGRAA',
+            title: 'FIELDS.PROFILE.PAYMENT_CHOICES.A',
+            name: 'NationalBankofGreece',
+            value: '',
+            description: '',
+        },
+        {
+            bic: 'PIRBGRAA',
+            title: 'FIELDS.PROFILE.PAYMENT_CHOICES.B',
+            name: 'PiraeusBank',
+            value: '',
+            description: '',
+        },
+        {
+            bic: 'EFGBGRAA',
+            title: 'FIELDS.PROFILE.PAYMENT_CHOICES.C',
+            name: 'EFGEurobankErgasias',
+            value: '',
+            description: '',
+        },
+        {
+            bic: 'CRBAGRAA',
+            title: 'FIELDS.PROFILE.PAYMENT_CHOICES.D',
+            name: 'AlphaBankAE',
+            value: '',
+            description: '',
+        },
+        {
+            bic: 'PAYPAL',
+            title: 'FIELDS.PROFILE.PAYMENT_CHOICES.E',
+            name: 'Paypal',
+            value: '',
+            description: '',
+        }
+    ];
+
+    public get getPaymentsList() {
+        return this.paymentsList;
+    };
 
     sectorList = [
         {
@@ -38,7 +251,7 @@ export class StaticDataService {
         {
             title: 'FIELDS.PROFILE.SECTOR_CHOICES.G',
             value: 'Recreation and Culture',
-        },
+        }
     ];
 
     accessList = [
@@ -53,7 +266,7 @@ export class StaticDataService {
         {
             title: 'FIELDS.POST.ACCESS_CHOICES.C',
             value: 'partners',
-        },
+        }
     ];
 
     userValidator = {

@@ -4,6 +4,7 @@ import { Component, OnInit, ElementRef, Renderer2, ViewEncapsulation } from '@an
 import { TranslationService } from '../core/helpers/translation.service';
 // Services
 import { MessageNoticeService } from '../core/helpers/message-notice/message-notice.service';
+import { environment } from '../../environments/environment';
 
 @Component({
 	selector: 'kt-auth',
@@ -15,6 +16,7 @@ export class AuthComponent implements OnInit {
 	// Public properties
 	today: number = Date.now();
 	headerLogo: string;
+	public version = `${environment.version}`;
 
 	/**
 	 * Component constructor

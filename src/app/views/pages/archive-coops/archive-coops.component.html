@@ -3,9 +3,9 @@
 	[infiniteScrollDistance]="2"
 	[infiniteScrollThrottle]="50"
 	(scrolled)="onScroll()"
-	*ngIf="merchants"
+	*ngIf="partners"
 >
-	<div class="col-md-4" *ngFor="let coop of (merchants)" >
+	<div class="col-md-4" *ngFor="let coop of (partners)" >
 		<app-card-coop [coop]="coop"></app-card-coop>
 	</div>
 </div>

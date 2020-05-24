@@ -82,26 +82,34 @@ export class AuthenticationService {
   authenticate(email: string, password: string): Observable<AuthUser> {
     return this.http.post<any>(`${environment.apiUrl}/auth/authenticate`, { email, password })
       .pipe(map(response => {
+        console.log(response.data);
         return response.data;
       }));
   }
 
-  register(name: string, email: string, password: string): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/register`, { name, email, password })
+  register_as_member(name: string, email: string, password: string): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/auto-register/member`, { name, email, password })
       .pipe(map(response => {
         return response;
       }));
   }
 
-  register_customer(email?: string, card?: string): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/register/customer`, { email: email, card: card })
+  register_as_partner(formData: FormData): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/auto-register/partner`, formData)
       .pipe(map(response => {
         return response;
       }));
   }
 
-  register_merchant(formData: FormData): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/register/merchant`, formData)
+  register_member(email?: string, card?: string): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/member`, { email: email, card: card })
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  register_partner(formData: FormData): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/partner`, formData)
       .pipe(map(response => {
         return response;
       }));
@@ -158,6 +166,13 @@ export class AuthenticationService {
 
   set_password(email: string, oldPassword: string, newPassword: string): Observable<Message> {
     return this.http.put<any>(`${environment.apiUrl}/auth/set_pass/${email}`, { oldPassword, newPassword })
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  deactivate(reason: string): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/auth/deactivate`, { reason })
       .pipe(map(response => {
         return response;
       }));

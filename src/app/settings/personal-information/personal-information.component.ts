@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2'
@@ -10,12 +10,12 @@ import { TranslateService } from '@ngx-translate/core';
 
 // Services
 import { AuthenticationService } from '../../core/services/authentication.service';
-import { MerchantsService } from '../../core/services/merchants.service';
-import { CustomersService } from '../../core/services/customers.service';
+import { PartnersService } from '../../core/services/partners.service';
+import { MembersService } from '../../core/services/members.service';
 
 // Models
-import { Merchant } from '../../core/models/merchant.model';
-import { Customer } from '../../core/models/customer.model';
+import { Partner } from '../../core/models/partner.model';
+import { Member } from '../../core/models/member.model';
 import { Router } from '@angular/router';
 
 import { StaticDataService } from '../../core/services/static-data.service';
@@ -30,14 +30,18 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputMerch', { static: false }) imageInputMerch: ElementRef;
   @ViewChild('fileInput', { static: false }) imageInput: ElementRef;
 
+  public paymentsList: any[];
   public access: string = '';
   public initialImage: string = '';
+
+  showImageError: boolean = false;
+  showPaymentError: boolean = false;
 
   sectorList: any;
   validator: any;
 
-  customerForm: FormGroup;
-  merchantForm: FormGroup;
+  memberForm: FormGroup;
+  partnerForm: FormGroup;
   submitted: boolean = false;
 
   fileData: File = null;
@@ -53,8 +57,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
    * @param cdRef: ChangeDetectorRef
    * @param translate: TranslateService
    * @param authenticationService: AuthenticationService
-   * @param merchantsService: MerchantsService
-   * @param customersService: CustomersService
+   * @param partnersService: PartnersService
+   * @param membersService: MembersService
    * @param staticDataService: StaticDataService,
   */
   constructor(
@@ -63,10 +67,11 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private translate: TranslateService,
     private authenticationService: AuthenticationService,
-    private merchantsService: MerchantsService,
-    private customersService: CustomersService,
+    private partnersService: PartnersService,
+    private membersService: MembersService,
     private staticDataService: StaticDataService,
   ) {
+    this.paymentsList = this.staticDataService.getPaymentsList;
     this.sectorList = this.staticDataService.getSectorList;
     this.validator = this.staticDataService.getUserValidator;
     this.unsubscribe = new Subject();
@@ -77,8 +82,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 	 */
   ngOnInit() {
     this.access = this.authenticationService.currentUserValue.user["access"];
-    (this.access === 'merchant') ? this.initMerchantForm() : this.initCustomerForm();
-    (this.access === 'merchant') ? this.fetchMerchantData() : this.fetchCustomerData();
+    (this.access === 'partner') ? this.initPartnerForm() : this.initMemberForm();
+    (this.access === 'partner') ? this.fetchPartnerData() : this.fetchMemberData();
   }
 
 	/**
@@ -90,15 +95,15 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  fetchCustomerData() {
-    console.log('Customer');
-    this.customersService.readProfile()
+  fetchMemberData() {
+    console.log('Member');
+    this.membersService.readProfile()
       .pipe(
         tap(
           data => {
             this.initialImage = data.imageURL;
             this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
-            this.customerForm.patchValue({ ...data });
+            this.memberForm.patchValue({ ...data });
           },
           error => {
             Swal.fire(
@@ -117,18 +122,25 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  fetchMerchantData() {
-    console.log('Merchant');
-    this.merchantsService.readMerchantInfo(this.authenticationService.currentUserValue.user["_id"])
+  fetchPartnerData() {
+    console.log('Partner');
+    this.partnersService.readPartnerInfo(this.authenticationService.currentUserValue.user["_id"])
       .pipe(
         tap(
           data => {
+            console.log(data);
             this.initialImage = data.imageURL;
             this.previewUrl = this.initialImage || '../../../../assets/media/users/default.png';
-            this.merchantForm.patchValue({
+            const patner_payments = (this.paymentsList.map(item => {
+              const obj = (data.payments).find(o => o.bic === item.bic);
+              return { ...item, ...obj };
+            })).map(a => a.value);
+
+            this.partnerForm.patchValue({
               ...data, ...data.address,
-              lat: data.address.coordinates[0], long: data.address.coordinates[1],
-              ...data.contact, ...data.payments
+              //lat: data.address.coordinates[0], long: data.address.coordinates[1],
+              ...data.contact, ...{ payments: patner_payments }
+              //...data.payments
             });
           },
           error => {
@@ -148,8 +160,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  initCustomerForm() {
-    this.customerForm = this.fb.group({
+  initMemberForm() {
+    this.memberForm = this.fb.group({
       name: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.name.minLength),
@@ -159,8 +171,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     });
   }
 
-  initMerchantForm() {
-    this.merchantForm = this.fb.group({
+  initPartnerForm() {
+    this.partnerForm = this.fb.group({
       name: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.name.minLength),
@@ -205,12 +217,26 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         Validators.required
       ])
       ],
-      nationalBank: [''],
-      pireausBank: [''],
-      eurobank: [''],
-      alphaBank: [''],
-      paypal: [''],
+      payments: new FormArray([]),
+
+      // nationalBank: [''],
+      // pireausBank: [''],
+      // eurobank: [''],
+      // alphaBank: [''],
+      // paypal: [''],
     });
+    this.paymentsList.forEach(element => {
+      const payment = new FormControl('',
+        //Validators.compose([
+        //	Validators.required
+        //])
+      );
+      this.payments.push(payment);
+    });
+  }
+
+  get payments() {
+    return this.partnerForm.get('payments') as FormArray;
   }
 
   fileProgress(fileInput: any) {
@@ -227,6 +253,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       this.onImageCancel();
       return;
     }
+
     var mimeType = this.fileData.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -243,7 +270,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   onImageCancel() {
-    if (this.access === 'merchant') {
+    if (this.access === 'partner') {
       this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
       this.imageInputMerch.nativeElement.value = null;
     } else {
@@ -254,12 +281,12 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.originalImage = true;
   }
 
-  onCustomerSubmit() {
+  onMemberSubmit() {
     if (this.submitted || this.loading) return;
 
-    const controls = this.customerForm.controls;
+    const controls = this.memberForm.controls;
     /** check form */
-    if (this.customerForm.invalid) {
+    if (this.memberForm.invalid) {
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
@@ -273,7 +300,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     formData.append('imageURL', this.fileData);
     formData.append('name', controls.name.value);
 
-    this.customersService.updateProfile(formData)
+    this.membersService.updateProfile(formData)
       .pipe(
         tap(
           data => {
@@ -304,19 +331,62 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  onMerchantSubmit() {
+  setPaymentsValidators(controls: any) {
+    console.log("On Set");
+    this.paymentsList.forEach((value, i) => {
+      this.payments.at(i).setValidators(Validators.required);
+      this.payments.at(i).updateValueAndValidity();
+    });
+  }
+
+  clearPaymentsValidators(controls: any) {
+    console.log("On Clear");
+    this.paymentsList.forEach((value, i) => {
+      this.payments.at(i).clearValidators();
+      this.payments.at(i).updateValueAndValidity();
+    });
+  }
+
+  setPaymentsValues(controls: any) {
+    var payments: any[] = [];
+    this.paymentsList.forEach((value, i) => {
+      console.log(controls.payments.value[i])
+      if (controls.payments.value[i]) {
+        payments.push({
+          bic: this.paymentsList[i].bic,
+          name: this.paymentsList[i].name,
+          value: controls.payments.value[i]
+        })
+      }
+    });
+
+    return payments;
+  }
+
+  onPartnerSubmit() {
     if (this.submitted || this.loading) return;
 
-    const controls = this.merchantForm.controls;
+    const controls = this.partnerForm.controls;
+    const partner_payments: any[] = this.setPaymentsValues(controls);
     /** check form */
-    if (this.merchantForm.invalid) {
+    if (this.partnerForm.invalid || !partner_payments.length) {
+      if (!partner_payments.length) { this.setPaymentsValidators(controls); this.showPaymentError = true; }
+      else if (partner_payments.length) { this.clearPaymentsValidators; this.showPaymentError = false; }
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
+      this.loading = false;
+      this.submitted = false;
       return;
     }
 
-    this.submitted = true;
+    // if (this.partnerForm.invalid) {
+    //   Object.keys(controls).forEach(controlName =>
+    //     controls[controlName].markAsTouched()
+    //   );
+    //   return;
+    // }
+
     this.loading = true;
 
     const formData = new FormData();
@@ -336,18 +406,21 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     formData.append('phone', controls.phone.value);
     formData.append('websiteURL', controls.websiteURL.value);
 
-    formData.append('nationalBank', controls.nationalBank.value);
-    formData.append('pireausBank', controls.pireausBank.value);
-    formData.append('eurobank', controls.eurobank.value);
-    formData.append('alphaBank', controls.alphaBank.value);
-    formData.append('paypal', controls.paypal.value);
+    formData.append('payments', JSON.stringify(partner_payments));
+    // formData.append('nationalBank', controls.nationalBank.value);
+    // formData.append('pireausBank', controls.pireausBank.value);
+    // formData.append('eurobank', controls.eurobank.value);
+    // formData.append('alphaBank', controls.alphaBank.value);
+    // formData.append('paypal', controls.paypal.value);
+    console.log("Update");
 
-    this.merchantsService.updateMerchantInfo(this.authenticationService.currentUserValue.user["_id"], formData)
+    this.partnersService.updatePartnerInfo(this.authenticationService.currentUserValue.user["_id"], formData)
       .pipe(
         tap(
           data => {
-            this.authenticationService.updateCurrentUser(data.name, data.imageURL);
+            console.log("Done");
 
+            this.authenticationService.updateCurrentUser(data.name, data.imageURL);
             Swal.fire({
               title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               text: this.translate.instant('MESSAGE.SUCCESS.PROFILE_UPDATED'),
@@ -381,8 +454,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     * @param controlName: string => Equals to formControlName
     * @param validationType: string => Equals to valitors name
     */
-  isCustomerControlHasError(controlName: string, validationType: string): boolean {
-    const control = this.customerForm.controls[controlName];
+  isMemberControlHasError(controlName: string, validationType: string): boolean {
+    const control = this.memberForm.controls[controlName];
     if (!control) {
       return false;
     }
@@ -397,8 +470,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     * @param controlName: string => Equals to formControlName
     * @param validationType: string => Equals to valitors name
     */
-  isMerchantControlHasError(controlName: string, validationType: string): boolean {
-    const control = this.merchantForm.controls[controlName];
+  isPartnerControlHasError(controlName: string, validationType: string): boolean {
+    const control = this.partnerForm.controls[controlName];
     if (!control) {
       return false;
     }

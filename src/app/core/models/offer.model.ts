@@ -6,11 +6,11 @@ interface Address {
 }
 
 export interface Offer {
-  merchant_id: string;
-  merchant_name: string;
-  merchant_slug: string;
-  merchant_imageURL: string;
-  merchant_address: Address;
+  partner_id: string;
+  partner_name: string;
+  partner_slug: string;
+  partner_imageURL: string;
+  partner_address: Address;
 
   offer_id: string;
   offer_imageURL: string;

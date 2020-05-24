@@ -307,7 +307,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 
   actionRegistration(notice: { type: string, message: string }, email: string, card: string) {
     console.log('Reg', email + card)
-    this.authenticationService.register_customer(email, card)
+    this.authenticationService.register_member(email, card)
       .pipe(
         tap(
           data => {
@@ -394,7 +394,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
               this.redeemPoints(_to);
             } else {
               console.log("Will Not Redeem");
-              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCESS_TRANSACTION'), 'success');
+              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
               this.onNextStep();
             }
           },
@@ -425,7 +425,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCESS_TRANSACTION'), 'success');
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
             this.onNextStep();
           },
           error => {
@@ -699,7 +699,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   //       authData.card = user.identifier;
   //     }
 
-  //     this.authenticationService.register_customer(authData.email, authData.card)
+  //     this.authenticationService.register_member(authData.email, authData.card)
   //       .pipe(
   //         tap(
   //           data => {

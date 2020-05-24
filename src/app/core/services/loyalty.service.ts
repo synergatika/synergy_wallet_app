@@ -42,14 +42,14 @@ export class LoyaltyService {
       }));
   }
 
-  readBalanceByMerchant(_to: string): Observable<Points> {
+  readBalanceByPartner(_to: string): Observable<Points> {
     return this.http.get<any>(`${environment.apiUrl}/loyalty/balance/${_to}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
 
-  readBadgeByMerchant(_to: string): Observable<Activity> {
+  readBadgeByPartner(_to: string): Observable<Activity> {
     return this.http.get<any>(`${environment.apiUrl}/loyalty/badge/${_to}`)
       .pipe(map(response => {
         return response.data;
@@ -77,8 +77,8 @@ export class LoyaltyService {
       }));
   }
 
-  redeemOffer(merchant_id: string, offer_id: string, _to: string, password: string, _points: number, quantity: number): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/loyalty/redeem/${merchant_id}/${offer_id}/${_to}`, { password, _points, quantity })
+  redeemOffer(partner_id: string, offer_id: string, _to: string, password: string, _points: number, quantity: number): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/loyalty/redeem/${partner_id}/${offer_id}/${_to}`, { password, _points, quantity })
       .pipe(map(data => {
         return data;
       }));

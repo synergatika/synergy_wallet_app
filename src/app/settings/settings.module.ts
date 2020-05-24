@@ -2,9 +2,8 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSelectModule, MatCardModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatCardModule } from "@angular/material";
 
 import { SettingsComponent } from './settings.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -14,7 +13,7 @@ import { EmailSettingsComponent } from './email-settings/email-settings.componen
 
 // import { LoyaltyHistoryComponent } from '../history/loyalty/loyalty.component';
 // import { MicrocreditHistoryComponent } from '../history/microcredit/microcredit.component';
-import { HistoryModule } from "../history/history.module";
+// import { HistoryModule } from "../history/history.module";
 
 const routes: Routes = [
     {
@@ -29,12 +28,17 @@ const routes: Routes = [
             {
                 path: 'personal-information',
                 component: PersonalInformationComponent,
-                data: { title: 'MENU.PROFILE' }
+                data: { title: 'SETTINGS.SUBMENU.PERSONAL_INFORMATION' }
             },
             {
                 path: 'change-password',
                 component: ChangePasswordComponent,
                 data: { title: 'SETTINGS.SUBMENU.CHANGE_PASSWORD' }
+            },
+            {
+                path: 'account-settings',
+                component: AccountSettingsComponent,
+                data: { title: 'SETTINGS.SUBMENU.ACCOUNT_SETTINGS' }
             },
             // {
             //     path: 'account-settings',
@@ -46,10 +50,7 @@ const routes: Routes = [
             //     component: EmailSettingsComponent,
             //     data: { title: 'SETTINGS.SUBMENU.EMAIL' }
             // },
-            {
-                path: 'history',
-                loadChildren: () => import('../history/history.module').then(m => m.HistoryModule)
-            },
+            // {
         ]
     }
 ];
@@ -69,18 +70,8 @@ const routes: Routes = [
         MatDialogModule,
         MatCardModule,
         MatSelectModule,
-        //HistoryModule
-        // StoreModule.forFeature('auth', authReducer),
-        // EffectsModule.forFeature([AuthEffects]),
-
     ],
     providers: [
-        // InterceptService,
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: InterceptService,
-        //     multi: true
-        // },
     ],
     exports: [SettingsComponent],
     declarations: [

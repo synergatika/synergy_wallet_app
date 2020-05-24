@@ -32,8 +32,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             } else {
                 error = err.error.message || err.statusText;
             }
-            // const error = err.error.message || err.statusText;
-            return throwError(err.status.toString() + " : " + JSON.stringify(err) + " : " + error);
+            return throwError(error);
+            //return throwError(err.status.toString() + " : " + JSON.stringify(err) + " : " + error);
         }))
     }
 }

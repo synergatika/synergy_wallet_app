@@ -10,12 +10,10 @@ interface Contact {
     websiteURL: string;
 }
 
-interface Payments {
-    nationalBank: string;
-    pireausBank: string;
-    eurobank: string;
-    alphaBank: string;
-    paypal: string;
+interface Bank {
+    bic: string;
+    name: string;
+    value: string;
 }
 
 interface Tokens {
@@ -26,14 +24,14 @@ interface Tokens {
 
 export interface MicrocreditCampaign {
 
-    merchant_id: string;
-    merchant_name: string;
-    merchant_email: string;
-    merchant_slug: string;
-    merchant_imageURL: string;
-    merchant_payments: Payments;
-    merchant_address: Address;
-    merchant_contact: Contact;
+    partner_id: string;
+    partner_name: string;
+    partner_email: string;
+    partner_slug: string;
+    partner_imageURL: string;
+    partner_payments: Bank[];
+    partner_address: Address;
+    partner_contact: Contact;
 
     _id?: string;
     campaign_id: string;

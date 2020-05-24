@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { AuthenticationService } from '../services/authentication.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserGuard implements CanActivate {
@@ -13,17 +14,32 @@ export class UserGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
         const expectedRole = route.data.expectedRole;
+        const accessIndex = route.data.accessIndex;
+
+        function accessRoute(access: string) {
+            switch (access) {
+                case 'member':
+                    return 'dashboard';
+                    break;
+                case 'partner':
+                    return 'scanner';
+                    break;
+                case 'admin':
+                    return 'a-partners';
+                    break;
+                default:
+                    return '/auth/login';
+                    break;
+            }
+        }
+        // if (!accessIndex || !environment.access[accessIndex]) {
+        //     return false;
+        // }
 
         if (currentUser && (currentUser.user["access"] === expectedRole)) {
             return true;
         } else if (currentUser && (currentUser.user["access"] !== expectedRole)) {
-            if (currentUser.user["access"] === 'customer') {
-                this.router.navigate(['dashboard']);
-            } else if (currentUser.user["access"] === 'merchant') {
-                this.router.navigate(['scanner']);
-            } else if (currentUser.user["access"] === 'admin') {
-                this.router.navigate(['a-users']);
-            }
+            this.router.navigate([accessRoute(currentUser.user["access"])]);
             return false;
         } else if (!currentUser) {
             this.router.navigate(['/auth/login']);//, { queryParams: { returnUrl: state.url }});
@@ -37,8 +53,8 @@ export class UserGuard implements CanActivate {
     // const currentUser = this.authenticationService.currentUserValue;
     // if(currentUser === expectedRole) {
     // //console.log(currentUser);
-    // if (currentUser.user.access == "merchant") {
-    //     //console.log('merchant');
+    // if (currentUser.user.access == "partner") {
+    //     //console.log('partner');
     //     this.router.navigate(['/scanner']);
     // } /*else {
     // 			console.log('else');

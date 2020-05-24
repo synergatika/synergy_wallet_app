@@ -23,6 +23,9 @@ import { ErrorInterceptor } from './core/helpers/error.interceptor';
 //Application Components
 
 //0. General
+/**
+ * General Components
+ */
 import { LayoutComponent } from './views/layout/layout.component';
 import { HeaderComponent } from './views/layout/header/header.component';
 import { TopbarComponent } from './views/layout/header/topbar/topbar.component';
@@ -31,25 +34,32 @@ import { UserMenuComponent } from './views/layout/header/user-menu/user-menu.com
 import { FooterComponent } from './views/layout/footer/footer.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
 import { LanguageSwitcherComponent } from './views/layout/header/language-switcher/language-switcher.component';
+import { ShareIconComponent } from './views/widgets/share-icon/share-icon.component';
+
 import { MenuService } from './core/services/menu.service';
 
-//Cards
+
+/**
+ * Item Cards Components
+ */
 import { CardOfferComponent } from './views/layout/card-offer/card-offer.component';
 import { CardCoopComponent } from './views/layout/card-coop/card-coop.component';
 import { CardPostComponent } from './views/layout/card-post/card-post.component';
 import { CardSupportsComponent } from './views/layout/card-supports/card-supports.component';
 
-//Singles
+/**
+ * Item Pages Components
+ */
 import { SingleCoopComponent } from './views/layout/single-coop/single-coop.component';
 import { SinglePostComponent } from './views/layout/single-post/single-post.component';
 
-//1. Customer
-import { ShareIconComponent } from './views/widgets/share-icon/share-icon.component';
-
-//Basic Papes
-import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
-import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
-import { CustomerSupportModule } from './customer-support/customer-support.module'; //This has it's own module due to functionality
+/**
+ * Member Basic Pages Components
+ */
+import { MemberDashboardComponent } from './member-dashboard/member-dashboard.component';
+import { MemberExploreComponent } from './member-explore/member-explore.component';
+import { MemberSupportModule } from './member-support/member-support.module';
+//This has it's own module due to functionality
 
 //User Centered Components
 import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
@@ -60,25 +70,26 @@ import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
 import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 
-//2. Merchant
+//2. Partner
 
 //Basic Functionality
 import { ScannerModule } from './scanner/scanner.module';
-import { CreateItemsModule } from './create-items/create-items.module';
-import { EditItemsModule } from './edit-items/edit-items.module';
-import { MicrocreditModule } from './microcredit/microcredit.module';
+// import { CreateItemsModule } from './create-itemsDEPR/create-items.module';
+// import { EditItemsModule } from './edit-itemsDEPR/edit-items.module';
+// import { MicrocreditModule } from './microcreditDEPR/microcredit.module';
 
 //Pages
-import { MerchantOffersComponent } from './views/pages/merchant-offers/merchant-offers.component';
-import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-posts.component';
-import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
-import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
+// import { PartnerOffersComponent } from './views/pages/DEPRpartner-offersDEPR/partner-offers.component';
+// import { PartnerPostsComponent } from './views/pages/DEPRpartner-postsDEPR/partner-posts.component';
+// import { PartnerEventsComponent } from './views/pages/DEPRpartner-eventsDEPR/partner-events.component';
+// import { PartnerCampaignsComponent } from './views/pages/DEPRpartner-campaignsDEPR/partner-campaigns.component';
 
 // 3. Admin
-//import { NewCustomerComponent } from './create-users/new-customer/new-customer.component';
-//import { NewMerchantComponent } from './create-users/new-merchant/new-merchant.component';
+//import { NewMemberComponent } from './create-users/new-member/new-member.component';
+//import { NewPartnerComponent } from './create-users/new-partner/new-partner.component';
 
-import { UsersModule } from './users/users.module';
+import { PartnersModule } from './a-partners/a-partners.module';
+import { MembersModule } from './a-members/a-members.module';
 
 @NgModule({
 	declarations: [
@@ -106,7 +117,7 @@ import { UsersModule } from './users/users.module';
 		SingleCoopComponent,
 		SinglePostComponent,
 
-		//1. Customer
+		//1. Member
 		ShareIconComponent,
 
 		//User Centered Components
@@ -114,19 +125,19 @@ import { UsersModule } from './users/users.module';
 		InvitationComponent,
 
 		//Basic Papes
-		CustomerDashboardComponent,
-		CustomerExploreComponent,
+		MemberDashboardComponent,
+		MemberExploreComponent,
 
 		//Archives
 		ArchiveCoopsComponent,
 		ArchiveOffersComponent,
 		ArchivePostsComponent,
 
-		//2. Merchant		
-		MerchantOffersComponent,
-		MerchantPostsComponent,
-		MerchantEventsComponent,
-		MerchantCampaignsComponent,
+		//2. Partner		
+		// PartnerOffersComponent,
+		// PartnerPostsComponent,
+		// PartnerEventsComponent,
+		// PartnerCampaignsComponent,
 	],
 	imports: [
 
@@ -143,22 +154,21 @@ import { UsersModule } from './users/users.module';
 		CarouselModule,
 		InfiniteScrollModule,
 
-		//Materialize
+		// Materialize Modules
 		MatDialogModule,
 		MatButtonModule,
 		MatCardModule,
 		MatInputModule,
 
-		//Client
-		CustomerSupportModule,
+		// Member Modules
+		MemberSupportModule,
 
-		//Merchant
-		CreateItemsModule,
+		// Partner Modules
 		ScannerModule,
-		EditItemsModule,
-		MicrocreditModule,
 
-		UsersModule,
+		// Admin Modules
+		PartnersModule,
+		MembersModule,
 
 	],
 	providers: [

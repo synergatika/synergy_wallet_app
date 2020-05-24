@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { MerchantsService } from '../../../core/services/merchants.service';
+import { PartnersService } from '../../../core/services/partners.service';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Merchant } from '../../../core/models/merchant.model';
+import { Partner } from '../../../core/models/partner.model';
 
 @Component({
 	selector: 'app-archive-coops',
@@ -10,25 +10,25 @@ import { Merchant } from '../../../core/models/merchant.model';
 	styleUrls: ['./archive-coops.component.scss']
 })
 export class ArchiveCoopsComponent implements OnInit {
-	merchants: Merchant[];
+	partners: Partner[];
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
-	constructor(private cdRef: ChangeDetectorRef, private merchantsService: MerchantsService, ) {
+	constructor(private cdRef: ChangeDetectorRef, private partnersService: PartnersService, ) {
 		this.unsubscribe = new Subject();
 	}
 
 	ngOnInit() {
-		this.fetchMerchantsData();
+		this.fetchPartnersData();
 	}
 
-	fetchMerchantsData() {
-		this.merchantsService.readMerchants('0-0-0')
+	fetchPartnersData() {
+		this.partnersService.readPartners('0-0-0')
 			.pipe(
 				tap(
 					data => {
-						this.merchants = data;
-						console.log(this.merchants)
+						this.partners = data;
+						console.log(this.partners)
 					},
 					error => {
 					}),
@@ -49,7 +49,7 @@ export class ArchiveCoopsComponent implements OnInit {
 
 	onScroll() {
 		console.log('scrolled!!');
-		this.merchants = this.merchants.concat(this.merchants);
+		this.partners = this.partners.concat(this.partners);
 		this.cdRef.markForCheck();
 	}
 

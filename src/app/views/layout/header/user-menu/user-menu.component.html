@@ -1,5 +1,5 @@
 <div class="user-menu">
-  <div *ngIf="user.access!=='customer'" (click)="openNav()"><img src={{icon}} class="menu-icon"></div>
+  <div *ngIf="user.access!=='member'" (click)="openNav()"><img src={{icon}} class="menu-icon"></div>
   <div ngbDropdown placement="bottom-right" *ngIf="user" class="header-topbar">
     <div ngbDropdownToggle class="header-topbar-wrapper">
       <div class="header-topbar-avatar" [ngStyle]="{'background-image':'url(' + userAvatar + ')'}">
@@ -10,17 +10,17 @@
       <div class="header-topbar-name">{{user.name}}</div>
       <!--begin: Navigation -->
       <div class="navigation" style="padding-top: 10px;">
-        <a ngbDropdownItem routerLink="/settings" href="javascript:;" class="navigation-item">
+        <a *ngFor="let item of menu" ngbDropdownItem [routerLink]="['/'+item.link]" href="javascript:;"
+          class="navigation-item">
           <div class="navigation-item-icon">
             <i class="flaticon2-calendar-3 font-success"></i>
           </div>
           <div class="navigation-item-details">
             <div class="navigation-item-title font-bold">
-              {{'SETTINGS.ACCOUNT' | translate }}
+              {{item.title | translate}}
             </div>
           </div>
         </a>
-
         <div class="navigation-custom">
           <a href="javascript:;" (click)="logout()"
             class="btn btn-primary btn-upper btn-sm btn-bold">{{'AUTH.LOGOUT.BUTTON' | translate}}</a>

@@ -3,6 +3,8 @@
     <span aria-hidden="true">&times;</span>
   </button>
   <aw-wizard>
+
+    <!--start::Step A - Scan/Enter Identifier-->
     <aw-wizard-step stepTitle="Scan Or Add">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -24,6 +26,9 @@
         </div>
       </div>
     </aw-wizard-step>
+    <!--end::Step A - Scan/Enter Identifier-->
+
+    <!--start::Step B - Enter Tokens-->
     <aw-wizard-step stepTitle="Microcredit">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -33,6 +38,9 @@
         <!--<button type="button" awPreviousStep>Previous Step</button>-->
       </div>
     </aw-wizard-step>
+    <!--end::Step B - Enter Tokens-->
+
+    <!--start::Step C - Final-->
     <aw-wizard-step stepTitle="Final">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -40,4 +48,6 @@
       </div>
     </aw-wizard-step>
   </aw-wizard>
+  <!--end::Step C - Final-->
+
 </div>

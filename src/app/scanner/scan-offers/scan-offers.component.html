@@ -3,6 +3,8 @@
     <span aria-hidden="true">&times;</span>
   </button>
   <aw-wizard>
+
+    <!--start::Step A - Scan/Enter Identifier-->
     <aw-wizard-step stepTitle="Scan Or Add">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -12,9 +14,9 @@
           <button class="btn btn-primary" type="button" [ngClass]="{'identifier-active': showIdentifierForm}"
             (click)="onShowIdentifierFormChange()">
             <span
-              *ngIf="!showIdentifierForm; else back_to_scanner">{{ 'MERCHANT.SCANNER.SUB_IDENTIFIER_FORM.TITLE' | translate }}</span>
+              *ngIf="!showIdentifierForm; else back_to_scanner">{{ 'PARTNER.WIZARD.SUB_IDENTIFIER_FORM.TITLE' | translate }}</span>
             <ng-template #back_to_scanner>
-              <span>{{ 'MERCHANT.SCANNER.BACK_TO_SCANNER' | translate }}</span>
+              <span>{{ 'PARTNER.WIZARD.BACK_TO_SCANNER' | translate }}</span>
             </ng-template>
           </button>
           <div *ngIf="showIdentifierForm">
@@ -24,6 +26,9 @@
         </div>
       </div>
     </aw-wizard-step>
+    <!--end::Step A - Scan/Enter Identifier-->
+
+    <!--start::Step B - Enter Points-->
     <aw-wizard-step stepTitle="Offer">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
@@ -32,11 +37,16 @@
         <!--<button type="button" awPreviousStep>Previous Step</button>-->
       </div>
     </aw-wizard-step>
+    <!--start::Step B - Enter Points-->
+
+    <!--start::Step C - Final-->
     <aw-wizard-step stepTitle="Final">
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
         <app-sub-final-step (finalize)="onFinalStep($event)" [type]=2></app-sub-final-step>
       </div>
     </aw-wizard-step>
+    <!--end::Step C - Final-->
+
   </aw-wizard>
 </div>

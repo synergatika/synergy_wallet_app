@@ -1,6 +1,6 @@
 <form [formGroup]="submitForm">
   <div>
-    <h5 class="heading">{{ 'MERCHANT.SCANNER.SUB_AMOUNT_FORM.HEADING' | translate }}</h5>
+    <h5 class="heading">{{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.HEADING' | translate }}</h5>
     <div class="form-group">
       <!--<label>Amount</label>-->
       <div class="input-group amount-input">
@@ -12,10 +12,10 @@
       <span *ngIf="isControlHasError('amount','min')"
         class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
         {{ '1' | currency: 'EUR'}}</span>
-      <span class="form-text text-muted">{{ 'MERCHANT.SCANNER.SUB_AMOUNT_FORM.HINT' | translate }}</span>
+      <span class="form-text text-muted">{{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.HINT' | translate }}</span>
     </div>
   </div>
 </form>
 <button class="mr-2" mat-raised-button type="button"
-  (click)="onPreviousStep()">{{ 'MERCHANT.SCANNER.PREVIOUS_STEP' | translate }}</button>
-<button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.NEXT_STEP' | translate }}</button>
+  (click)="onPreviousStep()">{{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}</button>
+<button mat-raised-button type="button" (click)="onNextStep()">{{ 'PARTNER.WIZARD.NEXT_STEP' | translate }}</button>

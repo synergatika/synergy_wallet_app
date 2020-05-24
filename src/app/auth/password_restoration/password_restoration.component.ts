@@ -19,6 +19,7 @@ import { StaticDataService } from 'src/app/core/services/static-data.service';
 @Component({
 	selector: 'kt-login',
 	templateUrl: './password_restoration.component.html',
+	styleUrls: ['./password_restoration.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class PasswordRestorationComponent implements OnInit, OnDestroy {

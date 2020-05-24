@@ -9,6 +9,7 @@ import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { RegisterPartnerComponent } from './register-partner/register-partner.component';
 import { ForgotPasswordComponent } from './forgot_password/forgot_password.component';
 import { PasswordVerificationComponent } from './password_verification/password_verification.component';
 import { EmailVerificationComponent } from './email_verification/email_verification.component';
@@ -40,6 +41,10 @@ const routes: Routes = [
             {
                 path: 'register',
                 component: RegisterComponent
+            },
+            {
+                path: 'partner',
+                component: RegisterPartnerComponent
             },
             {
                 path: 'forgot-password',
@@ -88,6 +93,7 @@ const routes: Routes = [
         AuthComponent,
         LoginComponent,
         RegisterComponent,
+        RegisterPartnerComponent,
         ForgotPasswordComponent,
         PasswordVerificationComponent,
         EmailVerificationComponent,

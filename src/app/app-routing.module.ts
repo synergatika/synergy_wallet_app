@@ -1,31 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
-import { CustomerDashboardComponent } from './views/pages/customer-dashboard/customer-dashboard.component';
-import { CustomerExploreComponent } from './views/pages/customer-explore/customer-explore.component';
+//import { MemberDashboardComponent } from './views/pages/member-dashboard/member-dashboard.component';
+//import { MemberExploreComponent } from './views/pages/member-explore/member-explore.component';
+import { MemberDashboardComponent } from './member-dashboard/member-dashboard.component';
+import { MemberExploreComponent } from './member-explore/member-explore.component';
+
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
 import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops.component';
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
 import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 import { LayoutComponent } from './views/layout/layout.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
-import { MerchantOffersComponent } from './views/pages/merchant-offers/merchant-offers.component';
-import { NewOfferComponent } from './create-items/new-offer/new-offer.component';
-import { EditOfferComponent } from './edit-items/edit-offer/edit-offer.component';
-import { MerchantPostsComponent } from './views/pages/merchant-posts/merchant-posts.component';
-import { NewPostComponent } from './create-items/new-post/new-post.component';
-import { EditPostComponent } from './edit-items/edit-post/edit-post.component';
-import { MerchantEventsComponent } from './views/pages/merchant-events/merchant-events.component';
-import { NewEventComponent } from './create-items/new-event/new-event.component';
-import { EditEventComponent } from './edit-items/edit-event/edit-event.component';
-import { MerchantCampaignsComponent } from './views/pages/merchant-campaigns/merchant-campaigns.component';
-import { NewMicrocreditCampaignComponent } from './create-items/new-microcredit-campaign/new-microcredit-campaign.component';
-import { EditMicrocreditCampaignComponent } from './microcredit/edit-microcredit-campaign/edit-microcredit-campaign.component';
-import { EditMicrocreditCampaignComponentDraft } from './edit-items/edit-microcredit-campaign-draft/edit-microcredit-campaign-draft.component';
+
 
 // Auth
 import { AuthGuard } from './core/helpers/auth.guard';
 import { UserGuard } from './core/helpers/user.guard';
+import { ConfigGuard } from './core/helpers/config.guard';
 
 const routes: Routes = [
 	{
@@ -35,12 +27,12 @@ const routes: Routes = [
 	{
 
 		/**
-		 * -- CUSTOMER --
+		 * -- MEMBER --
 		 * Wallet - Open if 1 or 2 are true
 		 * Support - Open if 2 is true
 		 * Discover - Open if 0 or 1 are true 
 		 * 
-		 * -- MERCHANT --
+		 * -- PARTNER --
 		 * Offers - Open if 1 is true
 		 * Campaigns - Open if 2 is true
 		 * Posts & Events - Open if 0 is true 
@@ -50,162 +42,235 @@ const routes: Routes = [
 		canActivate: [AuthGuard],
 		children: [
 			{
-				path: '', redirectTo: 'dashboard', pathMatch: 'full',
+				path: '',
+				redirectTo: 'dashboard',
+				pathMatch: 'full',
 				canActivate: [UserGuard],
-				data: {
-					expectedRole: 'customer'
-				}
 			},
 			{
 				path: 'dashboard',
-				component: CustomerDashboardComponent,
+				component: MemberDashboardComponent,
 				canActivate: [UserGuard],
 				data: {
 					title: 'MENU.HOME',
-					expectedRole: 'customer'
+					expectedRole: 'member',
 				}
 			},
 			{
 				path: 'support',
-				loadChildren: () => import('./customer-support/customer-support.module').then(m => m.CustomerSupportModule),
-				canActivate: [UserGuard],
+				loadChildren: () => import('./member-support/member-support.module').then(m => m.MemberSupportModule),
+				canActivate: [UserGuard && ConfigGuard],
 				data: {
-					title: 'MENU_CLIENT.SUPPORT',
-					expectedRole: 'customer'
+					title: 'MENU.SUPPORT',
+					expectedRole: 'member',
+					accessIndex: 2,
 				}
 			},
 			{
-				path: 'explore', component: CustomerExploreComponent,
+				path: 'explore', component: MemberExploreComponent,
 				canActivate: [UserGuard],
 				data: {
-					title: 'MENU_CLIENT.DISCOVER',
-					expectedRole: 'customer'
+					title: 'MENU.DISCOVER',
+					expectedRole: 'member'
 				}
 			},
-			{
-				path: 'microcredit',
-				loadChildren: () => import('./microcredit/microcredit.module').then(m => m.MicrocreditModule),
-				canActivate: [UserGuard],
-				data: {
-					expectedRole: 'merchant'
-				}
-			},
-			{
-				path: 'create',
-				loadChildren: () => import('./create-items/create-items.module').then(m => m.CreateItemsModule),
-				canActivate: [UserGuard],
-				data: {
-					expectedRole: 'merchant'
-				}
-			},
-			{
-				path: 'scanner',
-				loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule),
-				canActivate: [UserGuard],
-				data: {
-					title: 'HEADER.MESSAGE',
-					expectedRole: 'merchant'
-				}
-			},
+
 			{
 				path: 'settings',
 				loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
 				data: { title: 'settings' }
 			},
 			{
-				path: 'coops', component: ArchiveCoopsComponent, data: { title: 'MENU.COMMUNITY' }
+				path: 'history',
+				loadChildren: () => import('./history/history.module').then(m => m.HistoryModule),
+				data: { title: 'history' }
+			},
+
+
+			{
+				path: 'coops',
+				component: ArchiveCoopsComponent,
+				// canActivate: [UserGuard],
+				data: { title: 'MENU.COMMUNITY' }
 			},
 			{
-				path: 'offers', component: ArchiveOffersComponent, data: { title: 'MENU.OFFERS' }
+				path: 'offers',
+				canActivate: [ConfigGuard],
+				component: ArchiveOffersComponent,
+				data: { title: 'MENU.OFFERS', accessIndex: 1 }
+
 			},
 			{
-				path: 'posts', component: ArchivePostsComponent, data: { title: 'MENU.POSTS' }
+				path: 'posts',
+				canActivate: [ConfigGuard],
+				component: ArchivePostsComponent,
+				data: { title: 'MENU.POSTS', accessIndex: 0 }
+
 			},
+			// {
+			// 	path: 'invitation', component: InvitationComponent, data: { title: 'invitation' }
+			// },
+
+			/**
+			 * PARTNER's Pages
+			 */
 			{
-				path: 'invitation', component: InvitationComponent, data: { title: 'invitation' }
-			},
-			{
-				path: 'm-offers',
-				children: [
-					{
-						path: '', component: MerchantOffersComponent,
-					},
-					{
-						path: 'create', component: NewOfferComponent
-					},
-					{
-						path: 'edit/:_id', component: EditOfferComponent
-					},
-				],
+				path: 'scanner',
+				loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule),
 				canActivate: [UserGuard],
 				data: {
-					title: 'MENU.OFFERS',
-					expectedRole: 'merchant'
-				}
-			},
-			{
-				path: 'm-campaigns',
-				children: [
-					{
-						path: '', component: MerchantCampaignsComponent,
-					},
-					{
-						path: 'create', component: NewMicrocreditCampaignComponent
-					},
-					{
-						path: 'edit/:_id', component: EditMicrocreditCampaignComponent
-					},
-					{
-						path: 'edit-draft/:_id', component: EditMicrocreditCampaignComponentDraft
-					},
-				],
-				canActivate: [UserGuard],
-				data: {
-					title: 'MENU.CAMPAIGNS',
-					expectedRole: 'merchant'
+					title: 'HEADER.MESSAGE',
+					expectedRole: 'partner'
 				}
 			},
 			{
 				path: 'm-posts',
-				children: [
-					{
-						path: '', component: MerchantPostsComponent,
-					},
-					{
-						path: 'create', component: NewPostComponent
-					},
-					{
-						path: 'edit/:_id', component: EditPostComponent
-					},
-				],
-				canActivate: [UserGuard],
+				loadChildren: () => import('./p-posts/p-posts.module').then(m => m.PostsModule),
+				canActivate: [UserGuard && ConfigGuard],
 				data: {
 					title: 'MENU.POSTS',
-					expectedRole: 'merchant'
+					expectedRole: 'partner',
+					accessIndex: 0
 				}
 			},
 			{
 				path: 'm-events',
-				children: [
-					{
-						path: '', component: MerchantEventsComponent,
-					},
-					{
-						path: 'create', component: NewEventComponent
-					},
-					{
-						path: 'edit/:_id', component: EditEventComponent
-					},
-				],
-				canActivate: [UserGuard],
+				loadChildren: () => import('./p-events/p-events.module').then(m => m.EventsModule),
+				canActivate: [UserGuard && ConfigGuard],
 				data: {
 					title: 'MENU.EVENTS',
-					expectedRole: 'merchant'
+					expectedRole: 'partner',
+					accessIndex: 0
 				}
 			},
 			{
-				path: 'a-users',
-				loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+				path: 'm-offers',
+				loadChildren: () => import('./p-loyalty/p-loyalty.module').then(m => m.LoyaltyModule),
+				canActivate: [UserGuard && ConfigGuard],
+				data: {
+					title: 'MENU.OFFERS',
+					expectedRole: 'partner',
+					accessIndex: 1
+				}
+			},
+			{
+				path: 'm-campaigns',
+				loadChildren: () => import('./p-microcredit/p-microcredit.module').then(m => m.MicrocreditModule),
+				canActivate: [UserGuard && ConfigGuard],
+				data: {
+					title: 'MENU.CAMPAIGNS',
+					expectedRole: 'partner',
+					accessIndex: 2
+				}
+			},
+
+			// {
+			// 	path: 'microcredit',
+			// 	loadChildren: () => import('./microcreditDEPR/microcredit.module').then(m => m.MicrocreditModule),
+			// 	canActivate: [UserGuard],
+			// 	data: {
+			// 		expectedRole: 'partner'
+			// 	}
+			// },
+			// {
+			// 	path: 'create',
+			// 	loadChildren: () => import('./create-itemsDEPR/create-items.module').then(m => m.CreateItemsModule),
+			// 	canActivate: [UserGuard],
+			// 	data: {
+			// 		expectedRole: 'partner'
+			// 	}
+			// },
+			// {
+			// 	path: 'm-offers',
+			// 	children: [
+			// 		{
+			// 			path: '', component: PartnerOffersComponent,
+			// 		},
+			// 		{
+			// 			path: 'create', component: NewOfferComponent
+			// 		},
+			// 		{
+			// 			path: 'edit/:_id', component: EditOfferComponent
+			// 		},
+			// 	],
+			// 	canActivate: [UserGuard],
+			// 	data: {
+			// 		title: 'MENU.OFFERS',
+			// 		expectedRole: 'partner'
+			// 	}
+			// },
+			// {
+			// 	path: 'm-campaigns',
+			// 	children: [
+			// 		{
+			// 			path: '', component: PartnerCampaignsComponent,
+			// 		},
+			// 		{
+			// 			path: 'create', component: NewMicrocreditCampaignComponent
+			// 		},
+			// 		{
+			// 			path: 'edit/:_id', component: EditMicrocreditCampaignComponent
+			// 		},
+			// 		{
+			// 			path: 'edit-draft/:_id', component: EditMicrocreditCampaignComponentDraft
+			// 		},
+			// 	],
+			// 	canActivate: [UserGuard],
+			// 	data: {
+			// 		title: 'MENU.CAMPAIGNS',
+			// 		expectedRole: 'partner'
+			// 	}
+			// },
+			// {
+			// 	path: 'm-posts',
+			// 	children: [
+			// 		{
+			// 			path: '', component: PartnerPostsComponent,
+			// 		},
+			// 		{
+			// 			path: 'create', component: NewPostComponent
+			// 		},
+			// 		{
+			// 			path: 'edit/:_id', component: EditPostComponent
+			// 		},
+			// 	],
+			// 	canActivate: [UserGuard],
+			// 	data: {
+			// 		title: 'MENU.POSTS',
+			// 		expectedRole: 'partner'
+			// 	}
+			// },
+			// {
+			// 	path: 'm-events',
+			// 	children: [
+			// 		{
+			// 			path: '', component: PartnerEventsComponent,
+			// 		},
+			// 		{
+			// 			path: 'create', component: NewEventComponent
+			// 		},
+			// 		{
+			// 			path: 'edit/:_id', component: EditEventComponent
+			// 		},
+			// 	],
+			// 	canActivate: [UserGuard],
+			// 	data: {
+			// 		title: 'MENU.EVENTS',
+			// 		expectedRole: 'partner'
+			// 	}
+			// },
+			{
+				path: 'a-partners',
+				loadChildren: () => import('./a-partners/a-partners.module').then(m => m.PartnersModule),
+				canActivate: [UserGuard],
+				data: {
+					title: 'MENU.CONTENT',
+					expectedRole: 'admin'
+				}
+			},
+			{
+				path: 'a-members',
+				loadChildren: () => import('./a-members/a-members.module').then(m => m.MembersModule),
 				canActivate: [UserGuard],
 				data: {
 					title: 'MENU.CONTENT',

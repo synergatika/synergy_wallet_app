@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { first, takeUntil, finalize, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import Swal from 'sweetalert2'
 
 // Translate
@@ -10,7 +11,6 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { ConfirmPasswordValidator } from './confirm-password.validator';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-change-password',

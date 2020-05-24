@@ -11,7 +11,11 @@ export const environment = {
   //apiUrl: 'http://192.168.1.7:3000',
   //apiUrl: 'http://79.129.47.140:3000',
   authTimeOuter: 5000,
-  staticUrl: 'https://wp.synergatika.gr/wp-json/wp/v2'
+  staticUrl: 'https://wp.synergatika.gr/wp-json/wp/v2',
+  access: [true, true, true, false],// community, loyalty, microcredit, microfunding
+  subAccess: [true, true, true], //partner_address, partner_contact,  partner_payments
+
+  version: '0.5.0'
 };
 
 /*

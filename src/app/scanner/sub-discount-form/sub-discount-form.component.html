@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xl-12">
       <div class="form-group transaction">
-        <h4 class="transaction-title">{{ 'MERCHANT.SCANNER.SUB_DISCOUNT_FORM.HEADING' | translate }}</h4>
+        <h4 class="transaction-title">{{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.HEADING' | translate }}</h4>
         <div class="form-group">
           <div class="input-group amount-input">
             <span class="input-group-text">€</span>
@@ -17,13 +17,13 @@
     <div class="col-xl-12 discount-container">
       <div class="">
         <h4>
-          {{ 'MERCHANT.SCANNER.SUB_DISCOUNT_FORM.TITLE' | translate }}
+          {{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.TITLE' | translate }}
           <span class="discount">{{transaction.discount_amount | currency:'EUR'}}</span>.
         </h4>
         <div class="">
           <mat-checkbox (click)="onWantRedeemCheckboxChange()" type="checkbox" name="redeem"
             formControlName="wantRedeem" value="false">
-            {{ 'MERCHANT.SCANNER.SUB_DISCOUNT_FORM.CTA' | translate }}
+            {{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.CTA' | translate }}
           </mat-checkbox>
         </div>
       </div>
@@ -31,5 +31,5 @@
   </div>
 </form>
 <button class="mr-2" mat-raised-button type="button"
-  (click)="onPreviousStep()">{{ 'MERCHANT.SCANNER.PREVIOUS_STEP' | translate }}</button>
-<button mat-raised-button type="button" (click)="onNextStep()">{{ 'MERCHANT.SCANNER.COMPLETE' | translate }}</button>
+  (click)="onPreviousStep()">{{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}</button>
+<button mat-raised-button type="button" (click)="onNextStep()">{{ 'PARTNER.WIZARD.COMPLETE' | translate }}</button>

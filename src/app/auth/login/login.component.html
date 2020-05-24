@@ -1,17 +1,18 @@
-<!--begin::Head-->
-
-<!--end::Head-->
-
 <!--begin::Body-->
 <div class="kt-login__body">
+
   <!--begin::Signin-->
   <div class="kt-login__form">
     <div class="kt-login__title mb-3">
       <h3>{{ 'AUTH.LOGIN.TITLE' | translate }}</h3>
     </div>
 
+    <!--begin::Notice-->
     <auth-notice></auth-notice>
+    <!--end::Notice-->
+
     {{test}}
+
     <!--begin::Form-->
     <form class="kt-form" [formGroup]="loginForm" autocomplete="off" class="login-form">
       <div class="form-group">
@@ -53,6 +54,7 @@
           </mat-error>
         </mat-form-field>
       </div>
+
       <!--begin::Action-->
       <div class="kt-login__actions">
         <a href="javascript:;" routerLink="/auth/forgot-password" class="link-forgot mr-3">
@@ -66,8 +68,10 @@
           class="btn btn-primary btn-elevate kt-login__btn-primary">{{ 'AUTH.LOGIN.BUTTON' | translate }}</button>
       </div>
       <!--end::Action-->
+
     </form>
     <!--end::Form-->
+
     <div class="kt-login__head">
       <span class="kt-login__signup-label">{{ 'AUTH.MESSAGES.HAVE_ACCOUNT' | translate }}</span>&nbsp;&nbsp;
       <a href="javascript:;" routerLink="/auth/register"
@@ -76,5 +80,6 @@
 
   </div>
   <!--end::Signin-->
+
 </div>
 <!--end::Body-->

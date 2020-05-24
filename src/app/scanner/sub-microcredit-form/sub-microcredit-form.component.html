@@ -1,5 +1,5 @@
-<h4 class="heading">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HEADING' | translate }} <div class="extra-details">
-    {{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.CAMPAIGN_ID' | translate }} {{transaction.campaign_id}}</div>
+<h4 class="heading">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.HEADING' | translate }} <div class="extra-details">
+    {{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.CAMPAIGN_ID' | translate }} {{transaction.campaign_id}}</div>
 </h4>
 <div class="row justify-content-md-center">
   <mat-radio-group aria-labelledby="token-radio-group-label" class="token-radio-group">
@@ -22,32 +22,32 @@
 	
 </div>-->
 <div class="mb-3">
-  <h4 class="heading">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HEADING_2' | translate }} <div class="extra-details">
-      {{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.SUPPORT_ID' | translate }} {{transaction.support_id}}</div>
+  <h4 class="heading">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.HEADING_2' | translate }} <div class="extra-details">
+      {{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.SUPPORT_ID' | translate }} {{transaction.support_id}}</div>
   </h4>
   <div class="row token-info">
     <div class="col-md-3">
-      <div class="col-head init">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.INITIAL' | translate }}</div>
+      <div class="col-head init">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.INITIAL' | translate }}</div>
       <div class="token-num">{{transaction.initial_tokens}}</div>
     </div>
     <div class="col-md-4">
-      <div class="col-head redeemed">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.REDEEMED' | translate }}</div>
+      <div class="col-head redeemed">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.REDEEMED' | translate }}</div>
       <div class="token-num">{{transaction.redeemed_tokens}}</div>
     </div>
     <div class="col-md-5">
-      <div class="col-head remaining">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.REMAINING' | translate }}</div>
+      <div class="col-head remaining">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.REMAINING' | translate }}</div>
       <div class="token-num">{{transaction.possible_tokens}}</div>
     </div>
   </div>
 </div>
-<!-- <div class="merchant-alert" *ngIf="!transaction.possible_tokens">
-  <p>{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.ALERT' | translate }}</p>
+<!-- <div class="partner-alert" *ngIf="!transaction.possible_tokens">
+  <p>{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.ALERT' | translate }}</p>
 </div> -->
 <div *ngIf="transaction.possible_tokens">
   <form [formGroup]="submitForm">
     <!--begin: Form Wizard Step 1-->
     <div class="">
-      <h5>{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HEADING_3' | translate }}</h5>
+      <h5>{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.HEADING_3' | translate }}</h5>
       <div class="form-group">
         <!--<label>Tokens</label>-->
         <div class="input-group amount-input">
@@ -61,12 +61,15 @@
         <span *ngIf="isControlHasError('tokens','max')"
           class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
           {{ transaction.possible_tokens }}</span>
-        <span class="form-text text-muted">{{ 'MERCHANT.SCANNER.SUB_MICROCREDIT_FORM.HINT' | translate }}</span>
+        <span class="form-text text-muted">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.HINT' | translate }}</span>
       </div>
     </div>
   </form>
 </div>
-<button mat-raised-button class="mr-2" type="button"
-  (click)="onPreviousStep()">{{ 'MERCHANT.SCANNER.PREVIOUS_STEP' | translate }}</button>
-<button *ngIf="transaction.possible_tokens" mat-raised-button type="button"
-  (click)="onNextStep()">{{ 'MERCHANT.SCANNER.NEXT_STEP' | translate }}</button>
+
+<!--start::Wizard Buttons-->
+<button mat-raised-button class="mr-2" type="button" (click)="onPreviousStep()">
+  {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}</button>
+<button *ngIf="transaction.possible_tokens" mat-raised-button type="button" (click)="onNextStep()">
+  {{ 'PARTNER.WIZARD.NEXT_STEP' | translate }}</button>
+<!--end::Wizard Buttons-->

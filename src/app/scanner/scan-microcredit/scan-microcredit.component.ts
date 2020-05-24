@@ -1,23 +1,19 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
-// Global Services
 import { TranslateService } from '@ngx-translate/core';
+import { WizardComponent } from 'angular-archwizard';
+
+// Global Services
 import { MessageNoticeService } from 'src/app/core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { MicrocreditService } from '../../core/services/microcredit.service';
 
-// Local Services
+// Local Services & Models/Interfaces
 import { ScannerService } from '../_scanner.service';
-
-// Local Models & Interfaces
 import { ScannerInterface } from '../_scanner.interface';
-
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { WizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-scan-microcredit',
@@ -139,7 +135,7 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCESS_TRANSACTION'), 'success');
+            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
             this.onNextStep();
           },
           error => {
