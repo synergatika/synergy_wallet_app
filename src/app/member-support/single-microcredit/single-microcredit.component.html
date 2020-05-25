@@ -49,8 +49,10 @@
               <span
                 *ngIf="singleMicrocredit.quantitative!=true">{{singleMicrocredit.minAllowed | currency:'EUR' }}</span>
             </div>
-            <button class="plegde-button" mat-raised-button
-              (click)="pledgeModal(singleMicrocredit.partner_id, singleMicrocredit.campaign_id)">{{'CAMPAIGN.PLEDGE' | translate}}</button>
+            <button disabled="!hasExpired" class="plegde-button" mat-raised-button
+              (click)="pledgeModal(singleMicrocredit.partner_id, singleMicrocredit.campaign_id)">{{'CAMPAIGN.PLEDGE' | translate}}
+            </button>
+            <span *ngIf="hasExpired">{{'CAMPAIGN.PLEDGE_DISABLE' | translate}}</span>
           </div>
         </div>
         <div class="row s_single-description">

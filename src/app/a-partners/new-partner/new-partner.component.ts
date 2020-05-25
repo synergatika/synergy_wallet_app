@@ -161,13 +161,6 @@ export class NewPartnerComponent implements OnInit, OnDestroy {
   /**
    * Set / Clear Validators 
    */
-  setPartnerPaymentsValidators() {
-    this.paymentsList.forEach((value, i) => {
-      this.payments.at(i).setValidators(Validators.required);
-      this.payments.at(i).updateValueAndValidity();
-    });
-  }
-
   clearPartnerAddressValidators(form: FormGroup) {
     form.get('timetable').clearValidators();
     form.get('timetable').updateValueAndValidity();
@@ -190,6 +183,13 @@ export class NewPartnerComponent implements OnInit, OnDestroy {
     form.get('phone').updateValueAndValidity();
     form.get('websiteURL').clearValidators();
     form.get('websiteURL').updateValueAndValidity();
+  }
+
+  setPartnerPaymentsValidators() {
+    this.paymentsList.forEach((value, i) => {
+      this.payments.at(i).setValidators(Validators.required);
+      this.payments.at(i).updateValueAndValidity();
+    });
   }
 
   clearPartnerPaymentsValidators() {

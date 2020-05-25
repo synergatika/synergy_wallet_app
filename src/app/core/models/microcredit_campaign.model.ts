@@ -1,20 +1,6 @@
-interface Address {
-    street: string;
-    city: string;
-    postCode: string;
-    coordinates: string[];
-}
-
-interface Contact {
-    phone: string;
-    websiteURL: string;
-}
-
-interface Bank {
-    bic: string;
-    name: string;
-    value: string;
-}
+import { PartnerAddress } from './partner_address.model';
+import { PartnerContact } from './partner_contact.model';
+import { PartnerPayment } from './partner_payment.model';
 
 interface Tokens {
     _id: string;
@@ -29,9 +15,10 @@ export interface MicrocreditCampaign {
     partner_email: string;
     partner_slug: string;
     partner_imageURL: string;
-    partner_payments: Bank[];
-    partner_address: Address;
-    partner_contact: Contact;
+
+    partner_payments: PartnerPayment[];
+    partner_address: PartnerAddress;
+    partner_contact: PartnerContact;
 
     _id?: string;
     campaign_id: string;

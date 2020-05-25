@@ -26,6 +26,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             } else if (err.status === 404) {
                 error = 'NOT_FOUND_ERRORS.' + err.error.message.split('Not Found: ')[1];// || err.statusText;
             } else if (err.status === 422) {
+                console.log(err);
                 error = 'HTTP_ERRORS.UNPROCESSABLE_ENTITY';
             } else if (err.status >= 500) {
                 error = 'HTTP_ERRORS.SERVER';

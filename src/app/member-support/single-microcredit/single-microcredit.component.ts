@@ -12,6 +12,7 @@ export class SingleMicrocreditComponent implements OnInit {
 	//Set Variables Imported
 	@Input() singleMicrocredit: any;
 
+	public hasExpired: boolean = false;
 	constructor(
 		public matDialog: MatDialog,
 	) {
@@ -20,6 +21,11 @@ export class SingleMicrocreditComponent implements OnInit {
 
 	ngOnInit() {
 		console.log(this.singleMicrocredit);
+
+		const now = new Date();
+		const seconds = parseInt(now.getTime().toString());
+
+		if (seconds > this.singleMicrocredit.expiresAt) this.hasExpired = true;
 	}
 
 	pledgeModal(partner_id: string, campaign_id: string) {

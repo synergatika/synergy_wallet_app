@@ -577,6 +577,7 @@ export const locale = {
             CAMPAIGN_NOT_PUBLISHED: 'Campaign\'s has not been published yet',
             CAMPAIGN_NOT_STARTED: 'Campaign\'s supporting period has not yet started',
             CAMPAIGN_EXPIRED: 'Camapign\'s supporting period has expired',
+            PAYMENT_METHODS_REQUIRED: 'Payment Methods Required! Declare them in your Profile',
 
             OVER_MAX_AMOUNT: 'Support Fund cannot be more than max allowed amount',
             UNDER_MIN_AMOUNT: 'Support Fund cannot be less than min allowed amount',
@@ -693,6 +694,7 @@ export const locale = {
             PRICE: 'Price',
             PRICE_PER_ITEM: 'Price per item',
             PLEDGE: 'Pledge',
+            PLEDGE_DISABLE: 'Supporting Period is over',
             PARTNER: 'Partner Info',
             TERMS: 'What do I get?'
         },
@@ -839,10 +841,53 @@ export const locale = {
         },
 
 
-
         /**
-         * ADMIN-PAGES TRANSLATION (Μετάφραση Σελίδων Διαχειριστή)
+         * WIZARD(STEPPER) MESSAGES TRANSLATION (Μετάφραση Μηνυμάτων Stepper)
          */
+        WIZARD_MESSAGES: {
+            ERROR: 'Something went wrong',
+            ERROR_REGISTRATION: 'Error during registration',
+            ERROR_LINK_EMAIL: 'Error during linking email',
+            ERROR_LINK_CARD: 'Error during linking card',
+            ERROR_TRANSACTION: 'Transaction failed',
+            EMAIL_HAS_CARD: 'A card is already linked to this account',
+
+            ERROR_EARN_POINTS: '',
+            ERROR_REDEEM_POINTS: '',
+            ERROR_REDEEM_OFFER: '',
+            ERROR_EARN_TOKENS: '',
+            ERROR_REDEEM_TOKENS: '',
+
+            NOT_ENOUGH_POINTS: 'Unable to procced <br> Not enough points',
+            NOT_ENOUGH_TOKENS: 'Unable to procced <br> Not enough tokens',
+
+            // Step A
+            NEW_EMAIL: 'A New email detected',
+            NEW_CARD: 'New Card Number Detected<br>Please enter an existing Email address to link! If not, ask email to register! Or procced and create a card account',
+            EXISTING_CARD: 'An Existing Card Number Detected<br>Link an Email or continue',
+
+            EMAIL_WILL_LINK: 'Email address will link with the card',
+            CARD_WILL_LINK: 'Card will link with email address',
+            NO_EMAIL_WILL_LINK: 'No email will link\nThe process will continue with a card',
+
+            USER_CREATED: 'A new user has been created',
+            USER_CREATED_CARD: 'A new user created only card',
+            USER_CREATED_EMAIL: 'A new user has been created only email',
+            LINK_EMAIL: 'A new email address has been linked to an existing account',
+            LINK_CARD: 'A new card has been linked to an existing account',
+
+            SUCCESS_TRANSACTION: 'Transaction completed successfully',
+        }
+    }
+};
+
+
+
+
+
+/**
+ * ADMIN-PAGES TRANSLATION (Μετάφραση Σελίδων Διαχειριστή)
+ */
 
 
         // COMMUNITY: {
@@ -883,39 +928,3 @@ export const locale = {
 
 
 
-        WIZARD_MESSAGES: {
-            ERROR: 'Something went wrong',
-            ERROR_REGISTRATION: 'Error during registration',
-            ERROR_LINK_EMAIL: 'Error during linking email',
-            ERROR_LINK_CARD: 'Error during linking card',
-            ERROR_TRANSACTION: 'Transaction failed',
-            EMAIL_HAS_CARD: 'A card is already linked to this account',
-
-            ERROR_EARN_POINTS: '',
-            ERROR_REDEEM_POINTS: '',
-            ERROR_REDEEM_OFFER: '',
-            ERROR_EARN_TOKENS: '',
-            ERROR_REDEEM_TOKENS: '',
-
-            NOT_ENOUGH_POINTS: 'Unable to procced <br> Not enough points',
-            NOT_ENOUGH_TOKENS: 'Unable to procced <br> Not enough tokens',
-
-            // Step A
-            NEW_EMAIL: 'A New email detected',
-            NEW_CARD: 'New Card Number Detected<br>Please enter an existing Email address to link! If not, ask email to register! Or procced and create a card account',
-            EXISTING_CARD: 'An Existing Card Number Detected<br>Link an Email or continue',
-
-            EMAIL_WILL_LINK: 'Email address will link with the card',
-            CARD_WILL_LINK: 'Card will link with email address',
-            NO_EMAIL_WILL_LINK: 'No email will link\nThe process will continue with a card',
-
-            USER_CREATED: 'A new user has been created',
-            USER_CREATED_CARD: 'A new user created only card',
-            USER_CREATED_EMAIL: 'A new user has been created only email',
-            LINK_EMAIL: 'A new email address has been linked to an existing account',
-            LINK_CARD: 'A new card has been linked to an existing account',
-
-            SUCCESS_TRANSACTION: 'Transaction completed successfully',
-        }
-    }
-};

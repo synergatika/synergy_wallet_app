@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-
-import { first, takeUntil, finalize, tap } from 'rxjs/operators';
-import Swal from 'sweetalert2'
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { first, takeUntil, tap, finalize } from 'rxjs/operators';
+import Swal from 'sweetalert2'
 
 // Translate
 import { TranslateService } from '@ngx-translate/core';
@@ -12,13 +12,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { PartnersService } from '../../core/services/partners.service';
 import { MembersService } from '../../core/services/members.service';
+import { StaticDataService } from '../../core/services/static-data.service';
+// Environment
+import { environment } from '../../../environments/environment';
 
 // Models
 import { Partner } from '../../core/models/partner.model';
-import { Member } from '../../core/models/member.model';
-import { Router } from '@angular/router';
+import { PartnerPayment } from '../../core/models/partner_payment.model';
 
-import { StaticDataService } from '../../core/services/static-data.service';
+import { Member } from '../../core/models/member.model';
+
 
 
 @Component({
@@ -29,6 +32,8 @@ import { StaticDataService } from '../../core/services/static-data.service';
 export class PersonalInformationComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputMerch', { static: false }) imageInputMerch: ElementRef;
   @ViewChild('fileInput', { static: false }) imageInput: ElementRef;
+
+  public subAccessConfig: Boolean[] = environment.subAccess;
 
   public paymentsList: any[];
   public access: string = '';
@@ -95,6 +100,34 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  /**
+   * Configuration
+   */
+  configurationOnFetchPartnerData(partner: Partner) {
+    if (partner.address && this.subAccessConfig[0]) {
+      this.partnerForm.patchValue({
+        ...partner.address, lat: partner.address.coordinates[0], long: partner.address.coordinates[1]
+      });
+    }
+
+    if (partner.contact && this.subAccessConfig[1]) {
+      this.partnerForm.patchValue({
+        ...partner.contact
+      });
+    }
+
+    if (partner.payments && this.subAccessConfig[1]) {
+      this.partnerForm.patchValue({
+        ...{
+          payments: (this.paymentsList.map(item => {
+            const obj = (partner.payments).find(o => o.bic === item.bic);
+            return { ...item, ...obj };
+          })).map(a => a.value)
+        }
+      });
+    }
+  };
+
   fetchMemberData() {
     console.log('Member');
     this.membersService.readProfile()
@@ -131,17 +164,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
             console.log(data);
             this.initialImage = data.imageURL;
             this.previewUrl = this.initialImage || '../../../../assets/media/users/default.png';
-            const patner_payments = (this.paymentsList.map(item => {
-              const obj = (data.payments).find(o => o.bic === item.bic);
-              return { ...item, ...obj };
-            })).map(a => a.value);
-
-            this.partnerForm.patchValue({
-              ...data, ...data.address,
-              //lat: data.address.coordinates[0], long: data.address.coordinates[1],
-              ...data.contact, ...{ payments: patner_payments }
-              //...data.payments
-            });
+            this.partnerForm.patchValue({ ...data });
+            this.configurationOnFetchPartnerData(data)
           },
           error => {
             Swal.fire(
@@ -225,11 +249,12 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       // alphaBank: [''],
       // paypal: [''],
     });
+
+    (this.subAccessConfig[0]) ? this.clearPartnerAddressValidators(this.partnerForm) : '';
+    (this.subAccessConfig[1]) ? this.clearPartnerContactValidators(this.partnerForm) : '';
+
     this.paymentsList.forEach(element => {
       const payment = new FormControl('',
-        //Validators.compose([
-        //	Validators.required
-        //])
       );
       this.payments.push(payment);
     });
@@ -237,6 +262,46 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   get payments() {
     return this.partnerForm.get('payments') as FormArray;
+  }
+
+  clearPartnerAddressValidators(form: FormGroup) {
+    form.get('timetable').clearValidators();
+    form.get('timetable').updateValueAndValidity();
+
+    form.get('street').clearValidators();
+    form.get('street').updateValueAndValidity();
+    form.get('postCode').clearValidators();
+    form.get('postCode').updateValueAndValidity();
+    form.get('city').clearValidators();
+    form.get('city').updateValueAndValidity();
+
+    form.get('lat').clearValidators();
+    form.get('lat').updateValueAndValidity();
+    form.get('long').clearValidators();
+    form.get('long').updateValueAndValidity();
+  }
+
+  clearPartnerContactValidators(form: FormGroup) {
+    form.get('phone').clearValidators();
+    form.get('phone').updateValueAndValidity();
+    form.get('websiteURL').clearValidators();
+    form.get('websiteURL').updateValueAndValidity();
+  }
+
+  clearPartnerPaymentsValidators() {
+    console.log("On Clear");
+    this.paymentsList.forEach((value, i) => {
+      this.payments.at(i).clearValidators();
+      this.payments.at(i).updateValueAndValidity();
+    });
+  }
+
+  setPartnerPaymentsValidators() {
+    console.log("On Set");
+    this.paymentsList.forEach((value, i) => {
+      this.payments.at(i).setValidators(Validators.required);
+      this.payments.at(i).updateValueAndValidity();
+    });
   }
 
   fileProgress(fileInput: any) {
@@ -331,22 +396,6 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  setPaymentsValidators(controls: any) {
-    console.log("On Set");
-    this.paymentsList.forEach((value, i) => {
-      this.payments.at(i).setValidators(Validators.required);
-      this.payments.at(i).updateValueAndValidity();
-    });
-  }
-
-  clearPaymentsValidators(controls: any) {
-    console.log("On Clear");
-    this.paymentsList.forEach((value, i) => {
-      this.payments.at(i).clearValidators();
-      this.payments.at(i).updateValueAndValidity();
-    });
-  }
-
   setPaymentsValues(controls: any) {
     var payments: any[] = [];
     this.paymentsList.forEach((value, i) => {
@@ -359,7 +408,6 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         })
       }
     });
-
     return payments;
   }
 
@@ -367,16 +415,19 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     if (this.submitted || this.loading) return;
 
     const controls = this.partnerForm.controls;
-    const partner_payments: any[] = this.setPaymentsValues(controls);
+    const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
     /** check form */
     if (this.partnerForm.invalid || !partner_payments.length) {
-      if (!partner_payments.length) { this.setPaymentsValidators(controls); this.showPaymentError = true; }
-      else if (partner_payments.length) { this.clearPaymentsValidators; this.showPaymentError = false; }
+
+      (partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();
+      this.showPaymentError = (partner_payments.length === 0)
+      this.showImageError = (!this.fileData);
+
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
-      this.loading = false;
-      this.submitted = false;
+
+      this.loading = false; this.submitted = false;
       return;
     }
 
@@ -403,16 +454,11 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     formData.append('city', controls.city.value);
     formData.append('lat', controls.lat.value);
     formData.append('long', controls.long.value);
+
     formData.append('phone', controls.phone.value);
     formData.append('websiteURL', controls.websiteURL.value);
 
     formData.append('payments', JSON.stringify(partner_payments));
-    // formData.append('nationalBank', controls.nationalBank.value);
-    // formData.append('pireausBank', controls.pireausBank.value);
-    // formData.append('eurobank', controls.eurobank.value);
-    // formData.append('alphaBank', controls.alphaBank.value);
-    // formData.append('paypal', controls.paypal.value);
-    console.log("Update");
 
     this.partnersService.updatePartnerInfo(this.authenticationService.currentUserValue.user["_id"], formData)
       .pipe(

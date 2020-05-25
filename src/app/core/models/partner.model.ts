@@ -1,20 +1,6 @@
-interface Address {
-    street: string;
-    city: string;
-    postCode: string;
-    coordinates: string[];
-}
-
-interface Contact {
-    phone: string;
-    websiteURL: string;
-}
-
-interface Bank {
-    bic: string;
-    name: string;
-    value: string;
-}
+import { PartnerAddress } from './partner_address.model';
+import { PartnerContact } from './partner_contact.model';
+import { PartnerPayment } from './partner_payment.model';
 
 export interface Partner {
     _id?: string;
@@ -28,9 +14,9 @@ export interface Partner {
     timetable?: string;
     sector: string;
 
-    contact: Contact;
-    address: Address;
-    payments?: [Bank];
+    contact: PartnerContact;
+    address: PartnerAddress;
+    payments?: PartnerPayment[];
 
     createdAt?: Date;
-}
+};

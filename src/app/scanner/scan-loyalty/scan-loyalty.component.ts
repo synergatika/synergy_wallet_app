@@ -399,6 +399,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
             }
           },
           error => {
+            console.log(error)
             this.scannerNoticeService.setNotice(
               this.translate.instant('WIZARD_MESSAGES.ERROR_EARN_POINTS') + '<br>' +
               this.translate.instant(error), 'danger');

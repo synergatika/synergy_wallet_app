@@ -15,6 +15,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
 import { StaticDataService } from '../../core/services/static-data.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
 	selector: 'kt-register-partner',
@@ -25,6 +26,8 @@ import { StaticDataService } from '../../core/services/static-data.service';
 export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
 	public paymentsList: any[];
+
+	public subAccessConfig: Boolean[] = environment.subAccess;
 
 	validator: any;
 	registerForm: FormGroup;
@@ -128,6 +131,9 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 			validator: ConfirmPasswordValidator.MatchPassword
 		});
 
+		//	(this.subAccessConfig[0]) ? this.clearPartnerAddressValidators(this.registerForm) : '';
+		//	(this.subAccessConfig[1]) ? this.clearPartnerContactValidators(this.registerForm) : '';
+
 		this.paymentsList.forEach(element => {
 			const payment = new FormControl('');
 			this.payments.push(payment);
@@ -138,6 +144,50 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		return this.registerForm.get('payments') as FormArray;
 	}
 
+	/**
+	 * Set / Clear Validators 
+	 */
+	clearPartnerAddressValidators(form: FormGroup) {
+		form.get('timetable').clearValidators();
+		form.get('timetable').updateValueAndValidity();
+
+		form.get('street').clearValidators();
+		form.get('street').updateValueAndValidity();
+		form.get('postCode').clearValidators();
+		form.get('postCode').updateValueAndValidity();
+		form.get('city').clearValidators();
+		form.get('city').updateValueAndValidity();
+
+		form.get('lat').clearValidators();
+		form.get('lat').updateValueAndValidity();
+		form.get('long').clearValidators();
+		form.get('long').updateValueAndValidity();
+	}
+
+	clearPartnerContactValidators(form: FormGroup) {
+		form.get('phone').clearValidators();
+		form.get('phone').updateValueAndValidity();
+		form.get('websiteURL').clearValidators();
+		form.get('websiteURL').updateValueAndValidity();
+	}
+
+	setPartnerPaymentsValidators() {
+		this.paymentsList.forEach((value, i) => {
+			this.payments.at(i).setValidators(Validators.required);
+			this.payments.at(i).updateValueAndValidity();
+		});
+	}
+
+	clearPartnerPaymentsValidators() {
+		this.paymentsList.forEach((value, i) => {
+			this.payments.at(i).clearValidators();
+			this.payments.at(i).updateValueAndValidity();
+		});
+	}
+
+	/**
+	 * Terms Aggrement
+	 */
 	openTermsDialog() {
 		const dialogRef = this.dialog.open(TermsComponent, {
 			height: '450px'
@@ -148,6 +198,9 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	/**
+	 * Image Upload
+	 */
 	fileProgress(fileInput: any) {
 		this.fileData = <File>fileInput.target.files[0];
 		this.preview();
@@ -182,21 +235,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		this.cdr.markForCheck();
 	}
 
-	setPaymentsValidators(controls: any) {
-		console.log("On Set");
-		this.paymentsList.forEach((value, i) => {
-			this.payments.at(i).setValidators(Validators.required);
-			this.payments.at(i).updateValueAndValidity();
-		});
-	}
 
-	clearPaymentsValidators(controls: any) {
-		console.log("On Clear");
-		this.paymentsList.forEach((value, i) => {
-			this.payments.at(i).clearValidators();
-			this.payments.at(i).updateValueAndValidity();
-		});
-	}
 	/*
 	this.registerForm.get('nationalBank').setValidators(Validators.required)
 	this.registerForm.get('nationalBank').updateValueAndValidity();
@@ -253,9 +292,11 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
 		/** check form */
 		if (this.registerForm.invalid || !this.fileData || !partner_payments.length) {
-			if (!partner_payments.length) { this.setPaymentsValidators(controls); this.showPaymentError = true; }
-			else if (partner_payments.length) { this.clearPaymentsValidators; this.showPaymentError = false; }
-			if (!this.fileData) this.showImageError = true;
+
+			(partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();
+			this.showPaymentError = (partner_payments.length === 0)
+			this.showImageError = (!this.fileData);
+
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
 			);
