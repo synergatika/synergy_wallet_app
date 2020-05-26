@@ -1,12 +1,15 @@
 import { Input, Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
-
+import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 import { ItemsService } from '../../../core/services/items.service';
-import { tap, takeUntil, finalize } from 'rxjs/operators';
 
-import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Partner } from 'src/app/core/models/partner.model';
+import { Offer } from 'src/app/core/models/offer.model';
+import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.model';
+import { PostEvent } from 'src/app/core/models/post_event.model';
 
 @Component({
 	selector: 'app-single-coop',
@@ -15,23 +18,27 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 })
 export class SingleCoopComponent implements OnInit, OnDestroy {
 
+	// Set Child Modals
+	@ViewChild('campaignModal', { static: false }) campaignModal: NgbModal;
+	@ViewChild('postModal', { static: false }) postModal: NgbModal;
+	// Set Variables Imported
+	@Input() singleCoop: Partner;
+
+
 	//Set Basic Variables
-	moved;
+	moved: boolean;
 	private unsubscribe: Subject<any>;
 	loading: boolean = false;
-	//Set Variables Imported
-	@Input() singleCoop: any;
-	//Set Content Variables
-	singleOffers: any;
-	singlePosts: any; //Used to store posts
-	singlePost: any; //Used for the post to open in modal
-	singleMicrocredits: any; //Used to store microcredits
-	singleMicrocredit: any; //Used for the Microcreit to open in modal
-	hours: any;
 
-	//Set Child Modals
-	@ViewChild('campaignModal', { static: false }) campaignModal;
-	@ViewChild('postModal', { static: false }) postModal;
+	//Set Content Variables
+	singleOffers: Offer[];
+	singlePosts: PostEvent[]; //Used to store posts
+	singlePost: PostEvent; //Used for the post to open in modal
+	singleMicrocredits: MicrocreditCampaign[]; //Used to store microcredits
+	singleMicrocredit: MicrocreditCampaign; //Used for the Microcreit to open in modal
+	//hours: any;
+
+
 
 	//Slider Options
 	customOptionsSingle: OwlOptions = {

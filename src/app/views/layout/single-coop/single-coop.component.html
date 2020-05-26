@@ -26,10 +26,11 @@
             <div *ngIf="singleCoop.contact" class="info-row"><span class="mdi mdi-web"></span><a target="_blank"
                 href="{{singleCoop.contact.websiteURL}}">{{singleCoop.contact.websiteURL}}</a></div>
           </div>
-          <div class="col-md-6 hours">
-            <div *ngFor="let hour of (hours)">
+          <div *ngIf="singleCoop.timetable" class="col-md-6 hours">
+            <p [innerHTML]="singleCoop.timetable"></p>
+            <!-- <div *ngFor="let hour of (hours)">
               {{hour}}
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="row s_single-description">

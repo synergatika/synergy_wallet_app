@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ItemsService } from '../../../core/services/items.service';
-import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { tap, takeUntil, finalize } from 'rxjs/operators';
+
+import { ItemsService } from '../../../core/services/items.service';
 import { Offer } from '../../../core/models/offer.model';
 
 @Component({
@@ -10,16 +11,24 @@ import { Offer } from '../../../core/models/offer.model';
 	styleUrls: ['./archive-offers.component.scss']
 })
 export class ArchiveOffersComponent implements OnInit {
-	offers: Offer[];
+
+	public offers: Offer[];
+
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
-	constructor(private cdRef: ChangeDetectorRef, private itemsService: ItemsService, ) {
+	constructor(private cdRef: ChangeDetectorRef, private itemsService: ItemsService) {
 		this.unsubscribe = new Subject();
 	}
 
 	ngOnInit() {
 		this.fetchOffersData();
+	}
+
+	ngOnDestroy() {
+		this.unsubscribe.next();
+		this.unsubscribe.complete();
+		this.loading = false;
 	}
 
 	fetchOffersData() {
@@ -42,16 +51,9 @@ export class ArchiveOffersComponent implements OnInit {
 			.subscribe();
 	}
 
-	ngOnDestroy() {
-		this.unsubscribe.next();
-		this.unsubscribe.complete();
-		this.loading = false;
-	}
-
 	onScroll() {
 		console.log('scrolled!!');
 		this.offers = this.offers.concat(this.offers);
 		this.cdRef.markForCheck();
 	}
-
 }

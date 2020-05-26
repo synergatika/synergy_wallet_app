@@ -16,6 +16,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
 import { StaticDataService } from '../core/services/static-data.service';
 
+import { Offer } from '../core/models/offer.model';
+import { Activity } from '../core/models/activity.model';
+import { Balance } from '../core/interfaces/balance.interface';
+
+import { PaymentList } from '../core/interfaces/payment-list.interface';
+
 @Component({
 	selector: 'app-member-dashboard',
 	templateUrl: './member-dashboard.component.html',
@@ -24,22 +30,22 @@ import { StaticDataService } from '../core/services/static-data.service';
 export class MemberDashboardComponent implements OnInit, OnDestroy {
 
 	public configAccess: Boolean[] = environment.access;
-	public paymentsList: any[];
+	public paymentsList: PaymentList[];
 
 	//Set Basic Variables
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
-	public loyalty_badge: any; //The loyalty badge of member
-	public microcredit_badge: any;
-	public balance: any; //The loyalty badge of member
+	public loyalty_badge: Activity; //The loyalty badge of member
+	public microcredit_badge: Activity;
+	public balance: Balance; //The loyalty badge of member
 	public qrcode: any; //The loyalty badge of member
 
 	//Set Content Variables
 	Text: any; //Static Text for QR Code Modal
 	supportsList: MicrocreditSupport[]; //The microcredits the member supports
 	supportItem: MicrocreditSupport; //Currently Selected microcredit Support
-	offers: any; //Available Offers
+	offers: Offer[]; //Available Offers
 
 	//Set Badges Icons
 	badgesImages = {

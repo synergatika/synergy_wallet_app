@@ -19,7 +19,7 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
   //Set Content Variables
   campaigns: MicrocreditCampaign[];
-  singleMicrocredit: any;
+  singleMicrocredit: MicrocreditCampaign;
 
   //Set Child Modals
   @ViewChild('campaignModal', { static: false }) campaignModal;

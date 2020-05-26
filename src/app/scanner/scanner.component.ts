@@ -31,7 +31,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
 
   moved: boolean;
   posts: PostEvent[];
-  singlePost: any;
+  singlePost: PostEvent;
   singlePartner = false;
 
   public offers: ScannerInterface["Offer"][];

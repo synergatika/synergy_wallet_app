@@ -17,6 +17,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 
 // Models./_support.service
 import { StaticDataService } from '../../core/services/static-data.service';
+import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
 
 @Component({
   selector: 'app-edit-microcredit-campaign',
@@ -33,7 +34,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   public initialImage: string = '';
   public title: string = '';
 
-  accessList: any;
+  accessList: GeneralList[];
   validator: any;
 
   fileData: File = null;

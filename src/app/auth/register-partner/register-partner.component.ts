@@ -1,7 +1,7 @@
 // Angular
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 // RxJS
 import { Subject } from 'rxjs';
@@ -16,6 +16,9 @@ import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
 import { StaticDataService } from '../../core/services/static-data.service';
 import { environment } from '../../../environments/environment';
+import { PartnerPayment } from '../../core/models/partner_payment.model';
+
+import { PaymentList } from '../../core/interfaces/payment-list.interface';
 
 @Component({
 	selector: 'kt-register-partner',
@@ -25,7 +28,7 @@ import { environment } from '../../../environments/environment';
 })
 export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
-	public paymentsList: any[];
+	public paymentsList: PaymentList[];
 
 	public subAccessConfig: Boolean[] = environment.subAccess;
 
@@ -250,8 +253,8 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 */
 
 
-	setPaymentsValues(controls: any) {
-		var payments: any[] = [];
+	setPaymentsValues(controls: { [key: string]: AbstractControl }) {
+		var payments: PartnerPayment[] = [];
 		this.paymentsList.forEach((value, i) => {
 			console.log(controls.payments.value[i])
 			if (controls.payments.value[i]) {
@@ -286,7 +289,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		this.loading = true;
 
 		const controls = this.registerForm.controls;
-		const partner_payments: any[] = this.setPaymentsValues(controls);
+		const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
 
 		//if (partner_payments.length) this.updatePaymentsValidators(controls);
 

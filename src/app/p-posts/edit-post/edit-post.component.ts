@@ -20,6 +20,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
 
 import { Post } from '../../core/models/post.model';
 import { StaticDataService } from '../../core/services/static-data.service';
+import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
 
 @Component({
   selector: 'app-edit-post',
@@ -35,7 +36,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   public initialImage: string = '';
   public title: string = '';
 
-  accessList: any;
+  accessList: GeneralList[];
   validator: any;
 
   fileData: File = null;

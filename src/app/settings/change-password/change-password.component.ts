@@ -26,11 +26,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     }
   };
 
-  profile: any = {
-    oldPassword: '',
-    newPassword: '',
-    verPassword: ''
-  }
   submitForm: FormGroup;
   submitted = false;
 

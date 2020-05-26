@@ -20,6 +20,7 @@ import { ItemsService } from '../../core/services/items.service';
 
 import { Event } from '../../core/models/event.model';
 import { StaticDataService } from '../../core/services/static-data.service';
+import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
 
 @Component({
   selector: 'app-edit-event',
@@ -50,7 +51,7 @@ export class EditEventComponent implements OnInit {
   public initialImage: string = '';
   public title: string = '';
 
-  accessList: any;
+  accessList: GeneralList[];
   validator: any;
 
   fileData: File = null;

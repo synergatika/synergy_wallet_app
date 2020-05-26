@@ -16,6 +16,9 @@ import { ItemsService } from '../../core/services/items.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { StaticDataService } from '../../core/services/static-data.service';
 import { environment } from '../../../environments/environment';
+import { PaymentList } from 'src/app/core/interfaces/payment-list.interface';
+import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
+import { PartnerPayment } from 'src/app/core/models/partner_payment.model';
 
 @Component({
   selector: 'app-new-partner',
@@ -25,9 +28,9 @@ import { environment } from '../../../environments/environment';
 export class NewPartnerComponent implements OnInit, OnDestroy {
 
   public subAccessConfig: Boolean[] = environment.subAccess;
-  public paymentsList: any[];
+  public paymentsList: PaymentList[];
 
-  sectorList: any;
+  sectorList: GeneralList[];
   validator: any;
 
   fileData: File = null;
@@ -237,7 +240,7 @@ export class NewPartnerComponent implements OnInit, OnDestroy {
   }
 
   setPaymentsValues(controls: any) {
-    var payments: any[] = [];
+    var payments: PartnerPayment[] = [];
     this.paymentsList.forEach((value, i) => {
       if (controls.payments.value[i]) {
         payments.push({
@@ -254,7 +257,7 @@ export class NewPartnerComponent implements OnInit, OnDestroy {
     if (this.submitted || this.loading) return;
 
     const controls = this.submitForm.controls;
-    const partner_payments: any[] = this.setPaymentsValues(controls);
+    const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
     /** check form */
     if (this.submitForm.invalid || !this.fileData || !partner_payments.length) {
       (partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();

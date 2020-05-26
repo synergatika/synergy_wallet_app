@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { PartnersService } from '../../../core/services/partners.service';
-import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { tap, takeUntil, finalize } from 'rxjs/operators';
+
+import { PartnersService } from '../../../core/services/partners.service';
 import { Partner } from '../../../core/models/partner.model';
 
 @Component({
@@ -10,16 +11,24 @@ import { Partner } from '../../../core/models/partner.model';
 	styleUrls: ['./archive-coops.component.scss']
 })
 export class ArchiveCoopsComponent implements OnInit {
-	partners: Partner[];
+
+	public partners: Partner[];
+
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
-	constructor(private cdRef: ChangeDetectorRef, private partnersService: PartnersService, ) {
+	constructor(private cdRef: ChangeDetectorRef, private partnersService: PartnersService) {
 		this.unsubscribe = new Subject();
 	}
 
 	ngOnInit() {
 		this.fetchPartnersData();
+	}
+
+	ngOnDestroy() {
+		this.unsubscribe.next();
+		this.unsubscribe.complete();
+		this.loading = false;
 	}
 
 	fetchPartnersData() {
@@ -41,16 +50,9 @@ export class ArchiveCoopsComponent implements OnInit {
 			.subscribe();
 	}
 
-	ngOnDestroy() {
-		this.unsubscribe.next();
-		this.unsubscribe.complete();
-		this.loading = false;
-	}
-
 	onScroll() {
 		console.log('scrolled!!');
 		this.partners = this.partners.concat(this.partners);
 		this.cdRef.markForCheck();
 	}
-
 }

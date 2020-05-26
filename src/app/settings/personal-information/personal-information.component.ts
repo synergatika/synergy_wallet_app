@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { first, takeUntil, tap, finalize } from 'rxjs/operators';
@@ -21,6 +21,8 @@ import { Partner } from '../../core/models/partner.model';
 import { PartnerPayment } from '../../core/models/partner_payment.model';
 
 import { Member } from '../../core/models/member.model';
+import { PaymentList } from 'src/app/core/interfaces/payment-list.interface';
+import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
 
 
 
@@ -35,14 +37,14 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   public subAccessConfig: Boolean[] = environment.subAccess;
 
-  public paymentsList: any[];
+  public paymentsList: PaymentList[];
   public access: string = '';
   public initialImage: string = '';
 
   showImageError: boolean = false;
   showPaymentError: boolean = false;
 
-  sectorList: any;
+  sectorList: GeneralList[];
   validator: any;
 
   memberForm: FormGroup;
@@ -396,8 +398,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  setPaymentsValues(controls: any) {
-    var payments: any[] = [];
+  setPaymentsValues(controls: { [key: string]: AbstractControl }) {
+    var payments: PartnerPayment[] = [];
     this.paymentsList.forEach((value, i) => {
       console.log(controls.payments.value[i])
       if (controls.payments.value[i]) {

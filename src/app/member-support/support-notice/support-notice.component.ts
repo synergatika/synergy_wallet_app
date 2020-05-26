@@ -12,7 +12,7 @@ import { MessageNoticeService } from '../../core/helpers/message-notice/message-
 })
 export class SupportNoticeComponent implements OnInit, OnDestroy {
 	@Output() type: any;
-	@Output() message: any = '';
+	@Output() message: string = '';
 
 	private subscriptions: Subscription[] = [];
 

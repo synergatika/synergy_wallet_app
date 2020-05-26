@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
-
-interface Menu {
-    title: string,
-    link: string,
-    icon: string,
-    enable?: boolean
-}
+import { Menu } from '../interfaces/menu.interface';
+import { PaymentList } from '../interfaces/payment-list.interface';
+import { GeneralList } from '../interfaces/general-list.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -35,8 +31,7 @@ export class StaticDataService {
         },
     ];
 
-    public get getMemberMenu() {
-
+    public get getMemberMenu(): Menu[] {
         return this.memberMenu.filter((el) => {
             return el.enable === true
         });
@@ -63,7 +58,7 @@ export class StaticDataService {
         }
     ];
 
-    public get getAdminMenu() {
+    public get getAdminMenu(): Menu[] {
         return this.adminMenu.filter((el) => {
             return el.enable === true
         });
@@ -102,13 +97,13 @@ export class StaticDataService {
         }
     ];
 
-    public get getPartnerMenu() {
+    public get getPartnerMenu(): Menu[] {
         return this.partnerMenu.filter((el) => {
             return el.enable === true
         });
     };
 
-    subMenuSettings = [
+    subMenuSettings: Menu[] = [
         {
             title: 'SETTINGS.SUBMENU.PERSONAL_INFORMATION',
             link: 'personal-information',
@@ -129,13 +124,13 @@ export class StaticDataService {
         }
     ];
 
-    public get getSettingsSubMenu() {
+    public get getSettingsSubMenu(): Menu[] {
         return this.subMenuSettings.filter((el) => {
             return el.enable === true
         });
     };
 
-    subMenuHistory = [
+    subMenuHistory: Menu[] = [
         {
             title: 'HISTORY.SUBMENU.LOYALTY',
             link: 'loyalty',
@@ -150,13 +145,13 @@ export class StaticDataService {
         }
     ];
 
-    public get getHistorySubMenu() {
+    public get getHistorySubMenu(): Menu[] {
         return this.subMenuHistory.filter((el) => {
             return el.enable === true
         });
     };
 
-    subUserHistory = [
+    subUserHistory: Menu[] = [
         {
             title: 'MENU.SETTINGS',
             link: 'settings',
@@ -171,13 +166,13 @@ export class StaticDataService {
         }
     ];
 
-    public get getUserSubMenu() {
+    public get getUserSubMenu(): Menu[] {
         return this.subUserHistory.filter((el) => {
             return el.enable === true
         });
     };
 
-    paymentsList = [
+    paymentsList: PaymentList[] = [
         {
             bic: 'ETHNGRAA',
             title: 'FIELDS.PROFILE.PAYMENT_CHOICES.A',
@@ -215,11 +210,11 @@ export class StaticDataService {
         }
     ];
 
-    public get getPaymentsList() {
+    public get getPaymentsList(): PaymentList[] {
         return this.paymentsList;
     };
 
-    sectorList = [
+    sectorList: GeneralList[] = [
         {
             title: 'FIELDS.PROFILE.SECTOR_CHOICES._',
             value: 'Other',
@@ -254,7 +249,7 @@ export class StaticDataService {
         }
     ];
 
-    accessList = [
+    accessList: GeneralList[] = [
         {
             title: 'FIELDS.POST.ACCESS_CHOICES.A',
             value: 'public',
@@ -378,11 +373,11 @@ export class StaticDataService {
         }
     };
 
-    public get getSectorList() {
+    public get getSectorList(): GeneralList[] {
         return this.sectorList;
     }
 
-    public get getAccessList() {
+    public get getAccessList(): GeneralList[] {
         return this.accessList;
     }
 

@@ -1,6 +1,7 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { SupportMicrocreditComponent } from '../support-microcredit/support-microcredit.component'
+import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.model';
 
 @Component({
 	selector: 'app-single-microcredit',
@@ -10,9 +11,9 @@ import { SupportMicrocreditComponent } from '../support-microcredit/support-micr
 export class SingleMicrocreditComponent implements OnInit {
 
 	//Set Variables Imported
-	@Input() singleMicrocredit: any;
+	@Input() singleMicrocredit: MicrocreditCampaign;
 
-	public hasExpired: boolean = false;
+	public outOfPeriod: boolean = false;
 	constructor(
 		public matDialog: MatDialog,
 	) {
@@ -25,7 +26,8 @@ export class SingleMicrocreditComponent implements OnInit {
 		const now = new Date();
 		const seconds = parseInt(now.getTime().toString());
 
-		if (seconds > this.singleMicrocredit.expiresAt) this.hasExpired = true;
+		if ((seconds < this.singleMicrocredit.startsAt) || (seconds > this.singleMicrocredit.expiresAt)) this.outOfPeriod = true;
+		console.log("Expired: ", this.outOfPeriod);
 	}
 
 	pledgeModal(partner_id: string, campaign_id: string) {

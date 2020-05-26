@@ -8,6 +8,10 @@ import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { environment } from '../../environments/environment';
+import { Partner } from '../core/models/partner.model';
+import { Offer } from '../core/models/offer.model';
+import { PostEvent } from '../core/models/post_event.model';
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
 
 @Component({
 	selector: 'app-member-explore',
@@ -24,14 +28,15 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 	loading: boolean = false;
 
 	//Set Content Variables
-	partners: any;
-	posts: any;
-	offers: any;
-	events: any;
-	singleOffers: any;
-	singleMicrocredit: any;
-	singleCoop: any;
-	singlePost: any;
+	partners: Partner[];
+	posts: PostEvent[];
+	offers: Offer[];
+	//events: Event[];
+
+	singleOffers: Offer;
+	singleMicrocredit: MicrocreditCampaign;
+	singleCoop: Partner;
+	singlePost: PostEvent;
 
 	//Set Child Modals
 	@ViewChild('coopModal', { static: false }) coopModal;

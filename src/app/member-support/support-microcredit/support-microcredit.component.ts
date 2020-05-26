@@ -12,6 +12,7 @@ import { ItemsService } from '../../core/services/items.service';
 import { SupportService } from '../_support.service';
 import { SupportInterface } from '../_support.interface';
 import { StaticDataService } from 'src/app/core/services/static-data.service';
+import { PaymentList } from 'src/app/core/interfaces/payment-list.interface';
 
 @Component({
   selector: 'app-support-microcredit',
@@ -22,7 +23,7 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
 
   @ViewChild(WizardComponent, { static: true })
   public wizard: WizardComponent;
-  public paymentsList: any[];
+  public paymentsList: PaymentList[];
 
   campaign_id: string;
   partner_id: string;

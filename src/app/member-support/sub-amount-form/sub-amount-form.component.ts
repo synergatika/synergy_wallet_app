@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MicrocreditSupport } from 'src/app/core/models/microcredit_support.model';
 import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.model';
 import { StaticDataService } from 'src/app/core/services/static-data.service';
+import { PaymentList } from 'src/app/core/interfaces/payment-list.interface';
 
 @Component({
   selector: 'app-sub-amount-form',
@@ -19,12 +20,12 @@ export class SubAmountFormComponent implements OnInit {
   @Output()
   add_amount: EventEmitter<number> = new EventEmitter<number>();
 
-  public paymentsList: any[];
+  public paymentsList: PaymentList[];
 
   public support: MicrocreditSupport;
   public campaign: MicrocreditCampaign;
   campaignType: any;
-  tempAmount: any;
+  tempAmount: number;
 
   submitForm: FormGroup;
   submitted: boolean = false;
