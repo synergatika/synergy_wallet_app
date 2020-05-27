@@ -120,7 +120,7 @@
     </form>
     <!--end::Form-->
 
-    <div class="kt-login__head">
+    <div *ngIf="subAccessConfig[3]" class="kt-login__head">
       <span class="kt-login__signup-label">{{ 'AUTH.MESSAGES.PARTNER_ACCOUNT' | translate }}</span>&nbsp;&nbsp;
       <a href="javascript:;" routerLink="/auth/partner"
         class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}

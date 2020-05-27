@@ -35,15 +35,27 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
+  /**
+   * On Init
+   */
   ngOnInit() {
-    //Get Microcredit Campaigns
     this.fetchMicrocreditData();
   }
 
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
+  }
+
+  /**
+   * Randomize
+   */
+  shuffle(array: MicrocreditCampaign[]) {
+    return array.sort(() => Math.random() - 0.5);
   }
 
   /**
@@ -56,8 +68,7 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.campaigns = data;
-            console.log(this.campaigns)
+            this.campaigns = this.shuffle(data);
             this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {
@@ -79,15 +90,13 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
   openMicrocredit(campaign) {
     this.singleMicrocredit = campaign;
     this.modalService.open(
-      this.campaignModal,
-      {
-        ariaLabelledBy: 'modal-basic-title',
-        size: 'lg',
-        backdropClass: 'fullscrenn-backdrop',
-        //backdrop: 'static',
-        windowClass: 'fullscreen-modal',
-      }
-    ).result.then((result) => {
+      this.campaignModal, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+      backdropClass: 'fullscrenn-backdrop',
+      //backdrop: 'static',
+      windowClass: 'fullscreen-modal',
+    }).result.then((result) => {
       console.log('closed');
     }, (reason) => {
       console.log('dismissed');

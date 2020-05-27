@@ -47,6 +47,8 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 	supportItem: MicrocreditSupport; //Currently Selected microcredit Support
 	offers: Offer[]; //Available Offers
 
+	p: number = 1;
+
 	//Set Badges Icons
 	badgesImages = {
 		supporter: '../../../assets/media/images/ranking-1.png',
@@ -117,6 +119,8 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.loyalty_badge = data;
+						console.log("Badge");
+						console.log(data);
 						//Set Data for Badge based On Level
 						switch (this.loyalty_badge.slug) {
 							case 1:

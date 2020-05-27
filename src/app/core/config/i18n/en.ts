@@ -727,8 +727,8 @@ export const locale = {
     USER: {
       PLURAL: 'Users',
       PARTNER: {
-        PLURAL: 'Cooperatives',
-        ALL: 'All Cooperatives',
+        PLURAL: 'Partners',
+        ALL: 'All Partners',
         CREATE: 'Add New Partner',
         CREATE_SUB: 'Create a new partner of our community',
       },

@@ -90,6 +90,13 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 	}
 
 	/**
+	 * Randomize
+	 */
+	shuffle(array: Partner[]) {
+		return array.sort(() => Math.random() - 0.5);
+	}
+
+	/**
 	* Assets Function On Init
 	*/
 
@@ -99,7 +106,7 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(
 					data => {
-						this.partners = data;
+						this.partners = this.shuffle(data);
 					},
 					error => {
 						console.log(error);

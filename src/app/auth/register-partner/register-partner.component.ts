@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
+import { ItemsService } from '../../core/services/items.service';
 // Others
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
@@ -54,6 +55,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	 * @param translate: TranslateService
 	 * @param authNoticeService: MessageNoticeService
 	 * @param authenticationService: AuthenticationService,
+	 * @param itemsService: ItemsService,
 	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
@@ -65,6 +67,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		private translate: TranslateService,
 		private authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
+		private itemsService: ItemsService,
 		private staticDataService: StaticDataService,
 	) {
 		this.paymentsList = this.staticDataService.getPaymentsList;
@@ -267,17 +270,6 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		});
 
 		return payments;
-		// if (!controls.nationalBank.value &&
-		// 	!controls.pireausBank.value &&
-		// 	!controls.eurobank.value &&
-		// 	!controls.alphaBank.value &&
-		// 	!controls.paypal.value) {
-
-		// 	console.log("Not Have")
-		// 	return false;
-		// }
-		// console.log("Have")
-		// return true;
 	}
 
 	/**
@@ -286,7 +278,6 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	submit() {
 
 		if (this.loading) return;
-		this.loading = true;
 
 		const controls = this.registerForm.controls;
 		const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
@@ -303,9 +294,9 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
 			);
-			this.loading = false;
 			return;
 		}
+		this.loading = true;
 
 		const formData = new FormData();
 		formData.append('name', controls.fullname.value);
@@ -318,9 +309,69 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		this.authenticationService.register_as_partner(formData)
 			.pipe(
 				tap(
-					user => {
+					data => {
+						console.log(data);
+						if (this.subAccessConfig[4]) this.autoCreateCampaign(data.oneClickToken)
+						else {
+							this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
+							setTimeout(() => { this.router.navigateByUrl('/auth/login'); }, 2500);
+						}
+					}, error => {
+						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.ERROR'), 'danger');
+						this.loading = false;
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.cdr.markForCheck();
+				})
+			).subscribe();
+	}
+
+	autoCreateCampaign(token: string) {
+
+		const campaign = environment.fixedMicrocreditCampaign;
+
+		var _date_1 = new Date();
+		var _newDate1 = _date_1.setDate(_date_1.getDate() + campaign.whenSupportStarts);
+		var _date_2 = new Date();
+		var _newDate2 = _date_2.setDate(_date_2.getDate() + campaign.whenSupportEnds);
+		var _date_3 = new Date();
+		var _newDate3 = _date_3.setDate(_date_3.getDate() + campaign.whenRedeemStarts);
+		var _date_4 = new Date();
+		var _newDate4 = _date_4.setDate(_date_4.getDate() + campaign.whenRedeemEnds);
+
+		const formData = new FormData();
+		formData.append("imageURL", this.fileData);
+
+		formData.append('title', campaign.title);
+		formData.append('subtitle', campaign.subtitle);
+		formData.append('terms', campaign.terms);
+		formData.append('description', campaign.description);
+		formData.append('category', campaign.category);
+		formData.append('access', campaign.access);
+		formData.append('quantitative', campaign.quantitative);
+		formData.append('minAllowed', campaign.minAllowed);
+		if (campaign.quantitative) {
+			formData.append('maxAllowed', campaign.maxAllowed);
+			formData.append('stepAmount', campaign.stepAmount);
+		} else {
+			formData.append('maxAllowed', campaign.minAllowed);
+		}
+		formData.append('maxAmount', campaign.maxAmount);
+		formData.append('redeemStarts', _newDate3.toString());
+		formData.append('redeemEnds', _newDate4.toString());
+		formData.append('startsAt', _newDate1.toString());
+		formData.append('expiresAt', _newDate2.toString());
+
+
+		this.itemsService.oneClickCreateMicrocreditCampaign(formData, token)
+			.pipe(
+				tap(
+					data => {
+						console.log(data);
 						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
 						setTimeout(() => {
+							this.loading = false;
 							this.router.navigateByUrl('/auth/login');
 						}, 2500);
 					}, error => {
@@ -328,7 +379,6 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
-					this.loading = false;
 					this.cdr.markForCheck();
 				})
 			).subscribe();

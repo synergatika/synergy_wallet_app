@@ -12,6 +12,7 @@ import { MessageNoticeService } from '../../core/helpers/message-notice/message-
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { StaticDataService } from '../../core/services/static-data.service';
 
+
 @Component({
 	selector: 'kt-login',
 	templateUrl: './login.component.html',
@@ -19,6 +20,7 @@ import { StaticDataService } from '../../core/services/static-data.service';
 	encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit, OnDestroy {
+
 
 	validator: any;
 	loginForm: FormGroup;
@@ -133,6 +135,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 						if ((data.action) && (data.action === 'need_email_verification')) {
 							this.authNoticeService.setNotice(
 								this.translate.instant('AUTH.LOGIN.EMAIL_NEEDS_VERIFICATION'), 'warning');
+							this.router.navigateByUrl('auth/need-verification');
 						}
 						else if ((data.action) && (data.action === 'need_account_activation')) {
 							this.authNoticeService.setNotice(

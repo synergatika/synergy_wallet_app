@@ -258,6 +258,13 @@ export class ItemsService {
   //     }));
   // }
 
+  oneClickCreateMicrocreditCampaign(formData: FormData, token: string): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/microcredit/campaigns/one-click/${token}`, formData)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
   createMicrocreditCampaign(formData: FormData): Observable<MicrocreditCampaign> {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/campaigns`, formData)
       .pipe(map(response => {

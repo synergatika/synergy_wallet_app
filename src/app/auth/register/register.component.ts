@@ -16,6 +16,8 @@ import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
 import { StaticDataService } from '../../core/services/static-data.service';
 
+import { environment } from '../../../environments/environment';
+
 @Component({
 	selector: 'kt-register',
 	templateUrl: './register.component.html',
@@ -23,6 +25,8 @@ import { StaticDataService } from '../../core/services/static-data.service';
 	encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
+	public subAccessConfig: Boolean[] = environment.subAccess;
 
 	validator: any;
 	registerForm: FormGroup;

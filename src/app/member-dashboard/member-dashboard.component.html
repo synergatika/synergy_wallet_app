@@ -87,7 +87,9 @@
 
             <!--begin::Microcredit Supports List-->
             <div *ngIf="configAccess[2]">
-              <div class="single row wallet-coop" *ngFor="let s of (supportsList)" (click)="openSupportItem(s)">
+              <div class="single row wallet-coop"
+                *ngFor="let s of (supportsList) | paginate: { id: 'tr_paginator', itemsPerPage: 3, currentPage: p }"
+                (click)="openSupportItem(s)">
                 <div class="col-sm-9 single-content">
                   <div class="wallet-img">
                     <img src={{s.campaign_imageURL}} alt={{s.title}} />
@@ -105,6 +107,9 @@
                     <span class="points">{{ s.initialTokens - s.redeemedTokens | currency:'EUR' }}</span>
                   </div>
                 </div>
+              </div>
+              <div class="pagination-wrapper">
+                <pagination-controls autoHide="true" id='tr_paginator' (pageChange)="p=$event"></pagination-controls>
               </div>
             </div>
             <!--end::Microcredit Supports List-->

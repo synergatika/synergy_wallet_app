@@ -156,11 +156,15 @@
         </a>
         <a href="javascript:;" routerLink="/" class="link login__link-forgot">
         </a>
-        <button routerLink="/auth/login" type="button" [disabled]="loading" id="kt_login_signup_cancel"
+        <button [disabled]="loading" routerLink="/auth/login" type="button" [disabled]="loading"
+          id="kt_login_signup_cancel"
           class="btn btn-secondary btn-elevate mr-2">{{ 'AUTH.GENERAL.BACK_BUTTON' | translate }}</button>
-        <button (click)="submit()" (keyup.enter)="submit()" id="kt_login_signin_submit"
+        <button [disabled]="loading" (click)="submit()" (keyup.enter)="submit()" id="kt_login_signin_submit"
           class="btn btn-primary btn-elevate login__btn-primary"
-          [ngClass]="{'spinner spinner--right spinner--md spinner--light': loading}">{{ 'AUTH.REGISTER.BUTTON' | translate }}</button>
+          [ngClass]="{'spinner spinner--right spinner--md spinner--light': loading}">{{ 'AUTH.REGISTER.BUTTON' | translate }}
+        </button>
+        <p *ngIf="loading">Loading...</p>
+
       </div>
       <!--end::Action-->
 

@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule, MatProgressSpinnerModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,6 +20,7 @@ import { TermsComponent } from './terms/synergy_terms.component';
 
 import { AuthenticationService } from '../core/services/authentication.service';
 import { AuthGuard } from '../core/helpers/auth.guard';
+import { SubConfigGuard } from '../core/helpers/subConfig.guard';
 
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 
@@ -44,7 +45,11 @@ const routes: Routes = [
             },
             {
                 path: 'partner',
-                component: RegisterPartnerComponent
+                component: RegisterPartnerComponent,
+                data: {
+                    accessIndex: 3,
+                },
+                canActivate: [SubConfigGuard]
             },
             {
                 path: 'forgot-password',
@@ -83,6 +88,7 @@ const routes: Routes = [
         TranslateModule.forChild(),
         MatDialogModule,
         MatCardModule,
+        MatProgressSpinnerModule,
         NgbModalModule,
         NgbDropdownModule
     ],

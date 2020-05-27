@@ -12,31 +12,40 @@ import { Offer } from '../../../core/models/offer.model';
 })
 export class ArchiveOffersComponent implements OnInit {
 
-	public offers: Offer[];
+	public offers: Offer[] = [];
 
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
+
+	counter: number = 0;
 
 	constructor(private cdRef: ChangeDetectorRef, private itemsService: ItemsService) {
 		this.unsubscribe = new Subject();
 	}
 
+	/**
+	 * On Init
+	 */
 	ngOnInit() {
-		this.fetchOffersData();
+		this.fetchOffersData(this.counter);
 	}
 
+	/**
+	 * On destroy
+	 */
 	ngOnDestroy() {
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
 		this.loading = false;
 	}
 
-	fetchOffersData() {
-		this.itemsService.readAllOffers('0-0-0')
+	fetchOffersData(counter: number) {
+		this.itemsService.readAllOffers(`6-${counter.toString()}-0`)
 			.pipe(
 				tap(
 					data => {
-						this.offers = data;
+						this.offers = this.offers.concat(data);
+						//	this.offers = data;
 						console.log(this.offers)
 
 					},
@@ -52,8 +61,10 @@ export class ArchiveOffersComponent implements OnInit {
 	}
 
 	onScroll() {
+		this.counter = this.counter + 1;
+		this.fetchOffersData(this.counter);
 		console.log('scrolled!!');
-		this.offers = this.offers.concat(this.offers);
+		//	this.offers = this.offers.concat(this.offers);
 		this.cdRef.markForCheck();
 	}
 }

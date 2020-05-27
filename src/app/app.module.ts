@@ -12,9 +12,10 @@ import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxPaginationModule } from 'ngx-pagination';
 //Materialize
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule, MatInputModule, MatCardModule } from "@angular/material";
+import { MatButtonModule, MatInputModule, MatCardModule, MatProgressSpinnerModule } from "@angular/material";
 // Interceptors
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
@@ -159,7 +160,8 @@ import { MembersModule } from './a-members/a-members.module';
 		MatButtonModule,
 		MatCardModule,
 		MatInputModule,
-
+		MatProgressSpinnerModule,
+		NgxPaginationModule,
 		// Member Modules
 		MemberSupportModule,
 

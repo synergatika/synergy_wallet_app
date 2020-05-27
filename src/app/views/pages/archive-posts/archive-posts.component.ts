@@ -12,34 +12,41 @@ import { PostEvent } from '../../../core/models/post_event.model';
 })
 export class ArchivePostsComponent implements OnInit {
 
-	public posts: PostEvent[];
+	public posts: PostEvent[] = [];
 
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
+
+	counter: number = 0;
 
 	constructor(private cdRef: ChangeDetectorRef, private itemsService: ItemsService) {
 		this.unsubscribe = new Subject();
 	}
 
+	/**
+	 * On destroy
+	 */
 	ngOnInit() {
-		this.fetchPostsEventsData();
+		this.fetchPostsEventsData(this.counter);
 	}
 
+	/**
+	 * On destroy
+	 */
 	ngOnDestroy() {
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
 		this.loading = false;
 	}
 
-	fetchPostsEventsData() {
-		this.itemsService.readAllPrivatePostsEvents('0-0-0')
+	fetchPostsEventsData(counter: number) {
+		this.itemsService.readAllPrivatePostsEvents(`6-${counter.toString()}-0`)
 			.pipe(
 				tap(
 					data => {
-						this.posts = data;
+						this.posts = this.posts.concat(data);
 						console.log("all posts");
 						console.log(this.posts)
-
 					},
 					error => {
 					}),
@@ -53,8 +60,9 @@ export class ArchivePostsComponent implements OnInit {
 	}
 
 	onScroll() {
+		this.counter = this.counter + 1;
+		this.fetchPostsEventsData(this.counter);
 		console.log('scrolled!!');
-		this.posts = this.posts.concat(this.posts);
 		this.cdRef.markForCheck();
 	}
 }

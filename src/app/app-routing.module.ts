@@ -91,7 +91,7 @@ const routes: Routes = [
 				path: 'coops',
 				component: ArchiveCoopsComponent,
 				// canActivate: [UserGuard],
-				data: { title: 'MENU.COMMUNITY' }
+				data: { title: 'MENU.PARTNERS' }
 			},
 			{
 				path: 'offers',

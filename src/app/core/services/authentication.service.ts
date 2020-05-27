@@ -17,6 +17,7 @@ import { Message } from '../models/message.model';
 import { AuthUser } from '../models/auth.model';
 import { VerificationRequired } from '../models/verification_required.model';
 import { RegistrationStatus } from '../models/registration_status.model';
+import { OneClickToken } from '../models/one_click_token.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -94,10 +95,10 @@ export class AuthenticationService {
       }));
   }
 
-  register_as_partner(formData: FormData): Observable<Message> {
+  register_as_partner(formData: FormData): Observable<OneClickToken> {
     return this.http.post<any>(`${environment.apiUrl}/auth/auto-register/partner`, formData)
       .pipe(map(response => {
-        return response;
+        return response.data;
       }));
   }
 
