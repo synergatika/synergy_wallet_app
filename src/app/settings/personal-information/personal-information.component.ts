@@ -38,13 +38,13 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   public subAccessConfig: Boolean[] = environment.subAccess;
 
   public paymentsList: PaymentList[];
+  public sectorList: GeneralList[];
   public access: string = '';
   public initialImage: string = '';
 
   showImageError: boolean = false;
   showPaymentError: boolean = false;
 
-  sectorList: GeneralList[];
   validator: any;
 
   memberForm: FormGroup;

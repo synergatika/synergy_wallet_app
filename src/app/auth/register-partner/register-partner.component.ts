@@ -20,6 +20,7 @@ import { environment } from '../../../environments/environment';
 import { PartnerPayment } from '../../core/models/partner_payment.model';
 
 import { PaymentList } from '../../core/interfaces/payment-list.interface';
+import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
 
 @Component({
 	selector: 'kt-register-partner',
@@ -30,6 +31,7 @@ import { PaymentList } from '../../core/interfaces/payment-list.interface';
 export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
 	public paymentsList: PaymentList[];
+	public sectorList: GeneralList[];
 
 	public subAccessConfig: Boolean[] = environment.subAccess;
 
@@ -71,6 +73,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		private staticDataService: StaticDataService,
 	) {
 		this.paymentsList = this.staticDataService.getPaymentsList;
+		this.sectorList = this.staticDataService.getSectorList;
 		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
@@ -128,6 +131,10 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 			])
 			],
 			description: ['', Validators.compose([
+				Validators.required,
+			])
+			],
+			sector: ['', Validators.compose([
 				Validators.required,
 			])
 			],
@@ -304,6 +311,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		formData.append('password', controls.password.value);
 		formData.append('imageURL', this.fileData);
 		formData.append('description', controls.description.value);
+		formData.append('sector', controls.sector.value);
 		formData.append('payments', JSON.stringify(partner_payments));
 
 		this.authenticationService.register_as_partner(formData)

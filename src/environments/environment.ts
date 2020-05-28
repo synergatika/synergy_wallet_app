@@ -12,8 +12,19 @@ export const environment = {
   staticUrl: 'https://wp.synergatika.gr/wp-json/wp/v2',
   authTimeOuter: 5000,
 
-  access: [true, false, true, false],// community, loyalty, microcredit, microfunding
-  subAccess: [false, false, true, false, true], //partner_address, partner_contact,  partner_payments, partner_auto_registration, partner_fixed_campaign
+  access: [
+    true, // community,
+    true, // loyalty,
+    true, // microcredit,
+    false // microfunding
+  ],
+  subAccess: [
+    true, //partner_address,
+    true, // partner_contact,
+    true, // partner_payments, 
+    true, // partner_auto_registration, 
+    true  // partner_fixed_campaign
+  ],
 
   version: '0.5.0',
 
