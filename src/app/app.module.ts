@@ -35,7 +35,6 @@ import { UserMenuComponent } from './views/layout/header/user-menu/user-menu.com
 import { FooterComponent } from './views/layout/footer/footer.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
 import { LanguageSwitcherComponent } from './views/layout/header/language-switcher/language-switcher.component';
-import { ShareIconComponent } from './views/widgets/share-icon/share-icon.component';
 
 import { MenuService } from './core/services/menu.service';
 
@@ -43,16 +42,17 @@ import { MenuService } from './core/services/menu.service';
 /**
  * Item Cards Components
  */
-import { CardOfferComponent } from './views/layout/card-offer/card-offer.component';
-import { CardCoopComponent } from './views/layout/card-coop/card-coop.component';
-import { CardPostComponent } from './views/layout/card-post/card-post.component';
-import { CardSupportsComponent } from './views/layout/card-supports/card-supports.component';
+// import { CardOfferComponent } from './views/layout/card-offer/card-offer.component';
+// import { CardPartnerComponent } from './views/layout/card-partner/card-partner.component';
+// import { CardPostComponent } from './views/layout/card-post/card-post.component';
+// import { CardMicrocreditComponent } from './views/layout/cards/card-microcredit/card-microcredit.component';
+// import { CardSupportComponent } from './views/layout/card-supports/card-supports.component';
 
 /**
  * Item Pages Components
  */
-import { SingleCoopComponent } from './views/layout/single-coop/single-coop.component';
-import { SinglePostComponent } from './views/layout/single-post/single-post.component';
+// import { SinglePartnerComponent } from './views/layout/single-items/single-partner/single-partner.component';
+// import { SinglePostComponent } from './views/layout/single-post/single-post.component';
 
 /**
  * Member Basic Pages Components
@@ -67,7 +67,7 @@ import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
 
 //Archives
-import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops.component';
+import { ArchivePartnersComponent } from './views/pages/archive-partners/archive-partners.component';
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
 import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 
@@ -91,6 +91,10 @@ import { ScannerModule } from './scanner/scanner.module';
 
 import { PartnersModule } from './a-partners/a-partners.module';
 import { MembersModule } from './a-members/a-members.module';
+// import { SingleMicrocreditComponent } from './views/layout/single-microcredit/single-microcredit.component';
+import { SupportMicrocreditComponent } from './member-support/support-microcredit/support-microcredit.component';
+import { CardsModule } from './views/layout/cards/cards.module';
+import { SingleItemsModule } from './views/layout/single-items/single-items.module';
 
 @NgModule({
 	declarations: [
@@ -109,17 +113,19 @@ import { MembersModule } from './a-members/a-members.module';
 		LanguageSwitcherComponent,
 
 		//Cards
-		CardOfferComponent,
-		CardCoopComponent,
-		CardPostComponent,
-		CardSupportsComponent,
+		// CardOfferComponent,
+		// CardPartnerComponent,
+		// CardPostComponent,
+		// CardMicrocreditComponent,
+		// CardSupportComponent,
 
 		//Singles
-		SingleCoopComponent,
-		SinglePostComponent,
+		// SinglePartnerComponent,
+		// SinglePostComponent,
+		// SingleMicrocreditComponent,
 
 		//1. Member
-		ShareIconComponent,
+		//	ShareIconComponent,
 
 		//User Centered Components
 		QrCodeComponent,
@@ -130,7 +136,7 @@ import { MembersModule } from './a-members/a-members.module';
 		MemberExploreComponent,
 
 		//Archives
-		ArchiveCoopsComponent,
+		ArchivePartnersComponent,
 		ArchiveOffersComponent,
 		ArchivePostsComponent,
 
@@ -171,8 +177,10 @@ import { MembersModule } from './a-members/a-members.module';
 		// Admin Modules
 		PartnersModule,
 		MembersModule,
-
+		CardsModule,
+		SingleItemsModule
 	],
+	exports: [],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

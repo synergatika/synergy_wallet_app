@@ -697,7 +697,11 @@ export const locale = {
       PLEDGE: 'Pledge',
       PLEDGE_DISABLE: 'Supporting Period is over/has not yet started',
       PARTNER: 'Partner Info',
-      TERMS: 'What do I get?'
+      TERMS: 'What do I get?',
+      STATUS: {
+        EXPECTED: 'Is Expected',
+        EXPIRED: 'Expired'
+      }
     },
     SUPPORT: {
       PAYMENT: {
@@ -726,6 +730,8 @@ export const locale = {
      */
     USER: {
       PLURAL: 'Users',
+      REACTIVATE: 'Reactivate',
+      REACTIVATE_DISABLE: 'User is activated',
       PARTNER: {
         PLURAL: 'Partners',
         ALL: 'All Partners',

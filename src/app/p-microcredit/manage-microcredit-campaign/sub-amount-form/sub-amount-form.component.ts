@@ -18,6 +18,10 @@ export class SubAmountFormComponent implements OnInit {
   support: SupportInterface["MicrocreditSupport"];
   campaign: SupportInterface["MicrocreditCampaign"];
 
+  tempAmount: number;
+  showAddStep: boolean = true;
+  showSubStep: boolean = false;
+
   submitForm: FormGroup;
   submitted: boolean = false;
 
@@ -46,6 +50,19 @@ export class SubAmountFormComponent implements OnInit {
       ])
       ]
     });
+
+    const controls = this.submitForm.controls;
+    controls['amount'].setValue(this.campaign.minAllowed);
+  }
+
+  onChangeAmount(action: boolean) {
+    const controls = this.submitForm.controls;
+    this.tempAmount = (action) ? (controls.amount.value + this.campaign.stepAmount) : (controls.amount.value - this.campaign.stepAmount);
+
+    this.showAddStep = (this.tempAmount >= this.campaign.maxAllowed) ? false : true;
+    this.showSubStep = (this.tempAmount <= this.campaign.minAllowed) ? false : true;
+
+    controls['amount'].setValue(this.tempAmount);
   }
 
   onNextStep() {

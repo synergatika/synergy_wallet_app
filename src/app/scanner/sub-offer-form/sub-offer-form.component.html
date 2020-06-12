@@ -23,10 +23,10 @@
 	</div> -->
   <form *ngIf='transaction.possible_quantity' [formGroup]="submitForm">
     <div class="col-xl-6 mx-auto">
-      <h5>{{ 'PARTNER.WIZARD.SUB_OFFER_FORM.HEADING' | translate }}</h5>
+      <h5>{{ 'PARTNER.WIZARD.SUB_OFFER_FORM.TITLE' | translate }}</h5>
       <div class="form-group">
         <div class="input-group">
-          <span class="input-group-text">€</span>
+          <!-- <span class="input-group-text">€</span> -->
           <input type="number" class="form-control" name="quantity" formControlName="quantity">
         </div>
         <span *ngIf="isControlHasError('quantity','required')"

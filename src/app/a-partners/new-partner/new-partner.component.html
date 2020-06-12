@@ -53,6 +53,8 @@
               </mat-hint>
             </mat-form-field>
           </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
             <mat-form-field>
               <mat-label>{{ 'FIELDS.PROFILE.PARTNER_NAME.TITLE' | translate }}</mat-label>
@@ -70,6 +72,10 @@
               </mat-hint>
             </mat-form-field>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-group">
             <mat-form-field>
               <mat-label>{{ 'FIELDS.PROFILE.SUBTITLE.TITLE' | translate }}</mat-label>
@@ -78,6 +84,8 @@
               <mat-hint class="form-text text-muted">{{ 'FIELDS.PROFILE.SUBTITLE.DESC' | translate }}</mat-hint>
             </mat-form-field>
           </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
             <mat-form-field>
               <mat-label>{{'FIELDS.PROFILE.DESCRIPTION.TITLE' | translate}}</mat-label>
@@ -86,6 +94,10 @@
               <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.DESCRIPTION.DESC' | translate}}</mat-hint>
             </mat-form-field>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-group">
             <mat-form-field>
               <mat-label>{{'FIELDS.PROFILE.SECTOR.TITLE' | translate}}</mat-label>
@@ -96,82 +108,80 @@
               <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.SECTOR.DESC' | translate}}</mat-hint>
             </mat-form-field>
           </div>
-          <div *ngIf="subAccessConfig[0]">
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.TIMETABLE.TITLE' | translate}}</mat-label>
-                <textarea matInput class="short" type="text" formControlName="timetable"
-                  placeholder="{{'FIELDS.PROFILE.TIMETABLE.PLACEHOLDER' | translate}}"></textarea>
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.TIMETABLE.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.ADDRESS.TITLE' | translate}}</mat-label>
-                <input matInput type="text" name="address" formControlName="street"
-                  placeholder="{{'FIELDS.PROFILE.ADDRESS.PLACEHOLDER' | translate}}" value="Address Line">
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.ADDRESS.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.POSTCODE.TITLE' | translate}}</mat-label>
-                <input matInput type="text" formControlName="postCode"
-                  placeholder="{{'FIELDS.PROFILE.POSTCODE.PLACEHOLDER' | translate}}">
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.POSTCODE.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.CITY.TITLE' | translate}}</mat-label>
-                <input matInput type="text" name="city" formControlName="city"
-                  placeholder="{{'FIELDS.PROFILE.CITY.PLACEHOLDER' | translate}}">
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.CITY.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.LAT.TITLE' | translate}}</mat-label>
-                <input matInput type="text" name="lat" formControlName="lat"
-                  placeholder="{{'FIELDS.PROFILE.LAT.PLACEHOLDER' | translate}}">
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.LAT.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.LONG.TITLE' | translate}}</mat-label>
-                <input matInput type="text" name="long" formControlName="long"
-                  placeholder="{{'FIELDS.PROFILE.LONG.PLACEHOLDER' | translate}}">
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.LONG.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="subAccessConfig[0]" class="col-md-6">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.TIMETABLE.TITLE' | translate}}</mat-label>
+              <textarea matInput class="short" type="text" formControlName="timetable"
+                placeholder="{{'FIELDS.PROFILE.TIMETABLE.PLACEHOLDER' | translate}}"></textarea>
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.TIMETABLE.DESC' | translate}}</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.ADDRESS.TITLE' | translate}}</mat-label>
+              <input matInput type="text" name="address" formControlName="street"
+                placeholder="{{'FIELDS.PROFILE.ADDRESS.PLACEHOLDER' | translate}}" value="Address Line">
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.ADDRESS.DESC' | translate}}</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.POSTCODE.TITLE' | translate}}</mat-label>
+              <input matInput type="text" formControlName="postCode"
+                placeholder="{{'FIELDS.PROFILE.POSTCODE.PLACEHOLDER' | translate}}">
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.POSTCODE.DESC' | translate}}</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.CITY.TITLE' | translate}}</mat-label>
+              <input matInput type="text" name="city" formControlName="city"
+                placeholder="{{'FIELDS.PROFILE.CITY.PLACEHOLDER' | translate}}">
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.CITY.DESC' | translate}}</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.LAT.TITLE' | translate}}</mat-label>
+              <input matInput type="text" name="lat" formControlName="lat"
+                placeholder="{{'FIELDS.PROFILE.LAT.PLACEHOLDER' | translate}}">
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.LAT.DESC' | translate}}</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.LONG.TITLE' | translate}}</mat-label>
+              <input matInput type="text" name="long" formControlName="long"
+                placeholder="{{'FIELDS.PROFILE.LONG.PLACEHOLDER' | translate}}">
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.LONG.DESC' | translate}}</mat-hint>
+            </mat-form-field>
           </div>
         </div>
-        <div *ngIf="subAccessConfig[1]">
-          <div class="col-md-6">
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.PHONE.TITLE' | translate}}</mat-label>
-                <input matInput type="text" formControlName="phone"
-                  placeholder="{{'FIELDS.PROFILE.PHONE.PLACEHOLDER' | translate}}">
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.PHONE.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.PROFILE.WEBSITE.TITLE' | translate}}</mat-label>
-                <input matInput type="text" formControlName="websiteURL"
-                  placeholder="{{'FIELDS.PROFILE.WEBSITE.PLACEHOLDER' | translate}}">
-                <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.WEBSITE.DESC' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
+        <div *ngIf="subAccessConfig[1]" class="col-md-6">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.PHONE.TITLE' | translate}}</mat-label>
+              <input matInput type="text" formControlName="phone"
+                placeholder="{{'FIELDS.PROFILE.PHONE.PLACEHOLDER' | translate}}">
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.PHONE.DESC' | translate}}</mat-hint>
+            </mat-form-field>
           </div>
-        </div>
-        <div *ngIf="subAccessConfig[2]">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>{{'FIELDS.PROFILE.WEBSITE.TITLE' | translate}}</mat-label>
+              <input matInput type="text" formControlName="websiteURL"
+                placeholder="{{'FIELDS.PROFILE.WEBSITE.PLACEHOLDER' | translate}}">
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.WEBSITE.DESC' | translate}}</mat-hint>
+            </mat-form-field>
+          </div>
 
           <div class="form-group">
             <div formArrayName="payments">
-              <mat-form-field *ngFor="let payment of payments.controls; index as i">
+              <mat-form-field class="payment" *ngFor="let payment of payments.controls; index as i">
                 <!-- <input [formControlName]=" i" placeholder="City"> -->
                 <input matInput type="text" [formControlName]="i" placeholder="{{paymentsList[i].title | translate}}">
                 <mat-error *ngIf="showPaymentError">
@@ -182,7 +192,20 @@
             </div>
           </div>
         </div>
+
       </div>
+
+      <!-- <div *ngIf="subAccessConfig[2]" class="form-group"> -->
+
+      <!-- <div formArrayName="payments">
+            <mat-form-field *ngFor="let payment of payments.controls; index as i">
+              <input matInput type="text" [formControlName]="i" placeholder="{{paymentsList[i].title | translate}}">
+              <mat-error *ngIf="showPaymentError">
+                <strong>{{ 'AUTH.VALIDATION.REQUIRED_ONE' | translate }}</strong>
+              </mat-error>
+              <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.PAYMENT.DESC' | translate}}</mat-hint>
+            </mat-form-field>
+          </div> -->
 
       <!--begin: Form Actions -->
       <div class="row">

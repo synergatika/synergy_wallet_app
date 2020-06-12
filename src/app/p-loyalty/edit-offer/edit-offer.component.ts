@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, finalize, tap } from 'rxjs/operators';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { DatePipe } from '@angular/common';
+// import { DatePipe } from '@angular/common';
 // Swal Alert
 import Swal from 'sweetalert2';
 // Translate
@@ -62,7 +62,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
-    private datePipe: DatePipe,
+    // private datePipe: DatePipe,
     private translate: TranslateService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,

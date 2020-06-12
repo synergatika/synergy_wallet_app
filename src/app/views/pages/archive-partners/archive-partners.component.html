@@ -1,6 +1,7 @@
 <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
   *ngIf="partners">
-  <div class="col-md-4" *ngFor="let coop of (partners)">
-    <app-card-coop [coop]="coop"></app-card-coop>
+  <div class="col-md-4" *ngFor="let partner of (partners)">
+    <app-card-partner [partner]="partner">
+    </app-card-partner>
   </div>
 </div>

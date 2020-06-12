@@ -122,7 +122,7 @@
   </div>
 
   <!--start::Loaylty Offers List-->
-  <div *ngIf="configAccess[1]">
+  <!-- <div *ngIf="configAccess[1]">
     <div class="row section-list" *ngIf="offers">
       <div class="col-md-12">
         <h3 class="list-tiltle">{{'OFFER.PLURAL' | translate }}</h3>
@@ -133,7 +133,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!--end::Loaylty Offers List-->
 
 </div>
@@ -189,7 +189,8 @@
   <button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
-  <app-card-supports [supportItem]="supportItem"></app-card-supports>
+  <app-card-support [support]="supportItem">
+  </app-card-support>
 </ng-template>
 <!--end::Microcredit Support Modal-->
 <!--end::Modals-->

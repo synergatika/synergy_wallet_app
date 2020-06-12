@@ -1,8 +1,6 @@
 .app-layout {
 	padding-top: 3rem;
 	margin-bottom: 100px;
-	.row {
-	}
 }
 
 /* The side navigation menu */
@@ -14,7 +12,7 @@
 	top: 0;
 	left: 0;
 	background-color: #0c1a33; /* Black*/
-	overflow-x: hidden; 
+	overflow-x: hidden;
 	padding-top: 60px;
 	transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 	&.menu-active {
@@ -24,7 +22,7 @@
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
-	transition: margin-left .5s;
+	transition: margin-left 0.5s;
 	padding: 0 0 20px;
 	margin-left: 0;
 	&.main-menu-active {
@@ -39,20 +37,22 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	background-color: rgba(0,0,0,0.3);
+	background-color: rgba(0, 0, 0, 0.3);
 	display: none;
 	z-index: 1;
-	&.overlay-show{
+	&.overlay-show {
 		display: block;
 	}
 }
 
-
-
 @media screen and (max-width: 450px) {
-	.sidenav {padding-top: 15px;}
-	.sidenav a {font-size: 18px;}
-} 
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
 
 @media screen and (min-width: 1025px) {
 	.sidenav {
@@ -67,4 +67,4 @@
 			margin-left: 65px;
 		}
 	}
-} 
+}

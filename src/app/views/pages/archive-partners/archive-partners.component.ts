@@ -6,11 +6,11 @@ import { PartnersService } from '../../../core/services/partners.service';
 import { Partner } from '../../../core/models/partner.model';
 
 @Component({
-	selector: 'app-archive-coops',
-	templateUrl: './archive-coops.component.html',
-	styleUrls: ['./archive-coops.component.scss']
+	selector: 'app-archive-partners',
+	templateUrl: './archive-partners.component.html',
+	styleUrls: ['./archive-partners.component.scss']
 })
-export class ArchiveCoopsComponent implements OnInit {
+export class ArchivePartnersComponent implements OnInit {
 
 	public partners: Partner[] = [];
 

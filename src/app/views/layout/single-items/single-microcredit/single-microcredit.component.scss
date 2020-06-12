@@ -1,4 +1,5 @@
-@import "../../../variables.scss";
+@import "../../../../../variables.scss";
+
 .s_single {
   &-info {
     .tag {
@@ -53,7 +54,7 @@
       padding-right: 15px;
       padding-left: 15px;
       padding-top: 0px;
-      border-bottom:0px;
+      border-bottom: 0px;
       h6 {
         text-transform: uppercase;
         color: $primary;

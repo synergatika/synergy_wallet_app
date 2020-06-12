@@ -61,7 +61,7 @@ const routes: Routes = [
         MatDatepickerModule,
         MatNativeDateModule,
         NgxMaterialTimepickerModule,
-        NgbDropdownModule
+        NgbDropdownModule,
     ],
     providers: [
     ],

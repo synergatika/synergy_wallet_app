@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
-import { ItemsService } from '../../../core/services/items.service';
+import { ItemsService } from '../../../../core/services/items.service';
 
 import { Partner } from 'src/app/core/models/partner.model';
 import { Offer } from 'src/app/core/models/offer.model';
@@ -12,17 +12,17 @@ import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.mo
 import { PostEvent } from 'src/app/core/models/post_event.model';
 
 @Component({
-	selector: 'app-single-coop',
-	templateUrl: './single-coop.component.html',
-	styleUrls: ['./single-coop.component.scss']
+	selector: 'app-single-partner',
+	templateUrl: './single-partner.component.html',
+	styleUrls: ['./single-partner.component.scss']
 })
-export class SingleCoopComponent implements OnInit, OnDestroy {
+export class SinglePartnerComponent implements OnInit, OnDestroy {
 
 	// Set Child Modals
 	@ViewChild('campaignModal', { static: false }) campaignModal: NgbModal;
 	@ViewChild('postModal', { static: false }) postModal: NgbModal;
 	// Set Variables Imported
-	@Input() singleCoop: Partner;
+	@Input() partner: Partner;
 
 
 	//Set Basic Variables
@@ -72,11 +72,11 @@ export class SingleCoopComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		//Get Microcredits of Coop
-		this.fetchSingleMicrocreditsData(this.singleCoop._id);
+		this.fetchSingleMicrocreditsData(this.partner._id);
 		//Get Offers of Coop
-		this.fetchSingleOffersData(this.singleCoop._id);
+		this.fetchSingleOffersData(this.partner._id);
 		//Get Post & Events of Coop
-		this.fetchSinglePostEventsData(this.singleCoop._id);
+		this.fetchSinglePostEventsData(this.partner._id);
 	}
 
 	ngOnDestroy() {

@@ -7,7 +7,7 @@ import { MemberDashboardComponent } from './member-dashboard/member-dashboard.co
 import { MemberExploreComponent } from './member-explore/member-explore.component';
 
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
-import { ArchiveCoopsComponent } from './views/pages/archive-coops/archive-coops.component';
+import { ArchivePartnersComponent } from './views/pages/archive-partners/archive-partners.component';
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
 import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 import { LayoutComponent } from './views/layout/layout.component';
@@ -43,16 +43,16 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				redirectTo: 'dashboard',
+				redirectTo: 'explore',
 				pathMatch: 'full',
 				canActivate: [UserGuard],
 			},
 			{
-				path: 'dashboard',
+				path: 'wallet',
 				component: MemberDashboardComponent,
 				canActivate: [UserGuard],
 				data: {
-					title: 'MENU.HOME',
+					title: 'MENU.WALLET',
 					expectedRole: 'member',
 				}
 			},
@@ -88,8 +88,8 @@ const routes: Routes = [
 
 
 			{
-				path: 'coops',
-				component: ArchiveCoopsComponent,
+				path: 'partners',
+				component: ArchivePartnersComponent,
 				// canActivate: [UserGuard],
 				data: { title: 'MENU.PARTNERS' }
 			},

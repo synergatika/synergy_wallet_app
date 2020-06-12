@@ -12,12 +12,6 @@ export class StaticDataService {
 
     memberMenu: Menu[] = [
         {
-            title: 'MENU.WALLET',
-            link: 'dashboard',
-            icon: 'wallet-outline',
-            enable: true
-        },
-        {
             title: 'MENU.DISCOVER',
             link: 'explore',
             icon: 'compass-outline',
@@ -29,37 +23,16 @@ export class StaticDataService {
             icon: 'handshake',
             enable: environment.access[2]
         },
+        {
+            title: 'MENU.WALLET',
+            link: 'wallet',
+            icon: 'wallet-outline',
+            enable: true
+        },
     ];
 
     public get getMemberMenu(): Menu[] {
         return this.memberMenu.filter((el) => {
-            return el.enable === true
-        });
-    };
-
-    adminMenu: Menu[] = [
-        {
-            title: 'MENU.PARTNERS',
-            link: 'a-partners',
-            icon: 'handshake',
-            enable: true
-        },
-        {
-            title: 'MENU.MEMBERS',
-            link: 'a-members',
-            icon: 'handshake',
-            enable: true
-        },
-        {
-            title: 'MENU.CONTENT',
-            link: 'a-content',
-            icon: 'content-paste',
-            enable: true
-        }
-    ];
-
-    public get getAdminMenu(): Menu[] {
-        return this.adminMenu.filter((el) => {
             return el.enable === true
         });
     };
@@ -99,6 +72,33 @@ export class StaticDataService {
 
     public get getPartnerMenu(): Menu[] {
         return this.partnerMenu.filter((el) => {
+            return el.enable === true
+        });
+    };
+
+    adminMenu: Menu[] = [
+        {
+            title: 'MENU.PARTNERS',
+            link: 'a-partners',
+            icon: 'handshake',
+            enable: true
+        },
+        {
+            title: 'MENU.MEMBERS',
+            link: 'a-members',
+            icon: 'handshake',
+            enable: true
+        },
+        {
+            title: 'MENU.CONTENT',
+            link: 'a-content',
+            icon: 'content-paste',
+            enable: true
+        }
+    ];
+
+    public get getAdminMenu(): Menu[] {
+        return this.adminMenu.filter((el) => {
             return el.enable === true
         });
     };
@@ -151,7 +151,7 @@ export class StaticDataService {
         });
     };
 
-    subUserHistory: Menu[] = [
+    subMenuUser: Menu[] = [
         {
             title: 'MENU.SETTINGS',
             link: 'settings',
@@ -167,7 +167,7 @@ export class StaticDataService {
     ];
 
     public get getUserSubMenu(): Menu[] {
-        return this.subUserHistory.filter((el) => {
+        return this.subMenuUser.filter((el) => {
             return el.enable === true
         });
     };

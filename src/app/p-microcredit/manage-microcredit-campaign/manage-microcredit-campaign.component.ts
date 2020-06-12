@@ -28,6 +28,9 @@ import Swal from 'sweetalert2';
 export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  seconds: number = 0;
+  outOfPeriod: boolean = false;
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
@@ -58,6 +61,9 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const now = new Date();
+    this.seconds = parseInt(now.getTime().toString());
+
     this.initializeCurrentCampaignData();
     this.fetchSupportsData();
   }
@@ -95,6 +101,9 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
           data => {
             this.current = data;
             this.supportService.changeMicrocreditCurrent(this.current);
+
+            if ((this.seconds < this.current.startsAt) || (this.seconds > this.current.expiresAt)) this.outOfPeriod = true;
+            console.log("Expired: ", this.outOfPeriod);
           },
           error => {
           }),

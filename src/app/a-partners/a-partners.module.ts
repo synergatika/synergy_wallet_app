@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule, MatSelectModule, MatNativeDateModule, MatTableModule, MatDatepickerModule, MatSortModule, MatProgressSpinnerModule, MAT_DATE_LOCALE } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule, MatSelectModule, MatNativeDateModule, MatTableModule, MatDatepickerModule, MatSortModule, MatProgressSpinnerModule, MatTooltipModule, MAT_DATE_LOCALE } from '@angular/material';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -56,6 +56,7 @@ const routes: Routes = [
         MatTableModule,
         MatSortModule,
         MatProgressSpinnerModule,
+        MatTooltipModule,
         NgxMaterialTimepickerModule,
 
         // StoreModule.forFeature('auth', authReducer),

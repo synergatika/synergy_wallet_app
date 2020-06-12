@@ -16,7 +16,13 @@
             <div class="col-sm-12 item-img-container">
               <div class="item-img">
                 <img *ngIf="item.campaign_imageURL" src={{item.campaign_imageURL}} alt={{item.title}} />
-                <div class="item-expires">{{'GENERAL.TO' | translate}} {{item.expiresAt | date: 'd.M'}}</div>
+                <div *ngIf="item.expiresAt>seconds||seconds>item.startsAt" class="s_archive-date">
+                  {{'GENERAL.TO' | translate}}
+                  {{item.expiresAt | date: 'd.M'}}</div>
+                <div *ngIf="seconds>item.expiresAt" class="s_archive-date">
+                  {{'CAMPAIGN.STATUS.EXPIRED' | translate}}</div>
+                <div *ngIf="item.startsAt>seconds" class="s_archive-date">
+                  {{'CAMPAIGN.STATUS.EXPECTED' | translate}}</div>
               </div>
             </div>
             <div class="col-sm-12 item-details">

@@ -24,16 +24,16 @@
       <ng-container matColumnDef="activated">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td style="vertical-align:middle" mat-cell *matCellDef="let item">
-          <button mat-button *ngIf='!item.activated' mat-raised-button (click)="changeUserActivation(item._id, $event)"
-            class="mb-5"> Reactivate </button>
-          <button mat-button *ngIf='item.activated' mat-raised-button disabled class="mb-5"> Is
-            Active </button>
-          <!-- <mat-checkbox name="" value="{{item.activated}}" [checked]="item.activated"
-            (change)="changeUserActivation(item._id, $event)"></mat-checkbox> -->
+          <div matTooltip="{{'USER.REACTIVATE_DISABLE' | translate}}" [matTooltipPosition]="'right'"
+            [matTooltipDisabled]="!item.activated">
+            <button [disabled]="item.activated" class="activate-button" mat-raised-button
+              (click)="changeUserActivation(item._id, $event)">{{'USER.REACTIVATE' | translate}}
+            </button>
+          </div>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>

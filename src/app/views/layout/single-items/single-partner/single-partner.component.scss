@@ -1,9 +1,11 @@
+@import "../../../../../variables.scss";
+
 .s_single {
 	&-img-container {
 		min-height: 300px;
 	}
-	&-img { 
-		img{
+	&-img {
+		img {
 			position: initial;
 			width: auto;
 			height: auto;

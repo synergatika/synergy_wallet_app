@@ -213,6 +213,14 @@ export class AddSupportComponent implements OnInit, OnDestroy {
   }
 
   onSubmitAmountForm(event: number) {
+    if ((this.actions.registration).length < 5) {
+      this.actions.registration = 'xx' + this.actions.registration;
+      this.supportService.changeActions(this.actions);
+    }
+    this.actionsHandler();
+  }
+
+  actionsHandler() {
     const user = {
       identifier: this.user.identifier_scan || this.user.identifier_form,
       email: this.user.email
@@ -221,12 +229,12 @@ export class AddSupportComponent implements OnInit, OnDestroy {
     switch (this.actions.registration) {
       case 'xx1000': { // only email
         this.actionRegistration(
-          { type: 'success', message: this.translate.instant('WIZARD_MESSAGE.USER_CREATED_EMAIL') }, user.identifier, null)
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.USER_CREATED_EMAIL') }, user.identifier, null)
         break;
       }
       case 'xx0000': { // only email
         this.actionRegistration(
-          { type: 'success', message: this.translate.instant('WIZARD_MESSAGE.USER_CREATED_EMAIL') }, user.identifier, null)
+          { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.USER_CREATED_EMAIL') }, user.identifier, null)
         break;
       }
       case '000100': { // only card

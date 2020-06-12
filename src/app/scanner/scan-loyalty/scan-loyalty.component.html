@@ -55,7 +55,7 @@
     <!--end::Step C - Enter Amount-->
 
     <!--start::Step D - Enter Discount-->
-    <aw-wizard-step stepTitle="Discount">
+    <aw-wizard-step stepTitle="Discount" awOptionalStep>
       <scanner-notice></scanner-notice>
       <div class="step-container row justify-content-md-center">
         <app-sub-discount-form (previous_step)="onPreviousStep($event)" (add_discount)="onSubmitDiscountForm($event)">

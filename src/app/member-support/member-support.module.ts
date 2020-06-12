@@ -8,10 +8,8 @@ import { ArchwizardModule } from 'angular-archwizard';
 
 //Support Page
 import { MemberSupportComponent } from './member-support.component';
-//Campaign Card
-import { CardMicrocreditComponent } from './card-microcredit/card-microcredit.component';
 //Campaign Single
-import { SingleMicrocreditComponent } from './single-microcredit/single-microcredit.component';
+// import { SingleMicrocreditComponent } from './single-microcredit/single-microcredit.component';
 
 //Pledge Form
 import { SupportMicrocreditComponent } from './support-microcredit/support-microcredit.component'
@@ -20,6 +18,11 @@ import { SubFinalStepComponent } from './sub-final-step/sub-final-step.component
 import { SupportService } from './_support.service';
 
 import { SupportNoticeComponent } from './support-notice/support-notice.component';
+//import { CardMicrocreditComponent } from '../views/layout/cards/card-microcredit/card-microcredit.component';
+
+import { CardsModule } from '../views/layout/cards/cards.module';
+import { SingleItemsModule } from '../views/layout/single-items/single-items.module';
+import { SingleMicrocreditComponent } from '../views/layout/single-items/single-microcredit/single-microcredit.component';
 
 const routes: Routes = [
     {
@@ -48,7 +51,11 @@ const routes: Routes = [
         MatCheckboxModule,
         MatDialogModule,
         MatCardModule,
-        TranslateModule.forChild()
+        TranslateModule.forChild(),
+        //  
+        CardsModule,
+        // SingleMicrocreditComponent //    
+        SingleItemsModule,
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
     ],
@@ -61,17 +68,18 @@ const routes: Routes = [
         //     multi: true
         // },
     ],
-    exports: [MemberSupportComponent, CardMicrocreditComponent, SingleMicrocreditComponent],
+    exports: [MemberSupportComponent, SupportMicrocreditComponent],
     declarations: [
         MemberSupportComponent,
-        CardMicrocreditComponent,
-        SingleMicrocreditComponent,
+        //      SingleMicrocreditComponent,
         //Pledge Form
         SupportMicrocreditComponent,
         SubAmountFormComponent,
         SubFinalStepComponent,
 
-        SupportNoticeComponent
+        SupportNoticeComponent,
+        // CardMicrocreditComponent
+
     ],
     entryComponents: [
         SupportMicrocreditComponent

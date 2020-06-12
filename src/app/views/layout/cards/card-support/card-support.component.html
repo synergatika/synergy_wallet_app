@@ -1,4 +1,4 @@
-<mat-card class="synergy-card supports-card" *ngIf="supportItem">
+<mat-card class="synergy-card supports-card" *ngIf="support">
   <mat-card-content>
     <!--begin::Content-->
     <div class="wallet_microcredit_wrapper s_archive_wrapper">
@@ -7,14 +7,14 @@
           <div class="row">
             <div class="col-sm-12 s_archive-img-container">
               <div class="s_archive-img">
-                <img src={{supportItem.campaign_imageURL}} alt={{supportItem.title}} />
-                <div class="s_archive-date" *ngIf="supportItem.status=='completed'">
+                <img src={{support.campaign_imageURL}} alt={{support.title}} />
+                <div class="s_archive-date" *ngIf="support.status=='completed'">
                   {{'SUPPORT.STATUS.COMPLETED' | translate}}
                 </div>
-                <div class="s_archive-date" *ngIf="supportItem.status=='order'">
+                <div class="s_archive-date" *ngIf="support.status=='order'">
                   {{'SUPPORT.STATUS.PENDING' | translate}}
                 </div>
-                <div class="s_archive-date" *ngIf="supportItem.status=='confirmation'">
+                <div class="s_archive-date" *ngIf="support.status=='confirmation'">
                   {{'SUPPORT.STATUS.CONFIRMED' | translate}}
                 </div>
               </div>
@@ -22,14 +22,14 @@
           </div>
           <div class=" s_archive-content container-fluid">
             <div class="s_archive-heading row">
-              <h4 class="s_archive-title col-12">{{supportItem.title}}</h4>
+              <h4 class="s_archive-title col-12">{{support.title}}</h4>
 
             </div>
             <div class="s_archive-credit-info row">
               <div class="s_archive-dates col-6">
                 <span class="tag">{{'CAMPAIGN.REDEEM_PERIOD' | translate}}:</span>
-                {{supportItem.redeemStarts | date: 'd.M.y'}} -
-                {{supportItem.redeemEnds | date: 'd.M.y'}}<br>
+                {{support.redeemStarts | date: 'd.M.y'}} -
+                {{support.redeemEnds | date: 'd.M.y'}}<br>
                 <span class="desc">{{'CAMPAIGN.REDEEM_PERIOD_SUB' | translate}}</span>
               </div>
               <div class="s_archive-points col-6">
@@ -38,35 +38,35 @@
                     {{'GENERAL.FROM' | translate}}
                   </span>
                   <span>
-                    {{supportItem.initialTokens | currency:'EUR'}}
+                    {{support.initialTokens | currency:'EUR'}}
                   </span>
                 </div>
                 <div class="current-amount">
-                  <span>{{ supportItem.initialTokens - supportItem.redeemedTokens | currency:'EUR'}}</span>
+                  <span>{{ support.initialTokens - support.redeemedTokens | currency:'EUR'}}</span>
                 </div>
               </div>
             </div>
             <div class="s_archive-subtitle row">
               <div class="col-md-12">
-                <p [innerHTML]="supportItem.terms"></p>
+                <p [innerHTML]="support.terms"></p>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12 s_archive-info">
                 <div class="s_archive-partner" *ngIf="type!='single'">
-                  <div class="s_archive-merch-name" *ngIf="supportItem.method!='store'">
+                  <div class="s_archive-merch-name" *ngIf="support.method!='store'">
                     <span class="mdi mdi-cash"></span>{{'SUPPORT.PAYMENT.BANK' | translate}} ||
-                    {{supportItem.how.title | translate}} : {{supportItem.how.value}}
+                    {{support.how.title | translate}} : {{support.how.value}}
                   </div>
-                  <div class="s_archive-merch-name" *ngIf="supportItem.method=='store'">
+                  <div class="s_archive-merch-name" *ngIf="support.method=='store'">
                     <span class="mdi mdi-cash"></span> {{'SUPPORT.PAYMENT.STORE' | translate}}
                   </div>
                   <div class="s_archive-merch-name">
-                    <span class="mdi mdi-shopping"></span> {{supportItem.partner_name}}
+                    <span class="mdi mdi-shopping"></span> {{support.partner_name}}
                   </div>
-                  <div class="s_archive-merch-adress" *ngIf="supportItem.partner_address">
-                    <span class="mdi mdi-pin"></span> {{supportItem.partner_address.street}} ,
-                    {{supportItem.partner_address.city}}
+                  <div class="s_archive-merch-adress" *ngIf="support.partner_address">
+                    <span class="mdi mdi-pin"></span> {{support.partner_address.street}} ,
+                    {{support.partner_address.city}}
                   </div>
                 </div>
               </div>

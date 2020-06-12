@@ -95,7 +95,7 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 		this.fetchBalanceData();
 		this.fetchSupportsData();
 		//Get Offers Data
-		this.fetchOffersData();
+		//	this.fetchOffersData();
 	}
 
 
@@ -232,24 +232,24 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 	}
 
 	//Get the Offers
-	fetchOffersData() {
-		this.itemsService.readAllOffers('0-0-0')
-			.pipe(
-				tap(
-					data => {
-						this.offers = data;
-					},
-					error => {
-						console.log(error);
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdRef.markForCheck();
-				})
-			)
-			.subscribe();
-	}
+	// fetchOffersData() {
+	// 	this.itemsService.readAllOffers('0-0-0')
+	// 		.pipe(
+	// 			tap(
+	// 				data => {
+	// 					this.offers = data;
+	// 				},
+	// 				error => {
+	// 					console.log(error);
+	// 				}),
+	// 			takeUntil(this.unsubscribe),
+	// 			finalize(() => {
+	// 				this.loading = false;
+	// 				this.cdRef.markForCheck();
+	// 			})
+	// 		)
+	// 		.subscribe();
+	// }
 
 	//Get the Mircoredit the Member supports
 	fetchSupportsData() {

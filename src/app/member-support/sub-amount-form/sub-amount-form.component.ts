@@ -24,8 +24,11 @@ export class SubAmountFormComponent implements OnInit {
 
   public support: MicrocreditSupport;
   public campaign: MicrocreditCampaign;
-  campaignType: any;
+  //campaignType: any;
+
   tempAmount: number;
+  showAddStep: boolean = true;
+  showSubStep: boolean = false;
 
   submitForm: FormGroup;
   submitted: boolean = false;
@@ -90,22 +93,31 @@ export class SubAmountFormComponent implements OnInit {
     //   .filter(key => this.campaign.partner_payments[key]))[0]);
   }
 
-
-  addStep() {
+  onChangeAmount(action: boolean) {
     const controls = this.submitForm.controls;
-    this.tempAmount = controls.amount.value + this.campaign.stepAmount;
-    if (this.tempAmount <= this.campaign.maxAllowed) {
-      controls['amount'].setValue(this.tempAmount);
-    }
+    this.tempAmount = (action) ? (controls.amount.value + this.campaign.stepAmount) : (controls.amount.value - this.campaign.stepAmount);
+
+    this.showAddStep = (this.tempAmount >= this.campaign.maxAllowed) ? false : true;
+    this.showSubStep = (this.tempAmount <= this.campaign.minAllowed) ? false : true;
+
+    controls['amount'].setValue(this.tempAmount);
   }
 
-  removeStep() {
-    const controls = this.submitForm.controls;
-    this.tempAmount = controls.amount.value - this.campaign.stepAmount;
-    if (this.tempAmount >= this.campaign.minAllowed) {
-      controls['amount'].setValue(this.tempAmount);
-    }
-  }
+  // addStep() {
+  //   const controls = this.submitForm.controls;
+  //   this.tempAmount = controls.amount.value + this.campaign.stepAmount;
+  //   if (this.tempAmount <= this.campaign.maxAllowed) {
+  //     controls['amount'].setValue(this.tempAmount);
+  //   }
+  // }
+
+  // removeStep() {
+  //   const controls = this.submitForm.controls;
+  //   this.tempAmount = controls.amount.value - this.campaign.stepAmount;
+  //   if (this.tempAmount >= this.campaign.minAllowed) {
+  //     controls['amount'].setValue(this.tempAmount);
+  //   }
+  // }
 
   onNextStep() {
     // if (this.submitted) return;

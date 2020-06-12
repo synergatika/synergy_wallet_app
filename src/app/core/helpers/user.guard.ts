@@ -19,7 +19,7 @@ export class UserGuard implements CanActivate {
         function accessRoute(access: string) {
             switch (access) {
                 case 'member':
-                    return 'dashboard';
+                    return 'explore';
                     break;
                 case 'partner':
                     return 'scanner';

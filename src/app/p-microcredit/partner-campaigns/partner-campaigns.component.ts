@@ -19,6 +19,7 @@ export class PartnerCampaignsComponent implements OnInit, OnDestroy {
 	private unsubscribe: Subject<any>;
 
 	public campaigns: MicrocreditCampaign[];
+	seconds: number = 0;
 
 	constructor(
 		private cdRef: ChangeDetectorRef,
@@ -33,6 +34,9 @@ export class PartnerCampaignsComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
 	ngOnInit() {
+		const now = new Date();
+		this.seconds = parseInt(now.getTime().toString());
+
 		this.fetchCampaignsData();
 	}
 

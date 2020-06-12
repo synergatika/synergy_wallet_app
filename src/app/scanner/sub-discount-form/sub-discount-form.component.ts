@@ -64,71 +64,27 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
         Validators.required,
       ])
       ],
-      wantRedeem: [{ value: false, disabled: true }, Validators.compose([
+      wantRedeem: [{ value: false, disabled: false }, Validators.compose([
         Validators.required
       ])
       ],
     });
   }
 
-  fetchBalanceData() {
+  initializeDiscount() {
+    console.log("Initialize Disc");
     this.initForm();
-    // console.log("Action")
-    // console.log(this.actions.registration);
-    // let search_by = (['110100', '111100'].includes(this.actions.registration)) ?
-    //   this.user.email : (this.user.identifier_scan || this.user.identifier_form);
-    // console.log("Search By")
-    // console.log(search_by);
-    if (this.transaction.amount >= 5) {
-      this.loyaltyService.readBalanceByPartner(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
-        .pipe(
-          tap(
-            data => {
-              this.transaction.points = parseInt(data.points, 16);
-              this.initializeDiscountAmount();
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-    } else {
-
-    }
-  }
-
-  initializeDiscountAmount() {
-    console.log(this.transaction.points);
-    const maxAllowedDiscount: number = this.transaction.amount * 0.2;
-    const maxPossibleDiscount: number = this.transaction.points * this.conversionRatiο;
-    if (maxPossibleDiscount > maxAllowedDiscount) {
-      this.transaction.discount_amount = maxAllowedDiscount;
-      this.canRedeem();
-    } else if (maxPossibleDiscount < 1) {
-      this.transaction.discount_amount = 0;
-      this.cannotRedeem();
-    } else {
-      this.transaction.discount_amount = maxPossibleDiscount;
-      this.canRedeem();
-    }
-  }
-
-  canRedeem() {
-    const controls = this.submitForm.controls;
-    controls["wantRedeem"].enable();
+    // const controls = this.submitForm.controls;
+    // controls["wantRedeem"].enable();
     this.actions.redeem = '10';
   }
 
-  cannotRedeem() {
-    const controls = this.submitForm.controls;
-    controls["wantRedeem"].disable();
-    this.actions.redeem = '00';
-  }
+  // cannotRedeem() {
+  //   this.initForm();
+  //   const controls = this.submitForm.controls;
+  //   controls["wantRedeem"].disable();
+  //   this.actions.redeem = '00';
+  // }
 
   onWantRedeemCheckboxChange() {
     const controls = this.submitForm.controls;
@@ -136,8 +92,11 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     console.log(this.actions.redeem);
     if (this.actions.redeem === '11') {
       this.transaction.final_amount = this.transaction.amount - this.transaction.discount_amount;
+      this.transaction.discount_points = this.transaction.discount_amount * (1 / this.conversionRatiο);
+
     } else {
       this.transaction.final_amount = this.transaction.amount;
+      this.transaction.discount_points = 0;
     }
     controls['final_amount'].setValue(this.transaction.final_amount);
   }

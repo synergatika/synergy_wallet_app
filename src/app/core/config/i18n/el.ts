@@ -697,7 +697,11 @@ export const locale = {
       PLEDGE: 'Στήριξε',
       PLEDGE_DISABLE: 'Η περίοδος Στήριξης έχει παρέλθει/δεν έχει ξεκινήσει ακόμα',
       PARTNER: 'Πληροφορίες Συνεργάτη',
-      TERMS: 'Τι παίρνω;'
+      TERMS: 'Τι παίρνω;',
+      STATUS: {
+        EXPECTED: 'Αναμένεται',
+        EXPIRED: 'Έχει Λήξει'
+      }
     },
     SUPPORT: {
       PAYMENT: {
@@ -726,6 +730,8 @@ export const locale = {
      */
     USER: {
       PLURAL: 'Χρήστες',
+      REACTIVATE: 'Επανεργοποίηση',
+      REACTIVATE_DISABLE: 'Ο Χρήστης είναι ενεργοποιημένος',
       PARTNER: {
         PLURAL: 'Συνεργάτες',
         ALL: 'Όλοι οι Συνεργάτες',

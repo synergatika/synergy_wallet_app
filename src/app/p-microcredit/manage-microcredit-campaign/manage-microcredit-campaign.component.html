@@ -1,6 +1,12 @@
 <h1 class="section-heading">{{current.title}}</h1>
 
-<button mat-raised-button (click)="openModal()" class="mb-5"> {{ 'CAMPAIGN.PLEDGE' | translate }} </button>
+<div matTooltip="{{'CAMPAIGN.PLEDGE_DISABLE' | translate}}" [matTooltipPosition]="'right'"
+  [matTooltipDisabled]="!outOfPeriod">
+  <button [disabled]="outOfPeriod" class="plegde-button" mat-raised-button
+    (click)="openModal()">{{'CAMPAIGN.PLEDGE' | translate}}
+  </button>
+</div>
+<!-- <button mat-raised-button (click)="openModal()" class="mb-5"> {{ 'CAMPAIGN.PLEDGE' | translate }} </button> -->
 <div>
   <div>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">

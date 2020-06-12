@@ -35,11 +35,11 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 
 	singleOffers: Offer;
 	singleMicrocredit: MicrocreditCampaign;
-	singleCoop: Partner;
+	singlePartner: Partner;
 	singlePost: PostEvent;
 
 	//Set Child Modals
-	@ViewChild('coopModal', { static: false }) coopModal;
+	@ViewChild('partnerModal', { static: false }) partnerModal;
 	@ViewChild('postModal', { static: false }) postModal;
 
 	//Slider Options
@@ -153,6 +153,10 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 				tap(
 					data => {
 						this.offers = data;
+						if (this.offers.length < 3) {
+							this.offers.push(this.offers[0]);
+							this.offers.push(this.offers[0]);
+						}
 					},
 					error => {
 						console.log(error);
@@ -172,10 +176,10 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 	*/
 
 	//Open Coop
-	openCoop(coop) {
-		this.singleCoop = coop;
+	openPartner(partner: Partner) {
+		this.singlePartner = partner;
 		this.modalService.open(
-			this.coopModal,
+			this.partnerModal,
 			{
 				ariaLabelledBy: 'modal-basic-title',
 				size: 'lg',
@@ -192,7 +196,7 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 
 
 	//Open Post
-	openPost(post) {
+	openPost(post: PostEvent) {
 		this.singlePost = post;
 		this.modalService.open(
 			this.postModal,
@@ -221,8 +225,8 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 		if (this.moved) {
 			//Do nothings
 		} else {
-			if (type == 'coop') {
-				this.openCoop(data);
+			if (type == 'partner') {
+				this.openPartner(data);
 			} else if (type == 'post') {
 				this.openPost(data);
 			} else {

@@ -1,6 +1,6 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { SupportMicrocreditComponent } from '../support-microcredit/support-microcredit.component'
+import { SupportMicrocreditComponent } from '../../../../member-support/support-microcredit/support-microcredit.component';
 import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.model';
 
 @Component({
@@ -11,7 +11,9 @@ import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.mo
 export class SingleMicrocreditComponent implements OnInit {
 
 	//Set Variables Imported
-	@Input() singleMicrocredit: MicrocreditCampaign;
+	@Input() microcredit: MicrocreditCampaign;
+
+	seconds: number = 0;
 
 	public outOfPeriod: boolean = false;
 	constructor(
@@ -21,12 +23,11 @@ export class SingleMicrocreditComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log(this.singleMicrocredit);
-
+		console.log(this.microcredit);
 		const now = new Date();
-		const seconds = parseInt(now.getTime().toString());
+		this.seconds = parseInt(now.getTime().toString());
 
-		if ((seconds < this.singleMicrocredit.startsAt) || (seconds > this.singleMicrocredit.expiresAt)) this.outOfPeriod = true;
+		if ((this.seconds < this.microcredit.startsAt) || (this.seconds > this.microcredit.expiresAt)) this.outOfPeriod = true;
 		console.log("Expired: ", this.outOfPeriod);
 	}
 

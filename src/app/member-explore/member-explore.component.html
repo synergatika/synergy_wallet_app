@@ -5,12 +5,12 @@
     <div class="col-md-12">
       <h3 class="list-tiltle">{{ 'USER.PARTNER.PLURAL' | translate }}</h3>
       <owl-carousel-o [options]="customOptions">
-        <ng-template carouselSlide *ngFor="let coop of (partners)">
-          <app-card-coop [coop]="coop" (mousedown)="mousedown()" (mousemove)="mousemove()"
-            (mouseup)="mouseup(coop, 'coop')"></app-card-coop>
+        <ng-template carouselSlide *ngFor="let partner of (partners)">
+          <app-card-partner [partner]="partner" (mousedown)="mousedown()" (mousemove)="mousemove()"
+            (mouseup)="mouseup(partner, 'partner')"></app-card-partner>
         </ng-template>
       </owl-carousel-o>
-      <div class="section-list-footer"><a [routerLink]="['/coops']">{{ 'USER.PARTNER.ALL' | translate }}</a>
+      <div class="section-list-footer"><a [routerLink]="['/partners']">{{ 'USER.PARTNER.ALL' | translate }}</a>
       </div>
     </div>
   </div>
@@ -55,11 +55,12 @@
 
 <!--start::Modals-->
 <!--start::Partner Modal-->
-<ng-template #coopModal let-c="close" let-d="dismiss">
+<ng-template #partnerModal let-c="close" let-d="dismiss">
   <button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
-  <app-single-coop [singleCoop]="singleCoop"></app-single-coop>
+  <app-single-partner [partner]="singleCoop">
+  </app-single-partner>
 </ng-template>
 <!--end::Partner Modal-->
 

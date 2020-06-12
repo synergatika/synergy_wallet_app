@@ -1,4 +1,4 @@
-<mat-card class="synergy-card  coop-card" *ngIf="coop">
+<mat-card class="synergy-card  coop-card" *ngIf="partner">
   <mat-card-content>
     <!--begin::Content-->
     <div class="wallet_coop_wrapper s_archive_wrapper">
@@ -7,32 +7,33 @@
           <div class="row">
             <div class="col-sm-12 s_archive-img-container">
               <div class="s_archive-img">
-                <img src={{coop.imageURL}} alt={{coop.name}} />
-                <div class="s_archive-category">{{coop.sector}}</div>
+                <img src={{partner.imageURL}} alt={{partner.name}} />
+                <div class="s_archive-category">{{partner.sector}}</div>
               </div>
             </div>
           </div>
           <div class="s_archive-content container-fluid">
             <div class="s_archive-heading row">
-              <h4 class="s_archive-title col-md-12">{{coop.name}}</h4>
+              <h4 class="s_archive-title col-md-12">{{partner.name}}</h4>
             </div>
             <div class="s_archive-subtitle row">
               <div class="col-md-12">
-                <p [innerHTML]="coop.subtitle"></p>
+                <p [innerHTML]="partner.subtitle"></p>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12 s_archive-info">
                 <div class="s_archive-partner">
-                  <div class="s_archive-merch-address" *ngIf="coop.address">
-                    <span class="mdi mdi-pin"></span> {{coop.address.street}} , {{coop.address.city}}
+                  <div class="s_archive-merch-address" *ngIf="partner.address">
+                    <span class="mdi mdi-pin"></span> {{partner.address.street}} , {{partner.address.city}}
                   </div>
-                  <div class="s_archive-merch-phone" *ngIf="coop.contact">
-                    <a href="tel:+{{coop.contact.phone}}"><span class="mdi mdi-phone"></span> {{coop.contact.phone}}</a>
+                  <div class="s_archive-merch-phone" *ngIf="partner.contact">
+                    <a href="tel:+{{partner.contact.phone}}"><span class="mdi mdi-phone"></span>
+                      {{partner.contact.phone}}</a>
                   </div>
                   <!--
-									<div class="s_archive-merch-website" *ngIf="coop.contact.websiteURL">
-										<span class="mdi mdi-web"></span> {{coop.contact.websiteURL}}
+									<div class="s_archive-merch-website" *ngIf="partner.contact.websiteURL">
+										<span class="mdi mdi-web"></span> {{partner.contact.websiteURL}}
 									</div>-->
                 </div>
               </div>
