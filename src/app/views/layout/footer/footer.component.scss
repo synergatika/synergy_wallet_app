@@ -21,18 +21,17 @@
 			display: block;
 			font-weight: 600;
 			color: #000;
-			&:hover{
+			&:hover {
 				text-decoration: none;
 			}
 			.mdi {
 				font-size: 40px;
 				line-height: 1;
 			}
-			
 		}
 		.footer-menu-item {
 			opacity: 0.5;
-			margin: 2px 0;
+			margin: 5px 5px;
 			transition: opacity 0.3s;
 			&-active {
 				opacity: 1;
@@ -42,8 +41,8 @@
 			}
 			&:hover {
 				opacity: 1;
-				a{
-					color:$primary;
+				a {
+					color: $primary;
 				}
 			}
 		}

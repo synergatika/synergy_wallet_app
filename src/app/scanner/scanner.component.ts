@@ -18,6 +18,7 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { PostEvent } from '../core/models/post_event.model';
 import { environment } from '../../environments/environment';
+import { StaticDataService } from '../core/services/static-data.service';
 
 @Component({
   selector: 'app-scanner',
@@ -34,6 +35,8 @@ export class ScannerComponent implements OnInit, OnDestroy {
   singlePost: PostEvent;
   singlePartner = false;
 
+  seconds: number = 0;
+
   public offers: ScannerInterface["Offer"][];
   public microcredit: ScannerInterface["MicrocreditCampaign"][];
 
@@ -41,25 +44,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
 
   @ViewChild('postModal', { static: false }) postModal;
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 700,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1
-      },
-      940: {
-        items: 3
-      }
-    },
-    margin: 30,
-    nav: true
-  }
+  customOptions: OwlOptions;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -67,9 +52,11 @@ export class ScannerComponent implements OnInit, OnDestroy {
     private scannerService: ScannerService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
+    private staticDataService: StaticDataService,
     public matDialog: MatDialog,
     private modalService: NgbModal,
   ) {
+    this.customOptions = staticDataService.getOwlOptionsThree;
     this.scannerService.offers.subscribe(offers => this.offers = offers)
     this.scannerService.microcredit.subscribe(microcredit => this.microcredit = microcredit)
     this.unsubscribe = new Subject();
@@ -79,6 +66,9 @@ export class ScannerComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
   ngOnInit() {
+    const now = new Date();
+    this.seconds = parseInt(now.getTime().toString());
+
     this.fetchOffersData();
     this.fetchCampaignsData();
     this.fetchPostsData();
@@ -118,6 +108,13 @@ export class ScannerComponent implements OnInit, OnDestroy {
   }
 
   openModalC(campaign_id: string) {
+    const currentMicrocredit = this.microcredit.filter(o => o.campaign_id === campaign_id)
+    console.log(currentMicrocredit);//if (currentMicrocredit[0] ))
+
+
+    if ((currentMicrocredit[0].redeemStarts > this.seconds) || (currentMicrocredit[0].redeemEnds < this.seconds)) {
+      return;
+    }
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -132,7 +129,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
 
   fetchCampaignsData() {
     console.log('this.microcredit');
-    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
+    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
       .pipe(
         tap(
           data => {
@@ -153,7 +150,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
   }
 
   fetchOffersData() {
-    this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
+    this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
       .pipe(
         tap(
           data => {

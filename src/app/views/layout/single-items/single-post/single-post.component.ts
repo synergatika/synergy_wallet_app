@@ -11,10 +11,7 @@ export class SinglePostComponent implements OnInit {
 	//Set Variables Imported
 	@Input() singlePost: PostEvent;
 
-	constructor(
-
-	) {
-
+	constructor() {
 	}
 
 	ngOnInit() {

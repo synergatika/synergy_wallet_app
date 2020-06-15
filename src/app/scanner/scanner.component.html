@@ -73,6 +73,9 @@
                 <div class="item-description">
                   {{item.subtitle}}
                 </div>
+                <div *ngIf="(item.redeemStarts>seconds)||(seconds>item.redeemEnds)" class="item-error">
+                  {{'CAMPAIGN.REDEEM_DISABLE' | translate}}
+                </div>
               </div>
             </mat-card-content>
           </mat-card>

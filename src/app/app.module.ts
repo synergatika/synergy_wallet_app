@@ -95,6 +95,7 @@ import { MembersModule } from './a-members/a-members.module';
 import { SupportMicrocreditComponent } from './member-support/support-microcredit/support-microcredit.component';
 import { CardsModule } from './views/layout/cards/cards.module';
 import { SingleItemsModule } from './views/layout/single-items/single-items.module';
+import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
 
 @NgModule({
 	declarations: [
@@ -139,6 +140,7 @@ import { SingleItemsModule } from './views/layout/single-items/single-items.modu
 		ArchivePartnersComponent,
 		ArchiveOffersComponent,
 		ArchivePostsComponent,
+		MemberRedeemComponent,
 
 		//2. Partner		
 		// PartnerOffersComponent,

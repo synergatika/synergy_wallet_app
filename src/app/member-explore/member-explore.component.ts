@@ -12,6 +12,7 @@ import { Partner } from '../core/models/partner.model';
 import { Offer } from '../core/models/offer.model';
 import { PostEvent } from '../core/models/post_event.model';
 import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
+import { StaticDataService } from '../core/services/static-data.service';
 
 @Component({
 	selector: 'app-member-explore',
@@ -43,43 +44,24 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 	@ViewChild('postModal', { static: false }) postModal;
 
 	//Slider Options
-	customOptions: OwlOptions = {
-		loop: true,
-		mouseDrag: true,
-		touchDrag: false,
-		pullDrag: false,
-		dots: true,
-		navSpeed: 700,
-		navText: ['', ''],
-		responsive: {
-			0: {
-				items: 1
-			},
-			600: {
-				items: 2
-			},
-			940: {
-				items: 3
-			}
-		},
-		margin: 30,
-		nav: true
-	}
+	customOptions: OwlOptions;
 
 	constructor(
 		private cdRef: ChangeDetectorRef,
 		private partnersService: PartnersService,
 		private itemsService: ItemsService,
+		private staticDataService: StaticDataService,
 		private modalService: NgbModal,
 		private elRef: ElementRef
 	) {
+		this.customOptions = this.staticDataService.getOwlOptionsThree;
 		this.unsubscribe = new Subject();
 	}
 
 	ngOnInit() {
 		//Get Lists Data
 		this.fetchPartnersData();
-		this.fetchOffersData();
+		//	this.fetchOffersData();
 		this.fetchPostsEventsData();
 	}
 

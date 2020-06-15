@@ -8,7 +8,11 @@
             <div class="col-sm-12 s_archive-img-container">
               <div class="s_archive-img">
                 <img src={{offer.offer_imageURL}} alt={{offer.title}} />
-                <div class="s_archive-date">{{'GENERAL.TO' | translate}} {{offer.expiresAt | date: 'd.M'}}</div>
+                <div *ngIf="offer.expiresAt>seconds" class="s_archive-date">
+                  {{'GENERAL.TO' | translate}}
+                  {{offer.expiresAt | date: 'd.M'}}</div>
+                <div *ngIf="seconds>offer.expiresAt" class="s_archive-date">
+                  {{'OFFER.STATUS.EXPIRED' | translate}}</div>
               </div>
             </div>
           </div>

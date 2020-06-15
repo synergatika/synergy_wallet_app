@@ -28,6 +28,7 @@ export const locale = {
       WALLET: 'Wallet',
       DISCOVER: 'Discover',
       SUPPORT: 'Suppport',
+      REDEEM: 'Redeem',
 
       /* PARTNER MENU (Μενού Συνεργάτη)*/
       NEW: 'new',
@@ -650,6 +651,9 @@ export const locale = {
       DELETE: 'Delete Offer',
       DELETE_CONFIRM: 'Are you sure that you want to delete ',
       CANCEL: 'Cancel',
+      STATUS: {
+        EXPIRED: 'Expired'
+      }
     },
     POST: {
       TITLE: 'POST',
@@ -696,6 +700,7 @@ export const locale = {
       PRICE_PER_ITEM: 'Price per item',
       PLEDGE: 'Pledge',
       PLEDGE_DISABLE: 'Supporting Period is over/has not yet started',
+      REDEEM_DISABLE: 'Redeeming Period is over/has not yet started',
       PARTNER: 'Partner Info',
       TERMS: 'What do I get?',
       STATUS: {

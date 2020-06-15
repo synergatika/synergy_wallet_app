@@ -28,6 +28,7 @@ export const locale = {
       WALLET: 'Πορτοφόλι',
       DISCOVER: 'Ανακάλυψε',
       SUPPORT: 'Υποστήριξε',
+      REDEEM: 'Εξαργύρωσε',
 
       /* PARTNER MENU (Μενού Συνεργάτη)*/
       NEW: 'new',
@@ -649,7 +650,10 @@ export const locale = {
       EDIT: 'Επεξεργασία Προσφοράς',
       DELETE: 'Διαγραφή Προσφοράς',
       DELETE_CONFIRM: 'Είστε σίγουρος ό,τι θέλετε να διαγράψετε την προσφορά',
-      CANCEL: 'Ακύρωση'
+      CANCEL: 'Ακύρωση',
+      STATUS: {
+        EXPIRED: 'Έχει Λήξει'
+      }
     },
     POST: {
       TITLE: 'ΑΝΑΡΤΗΣΗ',
@@ -696,6 +700,7 @@ export const locale = {
       PRICE_PER_ITEM: 'Τιμή ανα ποσότητα',
       PLEDGE: 'Στήριξε',
       PLEDGE_DISABLE: 'Η περίοδος Στήριξης έχει παρέλθει/δεν έχει ξεκινήσει ακόμα',
+      REDEEM_DISABLE: 'Η περίοδος Εξαργύρωσης έχει παρέλθει/δεν έχει ξεκινήσει ακόμα',
       PARTNER: 'Πληροφορίες Συνεργάτη',
       TERMS: 'Τι παίρνω;',
       STATUS: {

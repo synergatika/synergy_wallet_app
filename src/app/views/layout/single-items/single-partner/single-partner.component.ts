@@ -10,6 +10,7 @@ import { Partner } from 'src/app/core/models/partner.model';
 import { Offer } from 'src/app/core/models/offer.model';
 import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.model';
 import { PostEvent } from 'src/app/core/models/post_event.model';
+import { StaticDataService } from 'src/app/core/services/static-data.service';
 
 @Component({
 	selector: 'app-single-partner',
@@ -41,32 +42,16 @@ export class SinglePartnerComponent implements OnInit, OnDestroy {
 
 
 	//Slider Options
-	customOptionsSingle: OwlOptions = {
-		loop: true,
-		mouseDrag: true,
-		touchDrag: false,
-		pullDrag: false,
-		dots: true,
-		navSpeed: 700,
-		navText: ['', ''],
-		responsive: {
-			0: {
-				items: 1
-			},
-			740: {
-				items: 2
-			}
-		},
-		margin: 30,
-		nav: true
-	};
+	customOptions: OwlOptions;
 
 	constructor(
 		private cdRef: ChangeDetectorRef,
 		private itemsService: ItemsService,
 		private modalService: NgbModal,
-		private elRef: ElementRef
+		private elRef: ElementRef,
+		private staticDataService: StaticDataService,
 	) {
+		this.customOptions = this.staticDataService.getOwlOptionsTwo;
 		this.unsubscribe = new Subject();
 	}
 
@@ -92,7 +77,7 @@ export class SinglePartnerComponent implements OnInit, OnDestroy {
 	//Get Microcredit Campaigns of Coop
 	fetchSingleMicrocreditsData(partner_id) {
 		this.singleMicrocredits = null;
-		this.itemsService.readPrivateMicrocreditCampaignsByStore(partner_id, '0-0-0')
+		this.itemsService.readPrivateMicrocreditCampaignsByStore(partner_id, '0-0-1')
 			.pipe(
 				tap(
 					data => {
@@ -117,7 +102,7 @@ export class SinglePartnerComponent implements OnInit, OnDestroy {
 	//Get Offers of Coop
 	fetchSingleOffersData(partner_id) {
 		this.singleOffers = null;
-		this.itemsService.readOffersByStore(partner_id, '0-0-0')
+		this.itemsService.readOffersByStore(partner_id, '0-0-1')
 			.pipe(
 				tap(
 					data => {

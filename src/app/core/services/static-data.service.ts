@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Menu } from '../interfaces/menu.interface';
 import { PaymentList } from '../interfaces/payment-list.interface';
 import { GeneralList } from '../interfaces/general-list.interface';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,12 @@ export class StaticDataService {
             link: 'explore',
             icon: 'compass-outline',
             enable: true
+        },
+        {
+            title: 'MENU.REDEEM',
+            link: 'redeem',
+            icon: 'compass-outline',
+            enable: environment.access[1]
         },
         {
             title: 'MENU.SUPPORT',
@@ -170,6 +177,57 @@ export class StaticDataService {
         return this.subMenuUser.filter((el) => {
             return el.enable === true
         });
+    };
+
+    customOptionsTwo: OwlOptions = {
+        loop: true,
+        mouseDrag: true,
+        touchDrag: false,
+        pullDrag: false,
+        dots: true,
+        navSpeed: 700,
+        navText: ['', ''],
+        responsive: {
+            0: {
+                items: 1
+            },
+            740: {
+                items: 2
+            }
+        },
+        margin: 30,
+        nav: true
+    };
+
+    public get getOwlOptionsTwo(): OwlOptions {
+        return this.customOptionsTwo;
+    };
+
+    customOptionsThree: OwlOptions = {
+        loop: true,
+        mouseDrag: true,
+        touchDrag: false,
+        pullDrag: false,
+        dots: true,
+        navSpeed: 700,
+        navText: ['', ''],
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2
+            },
+            940: {
+                items: 3
+            }
+        },
+        margin: 30,
+        nav: true
+    }
+
+    public get getOwlOptionsThree(): OwlOptions {
+        return this.customOptionsThree;
     };
 
     paymentsList: PaymentList[] = [

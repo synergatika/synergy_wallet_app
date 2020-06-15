@@ -44,7 +44,7 @@
     <div class="row section-list" *ngIf="singleMicrocredits && singleMicrocredits.length">
       <div class="col-md-12">
         <h3 class="list-tiltle">{{'CAMPAIGN.PLURAL' | translate }}</h3>
-        <owl-carousel-o [options]="customOptionsSingle">
+        <owl-carousel-o [options]="customOptions">
           <ng-template carouselSlide *ngFor="let microcredit of (singleMicrocredits)">
             <app-card-microcredit [microcredit]="microcredit" type="single" (mousedown)="mousedown()"
               (mousemove)="mousemove()" (mouseup)="mouseup(microcredit, 'microcredit')">
@@ -58,7 +58,7 @@
     <div class="row section-list" *ngIf="singleOffers && singleOffers.length">
       <div class="col-md-12">
         <h3 class="list-tiltle">{{ 'OFFER.PLURAL' | translate }}</h3>
-        <owl-carousel-o [options]="customOptionsSingle">
+        <owl-carousel-o [options]="customOptions">
           <ng-template carouselSlide *ngFor="let offer of (singleOffers);">
             <app-card-offer [offer]="offer" type="single"></app-card-offer>
           </ng-template>
@@ -70,7 +70,7 @@
     <div class="row section-list" *ngIf="singlePosts && singlePosts.length">
       <div class="col-md-12">
         <h3 class="list-tiltle">{{ 'POST_EVENT.PLURAL' | translate }}</h3>
-        <owl-carousel-o [options]="customOptionsSingle">
+        <owl-carousel-o [options]="customOptions">
           <ng-template carouselSlide *ngFor="let post of (singlePosts)">
             <app-card-post [post]="post" type="single" (mousedown)="mousedown()" (mousemove)="mousemove()"
               (mouseup)="mouseup(post, 'post')"></app-card-post>

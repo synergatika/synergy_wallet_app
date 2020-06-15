@@ -5,6 +5,7 @@ import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
 //import { MemberExploreComponent } from './views/pages/member-explore/member-explore.component';
 import { MemberDashboardComponent } from './member-dashboard/member-dashboard.component';
 import { MemberExploreComponent } from './member-explore/member-explore.component';
+import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
 
 import { InvitationComponent } from './views/pages/invitation/invitation.component';
 import { ArchivePartnersComponent } from './views/pages/archive-partners/archive-partners.component';
@@ -31,12 +32,14 @@ const routes: Routes = [
 		 * Wallet - Open if 1 or 2 are true
 		 * Support - Open if 2 is true
 		 * Discover - Open if 0 or 1 are true 
-		 * 
-		 * -- PARTNER --
-		 * Offers - Open if 1 is true
-		 * Campaigns - Open if 2 is true
-		 * Posts & Events - Open if 0 is true 
 		 */
+
+		/**
+			* -- PARTNER --
+			* Offers - Open if 1 is true
+			* Campaigns - Open if 2 is true
+			* Posts & Events - Open if 0 is true 
+			*/
 		path: '',
 		component: LayoutComponent,
 		canActivate: [AuthGuard],
@@ -74,16 +77,14 @@ const routes: Routes = [
 					expectedRole: 'member'
 				}
 			},
-
 			{
-				path: 'settings',
-				loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
-				data: { title: 'settings' }
-			},
-			{
-				path: 'history',
-				loadChildren: () => import('./history/history.module').then(m => m.HistoryModule),
-				data: { title: 'history' }
+				path: 'redeem', component: MemberRedeemComponent,
+				canActivate: [UserGuard],
+				data: {
+					title: 'MENU.REDEEM',
+					expectedRole: 'member',
+					accessIndex: 1,
+				}
 			},
 
 
@@ -107,6 +108,17 @@ const routes: Routes = [
 				data: { title: 'MENU.POSTS', accessIndex: 0 }
 
 			},
+
+			{
+				path: 'settings',
+				loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
+				data: { title: 'settings' }
+			},
+			{
+				path: 'history',
+				loadChildren: () => import('./history/history.module').then(m => m.HistoryModule),
+				data: { title: 'history' }
+			},
 			// {
 			// 	path: 'invitation', component: InvitationComponent, data: { title: 'invitation' }
 			// },
@@ -114,6 +126,7 @@ const routes: Routes = [
 			/**
 			 * PARTNER's Pages
 			 */
+
 			{
 				path: 'scanner',
 				loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule),

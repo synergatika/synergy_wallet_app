@@ -108,8 +108,7 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 		const authData = {
 			email: (controls.email.value).toLowerCase()
 		};
-		this.authenticationService
-			.verification_askEmail(authData.email)
+		this.authenticationService.verification_askEmail(authData.email)
 			.pipe(
 				tap(
 					data => {

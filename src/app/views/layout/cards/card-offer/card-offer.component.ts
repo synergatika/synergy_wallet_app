@@ -10,9 +10,13 @@ export class CardOfferComponent implements OnInit {
 	@Input() offer: Offer;
 	@Input() type: string;
 
+	seconds: number = 0;
+
 	constructor() { }
 
 	ngOnInit() {
+		const now = new Date();
+		this.seconds = parseInt(now.getTime().toString());
 	}
 
 }

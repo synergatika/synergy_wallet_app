@@ -1,3 +1,5 @@
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
+
 interface User {
     identifier_scan: string;
     identifier_form: string;
@@ -59,16 +61,18 @@ interface MicrocreditSupport {
     status: string;
 }
 
-interface MicrocreditCampaign {
-    partner_id: string;
-    partner_name: string;
-    partner_imageURL: string;
-    campaign_id: string;
-    terms: string;
-    description: string;
-    expiresAt: number;
-    createdAt: Date;
-}
+// interface MicrocreditCampaign {
+//     partner_id: string;
+//     partner_name: string;
+//     partner_imageURL: string;
+//     campaign_id: string;
+//     terms: string;
+//     description: string;
+//     redeemStarts: string;
+//     redeemEnds: string;
+//     expiresAt: number;
+//     createdAt: Date;
+// }
 
 interface MicrocreditTransaction {
     campaign_id: string;
@@ -89,6 +93,6 @@ export interface ScannerInterface {
     Offer: Offer;
     OfferTransaction: OfferTransaction;
     MicrocreditSupport: MicrocreditSupport;
-    MicrocreditCampaign: MicrocreditCampaign;
+    MicrocreditCampaign: MicrocreditCampaign // MicrocreditCampaign;
     MicrocreditTransaction: MicrocreditTransaction;
 }
