@@ -18,4 +18,7 @@ export interface PostEvent {
     dateTime: string;
 
     createdAt: string;
+
+    description?: any;
+    name?: any;
 }
