@@ -30,6 +30,8 @@ export class ScannerComponent implements OnInit, OnDestroy {
 
   public configAccess: Boolean[] = environment.access;
 
+  campaign: any;
+
   moved: boolean;
   posts: PostEvent[];
   singlePost: PostEvent;
