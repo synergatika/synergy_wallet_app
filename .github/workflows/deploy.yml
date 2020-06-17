@@ -1,0 +1,35 @@
+name: publish
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: npm install
+      - name: Set env
+        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
+      - name: print version
+        run: |
+          echo $RELEASE_VERSION
+      - name: update project version
+        run: |
+          sed -i -e "s/version:.*/version: '0.0.5',"/g src/environments/environment.prod.ts
+      - run: npx ng build --prod
+      - name: deploy to server
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-e -c -r --delete"
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          FOLDER: "./dist/synergy-wallet/*"
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          USERNAME: ${{ secrets.USERNAME }}
+          SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
