@@ -17,6 +17,7 @@ import { PartnerOffersComponent } from './partner-offers/partner-offers.componen
 
 import { AuthenticationService } from '../core/services/authentication.service';
 import { AuthGuard } from '../core/helpers/auth.guard';
+import { CardsModule } from '../views/layout/cards/cards.module';
 
 
 const routes: Routes = [
@@ -62,6 +63,7 @@ const routes: Routes = [
         MatNativeDateModule,
         NgxMaterialTimepickerModule,
         NgbDropdownModule,
+        CardsModule
     ],
     providers: [
     ],

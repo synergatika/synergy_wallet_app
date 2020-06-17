@@ -23,6 +23,7 @@ import { SupportNoticeComponent } from './support-notice/support-notice.componen
 import { CardsModule } from '../views/layout/cards/cards.module';
 import { SingleItemsModule } from '../views/layout/single-items/single-items.module';
 import { SingleMicrocreditComponent } from '../views/layout/single-items/single-microcredit/single-microcredit.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const routes: Routes = [
     {
@@ -52,6 +53,8 @@ const routes: Routes = [
         MatDialogModule,
         MatCardModule,
         TranslateModule.forChild(),
+        InfiniteScrollModule,
+
         //  
         CardsModule,
         // SingleMicrocreditComponent //    

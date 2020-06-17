@@ -362,7 +362,9 @@ export class AddSupportComponent implements OnInit, OnDestroy {
       _amount: this.support.amount,
     };
 
-    this.microcreditService.earnTokensByPartner(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, earnTokens._to, earnTokens._amount, (this.support.paid) ? 'store' : 'none', this.support.paid)
+    this.microcreditService.earnTokensByPartner(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, earnTokens._to, earnTokens._amount,
+      // (this.support.paid) ? 'store' : 'none', this.support.paid)
+      'store', this.support.paid)
       .pipe(
         tap(
           data => {

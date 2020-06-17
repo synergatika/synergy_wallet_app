@@ -25,31 +25,33 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
   public wizard: WizardComponent;
   public paymentsList: PaymentList[];
 
-  campaign_id: string;
-  partner_id: string;
+  // campaign_id: string;
+  // partner_id: string;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
   private subscription: Subscription = new Subscription;
 
-  public campaigns: SupportInterface["MicrocreditCampaign"][];
-  public current: SupportInterface["MicrocreditCampaign"];
+  //public campaigns: SupportInterface["MicrocreditCampaign"][];
+  public campaign: SupportInterface["MicrocreditCampaign"];
   public support: SupportInterface["MicrocreditSupport"];
 
   constructor(
     private cdRef: ChangeDetectorRef,
     private translate: TranslateService,
     private supportNoticeService: MessageNoticeService,
+    private itemsService: ItemsService,
     private microcreditService: MicrocreditService,
     private supportService: SupportService,
     public dialogRef: MatDialogRef<SupportMicrocreditComponent>,
     private staticDataService: StaticDataService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    console.log("HEREE", this.data)
     this.paymentsList = this.staticDataService.getPaymentsList;
-    this.partner_id = this.data.partner_id;
-    this.campaign_id = this.data.campaign_id;
-    this.subscription.add(this.supportService.microcreditCampaigns.subscribe(campaigns => this.campaigns = campaigns));
+    // this.partner_id = this.data.partner_id;
+    // this.campaign_id = this.data.campaign_id;
+    this.supportService.microcreditCurrent.subscribe(campaign => this.campaign = campaign);
     this.subscription.add(this.supportService.microcreditSupport.subscribe(support => this.support = support));
     this.unsubscribe = new Subject();
   }
@@ -73,12 +75,12 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
   }
 
   initializeCurrentCampaignData() {
-    const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
-    this.current = currentCampaign;
-    this.supportService.changeMicrocreditCurrent(this.current);
+    // const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
+    this.campaign = this.data.campaign;
+    this.supportService.changeMicrocreditCurrent(this.campaign);
 
-    this.support.partner_id = currentCampaign.partner_id;
-    this.support.campaign_id = currentCampaign.campaign_id;
+    this.support.partner_id = this.campaign.partner_id;
+    this.support.campaign_id = this.campaign.campaign_id;
     this.supportService.changeMicrocreditSupport(this.support);
   }
 
@@ -88,20 +90,19 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
       _method: this.support.method
     };
 
-    this.microcreditService.earnTokens(this.current.partner_id, this.current.campaign_id, earnTokens._amount, earnTokens._method)
+    this.microcreditService.earnTokens(this.campaign.partner_id, this.campaign.campaign_id, earnTokens._amount, earnTokens._method)
       .pipe(
         tap(
           data => {
             console.log(data);
             this.support.support_id = data.support_id;
             this.support.payment_id = data.payment_id;
-            //this.support.how = data.how;
 
             this.support['how'] = (this.support.method == 'store') ? { title: '', value: '' } : {
               title: this.paymentsList.filter((el) => {
                 return el.bic == this.support.method
               })[0].title,
-              value: this.current.partner_payments.filter((el) => {
+              value: this.campaign.partner_payments.filter((el) => {
                 return el.bic == this.support.method
               })[0].value
             }

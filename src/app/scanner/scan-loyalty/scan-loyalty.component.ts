@@ -291,7 +291,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       }
       default: {
         this.fetchBalanceData();
-        this.onNextStep();
+        //this.onNextStep();
         break;
       }
     }
@@ -304,39 +304,24 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   fetchBalanceData() {
-    // console.log("Action")
-    // console.log(this.actions.registration);
-    // let search_by = (['110100', '111100'].includes(this.actions.registration)) ?
-    //   this.user.email : (this.user.identifier_scan || this.user.identifier_form);
-    // console.log("Search By")
-    // console.log(search_by);
-    if (this.transaction.amount >= 5) {
-      this.loyaltyService.readBalanceByPartner(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
-        .pipe(
-          tap(
-            data => {
-              this.transaction.points = parseInt(data.points, 16);
-              console.log(this.transaction.points);
-              this.initializeDiscountAmount();
-            },
-            error => {
-              console.log(error);
-            }),
-          takeUntil(this.unsubscribe),
-          finalize(() => {
-            this.loading = false;
-            this.cdRef.markForCheck();
-          })
-        )
-        .subscribe();
-    } else {
-      this.actions.redeem = '00';
-      this.scannerService.changeActions(this.actions);
-      this.transaction.discount_amount = 0;
-      this.scannerService.changePointsTransaction(this.transaction);
-      this.earnPoints(this.user.identifier_form || this.user.identifier_scan);
-      this.onAfterNextStep(4);
-    }
+    this.loyaltyService.readBalanceByPartner(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
+      .pipe(
+        tap(
+          data => {
+            this.transaction.points = parseInt(data.points, 16);
+            this.scannerService.changePointsTransaction(this.transaction);
+            this.initializeDiscountAmount();
+          },
+          error => {
+            console.log(error);
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
   }
 
   slipFloor(num: number) {
@@ -348,36 +333,37 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   initializeDiscountAmount() {
+
+    console.log("Initialize Discount");
+    console.log(this.transaction);
+
     const maxAllowedDiscount: number = this.transaction.amount * 0.2;
     const maxPossibleDiscount: number = this.transaction.points * this.conversionRatiο;
-    if (maxPossibleDiscount > maxAllowedDiscount) {
-      console.log("1");
-      this.transaction.discount_amount = this.slipFloor(maxAllowedDiscount);
+
+    if ((this.transaction.amount >= 5) && (maxPossibleDiscount >= 1)) {
+      this.transaction.discount_amount = (maxPossibleDiscount > maxAllowedDiscount) ? this.slipFloor(maxAllowedDiscount) : this.slipFloor(maxPossibleDiscount);
       this.transaction.discount_points = this.transaction.discount_amount * (1 / this.conversionRatiο);
       this.scannerService.changePointsTransaction(this.transaction);
+      console.log("Can Redeem")
+      console.log("Discount Amount: " + this.transaction.discount_amount, "Discount Points: " + this.transaction.discount_points);
       this.discountForm.initializeDiscount();
-      //  this.onNextStep();
-    } else if (maxPossibleDiscount < 1) {
-      console.log("2");
+      this.onNextStep();
+    } else if ((this.transaction.amount < 5) || (maxPossibleDiscount < 1)) {
       this.actions.redeem = '00';
       this.scannerService.changeActions(this.actions);
       this.transaction.discount_amount = 0;
+      this.transaction.discount_points = 0;
       this.scannerService.changePointsTransaction(this.transaction);
+      console.log("Can Not Redeem")
+      console.log("Discount Amount: " + this.transaction.discount_amount, "Discount Points: " + this.transaction.discount_points);
       this.earnPoints(this.user.identifier_form || this.user.identifier_scan);
       this.onAfterNextStep(4);
-    } else {
-      console.log("3");
-      this.transaction.discount_amount = this.slipFloor(maxPossibleDiscount);
-      this.transaction.discount_points = this.transaction.discount_amount * (1 / this.conversionRatiο);
-      this.scannerService.changePointsTransaction(this.transaction);
-      this.discountForm.initializeDiscount();
-      //  this.onNextStep();
     }
   }
 
   onSubmitDiscountForm(event: boolean) {
 
-    console.log('Actions');
+    console.log('Actions (onSubmitDiscountForm)');
     console.log("Registration: " + this.actions.registration);
     console.log("Redeem: " + this.actions.redeem);
 
@@ -437,7 +423,6 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
           data => {
             console.log(data);
             this.fetchBalanceData();
-            //  this.earnPoints(card);
           },
           error => {
             this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.ERROR_LINK_EMAIL') + '<br>' +
@@ -524,10 +509,12 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   onNextStep() {
+    console.log("Next")
     this.wizard.goToNextStep();
   }
 
   onAfterNextStep(step: number) {
+    console.log("Next : " + step)
     this.wizard.goToStep(step);
   }
 

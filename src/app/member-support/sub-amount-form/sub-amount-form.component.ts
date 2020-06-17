@@ -41,26 +41,8 @@ export class SubAmountFormComponent implements OnInit {
   ) {
     this.paymentsList = this.staticDataService.getPaymentsList;
     this.supportService.microcreditCurrent.subscribe(campaign => this.campaign = campaign);
+    console.log("Inside subamount", this.campaign)
     this.supportService.microcreditSupport.subscribe(support => this.support = support);
-    // const x = this.paymentsList.map(mem => {
-    //   return this.campaign.partner_payments.map(info => {
-    //     if (info.bic === mem.bic) {
-    //       mem.bic = info.bic;
-    //       return mem;
-    //     }
-    //   });
-    // });
-    // console.log(x);
-
-    // const paymentsList = (this.campaign.partner_payments).map((a: any) =>
-    //   Object.assign({}, a,
-    //     {
-    //       name: (confirmedTokens).find((b: Tokens) => (b._id).toString() === (a.campaign_id).toString())
-    //       // confirmedTokens: (confirmedTokens).find((b: Tokens) => (b._id).toString() === (a.campaign_id).toString()),
-    //       // orderedTokens: (orderedTokens).find((c: Tokens) => (c._id).toString() === (a.campaign_id).toString()),
-    //     }
-    //   )
-    // );
   }
 
   ngOnInit() {

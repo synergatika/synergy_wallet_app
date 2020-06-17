@@ -12,6 +12,7 @@
     </div>
     <ng-container *ngIf="posts">
       <div class="item item-wrapper col-md-4" *ngFor="let item of posts" routerLink="edit/{{item.post_id}}">
+        <!-- <app-card-post [post]="item"></app-card-post> -->
         <mat-card class="item-card">
           <mat-card-content>
             <div class="col-sm-12 item-img-container">

@@ -19,9 +19,9 @@ export class StaticDataService {
             enable: true
         },
         {
-            title: 'MENU.REDEEM',
-            link: 'redeem',
-            icon: 'compass-outline',
+            title: 'MENU.OFFERS',
+            link: 'offers',
+            icon: 'muffin',
             enable: environment.access[1]
         },
         {

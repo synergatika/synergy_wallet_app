@@ -31,7 +31,7 @@ export class SingleMicrocreditComponent implements OnInit {
 		console.log("Expired: ", this.outOfPeriod);
 	}
 
-	pledgeModal(partner_id: string, campaign_id: string) {
+	pledgeModal(campaign: MicrocreditCampaign) {
 		const dialogConfig = new MatDialogConfig();
 		// The user can't close the dialog by clicking outside its body
 		dialogConfig.disableClose = true;
@@ -39,8 +39,7 @@ export class SingleMicrocreditComponent implements OnInit {
 		dialogConfig.height = "auto";
 		dialogConfig.width = "600px";
 		dialogConfig.data = {
-			partner_id: partner_id,
-			campaign_id: campaign_id
+			campaign: campaign
 		};
 		const modalDialog = this.matDialog.open(SupportMicrocreditComponent, dialogConfig);
 	}

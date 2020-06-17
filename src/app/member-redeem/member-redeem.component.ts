@@ -16,9 +16,11 @@ import { StaticDataService } from '../core/services/static-data.service';
 })
 export class MemberRedeemComponent implements OnInit, OnDestroy {
 
-  public offers: Offer[];
+  public offers: Offer[] = [];
 
-  customOptions: OwlOptions;
+  // customOptions: OwlOptions;
+
+  counter: number = 0;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -29,14 +31,14 @@ export class MemberRedeemComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private staticDataService: StaticDataService,
   ) {
-    this.customOptions = staticDataService.getOwlOptionsThree;
+    // this.customOptions = staticDataService.getOwlOptionsThree;
     this.unsubscribe = new Subject();
   }
 	/**
 	* On Init
 	*/
   ngOnInit() {
-    this.fetchOffersData();
+    this.fetchOffersData(this.counter);
   }
 
   /**
@@ -49,12 +51,14 @@ export class MemberRedeemComponent implements OnInit, OnDestroy {
   }
 
   //	Get the Offers
-  fetchOffersData() {
-    this.itemsService.readAllOffers('0-0-1')
+  fetchOffersData(counter: number) {
+    this.itemsService.readAllOffers(`6-${counter.toString()}-1`)
       .pipe(
         tap(
           data => {
-            this.offers = data;
+            console.log(data);
+            this.offers = this.offers.concat(data);
+            //            this.offers = data;
           },
           error => {
             console.log(error);
@@ -68,4 +72,11 @@ export class MemberRedeemComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  onScroll() {
+    this.counter = this.counter + 1;
+    this.fetchOffersData(this.counter);
+    console.log('scrolled!!');
+    //	this.offers = this.offers.concat(this.offers);
+    this.cdRef.markForCheck();
+  }
 }

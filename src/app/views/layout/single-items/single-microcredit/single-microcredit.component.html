@@ -54,7 +54,7 @@
             <div matTooltip="{{'CAMPAIGN.PLEDGE_DISABLE' | translate}}" [matTooltipPosition]="'right'"
               [matTooltipDisabled]="!outOfPeriod">
               <button [disabled]="outOfPeriod" class="plegde-button" mat-raised-button
-                (click)="pledgeModal(microcredit.partner_id, microcredit.campaign_id)">{{'CAMPAIGN.PLEDGE' | translate}}
+                (click)="pledgeModal(microcredit)">{{'CAMPAIGN.PLEDGE' | translate}}
               </button>
             </div>
           </div>

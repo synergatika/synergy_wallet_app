@@ -133,7 +133,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.microcredit = data;
+            this.microcredit = data.filter(o => { status === "published" });
 
             console.log(this.microcredit);
             this.scannerService.changeMicrocreditCampaigns(this.microcredit);
@@ -190,7 +190,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  openPost(post) {
+  openPost(post: PostEvent) {
     console.log('post modal');
     console.log(post);
     this.singlePost = post;
@@ -212,23 +212,22 @@ export class ScannerComponent implements OnInit, OnDestroy {
     });
   }
 
+  //Actions to Open Modals from Carousel
   mousedown() {
     this.moved = false;
   }
-
   mousemove() {
     this.moved = true;
   }
-
-  mouseup(data) {
+  mouseup(data, type) {
     if (this.moved) {
-      console.log('moved')
+      //Do nothings
     } else {
-      console.log('not moved');
-      console.log(data);
-      this.openPost(data);
-      //this.router.navigate(['/post', {id: mercId , id2: offerId}]);
-
+      if (type == 'post') {
+        this.openPost(data);
+      } else {
+        //Do nothing
+      }
     }
     this.moved = false;
   }

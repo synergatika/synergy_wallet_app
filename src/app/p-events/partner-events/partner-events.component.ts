@@ -13,10 +13,11 @@ import { Event } from '../../core/models/event.model';
 	styleUrls: ['./partner-events.component.scss']
 })
 export class PartnerEventsComponent implements OnInit, OnDestroy {
-	loading: boolean = false;
-	private unsubscribe: Subject<any>;
 
 	public events: Event[];
+
+	loading: boolean = false;
+	private unsubscribe: Subject<any>;
 
 	constructor(
 		private cdRef: ChangeDetectorRef,

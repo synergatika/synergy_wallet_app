@@ -21,7 +21,8 @@
       <!-- <div *ngIf="configAccess[1]"> -->
       <ng-container *ngIf="configAccess[1]&&offers">
         <div class="item item-wrapper col-md-4" *ngFor="let item of offers" (click)="openModalB(item.offer_id)">
-          <mat-card class="item-card">
+          <app-card-offer [offer]="item"></app-card-offer>
+          <!-- <mat-card class="item-card">
             <mat-card-content>
               <div class="col-sm-12 item-img-container">
                 <div class="item-img">
@@ -43,7 +44,7 @@
               </div>
 
             </mat-card-content>
-          </mat-card>
+          </mat-card> -->
         </div>
       </ng-container>
       <!-- </div> -->
@@ -54,7 +55,8 @@
       <!-- <div *ngIf="configAccess[2]"> -->
       <ng-container *ngIf="configAccess[2]&&microcredit">
         <div class="item item-wrapper col-md-4" *ngFor="let item of microcredit" (click)="openModalC(item.campaign_id)">
-          <mat-card class="item-card">
+          <app-card-microcredit [microcredit]="campaign" type="all"></app-card-microcredit>
+          <!-- <mat-card class="item-card">
             <mat-card-content>
               <div class="col-sm-12 item-img-container">
                 <div class="item-img">
@@ -78,7 +80,7 @@
                 </div>
               </div>
             </mat-card-content>
-          </mat-card>
+          </mat-card> -->
         </div>
       </ng-container>
       <!-- </div> -->
@@ -94,10 +96,11 @@
       <ng-container *ngIf="posts">
         <owl-carousel-o [options]="customOptions">
           <ng-template carouselSlide *ngFor="let item of posts">
-            <mat-card class="item-card item-card" (mousedown)="mousedown()" (mousemove)="mousemove()"
+            <app-card-post [post]="item" (mousedown)="mousedown()" (mousemove)="mousemove()"
+              (mouseup)="mouseup(item, 'post')"></app-card-post>
+            <!-- <mat-card class="item-card item-card" (mousedown)="mousedown()" (mousemove)="mousemove()"
               (mouseup)="mouseup(item)">
               <mat-card-content>
-                <!--begin::Content-->
                 <div class="item">
                   <div class="col-sm-12 item-img-container">
                     <div class="item-img">
@@ -127,9 +130,8 @@
                     </div>
                   </div>
                 </div>
-                <!--end::Content-->
               </mat-card-content>
-            </mat-card>
+            </mat-card> -->
           </ng-template>
         </owl-carousel-o>
       </ng-container>

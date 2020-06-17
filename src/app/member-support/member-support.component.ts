@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 
 import { ItemsService } from '../core/services/items.service';
@@ -14,15 +14,19 @@ import { SupportService } from './_support.service';
   styleUrls: ['./member-support.component.scss']
 })
 export class MemberSupportComponent implements OnInit, OnDestroy {
+  //Set Child Modals
+  @ViewChild('campaignModal', { static: false }) campaignModal;
+
+  //Set Content Variables
+  public campaigns: MicrocreditCampaign[] = [];
+  singleMicrocredit: MicrocreditCampaign;
+
+  counter: number = 0;
+
   //Set Basic Variables
   loading: boolean = false;
   private unsubscribe: Subject<any>;
-  //Set Content Variables
-  campaigns: MicrocreditCampaign[];
-  singleMicrocredit: MicrocreditCampaign;
-
-  //Set Child Modals
-  @ViewChild('campaignModal', { static: false }) campaignModal;
+  // private subscription: Subscription = new Subscription;
 
   constructor(
     public matDialog: MatDialog,
@@ -31,7 +35,7 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private supportService: SupportService
   ) {
-    this.supportService.microcreditCampaigns.subscribe(campaigns => this.campaigns = campaigns)
+    //  this.subscription.add(this.supportService.microcreditCampaigns.subscribe(campaigns => this.campaigns = campaigns));
     this.unsubscribe = new Subject();
   }
 
@@ -39,7 +43,7 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
    * On Init
    */
   ngOnInit() {
-    this.fetchMicrocreditData();
+    this.fetchMicrocreditData(this.counter);
   }
 
   /**
@@ -48,6 +52,7 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
+    //   this.subscription.unsubscribe();
     this.loading = false;
   }
 
@@ -63,12 +68,13 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
 	*/
 
   //Get Microcredit Campaigns
-  fetchMicrocreditData() {
-    this.itemsService.readAllPrivateMicrocreditCampaigns('0-0-0')
+  fetchMicrocreditData(counter: number) {
+    this.itemsService.readAllPrivateMicrocreditCampaigns(`6-${counter.toString()}-1`)
       .pipe(
         tap(
           data => {
-            this.campaigns = this.shuffle(data);
+            // this.campaigns = this.shuffle(data);
+            this.campaigns = this.campaigns.concat(data);
             this.supportService.changeMicrocreditCampaigns(this.campaigns);
           },
           error => {
@@ -82,12 +88,20 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  onScroll() {
+    this.counter = this.counter + 1;
+    this.fetchMicrocreditData(this.counter);
+    console.log('scrolled!!');
+    //	this.offers = this.offers.concat(this.offers);
+    this.cdRef.markForCheck();
+  }
+
   /*
 	/ Modals
   */
 
   //Open Microcredit
-  openMicrocredit(campaign) {
+  openMicrocredit(campaign: MicrocreditCampaign) {
     this.singleMicrocredit = campaign;
     this.modalService.open(
       this.campaignModal, {

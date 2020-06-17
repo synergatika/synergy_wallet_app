@@ -13,7 +13,8 @@
     </div>
     <ng-container *ngIf="offers">
       <div class="item item-wrapper col-md-4" *ngFor="let item of offers" routerLink="edit/{{item.offer_id}}">
-        <mat-card class="item-card">
+        <app-card-offer [offer]="item"></app-card-offer>
+        <!-- <mat-card class="item-card">
           <mat-card-content>
             <div class="col-sm-12 item-img-container">
               <div class="item-img">
@@ -34,7 +35,7 @@
             </div>
 
           </mat-card-content>
-        </mat-card>
+        </mat-card> -->
       </div>
     </ng-container>
   </div>

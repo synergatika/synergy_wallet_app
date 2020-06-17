@@ -123,6 +123,7 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
+            this.fetchSupportsData();
             Swal.fire({
               title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
               text: this.translate.instant('MESSAGE.SUCCESS.CAMPAIGN_UPDATED'),
@@ -131,9 +132,9 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
             })
           },
           error => {
-            event.source.checked =
-              (this.supports[this.supports.map((x) => { return x.support_id; }).indexOf(support_id)].status === 'order') ?
-                false : true;
+            event.source.checked = (this.supports[this.supports.map((x) => { return x.support_id; }).
+              indexOf(support_id)].status === 'order') ?
+              false : true;
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
               this.translate.instant(error),

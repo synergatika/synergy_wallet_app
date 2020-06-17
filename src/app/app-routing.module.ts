@@ -78,10 +78,10 @@ const routes: Routes = [
 				}
 			},
 			{
-				path: 'redeem', component: MemberRedeemComponent,
-				canActivate: [UserGuard],
+				path: 'offers', component: MemberRedeemComponent,
+				canActivate: [UserGuard && ConfigGuard],
 				data: {
-					title: 'MENU.REDEEM',
+					title: 'MENU.OFFERS',
 					expectedRole: 'member',
 					accessIndex: 1,
 				}
@@ -94,13 +94,12 @@ const routes: Routes = [
 				// canActivate: [UserGuard],
 				data: { title: 'MENU.PARTNERS' }
 			},
-			{
-				path: 'offers',
-				canActivate: [ConfigGuard],
-				component: ArchiveOffersComponent,
-				data: { title: 'MENU.OFFERS', accessIndex: 1 }
-
-			},
+			// {
+			// path: 'offers',
+			// canActivate: [ConfigGuard],
+			// component: ArchiveOffersComponent,
+			// data: { title: 'MENU.OFFERS', accessIndex: 1 }
+			// },
 			{
 				path: 'posts',
 				canActivate: [ConfigGuard],

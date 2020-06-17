@@ -26,6 +26,7 @@ import { ScannerNoticeComponent } from './scanner-notice/scanner-notice.componen
 
 import { ScannerService } from './_scanner.service';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CardsModule } from '../views/layout/cards/cards.module';
 
 const routes: Routes = [
     {
@@ -66,9 +67,10 @@ const routes: Routes = [
         MatCardModule,
         MatRadioModule,
         CarouselModule,
-        TranslateModule.forChild()
+        TranslateModule.forChild(),
         // StoreModule.forFeature('auth', authReducer),
         // EffectsModule.forFeature([AuthEffects]),
+        CardsModule,
     ],
     providers: [
         ScannerService

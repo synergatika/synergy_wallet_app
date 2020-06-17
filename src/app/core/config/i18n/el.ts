@@ -28,7 +28,7 @@ export const locale = {
       WALLET: 'Πορτοφόλι',
       DISCOVER: 'Ανακάλυψε',
       SUPPORT: 'Υποστήριξε',
-      REDEEM: 'Εξαργύρωσε',
+      OFFERS: 'Προσφορές',
 
       /* PARTNER MENU (Μενού Συνεργάτη)*/
       NEW: 'new',
@@ -41,7 +41,7 @@ export const locale = {
       CAMPAIGNS: 'Καμπάνιες',
       EVENTS: 'Εκδηλώσεις',
       POSTS: 'Αναρτήσεις',
-      OFFERS: 'Προσφορές',
+      //OFFERS: 'Προσφορές',
 
       /* ADMIN MENU (Μενού Διαχειριστή)*/
       PARTNERS: 'Συνεργάτες',

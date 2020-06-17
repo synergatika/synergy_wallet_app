@@ -12,6 +12,8 @@
     </div>
     <ng-container *ngIf="events">
       <div class="item item-wrapper col-md-4" *ngFor="let item of events" routerLink="edit/{{item.event_id}}">
+        <!-- <app-card-post [post]="item"></app-card-post> -->
+
         <mat-card class="item-card">
           <mat-card-content>
             <div class="col-sm-12 item-img-container">
@@ -29,9 +31,9 @@
                 {{item.subtitle}}
               </div>
             </div>
-
           </mat-card-content>
         </mat-card>
+
       </div>
     </ng-container>
   </div>

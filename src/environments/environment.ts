@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  apiUrl: 'http://localhost:3000',
-  //apiUrl: 'https://api.synergatika.gr',
+  //apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://api.synergatika.gr',
   //apiUrl: 'http://192.168.1.160:3000',  
   //apiUrl: 'http://192.168.1.7:3000',
   //apiUrl: 'http://79.129.47.140:3000',
@@ -24,7 +24,7 @@ export const environment = {
     true, // partner_contact,
     true, // partner_payments, 
     true, // partner_auto_registration, 
-    true  // partner_fixed_campaign
+    false // partner_fixed_campaign
   ],
 
   version: '0.5.0',
