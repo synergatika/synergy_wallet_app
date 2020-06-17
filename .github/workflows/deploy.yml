@@ -20,7 +20,7 @@ jobs:
         run: |
           RELEASE_VERSION=${RELEASE_VERSION#"v"}
           echo $RELEASE_VERSION
-          sed -i -e "s/version:.*/version: '"$version"',"/g src/environments/environment.prod.ts
+          sed -i -e "s/version:.*/version: '"$RELEASE_VERSION"',"/g src/environments/environment.prod.ts
       - run: npx ng build --prod
       - name: deploy to server
         uses: AEnterprise/rsync-deploy@v1.0
