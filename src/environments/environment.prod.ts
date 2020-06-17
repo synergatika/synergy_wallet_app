@@ -16,7 +16,7 @@ export const environment = {
     true, // partner_contact,
     true, // partner_payments, 
     true, // partner_auto_registration, 
-    true  // partner_fixed_campaign
+    // true  // partner_fixed_campaign
   ],
 
   version: '0.5.0',
