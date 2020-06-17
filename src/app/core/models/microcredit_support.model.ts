@@ -1,5 +1,11 @@
 export interface MicrocreditSupport {
-
+    partner_address?: any;
+    partner_name?: any;
+    campaign_imageURL?: any;
+    title?:any;
+    redeemStarts?: any;
+    redeemEnds?:any;
+    terms?:any;
     campaign_id: string;
     support_id: string;
     backer_id?: string;
