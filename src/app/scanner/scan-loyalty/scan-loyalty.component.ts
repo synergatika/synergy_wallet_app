@@ -342,7 +342,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 
     if ((this.transaction.amount >= 5) && (maxPossibleDiscount >= 1)) {
       this.transaction.discount_amount = (maxPossibleDiscount > maxAllowedDiscount) ? this.slipFloor(maxAllowedDiscount) : this.slipFloor(maxPossibleDiscount);
-      this.transaction.discount_points = this.transaction.discount_amount * (1 / this.conversionRatiο);
+      this.transaction.discount_points = 0;//this.transaction.discount_amount * (1 / this.conversionRatiο);
       this.scannerService.changePointsTransaction(this.transaction);
       console.log("Can Redeem")
       console.log("Discount Amount: " + this.transaction.discount_amount, "Discount Points: " + this.transaction.discount_points);
