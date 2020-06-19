@@ -8,11 +8,14 @@ interface User {
 
 interface PointsTransaction {
     amount: number;
-    final_amount: number;
+    possible_discount_amount: number;
     discount_amount: number;
+    final_amount: number;
     discount_points: number;
     points: number;
+    previous_points: number;
     quantity?: any;
+    // previous_points: any;
     initial_tokens?: any;
     redeemed_tokens?: any;
     discount_tokens?: any;
@@ -42,6 +45,7 @@ interface Offer {
 interface OfferTransaction {
     offer_id: string;
     cost: number;
+    discount_amount?: number;
     discount_points: number;
     points: number;
     possible_quantity: number;
@@ -50,6 +54,7 @@ interface OfferTransaction {
     initial_tokens?: any;
     redeemed_tokens?: any;
     discount_tokens?: number;
+    previous_points?: number;
 }
 
 interface MicrocreditSupport {
@@ -77,10 +82,13 @@ interface MicrocreditSupport {
 interface MicrocreditTransaction {
     campaign_id: string;
     support_id: string;
+    discount_amount?: number;
     initial_tokens: number;
     redeemed_tokens: number;
     possible_tokens: number;
     discount_tokens: number;
+    points?: number;
+    previous_points?: number;
     final_amount?: any;
     discount_points?: any;
     quantity?: any;

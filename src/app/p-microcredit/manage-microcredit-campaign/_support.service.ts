@@ -25,24 +25,10 @@ export class SupportService {
         partner_email: '',
         partner_slug: '',
         partner_imageURL: '',
-        partner_address: {
-            street: '',
-            city: '',
-            postCode: '',
-            coordinates: ['', '']
-        },
-        partner_contact: {
-            phone: '',
-            websiteURL: ''
-        },
+        partner_address: { street: '', city: '', postCode: '', coordinates: ['', ''] },
+        partner_contact: { phone: '', websiteURL: '' },
         partner_payments: [{ bic: '', name: '', value: '' }, { bic: '', name: '', value: '' }],
-        // {
-        //     paypal: '',
-        //     nationalBank: '',
-        //     eurobank: '',
-        //     alphaBank: '',
-        //     pireausBank: ''
-        // },
+
         campaign_id: '',
         campaign_imageURL: '',
         campaign_slug: '',
@@ -52,6 +38,8 @@ export class SupportService {
         description: '',
         category: '',
         access: 'public',
+        status: 'published',
+
         quantitative: false,
         stepAmount: 0,
         minAllowed: 0,
@@ -61,9 +49,7 @@ export class SupportService {
         expiresAt: 0,
         redeemStarts: 0,
         redeemEnds: 0,
-        // supports: [{
-        //     _id: '', backer_id: '', initialTokens: 0, redeemedTokens: 0, payment_id: '', status: 'order'
-        // }],
+
         confirmationTokens: {
             _id: '', initialTokens: 0, redeemedTokens: 0
         },

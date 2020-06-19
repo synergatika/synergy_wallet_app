@@ -27,7 +27,9 @@ export class SubFinalStepComponent implements OnInit {
 	 */
   ngOnInit() {
     if (this.type === 1) {
-      this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction)
+      this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction);
+      console.log(this.transaction);
+
     } else if (this.type === 2) {
       this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction)
     } else if (this.type === 3) {

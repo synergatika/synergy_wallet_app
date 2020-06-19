@@ -34,6 +34,7 @@ import { SubFinalStepComponent } from './manage-microcredit-campaign/sub-final-s
 
 import { SupportNoticeComponent } from './manage-microcredit-campaign/support-notice/support-notice.component';
 import { SupportService } from './manage-microcredit-campaign/_support.service';
+import { CardsModule } from '../views/layout/cards/cards.module';
 
 const routes: Routes = [
     {
@@ -89,7 +90,9 @@ const routes: Routes = [
         MatProgressSpinnerModule,
         MatTooltipModule,
         NgxMaterialTimepickerModule,
-        NgbDropdownModule
+        NgbDropdownModule,
+
+        CardsModule
     ],
     providers: [
         SupportService

@@ -11,7 +11,9 @@
     <ng-container *ngIf="campaigns">
       <div class="item item-wrapper col-md-4" *ngFor="let item of campaigns"
         [routerLink]="item.status=='draft' ? ['edit/'+item.campaign_id] : ['manage/'+item.campaign_id]">
-        <mat-card class="item-card">
+        <app-card-microcredit [microcredit]="item" type="all"></app-card-microcredit>
+
+        <!-- <mat-card class="item-card">
           <mat-card-content>
             <div class="col-sm-12 item-img-container">
               <div class="item-img">
@@ -32,10 +34,9 @@
               <div class="item-description partner">
                 {{item.subtitle}}
               </div>
-              <!--<button mat-raised-button routerLink="edit/{{item.campaign_id}}"> Edit Campaign</button>-->
             </div>
           </mat-card-content>
-        </mat-card>
+        </mat-card> -->
       </div>
     </ng-container>
   </div>

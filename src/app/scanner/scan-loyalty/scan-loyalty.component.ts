@@ -341,21 +341,23 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     const maxPossibleDiscount: number = this.transaction.points * this.conversionRatiο;
 
     if ((this.transaction.amount >= 5) && (maxPossibleDiscount >= 1)) {
-      this.transaction.discount_amount = (maxPossibleDiscount > maxAllowedDiscount) ? this.slipFloor(maxAllowedDiscount) : this.slipFloor(maxPossibleDiscount);
+      this.transaction.possible_discount_amount = (maxPossibleDiscount > maxAllowedDiscount) ? this.slipFloor(maxAllowedDiscount) : this.slipFloor(maxPossibleDiscount);
       this.transaction.discount_points = 0;//this.transaction.discount_amount * (1 / this.conversionRatiο);
+      this.transaction.discount_amount = 0;
       this.scannerService.changePointsTransaction(this.transaction);
       console.log("Can Redeem")
-      console.log("Discount Amount: " + this.transaction.discount_amount, "Discount Points: " + this.transaction.discount_points);
+      console.log("Discount Amount: " + this.transaction.possible_discount_amount, "Discount Points: " + this.transaction.discount_points);
       this.discountForm.initializeDiscount();
       this.onNextStep();
     } else if ((this.transaction.amount < 5) || (maxPossibleDiscount < 1)) {
       this.actions.redeem = '00';
       this.scannerService.changeActions(this.actions);
+      this.transaction.possible_discount_amount = 0;
       this.transaction.discount_amount = 0;
       this.transaction.discount_points = 0;
       this.scannerService.changePointsTransaction(this.transaction);
       console.log("Can Not Redeem")
-      console.log("Discount Amount: " + this.transaction.discount_amount, "Discount Points: " + this.transaction.discount_points);
+      console.log("Discount Amount: " + this.transaction.possible_discount_amount, "Discount Points: " + this.transaction.discount_points);
       this.earnPoints(this.user.identifier_form || this.user.identifier_scan);
       this.onAfterNextStep(4);
     }
@@ -456,6 +458,11 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
             } else {
               console.log("Will Not Redeem");
               this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
+
+              this.transaction.previous_points = this.transaction.points;
+              this.scannerService.changePointsTransaction(this.transaction);
+              this.fetchBalanceData();
+
               this.onNextStep();
             }
           },
@@ -488,6 +495,11 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
+
+            this.transaction.previous_points = this.transaction.points;
+            this.scannerService.changePointsTransaction(this.transaction);
+            this.fetchBalanceData();
+
             this.onNextStep();
           },
           error => {

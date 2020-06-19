@@ -704,8 +704,10 @@ export const locale = {
       PARTNER: 'Πληροφορίες Συνεργάτη',
       TERMS: 'Τι παίρνω;',
       STATUS: {
+        DRAFT: 'Πρόχειρη',
         EXPECTED: 'Αναμένεται',
-        EXPIRED: 'Έχει Λήξει'
+        EXPIRED: 'Έχει Λήξει',
+        REDEEM_TO: 'Εξαργύρωση εώς'
       }
     },
     SUPPORT: {
@@ -831,7 +833,10 @@ export const locale = {
         },
         SUB_FINAL_STEP: {
           AMOUNT: 'Ποσό Συναλλαγής',
+          DISCOUNT_AMOUNT: 'Ποσό Έκπτωσης',
           POINTS_TO_REDEEM: 'Πόντοι που θα χρησιμοποιηθούν',
+          POINTS_REMAINING: 'Νέο Υπόλοιπο Πόντων',
+          POINTS_ADDED: 'Πόντοι που Προστέθηκαν',
           QUANTITY: 'Ποσότητα',
           TOKENS_BEFORE: 'Αρχικοί Πόντοι',
           TOKENS_REDEEMED: 'Πόντοι που Χρησιμοποιήθηκαν',

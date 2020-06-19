@@ -85,60 +85,14 @@ export class ScannerComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  openModalA() {
-    const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    dialogConfig.width = "600px";
-
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ScanLoyaltyComponent, dialogConfig);
-  }
-
-  openModalB(offer_id: string) {
-    const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    dialogConfig.width = "600px";
-    dialogConfig.data = {
-      offer_id: offer_id//'5e3298c9ba608903716b09c2'
-    };
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ScanOffersComponent, dialogConfig);
-  }
-
-  openModalC(campaign_id: string) {
-    const currentMicrocredit = this.microcredit.filter(o => o.campaign_id === campaign_id)
-    console.log(currentMicrocredit);//if (currentMicrocredit[0] ))
-
-
-    if ((currentMicrocredit[0].redeemStarts > this.seconds) || (currentMicrocredit[0].redeemEnds < this.seconds)) {
-      return;
-    }
-    const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    dialogConfig.width = "600px";
-    dialogConfig.data = {
-      campaign_id: campaign_id//'5e3298c9ba608903716b09c2'
-    };
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ScanMicrocreditComponent, dialogConfig);
-  }
-
-  fetchCampaignsData() {
-    console.log('this.microcredit');
-    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
+  fetchOffersData() {
+    this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
       .pipe(
         tap(
           data => {
-            this.microcredit = data.filter(o => { status === "published" });
-
-            console.log(this.microcredit);
-            this.scannerService.changeMicrocreditCampaigns(this.microcredit);
+            this.offers = data;
+            console.log(this.offers)
+            this.scannerService.changeOffers(this.offers);
           },
           error => {
           }),
@@ -151,14 +105,20 @@ export class ScannerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  fetchOffersData() {
-    this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
+  fetchCampaignsData() {
+    console.log('this.microcredit');
+    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
       .pipe(
         tap(
           data => {
-            this.offers = data;
-            console.log(this.offers)
-            this.scannerService.changeOffers(this.offers);
+            const seconds = this.seconds;
+            console.log(seconds)
+            this.microcredit = data.filter((item) => {
+              return ((item.status == 'published') &&
+                (item.redeemStarts < seconds) &&
+                (seconds < item.redeemEnds));
+            });;
+            this.scannerService.changeMicrocreditCampaigns(this.microcredit);
           },
           error => {
           }),
@@ -192,6 +152,61 @@ export class ScannerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  /**
+   * Open Wizard (Scan for Points)
+   */
+  openModalA() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.width = "600px";
+
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(ScanLoyaltyComponent, dialogConfig);
+  }
+
+  /**
+   * Open Wizard (Scan for Offer)
+   */
+  openModalB(offer_id: string) {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.width = "600px";
+    dialogConfig.data = {
+      offer_id: offer_id
+    };
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(ScanOffersComponent, dialogConfig);
+  }
+
+  /**
+   * Open Wizard (Scan for Microcredit Campaign)
+   */
+  openModalC(campaign_id: string) {
+    const currentMicrocredit = this.microcredit.filter(o => o.campaign_id === campaign_id)
+    console.log(currentMicrocredit);//if (currentMicrocredit[0] ))
+
+    if ((currentMicrocredit[0].redeemStarts > this.seconds) || (currentMicrocredit[0].redeemEnds < this.seconds)) {
+      return;
+    }
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.width = "600px";
+    dialogConfig.data = {
+      campaign_id: campaign_id
+    };
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(ScanMicrocreditComponent, dialogConfig);
+  }
+
+  /**
+   * Open Modal (Post/Event Info)
+   */
   openPost(post: PostEvent) {
     console.log('post modal');
     console.log(post);

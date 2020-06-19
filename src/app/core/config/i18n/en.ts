@@ -704,8 +704,10 @@ export const locale = {
       PARTNER: 'Partner Info',
       TERMS: 'What do I get?',
       STATUS: {
+        DRAFT: 'Draft',
         EXPECTED: 'Is Expected',
-        EXPIRED: 'Expired'
+        EXPIRED: 'Expired',
+        REDEEM_TO: 'Redeem To'
       }
     },
     SUPPORT: {
@@ -830,7 +832,10 @@ export const locale = {
         },
         SUB_FINAL_STEP: {
           AMOUNT: 'Transaction Amount',
+          DISCOUNT_AMOUNT: 'Discount Amount',
           POINTS_TO_REDEEM: 'Points to Redeem',
+          POINTS_REMAINING: 'Total Points',
+          POINTS_ADDED: 'New Points',
           QUANTITY: 'Quantity',
           TOKENS_BEFORE: 'Initial Tokens',
           TOKENS_REDEEMED: 'Tokens Redeemed',

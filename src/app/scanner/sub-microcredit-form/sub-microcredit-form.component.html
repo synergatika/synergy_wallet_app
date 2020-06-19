@@ -6,7 +6,7 @@
     <mat-radio-button class="token-radio-buttons" *ngFor="let item of supports" [value]='item.support_id' type="radio"
       name="item.support_id" [checked]="isRadioButtonChecked(item)" [disabled]="isRadioButtonDisable(item)"
       (click)="onRadioButtonChange(item)">
-      {{item.support_id}}
+      {{item.payment_id}}
       <span *ngIf="item.redeemedTokens === item.initialTokens"><i>(Completed)</i></span>
       <span *ngIf="item.status === 'order'"><i>(Unpaid)</i></span>
     </mat-radio-button>

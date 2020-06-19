@@ -18,21 +18,10 @@ export class SupportService {
         partner_email: '',
         partner_slug: '',
         partner_imageURL: '',
-        partner_address: {
-            street: '',
-            city: '',
-            postCode: '',
-            coordinates: ['', '']
-        },
-        partner_contact: {
-            phone: '',
-            websiteURL: ''
-        },
-        partner_payments: [
-            {
-                bic: '', name: '', value: ''
-            }
-        ],
+        partner_address: { street: '', city: '', postCode: '', coordinates: ['', ''] },
+        partner_contact: { phone: '', websiteURL: '' },
+        partner_payments: [{ bic: '', name: '', value: '' }],
+
         campaign_id: '',
         campaign_imageURL: '',
         title: '',
@@ -42,6 +31,8 @@ export class SupportService {
         description: '',
         category: '',
         access: 'public',
+        status: 'published',
+
         quantitative: false,
         stepAmount: 0,
         minAllowed: 0,

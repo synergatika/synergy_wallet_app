@@ -14,8 +14,8 @@ export class SingleMicrocreditComponent implements OnInit {
 	@Input() microcredit: MicrocreditCampaign;
 
 	seconds: number = 0;
-
 	public outOfPeriod: boolean = false;
+
 	constructor(
 		public matDialog: MatDialog,
 	) {
@@ -23,12 +23,10 @@ export class SingleMicrocreditComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log(this.microcredit);
 		const now = new Date();
 		this.seconds = parseInt(now.getTime().toString());
 
-		if ((this.seconds < this.microcredit.startsAt) || (this.seconds > this.microcredit.expiresAt)) this.outOfPeriod = true;
-		console.log("Expired: ", this.outOfPeriod);
+		this.outOfPeriod = ((this.seconds < this.microcredit.startsAt) || (this.seconds > this.microcredit.expiresAt)) ? true : false;
 	}
 
 	pledgeModal(campaign: MicrocreditCampaign) {

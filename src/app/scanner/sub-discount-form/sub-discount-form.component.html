@@ -18,7 +18,7 @@
       <div class="">
         <h4>
           {{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.TITLE' | translate }}
-          <span class="discount">{{transaction.discount_amount | currency:'EUR'}}</span>.
+          <span class="discount">{{transaction.possible_discount_amount | currency:'EUR'}}</span>.
         </h4>
         <div class="">
           <mat-checkbox (click)="onWantRedeemCheckboxChange()" type="checkbox" name="redeem"

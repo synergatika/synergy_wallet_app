@@ -50,11 +50,14 @@ export class PartnerCampaignsComponent implements OnInit, OnDestroy {
 	}
 
 	fetchCampaignsData() {
-		this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
+		this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
 			.pipe(
 				tap(
 					data => {
-						this.campaigns = data;
+						this.campaigns = data.filter(item => {
+							return (item.expiresAt > this.seconds);
+						});;
+						//this.campaigns = data;
 						console.log(this.campaigns);
 					},
 					error => {

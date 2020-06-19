@@ -91,11 +91,12 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
     this.actions.redeem = '1' + ((controls.wantRedeem.value) ? '0' : '1');
     console.log(this.actions.redeem);
     if (this.actions.redeem === '11') {
-      this.transaction.final_amount = this.transaction.amount - this.transaction.discount_amount;
-      this.transaction.discount_points = this.transaction.discount_amount * (1 / this.conversionRatiο);
-
+      this.transaction.final_amount = this.transaction.amount - this.transaction.possible_discount_amount;
+      this.transaction.discount_amount = this.transaction.possible_discount_amount;
+      this.transaction.discount_points = this.transaction.possible_discount_amount * (1 / this.conversionRatiο);
     } else {
       this.transaction.final_amount = this.transaction.amount;
+      this.transaction.discount_amount = 0;
       this.transaction.discount_points = 0;
     }
     controls['final_amount'].setValue(this.transaction.final_amount);

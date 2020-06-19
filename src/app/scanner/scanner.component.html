@@ -55,7 +55,7 @@
       <!-- <div *ngIf="configAccess[2]"> -->
       <ng-container *ngIf="configAccess[2]&&microcredit">
         <div class="item item-wrapper col-md-4" *ngFor="let item of microcredit" (click)="openModalC(item.campaign_id)">
-          <app-card-microcredit [microcredit]="campaign" type="all"></app-card-microcredit>
+          <app-card-microcredit [microcredit]="item" type="all"></app-card-microcredit>
           <!-- <mat-card class="item-card">
             <mat-card-content>
               <div class="col-sm-12 item-img-container">

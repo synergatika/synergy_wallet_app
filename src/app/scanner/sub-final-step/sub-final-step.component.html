@@ -1,6 +1,10 @@
 <div *ngIf='type===1'>
     <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.AMOUNT' | translate }}: {{transaction.final_amount}}</p>
     <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_TO_REDEEM' | translate }}: {{transaction.discount_points}}</p>
+    <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.DISCOUNT_AMOUNT' | translate }}: {{transaction.discount_amount}}</p>
+    <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_REMAINING' | translate }}: {{transaction.points}}</p>
+    <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_ADDED' | translate }}:
+        {{transaction.points - transaction.previous_points - transaction.discount_points}} </p>
     <button mat-raised-button type="button" (click)="onNextStep()">{{ 'PARTNER.WIZARD.CLOSE' | translate }}</button>
 </div>
 
@@ -11,7 +15,8 @@
 </div>
 
 <div *ngIf='type===3'>
-    <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.TOKENS_BEFORE' | translate }}: {{transaction.initial_tokens - transaction.redeemed_tokens}}</p>
+    <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.TOKENS_BEFORE' | translate }}:
+        {{transaction.initial_tokens - transaction.redeemed_tokens}}</p>
     <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.TOKENS_REDEEMED' | translate }}: {{transaction.discount_tokens}}</p>
     <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.TOKENS_REMAINING' | translate }}:
         {{transaction.initial_tokens - (transaction.redeemed_tokens + transaction.discount_tokens)}}
