@@ -1,8 +1,16 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
+/**
+ * Services
+ */
 import { ItemsService } from '../../../core/services/items.service';
+
+/**
+ * Models & Interfaces
+ */
 import { PostEvent } from '../../../core/models/post_event.model';
 
 @Component({
@@ -12,14 +20,28 @@ import { PostEvent } from '../../../core/models/post_event.model';
 })
 export class ArchivePostsComponent implements OnInit {
 
+	/**
+	 * Content Variables
+	 */
 	public posts: PostEvent[] = [];
+
+	counter: number = 0;
 
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
-	counter: number = 0;
-
-	constructor(private cdRef: ChangeDetectorRef, private itemsService: ItemsService) {
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param translate: TranslateService
+	 * @param itemsService: ItemsService
+	 */
+	constructor(
+		private cdRef: ChangeDetectorRef,
+		public translate: TranslateService,
+		private itemsService: ItemsService
+	) {
 		this.unsubscribe = new Subject();
 	}
 
@@ -39,6 +61,9 @@ export class ArchivePostsComponent implements OnInit {
 		this.loading = false;
 	}
 
+	/**
+	 * Fetch Post & Events List
+	 */
 	fetchPostsEventsData(counter: number) {
 		this.itemsService.readAllPrivatePostsEvents(`6-${counter.toString()}-0`)
 			.pipe(
@@ -59,6 +84,9 @@ export class ArchivePostsComponent implements OnInit {
 			.subscribe();
 	}
 
+	/**
+	 * On Scroll
+	 */
 	onScroll() {
 		this.counter = this.counter + 1;
 		this.fetchPostsEventsData(this.counter);

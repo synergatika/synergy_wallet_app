@@ -31,6 +31,9 @@
     <!--start::Step B - Enter Points-->
     <aw-wizard-step stepTitle="Offer">
       <scanner-notice></scanner-notice>
+      <div *ngIf="loading" class="spinner-overlay">
+        <mat-spinner></mat-spinner>
+      </div>
       <div class="step-container row justify-content-md-center">
         <app-sub-offer-form (previous_step)="onPreviousStep($event)" (add_offer)="onSubmitOfferForm($event)">
         </app-sub-offer-form>

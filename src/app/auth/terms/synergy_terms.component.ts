@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material';
 export class TermsComponent implements OnInit, OnDestroy {
 
 	/**
-	 * Component constructor
+	 * Component Constructor
 	 *
 	 * @param dialog: MatDialog
 	 */

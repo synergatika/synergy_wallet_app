@@ -1,24 +1,41 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, HostListener } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { NgbModal, NgbActiveModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
-import { ItemsService } from '../core/services/items.service';
+/**
+ * Environment
+ */
+import { environment } from '../../environments/environment';
+
+/**
+ * Services
+ */
+import { StaticDataService } from '../core/services/static-data.service';
 import { AuthenticationService } from '../core/services/authentication.service';
+import { ItemsService } from '../core/services/items.service';
 
-import { ScannerInterface } from './_scanner.interface';
-import { ScannerService } from './_scanner.service';
+/**
+ * Models & Interfaces
+ */
+import { PostEvent } from '../core/models/post_event.model';
+import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
 
+/**
+ * Components
+ */
 import { ScanLoyaltyComponent } from './scan-loyalty/scan-loyalty.component';
 import { ScanOffersComponent } from './scan-offers/scan-offers.component';
 import { ScanMicrocreditComponent } from './scan-microcredit/scan-microcredit.component';
-// Translate
-import { TranslateService } from '@ngx-translate/core';
-import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { PostEvent } from '../core/models/post_event.model';
-import { environment } from '../../environments/environment';
-import { StaticDataService } from '../core/services/static-data.service';
+
+/**
+ * Local Services & Interfaces
+ */
+import { ScannerInterface } from './_scanner.interface';
+import { ScannerService } from './_scanner.service';
 
 @Component({
   selector: 'app-scanner',
@@ -28,63 +45,110 @@ import { StaticDataService } from '../core/services/static-data.service';
 })
 export class ScannerComponent implements OnInit, OnDestroy {
 
+	/**
+	 * Configuration and Static Data
+	 */
   public configAccess: Boolean[] = environment.access;
 
-  campaign: any;
+	/**
+	 * Children Modals
+	 */
+  @ViewChild('postModal', { static: false }) postModal: NgbModalRef;
 
+  /** 
+   * Carousel Variables
+   */
+  customOptions: OwlOptions;
   moved: boolean;
-  posts: PostEvent[];
-  singlePost: PostEvent;
-  singlePartner = false;
 
-  seconds: number = 0;
-
+  /**
+   * Content Variables
+   */
+  public posts: PostEvent[];
   public offers: ScannerInterface["Offer"][];
   public microcredit: ScannerInterface["MicrocreditCampaign"][];
+  singlePost: PostEvent;
+  singlePartner = false;
+  // public campaign: MicrocreditCampaign;
+
+  seconds: number = 0;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-  @ViewChild('postModal', { static: false }) postModal;
-  customOptions: OwlOptions;
-
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param modalService: NgbModal
+	 * @param matDialog: MatDialog
+	 * @param translate: TranslateService
+	 * @param staticDataService: StaticDataService
+	 * @param authenticationService: AuthenticationService
+	 * @param itemsService: ItemsService
+	 * @param scannerService: ScannerService
+	 */
   constructor(
     private cdRef: ChangeDetectorRef,
-    //private translate: TranslateService,
-    private scannerService: ScannerService,
+    private modalService: NgbModal,
+    public matDialog: MatDialog,
+    private translate: TranslateService,
+    private staticDataService: StaticDataService,
     private authenticationService: AuthenticationService,
     private itemsService: ItemsService,
-    private staticDataService: StaticDataService,
-    public matDialog: MatDialog,
-    private modalService: NgbModal,
+    private scannerService: ScannerService
   ) {
-    this.customOptions = staticDataService.getOwlOptionsThree;
+    this.customOptions = this.staticDataService.getOwlOptionsThree;
     this.scannerService.offers.subscribe(offers => this.offers = offers)
     this.scannerService.microcredit.subscribe(microcredit => this.microcredit = microcredit)
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     const now = new Date();
     this.seconds = parseInt(now.getTime().toString());
 
     this.fetchOffersData();
     this.fetchCampaignsData();
-    this.fetchPostsData();
+    this.fetchPostsEventsData();
   }
 
-	/**
-	 * On Destroy
-	 */
+  /**
+   * On Destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
   }
 
+	/**
+	 * Close Modal on Browser Back Button 
+	 */
+  controlModalState(state: boolean) {
+    if (state) {
+      const modalState = {
+        modal: true,
+        desc: 'ScannerModals'
+      };
+      history.pushState(modalState, null);
+    } else if (window.history.state.modal) {
+      history.back();
+    }
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    this.controlModalState(false);
+    this.modalService.dismissAll();
+  }
+
+  /**
+   * Fetch Offers List (for One Partner)
+   */
   fetchOffersData() {
     this.itemsService.readOffersByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
       .pipe(
@@ -105,18 +169,19 @@ export class ScannerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  /**
+   * Fetch Microcredit Campaigns List (for One Partner)
+   */
   fetchCampaignsData() {
     console.log('this.microcredit');
-    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-1')
+    this.itemsService.readPrivateMicrocreditCampaignsByStore(this.authenticationService.currentUserValue.user["_id"], '0-0-0')
       .pipe(
         tap(
           data => {
             const seconds = this.seconds;
             console.log(seconds)
             this.microcredit = data.filter((item) => {
-              return ((item.status == 'published') &&
-                (item.redeemStarts < seconds) &&
-                (seconds < item.redeemEnds));
+              return ((item.status == 'published') && (item.redeemStarts < seconds) && (seconds < item.redeemEnds));
             });;
             this.scannerService.changeMicrocreditCampaigns(this.microcredit);
           },
@@ -131,7 +196,10 @@ export class ScannerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  fetchPostsData() {
+  /**
+   * Fetch Post & Events List
+   */
+  fetchPostsEventsData() {
     this.itemsService.readAllPrivatePostsEvents('0-0-0')
       .pipe(
         tap(
@@ -178,6 +246,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       offer_id: offer_id
     };
+
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(ScanOffersComponent, dialogConfig);
   }
@@ -200,17 +269,21 @@ export class ScannerComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       campaign_id: campaign_id
     };
+
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(ScanMicrocreditComponent, dialogConfig);
   }
 
   /**
-   * Open Modal (Post/Event Info)
+   * Open PostEvent Modal
    */
   openPost(post: PostEvent) {
     console.log('post modal');
     console.log(post);
     this.singlePost = post;
+
+    this.controlModalState(true);
+
     this.modalService.open(
       this.postModal,
       {
@@ -222,31 +295,28 @@ export class ScannerComponent implements OnInit, OnDestroy {
       }
     ).result.then((result) => {
       console.log('closed');
+      this.controlModalState(false);
 
     }, (reason) => {
       console.log('dismissed');
+      this.controlModalState(false);
 
     });
   }
 
-  //Actions to Open Modals from Carousel
-  mousedown() {
-    this.moved = false;
-  }
-  mousemove() {
-    this.moved = true;
-  }
-  mouseup(data, type) {
-    if (this.moved) {
-      //Do nothings
-    } else {
+
+	/**
+	 * Actions to Open Modals from Carousel
+	 */
+  mousedown() { this.moved = false; }
+  mousemove() { this.moved = true; }
+  mouseup(data: any, type: string) {
+    if (this.moved) { }
+    else {
       if (type == 'post') {
         this.openPost(data);
-      } else {
-        //Do nothing
-      }
+      } else { }
     }
     this.moved = false;
   }
-
 }

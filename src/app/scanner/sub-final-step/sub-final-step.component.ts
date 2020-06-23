@@ -16,6 +16,7 @@ export class SubFinalStepComponent implements OnInit {
   finalize: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public transaction: ScannerInterface["PointsTransaction"] | ScannerInterface["OfferTransaction"] | ScannerInterface["MicrocreditTransaction"];
+  public actions: ScannerInterface["Actions"];
 
   constructor(
     private scannerService: ScannerService
@@ -28,7 +29,9 @@ export class SubFinalStepComponent implements OnInit {
   ngOnInit() {
     if (this.type === 1) {
       this.scannerService.pointsTransaction.subscribe(transaction => this.transaction = transaction);
+      this.scannerService.actions.subscribe(actions => this.actions = actions);
       console.log(this.transaction);
+      console.log(this.actions);
 
     } else if (this.type === 2) {
       this.scannerService.offerTransaction.subscribe(transaction => this.transaction = transaction)

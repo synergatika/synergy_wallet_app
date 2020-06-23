@@ -1,4 +1,8 @@
 import { Input, Component, OnInit } from '@angular/core';
+
+/**
+ * Models & Interfaces
+ */
 import { PostEvent } from 'src/app/core/models/post_event.model';
 
 @Component({
@@ -8,12 +12,16 @@ import { PostEvent } from 'src/app/core/models/post_event.model';
 })
 export class SinglePostComponent implements OnInit {
 
-	//Set Variables Imported
+	/**
+	 * Imported Variables
+	 */
 	@Input() singlePost: PostEvent;
 
-	constructor() {
-	}
+	constructor() { }
 
+	/**
+	 * On Init
+	 */
 	ngOnInit() {
 	}
 

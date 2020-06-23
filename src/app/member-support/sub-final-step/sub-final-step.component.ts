@@ -10,12 +10,22 @@ import { SupportService } from '../_support.service';
 })
 export class SubFinalStepComponent implements OnInit {
 
+  /**
+   * Imported Variables
+   */
   @Input()
   type: number;
+
+  /**
+   * Event Emitter
+   */
   @Output()
   finalize: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  support: SupportInterface["MicrocreditSupport"];
+  /**
+   * Content Variables
+   */
+  public support: SupportInterface["MicrocreditSupport"];
 
   constructor(
     private supportService: SupportService
@@ -35,5 +45,4 @@ export class SubFinalStepComponent implements OnInit {
   onNextStep() {
     this.finalize.emit(true);
   }
-
 }

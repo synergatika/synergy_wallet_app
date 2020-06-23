@@ -1,17 +1,18 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-// Translate
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AuthenticationService } from '../../../core/services/authentication.service';
+/**
+ * Services
+ */
 import { StaticDataService } from '../../../core/services/static-data.service';
+import { AuthenticationService } from '../../../core/services/authentication.service';
 
-interface Menu {
-	title?: string,
-	link?: string,
-	icon?: string
-}
+/**
+ * Models & Interfaces
+ */
+import { Menu } from '../../../core/interfaces/menu.interface';
 
 @Component({
 	selector: 'app-footer',
@@ -23,16 +24,19 @@ export class FooterComponent implements OnInit {
 	public menu: Menu[];
 
 	constructor(
-		private authenticationService: AuthenticationService,
-		private router: Router,
 		private cdr: ChangeDetectorRef,
+		private router: Router,
 		private translate: TranslateService,
-		private staticDataService: StaticDataService
+		private staticDataService: StaticDataService,
+		private authenticationService: AuthenticationService
 	) {
 		const currentUser = this.authenticationService.currentUserValue;
 		this.menu = (currentUser.user["access"] === 'member') ? this.staticDataService.getMemberMenu : [];
 	}
 
+	/**
+	 * On Init
+	 */
 	ngOnInit() {
 		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
 		this.router.events

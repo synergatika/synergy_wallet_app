@@ -1,24 +1,30 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject, HostListener } from '@angular/core';
+import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-// Translate
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { WizardComponent } from "angular-archwizard";
 
-// Services
+/**
+ * Services
+ */
 import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { LoyaltyService } from '../../core/services/loyalty.service';
 
-import { WizardComponent } from "angular-archwizard";
-import { tap, takeUntil, finalize } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
-
+/**
+ * Components
+ */
 import { SubDiscountFormComponent } from "../sub-discount-form/sub-discount-form.component";
 import { ScannerService } from "../_scanner.service";
+
+/**
+ * Local Services & Interfaces
+ */
 import { ScannerInterface } from "../_scanner.interface";
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-scan-loyalty',
@@ -27,23 +33,33 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   // providers: [LoyaltyLocalService]
 })
 export class ScanLoyaltyComponent implements OnInit, OnDestroy {
-
+  /**
+   * Imported Component
+   */
   @ViewChild(SubDiscountFormComponent, { static: true })
   public discountForm: SubDiscountFormComponent;
+
+  /**
+   * Wizard Component
+   */
   @ViewChild(WizardComponent, { static: true })
   public wizard: WizardComponent;
+
+  /**
+   * Content Variables
+   */
+  public user: ScannerInterface["User"];
+  public transaction: ScannerInterface["PointsTransaction"];
+  public actions: ScannerInterface["Actions"];
 
   showIdentifierForm: boolean = false;
   showEmailForm: boolean = false;
 
+  conversionRatiο = 0.01;
+
   loading: boolean = false;
   private unsubscribe: Subject<any>;
   private subscription: Subscription = new Subscription;
-
-  public user: ScannerInterface["User"];
-  public transaction: ScannerInterface["PointsTransaction"];
-  public actions: ScannerInterface["Actions"];
-  conversionRatiο = 0.01;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -64,18 +80,39 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
   ngOnInit() {
+    // this.controlModalState(true);
   }
 
 	/**
 	 * On destroy
 	 */
   ngOnDestroy() {
+    // this.controlModalState(false);
+
     this.scannerNoticeService.setNotice(null);
     this.subscription.unsubscribe();
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
   }
+
+  // controlModalState(state: boolean) {
+  //   if (state) {
+  //     const modalState = {
+  //       modal: true,
+  //       desc: 'fake state for our modal'
+  //     };
+  //     history.pushState(modalState, null);
+  //   } else if (window.history.state.modal) {
+  //     history.back();
+  //   }
+  // }
+
+  // @HostListener('window:popstate', ['$event'])
+  // dismissModal() {
+  //   this.controlModalState(false);
+  //   this.dialogRef.close();
+  // }
 
   checkRegistrationOnIdentifier(status: string) {
     let action: string = 'xxxx';
@@ -290,7 +327,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
         break;
       }
       default: {
-        this.fetchBalanceData();
+        this.fetchBalanceData(false);
         //this.onNextStep();
         break;
       }
@@ -303,27 +340,9 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     // => link an email
   }
 
-  fetchBalanceData() {
-    this.loyaltyService.readBalanceByPartner(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
-      .pipe(
-        tap(
-          data => {
-            this.transaction.points = parseInt(data.points, 16);
-            this.scannerService.changePointsTransaction(this.transaction);
-            this.initializeDiscountAmount();
-          },
-          error => {
-            console.log(error);
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-
+  /**
+   * Slip Floor
+   */
   slipFloor(num: number) {
     let f = Math.floor(num);
     if (num - f < 0.5) {
@@ -370,17 +389,19 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
     console.log("Redeem: " + this.actions.redeem);
 
     this.earnPoints(this.user.identifier_form || this.user.identifier_scan);
-    this.onNextStep();
+    //  this.onNextStep();
   }
 
   actionRegistration(notice: { type: string, message: string }, email: string, card: string) {
-    console.log('Reg', email + card)
+
+    this.loading = true;
+
     this.authenticationService.register_member(email, card)
       .pipe(
         tap(
           data => {
             console.log(data);
-            this.fetchBalanceData();
+            this.fetchBalanceData(false);
           },
           error => {
             this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.ERROR_REGISTRATION') + '<br>' +
@@ -397,12 +418,14 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 
   actionLinkCard(notice: { type: string, message: string }, email: string, card: string) {
     console.log('Card', email + card)
+    this.loading = true;
+
     this.authenticationService.linkCard(email, card)
       .pipe(
         tap(
           data => {
             console.log(data);
-            this.fetchBalanceData();
+            this.fetchBalanceData(false);
           },
           error => {
             this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.ERROR_LINK_CARD') + '<br>' +
@@ -419,16 +442,48 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 
   actionLinkEmail(notice: { type: string, message: string }, email: string, card: string) {
     console.log('Email', email + card);
+    this.loading = true;
+
     this.authenticationService.linkEmail(email, card)
       .pipe(
         tap(
           data => {
             console.log(data);
-            this.fetchBalanceData();
+            this.fetchBalanceData(false);
           },
           error => {
             this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.ERROR_LINK_EMAIL') + '<br>' +
               this.translate.instant(error), 'danger');
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
+  fetchBalanceData(final: boolean) {
+    this.loyaltyService.readBalanceByPartner(((this.user.identifier_scan || this.user.identifier_form)).toLowerCase())
+      .pipe(
+        tap(
+          data => {
+            if (final) {
+              this.transaction.final_points = parseInt(data.points, 16);
+              console.log("Balance Points ", this.transaction.final_points);
+              this.scannerService.changePointsTransaction(this.transaction);
+              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
+              this.onNextStep();
+            } else {
+              this.transaction.points = parseInt(data.points, 16);
+              console.log("Balance Points ", this.transaction.points);
+              this.scannerService.changePointsTransaction(this.transaction);
+              this.initializeDiscountAmount();
+            }
+          },
+          error => {
+            console.log(error);
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -447,6 +502,8 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       _amount: this.transaction.final_amount
     };
 
+    this.loading = true;
+
     this.loyaltyService.earnPoints(earnPoints._to, earnPoints.password, earnPoints._amount)
       .pipe(
         tap(
@@ -457,16 +514,12 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
               this.redeemPoints(_to);
             } else {
               console.log("Will Not Redeem");
-              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
-
-              this.transaction.previous_points = this.transaction.points;
-              this.scannerService.changePointsTransaction(this.transaction);
-              this.fetchBalanceData();
-
-              this.onNextStep();
+              //              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
+              this.fetchBalanceData(true);
             }
           },
           error => {
+            this.loading = false;
             console.log(error)
             this.scannerNoticeService.setNotice(
               this.translate.instant('WIZARD_MESSAGES.ERROR_EARN_POINTS') + '<br>' +
@@ -474,7 +527,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
-          this.loading = false;
+          // this.loading = false;
           this.cdRef.markForCheck();
         })
       )
@@ -494,22 +547,19 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
-
-            this.transaction.previous_points = this.transaction.points;
-            this.scannerService.changePointsTransaction(this.transaction);
-            this.fetchBalanceData();
-
-            this.onNextStep();
+            console.log("Redeem ", data)
+            // this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
+            this.fetchBalanceData(true);
           },
           error => {
+            this.loading = false;
             this.scannerNoticeService.setNotice(
               this.translate.instant('WIZARD_MESSAGES.ERROR_REDEEM_POINTS') + '<br>' +
               this.translate.instant(error), 'danger');
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
-          this.loading = false;
+          //  this.loading = false;
           this.cdRef.markForCheck();
         })
       )
@@ -541,6 +591,7 @@ export class ScanLoyaltyComponent implements OnInit, OnDestroy {
 
   onFinalStep(event: boolean) {
     this.dialogRef.close();
+    // this.controlModalState(false);
   }
 }
 

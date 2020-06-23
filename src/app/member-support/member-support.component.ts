@@ -1,11 +1,21 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, HostListener } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { tap, takeUntil, finalize } from 'rxjs/operators'; import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { NgbModal, NgbActiveModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
+/**
+ * Services
+ */
 import { ItemsService } from '../core/services/items.service';
+
+/**
+ * Models & Interfaces
+ */
 import { MicrocreditCampaign } from '../core/models/microcredit_campaign.model';
+
+/**
+ * Local Services & Interfaces
+ */
 import { SupportService } from './_support.service';
 
 @Component({
@@ -14,24 +24,36 @@ import { SupportService } from './_support.service';
   styleUrls: ['./member-support.component.scss']
 })
 export class MemberSupportComponent implements OnInit, OnDestroy {
-  //Set Child Modals
-  @ViewChild('campaignModal', { static: false }) campaignModal;
 
-  //Set Content Variables
+	/**
+	 * Children Modals
+	 */
+  @ViewChild('campaignModal', { static: false }) campaignModal: NgbModalRef;
+
+  /**
+   * Content Variables
+   */
   public campaigns: MicrocreditCampaign[] = [];
   singleMicrocredit: MicrocreditCampaign;
 
   counter: number = 0;
 
-  //Set Basic Variables
   loading: boolean = false;
   private unsubscribe: Subject<any>;
-  // private subscription: Subscription = new Subscription;
 
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param modalService: NgbModal
+	 * @param matDialog: MatDialog
+	 * @param itemsService: ItemsService
+	 * @param supportService: SupportService
+	 */
   constructor(
-    public matDialog: MatDialog,
-    private modalService: NgbModal,
     private cdRef: ChangeDetectorRef,
+    private modalService: NgbModal,
+    public matDialog: MatDialog,
     private itemsService: ItemsService,
     private supportService: SupportService
   ) {
@@ -47,7 +69,7 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * On destroy
+   * On Destroy
    */
   ngOnDestroy() {
     this.unsubscribe.next();
@@ -56,18 +78,34 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  /**
-   * Randomize
-   */
-  shuffle(array: MicrocreditCampaign[]) {
-    return array.sort(() => Math.random() - 0.5);
+	/**
+	 * Close Modal on Browser Back Button 
+	 */
+  controlModalState(state: boolean) {
+    if (state) {
+      const modalState = {
+        modal: true,
+        desc: 'MemberDashboardModals'
+      };
+      history.pushState(modalState, null);
+    } else {
+      if (window.history.state.modal) {
+        history.back();
+      }
+    }
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    if (this.modalService.hasOpenModals()) {
+      this.modalService.dismissAll();
+      this.controlModalState(false);
+    }
   }
 
   /**
-	* Assets Function On Init
-	*/
-
-  //Get Microcredit Campaigns
+   * Fetch Microcredit Campaigns List
+   */
   fetchMicrocreditData(counter: number) {
     this.itemsService.readAllPrivateMicrocreditCampaigns(`6-${counter.toString()}-1`)
       .pipe(
@@ -88,6 +126,9 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  /**
+   * On Scroll
+   */
   onScroll() {
     this.counter = this.counter + 1;
     this.fetchMicrocreditData(this.counter);
@@ -96,13 +137,19 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
-  /*
-	/ Modals
-  */
+  /**
+   * Randomize Data
+   */
+  shuffle(array: MicrocreditCampaign[]) {
+    return array.sort(() => Math.random() - 0.5);
+  }
 
-  //Open Microcredit
+  /**
+   * Open Microcredit Campaign Modal
+   */
   openMicrocredit(campaign: MicrocreditCampaign) {
     this.singleMicrocredit = campaign;
+    this.controlModalState(true);
     this.modalService.open(
       this.campaignModal, {
       ariaLabelledBy: 'modal-basic-title',
@@ -110,11 +157,9 @@ export class MemberSupportComponent implements OnInit, OnDestroy {
       backdropClass: 'fullscrenn-backdrop',
       //backdrop: 'static',
       windowClass: 'fullscreen-modal',
-    }).result.then((result) => {
-      console.log('closed');
-    }, (reason) => {
-      console.log('dismissed');
-    });
+    })
+      .result.then(
+        (result) => { this.controlModalState(false); console.log('closed'); },
+        (reason) => { this.controlModalState(false); console.log('dismissed'); });
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -62,6 +62,8 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
   ngOnInit() {
+    // this.controlModalState(true);
+
     this.initializeOfferData();
   }
 
@@ -69,6 +71,8 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 	 * On destroy
 	 */
   ngOnDestroy() {
+    // this.controlModalState(false);
+
     this.scannerNoticeService.setNotice(null);
     this.subscription.unsubscribe();
     this.unsubscribe.next();
@@ -76,27 +80,57 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  // controlModalState(state: boolean) {
+  //   if (state) {
+  //     const modalState = {
+  //       modal: true,
+  //       desc: 'fake state for our modal'
+  //     };
+  //     history.pushState(modalState, null);
+  //   } else if (window.history.state.modal) {
+  //     history.back();
+  //   }
+  // }
+
+  // @HostListener('window:popstate', ['$event'])
+  // dismissModal() {
+  //   this.dialogRef.close();
+  // }
+
+
   initializeOfferData() {
     const currentOffer = this.offers[this.offers.map(function (e) { return e.offer_id; }).indexOf(this.offer_id)];
     this.transaction.offer_id = currentOffer.offer_id;
+    this.transaction.offer_title = currentOffer.title;
     this.transaction.cost = currentOffer.cost;
     this.scannerService.changeOfferTransaction(this.transaction);
   }
 
-  fetchBalanceData() {
+  fetchBalanceData(final: boolean) {
     const identifier = this.user.identifier_scan || this.user.identifier_form;
     this.loyaltyService.readBalanceByPartner((identifier).toLowerCase())
       .pipe(
         tap(
           data => {
-            console.log(parseInt(data.points, 16));
-            this.transaction.points = parseInt(data.points, 16);
-            this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
-            if (!this.transaction.possible_quantity) {
-              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.NOT_ENOUGH_POINTS'), 'danger');
+            console.log(data);
+
+            if (final) {
+              this.transaction.final_points = parseInt(data.points, 16);
+              this.scannerService.changeOfferTransaction(this.transaction);
+
+              this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
+              this.onNextStep();
+            } else {
+              console.log(parseInt(data.points, 16));
+              this.transaction.points = parseInt(data.points, 16);
+              this.transaction.possible_quantity = Math.floor(this.transaction.points / this.transaction.cost);
+              this.scannerService.changeOfferTransaction(this.transaction);
+              this.onNextStep();
+
+              if (!this.transaction.possible_quantity) {
+                this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.NOT_ENOUGH_POINTS'), 'danger');
+              }
             }
-            this.scannerService.changeOfferTransaction(this.transaction);
-            this.onNextStep();
           },
           error => {
             this.scannerNoticeService.setNotice(this.translate.instant(error), 'danger');
@@ -112,11 +146,11 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
   }
 
   onSuccessScanIdentifier(event: string) {
-    this.fetchBalanceData();
+    this.fetchBalanceData(false);
   }
 
   onSubmitIdentifierForm(event: string) {
-    this.fetchBalanceData();
+    this.fetchBalanceData(false);
   }
 
   onSubmitOfferForm(event: number) {
@@ -129,22 +163,23 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
       quanitive: this.transaction.quantity
     };
 
+    this.loading = true;
+
     this.loyaltyService.redeemOffer(this.authenticationService.currentUserValue.user["_id"], redeemOffer.offer_id, redeemOffer._to, redeemOffer.password, redeemOffer._points, redeemOffer.quanitive)
       .pipe(
         tap(
           data => {
-            this.scannerNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.SUCCESS_TRANSACTION'), 'success');
-            this.onNextStep();
-            console.log(data);
+            this.fetchBalanceData(true);
           },
           error => {
             this.scannerNoticeService.setNotice(
               this.translate.instant('WIZARD_MESSAGES.ERROR_REDEEM_OFFER') + '<br>' +
               this.translate.instant(error), 'danger');
+            this.loading = false;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
-          this.loading = false;
+          // this.loading = false;
           this.cdRef.markForCheck();
         })
       )
@@ -173,5 +208,6 @@ export class ScanOffersComponent implements OnInit, OnDestroy {
 
   onFinalStep(event = null) {
     this.dialogRef.close();
+    // this.controlModalState(false);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Inject, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject, Subscription } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
@@ -57,18 +57,39 @@ export class AddSupportComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
   ngOnInit() {
+    // this.controlModalState(true);
   }
 
 	/**
 	 * On destroy
 	 */
   ngOnDestroy() {
+    // this.controlModalState(false);
+
     this.supportNoticeService.setNotice(null);
     this.subscription.unsubscribe();
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
   }
+
+  // controlModalState(state: boolean) {
+  //   if (state) {
+  //     const modalState = {
+  //       modal: true,
+  //       desc: 'fake state for our modal'
+  //     };
+  //     history.pushState(modalState, null);
+  //   } else if (window.history.state.modal) {
+  //     history.back();
+  //   }
+  // }
+
+  // @HostListener('window:popstate', ['$event'])
+  // dismissModal() {
+  //   this.controlModalState(false);
+  //   this.dialogRef.close();
+  // }
 
   checkRegistrationOnIdentifier(status: string) {
     let action: string = 'xxxx';
@@ -419,5 +440,6 @@ export class AddSupportComponent implements OnInit, OnDestroy {
 
   onFinalStep(final: boolean, event: Event) {
     this.dialogRef.close(final);
+    // this.controlModalState(false);
   }
 }

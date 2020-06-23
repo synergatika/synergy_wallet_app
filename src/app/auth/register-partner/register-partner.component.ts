@@ -30,6 +30,9 @@ import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
 })
 export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
+	/**
+	 * Configuration and Static Data
+	 */
 	public paymentsList: PaymentList[];
 	public sectorList: GeneralList[];
 
@@ -47,7 +50,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	loading: boolean = false;
 
 	/**
-	 * Component constructor
+	 * Component Constructor
 	 *
 	 * @param router: Router
 	 * @param fb: FormBuilder,

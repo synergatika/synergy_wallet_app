@@ -19,9 +19,9 @@ export class ScannerService {
         possible_discount_amount: 0,
         discount_amount: 0,
         final_amount: 0,
-        discount_points: 0,
         points: 0,
-        previous_points: 0
+        discount_points: 0,
+        final_points: 0
     });
     pointsTransaction = this.pointsTransactionSource.asObservable();
 
@@ -36,12 +36,13 @@ export class ScannerService {
 
     private offerTransactionSource = new BehaviorSubject({
         offer_id: '',
+        offer_title: '',
         cost: 0,
-        discount_points: 0,
         points: 0,
+        discount_points: 0,
+        final_points: 0,
         possible_quantity: 0,
-        quantity: 0,
-        final_amount: 0,
+        quantity: 0
     });
     offerTransaction = this.offerTransactionSource.asObservable();
 
@@ -62,6 +63,7 @@ export class ScannerService {
 
     private microcreditTransactionSource = new BehaviorSubject({
         campaign_id: '0',
+        campaign_title: '0',
         support_id: '0',
         initial_tokens: 0,
         redeemed_tokens: 0,

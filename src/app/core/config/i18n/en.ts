@@ -707,7 +707,7 @@ export const locale = {
         DRAFT: 'Draft',
         EXPECTED: 'Is Expected',
         EXPIRED: 'Expired',
-        REDEEM_TO: 'Redeem To'
+        REDEEM_TO: 'redeem until'
       }
     },
     SUPPORT: {
@@ -823,6 +823,7 @@ export const locale = {
         SUB_OFFER_FORM: {
           HEADING_MAIN: 'Offer Transaction Details',
           HEADING: 'Transaction quantity',
+          OFFER: 'Offer',
           TITLE: 'Quantity',
           HINT: 'Please enter transaction quantity.',
           ALERT: 'Not enough points',
@@ -844,6 +845,7 @@ export const locale = {
         },
         SUB_MICROCREDIT_FORM: {
           HEADING: 'Support items',
+          CAMPAIGN: 'Campaign',
           CAMPAIGN_ID: 'Campaign ID',
           HEADING_2: 'Tokens',
           SUPPORT_ID: 'Support ID',

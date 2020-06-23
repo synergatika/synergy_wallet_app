@@ -1,10 +1,16 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-// Services
+
+/**
+ * Services 
+ */
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { LoyaltyService } from '../../core/services/loyalty.service';
-// Models
+
+/**
+ * Models & Interfaces 
+ */
 import { LoyaltyTransaction } from '../../core/models/loyalty_transaction.model';
 
 @Component({
@@ -14,12 +20,24 @@ import { LoyaltyTransaction } from '../../core/models/loyalty_transaction.model'
 })
 export class LoyaltyHistoryComponent implements OnInit, OnDestroy {
 
-  access: string = '';
+  /**
+   * Content Variables
+   */
   public transactions: LoyaltyTransaction[];
+
+  access: string = '';
+
   p: number = 1;
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param authenticationService: AuthenticationService
+	 * @param loyaltyService: LoyaltyService
+	 */
   constructor(
     private cdRef: ChangeDetectorRef,
     private authenticationService: AuthenticationService,
@@ -28,9 +46,27 @@ export class LoyaltyHistoryComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.access = this.authenticationService.currentUserValue.user["access"];
+    this.fetchTransactions();
+  }
 
+  /**
+   * On Destroy
+   */
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.loading = false;
+  }
+
+  /**
+   * Fetch Transactions List (for One User)
+   */
+  fetchTransactions() {
     this.loyaltyService.readTransactions('0-0-0')
       .pipe(
         tap(
@@ -50,9 +86,5 @@ export class LoyaltyHistoryComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-    this.loading = false;
-  }
+
 }

@@ -1,4 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+
+/**
+ * Models & Interfaces
+ */
 import { Partner } from '../../../../core/models/partner.model';
 
 @Component({
@@ -7,6 +11,9 @@ import { Partner } from '../../../../core/models/partner.model';
 	styleUrls: ['./card-partner.component.scss']
 })
 export class CardPartnerComponent implements OnInit {
+	/**
+	 * Imported Variables
+	 */
 	@Input() partner: Partner;
 
 	constructor() { }

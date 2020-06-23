@@ -1,6 +1,14 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+
+/**
+ * Components
+ */
 import { SupportMicrocreditComponent } from '../../../../member-support/support-microcredit/support-microcredit.component';
+
+/**
+ * Models & Interfaces
+ */
 import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.model';
 
 @Component({
@@ -10,17 +18,17 @@ import { MicrocreditCampaign } from 'src/app/core/models/microcredit_campaign.mo
 })
 export class SingleMicrocreditComponent implements OnInit {
 
-	//Set Variables Imported
+	/**
+	 * Imported Variables
+	 */
 	@Input() microcredit: MicrocreditCampaign;
 
 	seconds: number = 0;
 	public outOfPeriod: boolean = false;
 
 	constructor(
-		public matDialog: MatDialog,
-	) {
-
-	}
+		public matDialog: MatDialog
+	) { }
 
 	ngOnInit() {
 		const now = new Date();

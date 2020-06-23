@@ -65,7 +65,7 @@ export class EditEventComponent implements OnInit {
   private unsubscribe: Subject<any>;
 
   /**
-    * Component constructor
+    * Component Constructor
     *
     * @param router: Router
     * @param fb: FormBuilder

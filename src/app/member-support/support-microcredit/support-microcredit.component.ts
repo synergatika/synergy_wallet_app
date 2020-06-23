@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, finalize, tap } from 'rxjs/operators';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -13,6 +13,7 @@ import { SupportService } from '../_support.service';
 import { SupportInterface } from '../_support.interface';
 import { StaticDataService } from 'src/app/core/services/static-data.service';
 import { PaymentList } from 'src/app/core/interfaces/payment-list.interface';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-support-microcredit',
@@ -21,9 +22,22 @@ import { PaymentList } from 'src/app/core/interfaces/payment-list.interface';
 })
 export class SupportMicrocreditComponent implements OnInit, OnDestroy {
 
+  /**
+   * Wizard Component
+   */
   @ViewChild(WizardComponent, { static: true })
   public wizard: WizardComponent;
+
+	/**
+	 * Configuration and Static Data
+	 */
   public paymentsList: PaymentList[];
+
+  /**
+   * Content Variables
+   */
+  public campaign: SupportInterface["MicrocreditCampaign"];
+  public support: SupportInterface["MicrocreditSupport"];
 
   // campaign_id: string;
   // partner_id: string;
@@ -32,19 +46,26 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
   private subscription: Subscription = new Subscription;
 
-  //public campaigns: SupportInterface["MicrocreditCampaign"][];
-  public campaign: SupportInterface["MicrocreditCampaign"];
-  public support: SupportInterface["MicrocreditSupport"];
-
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdr: ChangeDetectorRef
+	 * @param translate: TranslateService,
+	 * @param supportNoticeService: MessageNoticeService
+	 * @param staticDataService: StaticDataService
+	 * @param microcreditService: MicrocreditService
+	 * @param supportService: SupportService
+	 * @param dialogRef: MatDialogRef<SupportMicrocreditComponent>
+   * @param data: any (@Inject(MAT_DIALOG_DATA))
+	 */
   constructor(
     private cdRef: ChangeDetectorRef,
     private translate: TranslateService,
     private supportNoticeService: MessageNoticeService,
-    private itemsService: ItemsService,
+    private staticDataService: StaticDataService,
     private microcreditService: MicrocreditService,
     private supportService: SupportService,
     public dialogRef: MatDialogRef<SupportMicrocreditComponent>,
-    private staticDataService: StaticDataService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     console.log("HEREE", this.data)
@@ -60,6 +81,7 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
 	 * On destroy
 	 */
   ngOnInit() {
+    // this.controlModalState(true);
     this.initializeCurrentCampaignData();
   }
 
@@ -67,12 +89,40 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
 	 * On destroy
 	 */
   ngOnDestroy() {
+    //console.log("On Destory Support Dialog")
+    //this.controlModalState(false);
+
     this.supportNoticeService.setNotice(null);
     this.subscription.unsubscribe();
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.loading = false;
   }
+
+  // controlModalState(state: boolean) {
+  //   if (state) {
+  //     const modalState = {
+  //       modal: true,
+  //       desc: 'Dialog'
+  //     };
+  //     console.log("Add Fake State")
+  //     history.pushState(modalState, null);
+  //     console.log(history.state['desc'])
+  //   } else {// if (window.history.state.modal) {
+  //     console.log("State in Support Dialog")
+  //     console.log(window.history.state)
+  //     if (window.history.state['desc'] == "Dialog") {
+  //       console.log("I am in Support Dialog - Back()")
+  //       //window.history.back();
+  //     }
+  //   }
+  // }
+
+  // @HostListener('window:popstate', ['$event'])
+  // dismissModal() {
+  //   this.controlModalState(false);
+  //   this.dialogRef.close();
+  // }
 
   initializeCurrentCampaignData() {
     // const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
@@ -135,5 +185,6 @@ export class SupportMicrocreditComponent implements OnInit, OnDestroy {
 
   onFinalStep(event = null) {
     this.dialogRef.close();
+    //  this.controlModalState(false);
   }
 }

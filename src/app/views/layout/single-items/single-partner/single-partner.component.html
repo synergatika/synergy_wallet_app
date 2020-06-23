@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <!-- Microcredit Campaigns -->
+    <!-- List of Partner's Microcredit Campaigns -->
     <div class="row section-list" *ngIf="singleMicrocredits && singleMicrocredits.length">
       <div class="col-md-12">
         <h3 class="list-tiltle">{{'CAMPAIGN.PLURAL' | translate }}</h3>
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <!-- Offers of Coop -->
+    <!-- List of Partner's Offers -->
     <div class="row section-list" *ngIf="singleOffers && singleOffers.length">
       <div class="col-md-12">
         <h3 class="list-tiltle">{{ 'OFFER.PLURAL' | translate }}</h3>
@@ -66,7 +66,7 @@
       </div>
     </div>
 
-    <!-- News & Events of Coop -->
+    <!-- List of Partner's News & Events -->
     <div class="row section-list" *ngIf="singlePosts && singlePosts.length">
       <div class="col-md-12">
         <h3 class="list-tiltle">{{ 'POST_EVENT.PLURAL' | translate }}</h3>
@@ -85,7 +85,7 @@
 
 </div>
 
-<!-- Post Event Modal -->
+<!-- Post/Event Modal -->
 <ng-template #postModal let-c="close" let-d="dismiss">
   <button type="button" class="close-btn" aria-label="Close" (click)="d('Cross click')">
     <span aria-hidden="true">&times;</span>

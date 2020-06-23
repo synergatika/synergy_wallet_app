@@ -21,7 +21,7 @@
       <!-- <div *ngIf="configAccess[1]"> -->
       <ng-container *ngIf="configAccess[1]&&offers">
         <div class="item item-wrapper col-md-4" *ngFor="let item of offers" (click)="openModalB(item.offer_id)">
-          <app-card-offer [offer]="item"></app-card-offer>
+          <app-card-offer class="item-card" [offer]="item"></app-card-offer>
           <!-- <mat-card class="item-card">
             <mat-card-content>
               <div class="col-sm-12 item-img-container">

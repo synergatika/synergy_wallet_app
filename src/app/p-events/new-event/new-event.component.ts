@@ -50,7 +50,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
 
   /**
-    * Component constructor
+    * Component Constructor
     *
     * @param cdRef: ChangeDetectorRef
     * @param itemsService: ItemsService

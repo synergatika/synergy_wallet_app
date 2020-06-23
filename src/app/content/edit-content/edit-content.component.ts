@@ -23,7 +23,7 @@ export class EditContentComponent implements OnInit {
   private unsubscribe: Subject<any>;
 
   /**
-   * Component constructor
+   * Component Constructor
    *
    * @param cdRef: ChangeDetectorRef
    * @param fb: FormBuilder

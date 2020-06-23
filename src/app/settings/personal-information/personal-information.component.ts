@@ -35,10 +35,13 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputMerch', { static: false }) imageInputMerch: ElementRef;
   @ViewChild('fileInput', { static: false }) imageInput: ElementRef;
 
+	/**
+	 * Configuration and Static Data
+	 */
   public subAccessConfig: Boolean[] = environment.subAccess;
-
   public paymentsList: PaymentList[];
   public sectorList: GeneralList[];
+
   public access: string = '';
   public initialImage: string = '';
 
@@ -47,8 +50,12 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   validator: any;
 
+  /**
+   * Forms
+   */
   memberForm: FormGroup;
   partnerForm: FormGroup;
+
   submitted: boolean = false;
 
   fileData: File = null;
@@ -66,7 +73,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
    * @param authenticationService: AuthenticationService
    * @param partnersService: PartnersService
    * @param membersService: MembersService
-   * @param staticDataService: StaticDataService,
+   * @param staticDataService: StaticDataService
   */
   constructor(
     private router: Router,

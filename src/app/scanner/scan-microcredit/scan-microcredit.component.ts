@@ -1,17 +1,21 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Inject, HostListener } from '@angular/core';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { WizardComponent } from 'angular-archwizard';
 
-// Global Services
+/**
+ * Services
+ */
 import { MessageNoticeService } from 'src/app/core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { MicrocreditService } from '../../core/services/microcredit.service';
 
-// Local Services & Models/Interfaces
+/**
+ * Local Services & Interfaces
+ */
 import { ScannerService } from '../_scanner.service';
 import { ScannerInterface } from '../_scanner.interface';
 
@@ -58,6 +62,7 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
   ngOnInit() {
+    // this.controlModalState(true);
     this.initializeCampaignData();
   }
 
@@ -65,6 +70,8 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
 	 * On destroy
 	 */
   ngOnDestroy() {
+    // this.controlModalState(false);
+
     this.scannerNoticeService.setNotice(null);
     this.subscription.unsubscribe();
     this.unsubscribe.next();
@@ -72,9 +79,29 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  // controlModalState(state: boolean) {
+  //   if (state) {
+  //     const modalState = {
+  //       modal: true,
+  //       desc: 'fake state for our modal'
+  //     };
+  //     history.pushState(modalState, null);
+  //   } else if (window.history.state.modal) {
+  //     history.back();
+  //   }
+  // }
+
+  // @HostListener('window:popstate', ['$event'])
+  // dismissModal() {
+  //   this.dialogRef.close();
+  // }
+
+
   initializeCampaignData() {
     const currentCampaign = this.campaigns[this.campaigns.map(function (e) { return e.campaign_id; }).indexOf(this.campaign_id)];
     this.transaction.campaign_id = currentCampaign.campaign_id;
+    console.log(currentCampaign)
+    this.transaction.campaign_title = currentCampaign.title;
     this.scannerService.changeMicrocreditTransaction(this.transaction);
   }
 
@@ -131,6 +158,8 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
       support_id: this.transaction.support_id
     };
 
+    this.loading = true;
+
     this.microcreditService.redeemTokens(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, redeemTokens._to, redeemTokens._tokens, redeemTokens.password, redeemTokens.support_id)
       .pipe(
         tap(
@@ -167,5 +196,6 @@ export class ScanMicrocreditComponent implements OnInit, OnDestroy {
 
   onFinalStep(event = null) {
     this.dialogRef.close();
+    // this.controlModalState(false);
   }
 }

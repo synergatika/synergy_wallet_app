@@ -3,11 +3,12 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { StaticDataService } from '../core/services/static-data.service';
 
-interface Menu {
-  title?: string,
-  link?: string,
-  icon?: string
-}
+import { Menu } from '../core/interfaces/menu.interface';
+// interface Menu {
+//   title?: string,
+//   link?: string,
+//   icon?: string
+// }
 
 @Component({
   selector: 'app-history',
@@ -18,14 +19,24 @@ export class HistoryComponent implements OnInit {
   currentRouteUrl: string = '';
   public menu: Menu[];
 
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param router: Router
+	 * @param staticDataService: StaticDataService
+	 */
   constructor(
-    private router: Router,
     private cdr: ChangeDetectorRef,
+    private router: Router,
     private staticDataService: StaticDataService
   ) {
     this.menu = this.staticDataService.getHistorySubMenu;
   }
 
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
     this.router.events

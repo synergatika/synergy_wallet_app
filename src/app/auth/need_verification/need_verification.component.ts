@@ -29,7 +29,7 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	loading: boolean = false;
 
 	/**
-	 * Component constructor
+	 * Component Constructor
 	 *
 	 * @param router: Router
 	 * @param fb: FormBuilder

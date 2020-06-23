@@ -1,4 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+
+/**
+ * Models & Interfaces
+ */
 import { PostEvent } from '../../../../core/models/post_event.model';
 
 @Component({
@@ -7,6 +11,9 @@ import { PostEvent } from '../../../../core/models/post_event.model';
 	styleUrls: ['./card-post.component.scss']
 })
 export class CardPostComponent implements OnInit {
+	/**
+	 * Imported Variables
+	 */
 	@Input() post: PostEvent;
 	@Input() type: string;
 

@@ -1,421 +1,430 @@
 @import "../../variables.scss";
-  
-  //2.1 Configue Material
 
-  //Materialize Card
-  .mat-card {
-    font-family: $main-font, sans-serif;
-    color:$darker-font;
+//2.1 Configue Material
+
+//Materialize Card
+.mat-card {
+  font-family: $main-font, sans-serif;
+  color: $darker-font;
+}
+mat-card {
+  font-family: $main-font, sans-serif;
+  .mdi.share-icon {
+    color: $grey-font;
+    font-size: 35px;
+    cursor: pointer;
   }
-  mat-card {
-    font-family: $main-font, sans-serif;
-    .mdi.share-icon {
-      color: $grey-font;
-      font-size: 35px;
-      cursor: pointer;
+  .mdi {
+    color: $primary;
+    font-size: 18px;
+    margin-right: 5px;
+    &.white {
+      color: #fff;
     }
-    .mdi {
-      color: $primary;
-      font-size: 18px;
-      margin-right: 5px;
-      &.white {
-        color: #fff;
+  }
+}
+.mat-card:not([class*="mat-elevation-z"]) {
+  @extend .light-shadow;
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+  overflow: hidden;
+}
+.owl-theme .mat-card {
+  box-shadow: none !important;
+}
+.mat-card.wallet-card:not([class*="mat-elevation-z"]) {
+  overflow: visible;
+}
+.mat-card.item-card {
+  cursor: pointer;
+  .item-draft {
+    position: absolute;
+    right: -1px;
+    bottom: 10%;
+    background-color: $secondary;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 1.1rem;
+  }
+}
+
+//Radio Button
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: $tertiary;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: $tertiary;
+}
+
+//Other
+.mat-button,
+.mat-fab,
+.mat-flat-button,
+.mat-icon-button,
+.mat-mini-fab,
+.mat-raised-button,
+.mat-stroked-button {
+  font-family: $main-font, sans-serif;
+}
+.mat-mini-fab {
+  span.mat-button-wrapper {
+    padding: 1px 0;
+    line-height: inherit;
+  }
+}
+button.mat-mini-fab.mat-accent {
+  background-color: #0c1a33;
+}
+th .mat-sort-header-sorted {
+  color: $secondary;
+}
+.cdk-overlay-container {
+  z-index: 9999;
+}
+
+//2.2 Configue Bootsrtap
+.btn {
+  transition: background-color 0.3s;
+}
+.btn-primary {
+  background-color: $primary;
+  border-color: $primary-light;
+  &:hover,
+  &:active,
+  &:not(:disabled):not(.disabled):active,
+  &:focus {
+    background-color: $primary-light;
+    border-color: $primary-light;
+  }
+}
+.btn-secondary {
+  background-color: $secondary;
+  border-color: $secondary-light;
+  &:hover,
+  &:active,
+  &:not(:disabled):not(.disabled):active,
+  &:focus {
+    background-color: $secondary-light;
+    border-color: $secondary-light;
+  }
+}
+.btn-success {
+  color: #fff;
+  background-color: $tertiary;
+  border-color: $tertiary;
+  &:hover,
+  &:active {
+    background-color: $tertiary-dark;
+    border-color: $tertiary-dark;
+  }
+}
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 0 40px 0 rgba(40, 70, 120, 0.15);
+}
+.dropdown-toggle {
+  &:after {
+    content: none;
+  }
+}
+
+//2.2 Configue Owl carousel
+.owl-theme {
+  .owl-nav {
+    position: absolute;
+    top: 100px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    pointer-events: none;
+    @media (max-width: 600px) {
+      display: none;
+    }
+    [class*="owl-"] {
+      font-size: 34px;
+      line-height: 1.1;
+      background-color: $primary;
+      &:hover {
+        background-color: $primary-light;
+      }
+    }
+    .owl-prev {
+      margin-left: -25px;
+      pointer-events: all;
+      &:before {
+        content: "\f141";
+        font-family: "Material Design Icons";
+      }
+    }
+    .owl-next {
+      margin-right: -25px;
+      pointer-events: all;
+      &:before {
+        content: "\f142";
+        font-family: "Material Design Icons";
       }
     }
   }
-  .mat-card:not([class*="mat-elevation-z"]) {
-    @extend .light-shadow;
+  .owl-dots {
+    .owl-dot {
+      &.active,
+      &:hover {
+        span {
+          background: $tertiary;
+        }
+      }
+    }
+  }
+}
+
+///2.3 Modal Diaglog
+.modal-dialog {
+  margin: 5rem auto;
+  @media (max-width: 576px) {
+    max-width: 92%;
+  }
+  .modal-content {
+    border: none;
+  }
+  .mat-card {
+    @extend .dark-shadow;
     border-bottom-left-radius: 9px;
     border-bottom-right-radius: 9px;
-    overflow: hidden;
   }
-  .owl-theme .mat-card{
-    box-shadow: none !important;
+}
+.close-btn {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  width: 35px;
+  height: 35px;
+  font-size: 30px;
+  z-index: 1;
+  span {
+    position: relative;
+    top: -6px;
   }
-  .mat-card.wallet-card:not([class*="mat-elevation-z"]) {
-    overflow: visible;
+}
+.fullscrenn-backdrop {
+  background-color: #fff;
+  &.modal-backdrop.show {
+    opacity: 1;
   }
-  .mat-card.item-card {
-		cursor: pointer;
-    .item-draft {
-      position: absolute;
-      right: -1px;
-      bottom: 10%;
-      background-color: $secondary;
-      color: #fff;
-      padding: 5px 15px;
-      font-size: 1.1rem;
-    }
-  }
-
-  //Radio Button
-  .mat-radio-button.mat-accent .mat-radio-inner-circle,
-  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
-  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
-  .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-    background-color: $tertiary;
-  }
-  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: $tertiary;
-  }
-
-  //Other
-  .mat-button, .mat-fab, .mat-flat-button, .mat-icon-button, .mat-mini-fab, .mat-raised-button, .mat-stroked-button{
-    font-family: $main-font, sans-serif;
-  }
-  .mat-mini-fab {
-    span.mat-button-wrapper {
-      padding: 1px 0;
-      line-height: inherit;
-    }
-  }
-  button.mat-mini-fab.mat-accent {
-    background-color: #0c1a33;
-  }
-  th .mat-sort-header-sorted {
-    color: $secondary;
-  }
-  .cdk-overlay-container {
-    z-index: 9999;
-  }
-
-  //2.2 Configue Bootsrtap
-	.btn {
-		transition: background-color 0.3s;
-	}
-  .btn-primary {
-    background-color: $primary;
-    border-color: $primary-light;
-    &:hover,
-    &:active,
-    &:not(:disabled):not(.disabled):active,
-    &:focus {
-      background-color: $primary-light;
-      border-color: $primary-light;
-    }
-  }
-	.btn-secondary {
-    background-color: $secondary;
-    border-color: $secondary-light;
-    &:hover,
-    &:active,
-    &:not(:disabled):not(.disabled):active,
-    &:focus {
-      background-color: $secondary-light;
-      border-color: $secondary-light;
-    }
-  }
-  .btn-success {
-    color: #fff;
-    background-color: $tertiary;
-    border-color: $tertiary;
-    &:hover,
-    &:active {
-      background-color: $tertiary-dark;
-      border-color: $tertiary-dark;
-    }
-  }
-  .dropdown-menu {
+}
+.fullscrenn-modal {
+  .modal-content {
     border: none;
-    box-shadow: 0 0 40px 0 rgba(40, 70, 120, 0.15);
   }
-  .dropdown-toggle {
-    &:after {
-      content: none;
-    }
-  }
+}
 
-  //2.2 Configue Owl carousel
-  .owl-theme {
-    .owl-nav {
+//2.4 Forms
+.single-form {
+  .mat-form-field {
+    display: block;
+    max-width: 400px;
+    //max-width: 100%;
+
+    //margin-bottom: 40px;
+    .mat-form-field-flex {
+      background-color: #f8f6f6;
+      padding: 10px;
+    }
+  }
+  textarea {
+    height: 400px;
+    &.short {
+      height: 200px;
+    }
+  }
+  .upload-img {
+    &-holder {
+      max-width: 250px;
+      margin-bottom: 15px;
+    }
+    &-container {
+      position: relative;
+      display: inline-block;
+    }
+    &-btn {
+      margin-bottom: 10px;
+    }
+    .image-cancel {
       position: absolute;
-      top:100px;
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      pointer-events: none;
-      @media(max-width:600px){
-        display: none;
-      }
-      [class*="owl-"] {
-        font-size: 34px;
-        line-height: 1.1;
-        background-color: $primary;
-        &:hover{
-          background-color:$primary-light;
-        }
-      }
-      .owl-prev {
-        margin-left:-25px;
-        pointer-events: all;
-        &:before {
-          content: "\f141";
-          font-family: "Material Design Icons";
-        }
-      }
-      .owl-next {
-        margin-right:-25px;
-        pointer-events: all;
-        &:before {
-          content: "\f142";
-          font-family: "Material Design Icons";
-        }
+      top: -6px;
+      right: -6px;
+      font-size: 24px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      span {
+        position: relative;
+        top: -10px;
+        right: 5px;
+        font-size: 28px;
+        cursor: pointer;
       }
     }
-    .owl-dots {
-      .owl-dot {
-        &.active,
-        &:hover {
-          span {
-            background: $tertiary;
+  }
+  .form-group-inline {
+    display: flex;
+    max-width: 400px;
+    //justify-content: space-between;
+    &-date {
+      flex-grow: 6;
+      margin-right: 30px;
+    }
+    &-time {
+      flex-grow: 6;
+      .mat-form-field-infix {
+        width: 100px;
+      }
+      .ngx-timepicker {
+        background-color: #f8f6f6;
+        padding: 18px 0 10px;
+        width: 150px;
+        height: auto;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+        input {
+          font-size: 14px;
+          background: transparent;
+        }
+        &-control {
+          width: 50px;
+          &--active {
+            &:after {
+              content: none;
+            }
+          }
+        }
+        &__toggle {
+          button {
+            margin-left: 6px;
+            padding-left: 6px;
+            padding-right: 5px;
+          }
+          svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.6;
           }
         }
       }
     }
   }
-
-  ///2.3 Modal Diaglog
-  .modal-dialog {
-    margin: 5rem auto;
-    @media(max-width:576px){
-      max-width: 92%;
-    }
-    .modal-content {
-      border: none;
-    }
-    .mat-card {
-      @extend .dark-shadow;
-      border-bottom-left-radius: 9px;
-      border-bottom-right-radius: 9px;
+  .form-actions {
+    margin-top: 20px;
+    button {
+      font-size: 18px;
+      padding: 4px 22px;
     }
   }
-  .close-btn {
+}
+.avatar {
+  &-holder {
+    max-width: 80px;
+    max-height: 80px;
+    margin-right: 20px;
+  }
+  &-img {
+    float: left;
+  }
+  &-container {
+    position: relative;
+    display: inline-block;
+  }
+  button {
+    margin-top: 10px;
+  }
+  .image-cancel {
     position: absolute;
-    right: -10px;
-    top: -10px;
+    top: -9px;
+    right: 8px;
+    font-size: 22px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
     border-radius: 50%;
-    border: 1px solid transparent;
-    width: 35px;
-    height: 35px;
-    font-size: 30px;
-    z-index: 1;
     span {
       position: relative;
-      top: -6px;
+      top: -5px;
+      right: 5px;
+      font-size: 22px;
+      cursor: pointer;
     }
   }
-  .fullscrenn-backdrop {
-    background-color: #fff;
-    &.modal-backdrop.show {
-      opacity: 1;
-    }
-  }
-  .fullscrenn-modal {
-    .modal-content {
-      border: none;
-    }
-  }
+}
 
-  //2.4 Forms
-  .single-form {
-    .mat-form-field {
-      display: block;
-      max-width: 400px;
-      .mat-form-field-flex {
-        background-color: #f8f6f6;
-        padding: 10px;
-      }
-    }
-    textarea {
-      height: 400px;
-      &.short {
-        height: 200px;
-      }
-    }
-    .upload-img {		
-      &-holder {
-        max-width: 250px;
-        margin-bottom: 15px;
-      }
-			&-container {
-				position: relative;
-				display: inline-block;
-			}
-			&-btn {
-				margin-bottom: 10px;
-			}
-			.image-cancel {
-				position: absolute;
-				top: -6px;
-				right: -6px;
-				font-size: 24px;
-				width: 20px;
-				height: 20px;
-				background: #fff;
-				border-radius: 50%;
-				span {
-						position: relative;
-						top: -10px;
-						right: 5px;
-						font-size: 28px;
-						cursor: pointer;
-				}
-			}
-    }
-		.form-group-inline {
-				display: flex;
-				max-width: 400px;
-				//justify-content: space-between;
-				&-date {
-					flex-grow: 6;
-					margin-right: 30px;
-				}
-				&-time {
-					flex-grow: 6;
-					.mat-form-field-infix {
-						width: 100px;
-					}
-					.ngx-timepicker {
-						background-color: #f8f6f6;
-						padding: 18px 0 10px; 
-						width: 150px;
-						height: auto;
-						border-bottom: 1px solid rgba(0,0,0,.42);
-						input {
-							font-size: 14px;
-							background: transparent;
-						}
-						&-control {
-							width: 50px;
-							&--active {
-								&:after {
-									content: none;
-								}
-							}
-						}
-						&__toggle {
-							button {
-								margin-left: 6px;
-								padding-left: 6px;
-								padding-right: 5px;
-							}
-							svg {
-								width: 18px;
-								height: 18px;
-								opacity: 0.6;	
-							}
-						}
-					}
-				}
-			}
-			.form-actions {
-				margin-top: 20px;
-				button {
-					font-size: 18px;
-					padding: 4px 22px;
-				}
-			}
-  }
-  .avatar {
-    &-holder {
-      max-width: 80px;
-			max-height: 80px;
-      margin-right: 20px;
-    }
-		&-img {
-			float: left;
-		}
-		&-container {
-			position: relative;
-			display: inline-block;
-		}
-		button {
-			margin-top: 10px;
-		}
-		.image-cancel {
-			position: absolute;
-			top: -9px;
-			right: 8px;
-			font-size: 22px;
-			width: 20px;
-			height: 20px;
-			background: #fff;
-			border-radius: 50%;
-			span {
-					position: relative;
-					top: -5px;
-					right: 5px;
-					font-size: 22px;
-					cursor: pointer;
-			}
-		}
-  }
-	
-  .partner-alert {
-    color: #f14551;
-    font-weight: 600;
-  }
-	
-	.input-group.amount-input {
-		max-width: 220px;
-    margin: 0 auto;
-	}
-	
-	app-sub-offer-form {
-		width: 100%;
-		max-width: 500px;
-	}
-	
-  //2.5 Wizards
-  aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
-    &.current {
-      .step-indicator {
-        background-color: $primary;
-        top: -19px;
-        left: calc(50% - 12px);
-        width: 24px;
-        height: 24px;
-        line-height: 24px;
-      }
-      .label {
-        color: #222;
-      }
-    }
-    &.optional .step-indicator {
-      background-color: $tertiary;
-    }
-		&.navigable.optional a:hover .step-indicator {
-			background-color: $secondary;
-		}
-    &.done .step-indicator {
-      background-color: #a4cfce;
-    }
-    &.navigable.done a:hover .step-indicator {
+.partner-alert {
+  color: #f14551;
+  font-weight: 600;
+}
+
+.input-group.amount-input {
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+app-sub-offer-form {
+  width: 100%;
+  max-width: 500px;
+}
+
+//2.5 Wizards
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
+  &.current {
+    .step-indicator {
       background-color: $primary;
+      top: -19px;
+      left: calc(50% - 12px);
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+    .label {
+      color: #222;
     }
   }
-  // TEMPORARY
-  /*aw-wizard-navigation-bar ul.steps-indicator li {
+  &.optional .step-indicator {
+    background-color: $tertiary;
+  }
+  &.navigable.optional a:hover .step-indicator {
+    background-color: $secondary;
+  }
+  &.done .step-indicator {
+    background-color: #a4cfce;
+  }
+  &.navigable.done a:hover .step-indicator {
+    background-color: $primary;
+  }
+}
+// TEMPORARY
+/*aw-wizard-navigation-bar ul.steps-indicator li {
     pointer-events: auto;
   }*/
-  // -------
-  aw-wizard-navigation-bar ul.steps-indicator li a {
-    .label {
-      font-weight: 400;
-      font-size: 12px;
+// -------
+aw-wizard-navigation-bar ul.steps-indicator li a {
+  .label {
+    font-weight: 400;
+    font-size: 12px;
+  }
+}
+
+//2.6 Othes
+
+//Paginator
+.pagination-wrapper {
+  text-align: center;
+  ul {
+    display: inline;
+    margin: 10px 0;
+    .current {
+      background-color: #0c1a33;
     }
   }
-
-  //2.6 Othes
-
-  //Paginator
-  .pagination-wrapper {
-    text-align: center;
-    ul {
-      display: inline;
-      margin: 10px 0;
-      .current {
-        background-color: #0c1a33;
-      }
-    }
-  }
+}

@@ -1,25 +1,29 @@
 //Import Basic Services
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { first, tap, finalize, takeUntil } from 'rxjs/operators';
-import { Subject, Subscriber } from 'rxjs';
-import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-//Import System Services
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, HostListener } from '@angular/core';
+import { tap, finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { NgbModal, NgbActiveModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
-import { MicrocreditSupport } from '../core/models/microcredit_support.model';
-import { AuthenticationService } from '../core/services/authentication.service';
-import { StaticContentService } from '../core/services/staticcontent.service';
-import { ItemsService } from '../core/services/items.service';
+/**
+ * Environment
+ */
+import { environment } from '../../environments/environment';
+
+/**
+ * Services
+ */
+import { StaticDataService } from '../core/services/static-data.service';
+import { ContentService } from 'src/app/core/services/content.service';
 import { LoyaltyService } from '../core/services/loyalty.service';
 import { MicrocreditService } from 'src/app/core/services/microcredit.service';
-import { ContentService } from 'src/app/core/services/content.service';
-import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../environments/environment';
-import { StaticDataService } from '../core/services/static-data.service';
 
-import { Offer } from '../core/models/offer.model';
+/**
+ * Models & Interfaces
+ */
 import { Activity } from '../core/models/activity.model';
 import { Balance } from '../core/interfaces/balance.interface';
-
+import { MicrocreditSupport } from '../core/models/microcredit_support.model';
 import { PaymentList } from '../core/interfaces/payment-list.interface';
 
 @Component({
@@ -29,9 +33,18 @@ import { PaymentList } from '../core/interfaces/payment-list.interface';
 })
 export class MemberDashboardComponent implements OnInit, OnDestroy {
 
+	/**
+	 * Children Modals
+	 */
+	@ViewChild('qrcodeModal', { static: false }) qrcodeModal: NgbModalRef;
+	@ViewChild('walletModal', { static: false }) walletModal: NgbModalRef;
+	@ViewChild('supportsModal', { static: false }) supportsModal: NgbModalRef;
+
+	/**
+	 * Configuration and Static Data
+	 */
 	public configAccess: Boolean[] = environment.access;
 	public paymentsList: PaymentList[];
-
 	//Set Basic Variables
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
@@ -43,9 +56,9 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 
 	//Set Content Variables
 	Text: any; //Static Text for QR Code Modal
-	supportsList: MicrocreditSupport[]; //The microcredits the member supports
-	supportItem: MicrocreditSupport; //Currently Selected microcredit Support
-	offers: Offer[]; //Available Offers
+	public supportsList: MicrocreditSupport[]; //The microcredits the member supports
+	public supportItem: MicrocreditSupport; //Currently Selected microcredit Support
+	//offers: Offer[]; //Available Offers
 
 	p: number = 1;
 
@@ -56,51 +69,42 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 		one_of_us: '../../../assets/media/images/ranking-3.png',
 	};
 
-	//Set Child Modals
-	@ViewChild('qrcodeModal', { static: false }) qrcodeModal;
-	@ViewChild('walletModal', { static: false }) walletModal;
-	@ViewChild('supportsModal', { static: false }) supportsModal;
-
 	/**
-   * Component constructor
-   *
-   * @param cdRef: ChangeDetectorRef
-   * @param authenticationService: AuthenticationService
-   * @param loyaltyService: LoyaltyService
-   */
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param modalService: NgbModal
+	 * @param translate: TranslateService
+	 * @param staticDataService: StaticDataService
+	 * @param loyaltyService: LoyaltyService
+	 * @param microcreditService: MicrocreditService
+	 * @param contentService: ContentService
+	 */
 	constructor(
 		private cdRef: ChangeDetectorRef,
-		private authenticationService: AuthenticationService,
 		private modalService: NgbModal,
-		private loyaltyService: LoyaltyService,
-		private staticContentService: StaticContentService,
 		public translate: TranslateService,
-		private itemsService: ItemsService,
+		private staticDataService: StaticDataService,
+		private loyaltyService: LoyaltyService,
 		private microcreditService: MicrocreditService,
-		private contentService: ContentService,
-		private staticDataService: StaticDataService
+		private contentService: ContentService
 	) {
 		this.paymentsList = this.staticDataService.getPaymentsList;
 		this.unsubscribe = new Subject();
 	}
 
 	/**
-	* On Init
-	*/
+	 * On Init
+	 */
 	ngOnInit() {
-		//Get Badge
 		this.fetchLoyaltyBadgeData();
 		this.fetchMicrocreditBadgeData();
-		//Get Wallet Data
 		this.fetchBalanceData();
 		this.fetchSupportsData();
-		//Get Offers Data
-		//	this.fetchOffersData();
 	}
 
-
 	/**
-	 * On destroy
+	 * On Destroy
 	 */
 	ngOnDestroy(): void {
 		this.unsubscribe.next();
@@ -109,10 +113,33 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	* Assets Function On Init
-	*/
+	 * Close Modal on Browser Back Button 
+	 */
+	controlModalState(state: boolean) {
+		if (state) {
+			const modalState = {
+				modal: true,
+				desc: 'MemberDashboardModals'
+			};
+			history.pushState(modalState, null);
+		} else {
+			if (window.history.state.modal) {
+				history.back();
+			}
+		}
+	}
 
-	//Get the Badge of the Member
+	@HostListener('window:popstate', ['$event'])
+	dismissModal() {
+		if (this.modalService.hasOpenModals()) {
+			this.modalService.dismissAll();
+			this.controlModalState(false);
+		}
+	}
+
+	/**
+	 * Fetch Loyalty Badge
+	 */
 	fetchLoyaltyBadgeData() {
 		this.loyaltyService.readBadge()
 			.pipe(
@@ -171,6 +198,9 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 			.subscribe();
 	}
 
+	/**
+	 * Fetch Microcredit Badge
+	 */
 	fetchMicrocreditBadgeData() {
 		this.microcreditService.readBadge()
 			.pipe(
@@ -191,7 +221,9 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 			.subscribe();
 	}
 
-	//Get the Balance of the Member
+	/**
+	 * Fetch Loyalty Balance
+	 */
 	fetchBalanceData() {
 		this.loyaltyService.readBalance()
 			.pipe(
@@ -231,27 +263,9 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 			.subscribe();
 	}
 
-	//Get the Offers
-	// fetchOffersData() {
-	// 	this.itemsService.readAllOffers('0-0-0')
-	// 		.pipe(
-	// 			tap(
-	// 				data => {
-	// 					this.offers = data;
-	// 				},
-	// 				error => {
-	// 					console.log(error);
-	// 				}),
-	// 			takeUntil(this.unsubscribe),
-	// 			finalize(() => {
-	// 				this.loading = false;
-	// 				this.cdRef.markForCheck();
-	// 			})
-	// 		)
-	// 		.subscribe();
-	// }
-
-	//Get the Mircoredit the Member supports
+	/**
+	 * Fetch Supports History
+	 */
 	fetchSupportsData() {
 		this.microcreditService.readAllBackerSupports('0-0-1')
 			.pipe(
@@ -272,18 +286,18 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	* Modal Functions
-	*/
+	 * Open QR Modal
+	 */
 	openQrcode() {
 		//Open the QR code Modal
-		this.modalService.open(this.qrcodeModal).result.then((result) => {
-			console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
-		});
+		this.controlModalState(true);
+		this.modalService.open(this.qrcodeModal)
+			.result.then(
+				(result) => { this.controlModalState(false); console.log('closed'); },
+				(reason) => { this.controlModalState(false); console.log('dismissed'); });
+
 		//Get static content of Balance Points
 		this.contentService.readContentById('QR Code')
-			//this.staticContentService.readText('23')
 			.pipe(
 				tap(
 					data => {
@@ -299,15 +313,22 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 					this.cdRef.markForCheck();
 				})
 			).subscribe();
+	}
 
-	}
+	/**
+	 * Open Wallet Modal
+	 */
 	openWallet() {
-		this.modalService.open(this.walletModal).result.then((result) => {
-			console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
-		});
+		this.controlModalState(true);
+		this.modalService.open(this.walletModal)
+			.result.then(
+				(result) => { this.controlModalState(false); console.log('closed'); },
+				(reason) => { this.controlModalState(false); console.log('dismissed'); });
 	}
+
+	/**
+	 * Open Support Modal
+	 */
 	openSupportItem(supportItemTemp) {
 
 		this.supportItem = {
@@ -322,10 +343,11 @@ export class MemberDashboardComponent implements OnInit, OnDestroy {
 				})[0].value
 			}
 		};
-		this.modalService.open(this.supportsModal).result.then((result) => {
-			console.log('closed');
-		}, (reason) => {
-			console.log('dismissed');
-		});
+
+		this.controlModalState(true);
+		this.modalService.open(this.supportsModal)
+			.result.then(
+				(result) => { this.controlModalState(false); console.log('closed'); },
+				(reason) => { this.controlModalState(false); console.log('dismissed'); });
 	}
 }

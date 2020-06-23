@@ -35,7 +35,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
 
   /**
-    * Component constructor
+    * Component Constructor
     *
     * @param fb: FormBuilder
     * @param cdRef: ChangeDetectorRef

@@ -3,6 +3,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
 import { AuthenticationService } from '../services/authentication.service';
 import { environment } from '../../../environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigGuard implements CanActivate {
@@ -15,10 +16,11 @@ export class ConfigGuard implements CanActivate {
 
         // on the data property
         const accessIndex = route.data.accessIndex;
-        console.log(route.data.redirectURL)
+
         if (environment.access[accessIndex] === true) {
             return true;
         }
+
         this.router.navigate([route.data.redirectURL || '/']);
         return false;
 

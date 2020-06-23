@@ -19,7 +19,7 @@ export class AuthComponent implements OnInit {
 	public version = `${environment.version}`;
 
 	/**
-	 * Component constructor
+	 * Component Constructor
 	 *
 	 * @param el: ElementRef
 	 * @param renderr: Renderer2

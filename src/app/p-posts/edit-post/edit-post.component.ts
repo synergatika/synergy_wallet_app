@@ -50,7 +50,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
 
   /**
-    * Component constructor
+    * Component Constructor
     *
     * @param router: Router
     * @param fb: FormBuilder

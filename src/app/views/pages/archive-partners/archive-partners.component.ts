@@ -1,8 +1,16 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap, takeUntil, finalize } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
+/**
+ * Services
+ */
 import { PartnersService } from '../../../core/services/partners.service';
+
+/**
+ * Models & Interfaces
+ */
 import { Partner } from '../../../core/models/partner.model';
 
 @Component({
@@ -12,14 +20,28 @@ import { Partner } from '../../../core/models/partner.model';
 })
 export class ArchivePartnersComponent implements OnInit {
 
+	/**
+	 * Content Variables
+	 */
 	public partners: Partner[] = [];
+
+	counter: number = 0;
 
 	loading: boolean = false;
 	private unsubscribe: Subject<any>;
 
-	counter: number = 0;
-
-	constructor(private cdRef: ChangeDetectorRef, private partnersService: PartnersService) {
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param translate: TranslateService
+	 * @param partnersService: PartnersService
+	 */
+	constructor(
+		private cdRef: ChangeDetectorRef,
+		public translate: TranslateService,
+		private partnersService: PartnersService
+	) {
 		this.unsubscribe = new Subject();
 	}
 
@@ -39,6 +61,9 @@ export class ArchivePartnersComponent implements OnInit {
 		this.loading = false;
 	}
 
+	/**
+	 * Fetch Partners List
+	 */
 	fetchPartnersData(counter: number) {
 		this.partnersService.readPartners(`6-${counter.toString()}-0`)
 			.pipe(
@@ -59,6 +84,9 @@ export class ArchivePartnersComponent implements OnInit {
 			.subscribe();
 	}
 
+	/**
+	 * On Scroll
+	 */
 	onScroll() {
 		this.counter = this.counter + 1;
 		this.fetchPartnersData(this.counter);

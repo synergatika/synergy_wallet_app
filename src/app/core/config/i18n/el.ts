@@ -824,6 +824,7 @@ export const locale = {
         SUB_OFFER_FORM: {
           HEADING_MAIN: 'Λεπτομέρειες Προσφοράς',
           HEADING: 'Ποσό Συναλλαγής',
+          OFFER: 'Προσφορά',
           TITLE: 'Ποσότητα',
           HINT: 'Παρακαλούμε εισάγετε το ποσό συναλλαγής.',
           ALERT: 'Δε φτάνουν οι πόντοι.',
@@ -845,6 +846,7 @@ export const locale = {
         },
         SUB_MICROCREDIT_FORM: {
           HEADING: 'Τεμάχια Συναλλαγής',
+          CAMPAIGN: 'Καμπάνια',
           CAMPAIGN_ID: 'Ταυτότητα Καμπάνιας',
           HEADING_2: 'Πόντοι',
           SUPPORT_ID: 'Ταυτότητα Συναλλαγής',

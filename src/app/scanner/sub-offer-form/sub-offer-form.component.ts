@@ -33,7 +33,7 @@ export class SubOfferFormComponent implements OnInit {
 
   initForm() {
     this.submitForm = this.fb.group({
-      quantity: [0, Validators.compose([
+      quantity: [1, Validators.compose([
         Validators.required,
         Validators.min(1),
         (control: AbstractControl) => Validators.max(this.transaction.possible_quantity)(control)

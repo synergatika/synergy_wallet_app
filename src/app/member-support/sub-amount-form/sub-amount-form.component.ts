@@ -17,19 +17,30 @@ import { PaymentList } from 'src/app/core/interfaces/payment-list.interface';
 })
 export class SubAmountFormComponent implements OnInit {
 
+  /**
+   * Event Emitter
+   */
   @Output()
   add_amount: EventEmitter<number> = new EventEmitter<number>();
 
+	/**
+	 * Configuration and Static Data
+	 */
   public paymentsList: PaymentList[];
 
+  /**
+   * Content Variables
+   */
   public support: MicrocreditSupport;
   public campaign: MicrocreditCampaign;
-  //campaignType: any;
 
   tempAmount: number;
   showAddStep: boolean = true;
   showSubStep: boolean = false;
 
+  /**
+   * Forms
+   */
   submitForm: FormGroup;
   submitted: boolean = false;
 

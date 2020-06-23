@@ -2,12 +2,19 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { first, tap, finalize, takeUntil } from 'rxjs/operators';
 import { Subject, Subscriber } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { TranslateService } from '@ngx-translate/core';
 
-import { ItemsService } from '../core/services/items.service';
-import { Offer } from '../core/models/offer.model';
+/**
+ * Services
+ */
 import { StaticDataService } from '../core/services/static-data.service';
+import { ItemsService } from '../core/services/items.service';
+
+/**
+ * Models & Interfaces
+ */
+import { Offer } from '../core/models/offer.model';
 
 @Component({
   selector: 'app-member-redeem',
@@ -16,24 +23,31 @@ import { StaticDataService } from '../core/services/static-data.service';
 })
 export class MemberRedeemComponent implements OnInit, OnDestroy {
 
+  /**
+   * Content Variables
+   */
   public offers: Offer[] = [];
-
-  // customOptions: OwlOptions;
 
   counter: number = 0;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
+	/**
+	 * Component Constructor
+	 *
+	 * @param cdRef: ChangeDetectorRef
+	 * @param translate: TranslateService
+	 * @param itemsService: ItemsService
+	 */
   constructor(
     private cdRef: ChangeDetectorRef,
     public translate: TranslateService,
     private itemsService: ItemsService,
-    private staticDataService: StaticDataService,
   ) {
-    // this.customOptions = staticDataService.getOwlOptionsThree;
     this.unsubscribe = new Subject();
   }
+
 	/**
 	* On Init
 	*/
@@ -50,7 +64,9 @@ export class MemberRedeemComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  //	Get the Offers
+  /**
+   * Fetch Offers List
+   */
   fetchOffersData(counter: number) {
     this.itemsService.readAllOffers(`6-${counter.toString()}-1`)
       .pipe(
@@ -72,6 +88,9 @@ export class MemberRedeemComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  /**
+   * On Scroll
+   */
   onScroll() {
     this.counter = this.counter + 1;
     this.fetchOffersData(this.counter);

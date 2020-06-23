@@ -3,19 +3,25 @@ import { MenuService } from '../../core/services/menu.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+	selector: 'app-layout',
+	templateUrl: './layout.component.html',
+	styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
 	user: any;
-	
-	constructor(private menuService : MenuService, private authenticationService: AuthenticationService) { }
 
+	constructor(
+		private menuService: MenuService,
+		private authenticationService: AuthenticationService
+	) { }
+
+	/**
+	 * On Init
+	 */
 	ngOnInit() {
 		this.user = this.authenticationService.currentUserValue.user;
 	}
-  
+
 	openNav() {
 		this.menuService.openNav();
 		/*document.getElementById("mySidenav").style.width = "250px";
@@ -24,7 +30,7 @@ export class LayoutComponent implements OnInit {
 		document.body.classList.add("menu-overlay");*/
 	}
 
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+	/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 	closeNav() {
 		this.menuService.closeNav();
 		/*
@@ -33,6 +39,6 @@ export class LayoutComponent implements OnInit {
 		//document.body.classList.replace("menu-overlay", "");
 		document.body.classList.remove("menu-overlay");
 		*/
-	} 
+	}
 
 }

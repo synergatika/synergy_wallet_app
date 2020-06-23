@@ -38,7 +38,7 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 	// Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
 	/**
-	 * Component constructor
+	 * Component Constructor
 	 *
 	 * @param router: Router
 	 * @param fb: FormBuilder,

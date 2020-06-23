@@ -27,6 +27,9 @@ import { PartnerPayment } from 'src/app/core/models/partner_payment.model';
 })
 export class NewPartnerComponent implements OnInit, OnDestroy {
 
+	/**
+	 * Configuration and Static Data
+	 */
   public subAccessConfig: Boolean[] = environment.subAccess;
   public paymentsList: PaymentList[];
 
@@ -45,7 +48,7 @@ export class NewPartnerComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
 
   /**
-    * Component constructor
+    * Component Constructor
     *
     * @param cdRef: ChangeDetectorRef
     * @param fb: FormBuilder

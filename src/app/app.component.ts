@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   // Public properties
   loader: boolean;
-  private unsubscribe: Subscription[] = []; 
+  private unsubscribe: Subscription[] = [];
   // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
   language: LanguageFlag;
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
     },
   ];
 	/**
-	 * Component constructor
+	 * Component Constructor
 	 *
 	 * @param translationService: TranslationService
 	 * @param router: Router
