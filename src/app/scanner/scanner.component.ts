@@ -140,7 +140,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:popstate', ['$event'])
+  @HostListener('window:popstate')
   dismissModal() {
     this.controlModalState(false);
     this.modalService.dismissAll();

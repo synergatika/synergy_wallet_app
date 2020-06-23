@@ -123,7 +123,7 @@ export class MemberExploreComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	@HostListener('window:popstate', ['$event'])
+	@HostListener('window:popstate')
 	dismissModal() {
 		if (this.modalService.hasOpenModals()) {
 			this.modalService.dismissAll();
