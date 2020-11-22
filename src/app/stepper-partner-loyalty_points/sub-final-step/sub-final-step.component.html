@@ -1,0 +1,18 @@
+<div class="step-final">
+
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.AMOUNT' | translate }}: {{transaction.final_amount}}</p>
+  <p *ngIf="actions.redeem=='11'">{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_TO_REDEEM' | translate }}:
+    {{transaction.discount_points}}</p>
+  <p *ngIf="actions.redeem=='11'">{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.DISCOUNT_AMOUNT' | translate }}:
+    {{transaction.discount_amount}}</p>
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_REMAINING' | translate }}: {{transaction.final_points}}</p>
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_ADDED' | translate }}:
+    {{transaction.final_points + transaction.discount_points- transaction.points}} </p>
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.CLOSE' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

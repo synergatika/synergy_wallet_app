@@ -1,0 +1,45 @@
+<div class="dashboard">
+  <div class="row">
+    <div class="col-md-6">
+
+      <!--begin::Loyalty Badge-->
+      <sng-loyalty_badge-card *ngIf="configAccess[1]"></sng-loyalty_badge-card>
+      <!--end::Loyalty Badge-->
+
+      <!--begin::Microcredit Badge-->
+      <sng-microcredit_badge-card *ngIf="!configAccess[1]&&configAccess[2]"></sng-microcredit_badge-card>
+      <!--end::Microcredit Badge-->
+
+    </div>
+
+
+    <div class="col-md-6">
+      <mat-card class="dashboard-card wallet-card">
+
+        <mat-card-header class="wallet-card-header">
+          <mat-card-title>{{'MEMBER.DASHBOARD.WALLET_TITLE' | translate}}</mat-card-title>
+
+          <!--begin::QR Code-->
+          <sng-qr_code-card></sng-qr_code-card>
+          <!--end::QR Code-->
+
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <!--begin::Loyalty Balance (Synergy Points)-->
+          <sng-loyalty_balance-card *ngIf="configAccess[1]"></sng-loyalty_balance-card>
+          <!--end::Loyalty Balance (Synergy Points)-->
+
+        </mat-card-content>
+        <mat-card-content>
+
+          <!--begin::Microcredit Supports List-->
+          <sng-microcredit_supports-list-pagination *ngIf="configAccess[2]"></sng-microcredit_supports-list-pagination>
+          <!--end::Microcredit Supports List-->
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,7 @@ import { MessageNoticeService } from '../core/helpers/message-notice/message-not
 import { environment } from '../../environments/environment';
 
 @Component({
-	selector: 'kt-auth',
+	selector: 'app-auth',
 	templateUrl: './auth.component.html',
 	styleUrls: ['./auth.component.scss'],
 	encapsulation: ViewEncapsulation.None

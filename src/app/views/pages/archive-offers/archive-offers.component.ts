@@ -11,7 +11,7 @@ import { ItemsService } from '../../../core/services/items.service';
 /**
  * Models & Interfaces
  */
-import { Offer } from '../../../core/models/offer.model';
+import { Offer } from 'sng-core';
 
 @Component({
 	selector: 'app-archive-offers',

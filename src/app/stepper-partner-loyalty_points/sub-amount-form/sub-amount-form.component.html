@@ -1,0 +1,37 @@
+<div class="step-amount">
+
+  <!--begin::Form(Wizard Step 3)-->
+  <form [formGroup]="stepperForm">
+    <h5 class="heading">{{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.HEADING' | translate }}</h5>
+
+    <!--begin::Form Group "Transaction's Amount"-->
+    <div class="form-group">
+      <div class="input-group amount-input">
+        <span class="input-group-text">€</span>
+        <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="0">
+      </div>
+      <span *ngIf="isControlHasError('amount','required')" class="error text-danger">
+        {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+      </span>
+      <span *ngIf="isControlHasError('amount','min')" class="error text-danger">
+        {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{ '1' | currency: 'EUR'}}
+      </span>
+      <span class="form-text text-muted">
+        {{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.HINT' | translate }}
+      </span>
+    </div>
+    <!--end::Form Group "Transaction's Amount"-->
+
+  </form>
+  <!--end::Form(Wizard Step 3)-->
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button class="mr-2" (click)="onPreviousStep()">
+    {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}
+  </button>
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.NEXT_STEP' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

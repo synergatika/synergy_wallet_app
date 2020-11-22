@@ -1,5 +1,29 @@
 @import "variables.scss";
 
+:root {
+  /* Colors */
+  --background-default: #f4f4f4;
+  --background-secondary: #a3b9cc;
+  --background-tertiary: #5c7d99;
+  --background-light: #ffffff;
+
+  --top-toolbar-color: #f4f4f4;
+  --top-toolbar-background-color: #{$primary};
+
+  --primary-color: #{$primary};
+  --primary-light-color: #{$primary-light};
+
+  --secondary-color: #{$secondary};
+  --tertiary-color: #{$tertiary};
+
+  --menu-font-color: #{$menu-color};
+
+  --font-primary-color: #{$primary};
+  --font-dark-color: #{$dark-font};
+
+  --amount-color: #{$amount-color};
+}
+
 html,
 body {
   height: 100%;
@@ -29,6 +53,12 @@ body {
     margin-bottom: 20px;
   }
 
+  .sub-heading {
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+
   .section-heading {
     margin-bottom: 20px;
   }
@@ -51,16 +81,6 @@ body {
     }
   }
 
-  .quantitative-fields {
-    background-color: #f2f2f2;
-    border: 1px solid #d7d7d7;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px #d7d7d7;
-    max-width: 400px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
   /* 1. HEADING */
   &.menu-overlay {
     background-color: rgba(0, 0, 0, 0.4);
@@ -72,25 +92,31 @@ body {
 
   /* 2. ASSETS */
   @import "assets/scss/config_assets.scss";
-
 }
 
 /* 3. CUSTOM ASSETS */
 
 //New item for Partner, used in Partner pages
-.new-item-card {
-  background-color: $tertiary;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
+.new-item-card,
+.loyalty-item-card {
   .mat-card-content {
     color: #fff;
     font-size: 3rem;
     line-height: 1.3;
     padding: 20px 20px 30px;
   }
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loyalty-item-card {
+  background-color: #faa635;
+}
+.new-item-card {
+  background-color: $tertiary;
 }
 
 //Card list
@@ -100,111 +126,14 @@ body {
   margin-bottom: 15px;
 }
 
+.section-list {
+  margin-bottom: 65px;
+}
+
 .mat-card.synergy-card {
   padding-top: 0px;
   padding-bottom: 15px;
   margin-bottom: 30px;
-}
-
-.s_archive {
-  &-img {
-    position: relative;
-    height: 230px;
-
-    @media (max-width: 768px) {
-      height: 280px;
-    }
-
-    &-container {
-      padding: 0;
-      margin-bottom: 20px;
-    }
-
-    img {
-      right: 0;
-      width: 100%;
-      height: 100%;
-      bottom: 0;
-      left: 0;
-      top: 0;
-      position: absolute;
-      object-position: 50% 50%;
-      object-fit: cover;
-    }
-  }
-
-  &-date {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    bottom: 0;
-    background-color: $tertiary;
-    color: #fff;
-    padding: 10px;
-    padding-right: 20px;
-    font-size: 1.25rem;
-    @extend .light-shadow;
-  }
-
-  &-category {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    bottom: 0;
-    background-color: $primary;
-    color: #fff;
-    padding: 10px;
-    padding-right: 20px;
-    text-transform: uppercase;
-  }
-
-  &-heading {
-    /*display: flex;
-		align-items: center;
-		justify-content: space-between;*/
-    margin-bottom: 10px;
-  }
-
-  &-title {
-    font-size: 1.35rem;
-    font-weight: normal;
-  }
-
-  &-points {
-    font-size: 1.5rem;
-    color: $amount-color;
-    text-align: right;
-    padding-right: 5px;
-    padding-left: 0px;
-    margin-top: -4px;
-  }
-
-  &-subtitle {
-    color: $main-font-color;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
-  }
-
-  &-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 15px;
-
-    .share {
-      cursor: pointer;
-    }
-  }
-
-  &-merch-phone {
-    a {
-      color: $darker-font;
-
-      &:hover {
-        color: $primary;
-      }
-    }
-  }
 }
 
 //Single Item
@@ -215,6 +144,19 @@ body {
 }
 
 .s_single {
+  &-img-container.partner-img-container {
+    min-height: 300px;
+  }
+  &-img.partner-img {
+    img {
+      position: initial;
+      width: auto;
+      height: auto;
+      max-width: 50%;
+      max-height: 80%;
+    }
+  }
+
   &-title {
     font-size: 1.6rem;
     margin-bottom: 20px;
@@ -274,7 +216,7 @@ body {
     position: absolute;
     z-index: 1;
     right: 0px;
-    bottom: -10px;
+    bottom: 0px; // bottom: -10px;
     background-color: $primary;
     color: #fff;
     padding: 5px 15px;
@@ -314,10 +256,75 @@ body {
   &-details {
     margin-bottom: 30px;
   }
+
+  &-info {
+    .tag {
+      color: #000;
+    }
+    .desc {
+      font-size: 12px;
+      font-style: italic;
+    }
+  }
+  .terms {
+    margin-left: 15px;
+    border-left: 2px solid $tertiary;
+    padding-left: 15px;
+    h4 {
+      font-size: 1.3rem;
+      color: #000;
+      margin-bottom: 12px;
+    }
+  }
+  &-credit {
+    text-align: right;
+    .hypertitle {
+      font-size: 10px;
+      color: #000;
+      text-transform: uppercase;
+      margin-top: 13px;
+      display: block;
+      line-height: 3px;
+    }
+    .min-amount {
+      .amount {
+        font-size: 1.3rem;
+        color: $amount-color;
+        margin-bottom: 20px;
+      }
+    }
+    .price-item {
+      color: $primary-light;
+      font-size: 1.6rem;
+    }
+    .plegde-button {
+      margin-top: 20px;
+      background-color: $primary;
+      font-size: 18px;
+      color: #fff;
+      padding: 6px 20px 6px 20px;
+    }
+  }
+  &-description {
+    .partner-info {
+      padding-right: 15px;
+      padding-left: 15px;
+      padding-top: 0px;
+      border-bottom: 0px;
+      h6 {
+        text-transform: uppercase;
+        color: $primary;
+        font-size: 0.8rem;
+      }
+      img {
+        max-width: 100%;
+      }
+    }
+  }
 }
 
 //In Mobile
-@media(max-width:576px) {
+@media (max-width: 576px) {
   .fullscreen-modal {
     .modal-dialog {
       margin-top: 65px;
@@ -365,16 +372,149 @@ body {
 }
 
 //Scan Modal
-.scan-modal-container {
+.stepper-modal-container {
+  max-height: 90vh;
   position: relative;
+
+  h4 .stepper-subtitle {
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .stepper-label {
+    margin-bottom: 5px;
+  }
+
+  .stepper-info.microcredit-info {
+    font-size: 18px;
+    font-weight: 600;
+
+    .col-head {
+      &.init {
+        color: $tertiary;
+      }
+
+      &.redeemed {
+        color: $secondary;
+      }
+
+      &.remaining {
+        color: $primary;
+      }
+    }
+    .token-num {
+      font-size: 36px;
+    }
+  }
+
+  .stepper-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0px; // margin: 0 0 15px;
+
+    .stepper-radio-buttons {
+      margin: 5px;
+    }
+  }
+
+  .stepper-info.offer-info {
+    margin-bottom: 20px;
+
+    .col-head {
+      &.offer-id {
+        color: $tertiary;
+      }
+
+      &.cost {
+        color: $secondary;
+      }
+
+      &.points {
+        color: $primary;
+      }
+    }
+
+    .offer-num {
+      font-size: 26px;
+      height: 35px;
+      line-height: 35px;
+
+      &.small {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .step-container {
+    text-align: center;
+
+    button {
+      margin: 0 auto;
+    }
+  }
+
+  form {
+    padding-bottom: 20px;
+
+    input:read-only {
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    input:-moz-read-only {
+      -moz-appearance: textfield;
+    }
+  }
 }
 
-.step-container {
-  text-align: center;
+.new-partner,
+.new-member,
+.new-content,
+.new-post,
+.new-event,
+.new-offer,
+.new-microcredit {
+  .form {
+    margin-bottom: 1.5rem;
 
-  button {
-    margin: 0 auto;
+    .form-group {
+      padding-left: 30px;
+      padding-right: 30px;
+      margin-bottom: 1.5rem;
+      .payment {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
   }
+}
+
+.spinner-overlay {
+  color: white;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: $primary !important;
 }
 
 .message-highlight {
@@ -382,34 +522,39 @@ body {
   color: $primary;
 }
 
-.scan-modal-container form {
-  padding-bottom: 20px;
+.item-wrapper {
+  margin-bottom: 30px;
 }
 
-//Microcredit card
-.microcredit {
-  .item-wrapper {
-    margin-bottom: 20px;
-  }
+/** Cards */
+.synergy-card {
+  height: 100%;
+  padding-top: 0;
 
-  >.row {
-    margin-top: 20px;
+  .item-card {
+    height: 100%;
+    padding-top: 0;
   }
-
-  .item {
-    &-card {
-      padding-top: 0;
-      padding-left: 0;
-      padding-right: 0;
+  .s_archive {
+    &-img.partner-img {
+      background-color: #e9e9e9;
+      img {
+        max-width: 60%;
+        margin: auto;
+        display: block;
+        max-height: 75%;
+        width: auto !important;
+        height: auto !important;
+      }
     }
 
     &-img {
       position: relative;
-      height: auto;
-      overflow: hidden;
-      padding-top: 50%;
-      background-position: 50% 50%;
-      background-size: cover;
+      height: 230px;
+
+      @media (max-width: 768px) {
+        height: 280px;
+      }
 
       &-container {
         padding: 0;
@@ -429,56 +574,71 @@ body {
       }
     }
 
-    &-expires {
+    &-date {
       position: absolute;
       z-index: 1;
-      right: -1px;
-      bottom: 30%;
+      right: 0;
+      bottom: 0;
+      background-color: $tertiary;
+      color: #fff;
+      padding: 10px;
+      padding-right: 20px;
+      font-size: 1.25rem;
+      @extend .light-shadow;
+    }
+
+    &-category {
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      bottom: 0;
       background-color: $primary;
       color: #fff;
-      padding: 5px 15px;
-      font-size: 1.22rem;
+      padding: 10px;
+      padding-right: 20px;
+      text-transform: uppercase;
     }
 
     &-heading {
-      display: flex;
+      /*display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      position: relative;
-
-      .points {
-        font-size: 1.1rem;
-      }
-    }
-
-    &-description {
-      font-size: 1.1rem;
-      color: #8b8b8b;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #eee;
-
-      &.partner {
-        border-bottom: none;
-        padding-bottom: 0;
-      }
+      justify-content: space-between;*/
+      margin-bottom: 10px;
     }
 
     &-title {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
+      font-weight: normal;
+    }
+
+    &-points {
+      font-size: 1.5rem;
+      color: $amount-color;
+      text-align: right;
+      padding-right: 5px;
+      padding-left: 0px;
+      margin-top: -4px;
+
+      .from {
+        font-size: 10px;
+        color: #000;
+        text-transform: uppercase;
+        margin-top: 13px;
+        display: block;
+        line-height: 3px;
+      }
     }
 
     &-subtitle {
-      font-size: 14px;
-      margin-bottom: 5px;
-      color: #8b8b8b;
+      color: $main-font-color;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
 
+    .amount {
       img {
-        position: relative;
-        top: -2px;
-        margin-right: 5px;
-        max-width: fit-content;
+        width: 24px;
+        display: inline;
       }
     }
 
@@ -486,86 +646,22 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-size: 15px;
 
       .share {
         cursor: pointer;
       }
     }
-  }
-}
 
-//Post Modal
-.singlePost {
-  &-title {
-    font-size: 24px;
-    margin-bottom: 2px;
-  }
+    &-merch-phone {
+      a {
+        color: $darker-font;
 
-  &-createdAt {
-    margin-bottom: 15px;
-    color: #8b8b8b;
-    font-size: 14px;
-  }
-
-  &-img {
-    position: relative;
-    height: auto;
-    overflow: hidden;
-    padding-top: 50%;
-    background-position: 50% 50%;
-    background-size: cover;
-
-    &-container {
-      padding: 0;
-      margin-bottom: 20px;
+        &:hover {
+          color: $primary;
+        }
+      }
     }
-
-    img {
-      right: 0;
-      width: 100%;
-      height: 100%;
-      bottom: 0;
-      left: 0;
-      top: 0;
-      position: absolute;
-      object-position: 50% 50%;
-      object-fit: cover;
-    }
-  }
-
-  &-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .share {
-      cursor: pointer;
-    }
-
-    .mdi {
-      font-size: 24px;
-      margin-right: 7px;
-      color: $secondary;
-    }
-  }
-
-  &-subtitle {
-    font-size: 14px;
-    margin-bottom: 2px;
-    color: #8b8b8b;
-    display: flex;
-    align-items: center;
-  }
-
-  .post-date {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    bottom: 20%;
-    background-color: $secondary;
-    color: #fff;
-    padding: 10px 22px;
-    font-size: 1.42rem;
   }
 }
 
@@ -597,3 +693,225 @@ body {
     }
   }
 }
+
+// .quantitative-fields {
+//   background-color: #f2f2f2;
+//   border: 1px solid #d7d7d7;
+//   border-radius: 10px;
+//   box-shadow: 0 3px 10px #d7d7d7;
+//   max-width: 400px;
+//   padding: 20px;
+//   margin-bottom: 20px;
+// }
+
+// .synergy-stepper {
+// }
+// .synergy-list {
+// }
+
+// .synergy-single {
+//   .item-single {
+//   }
+//   .post_event-single {
+//   }
+//   .microcredit_campaign-single {
+//   }
+//   .partner-single {
+//   }
+// }
+//Microcredit card
+// .microcredit {
+//   .item-wrapper {
+//     margin-bottom: 20px;
+//   }
+
+//   > .row {
+//     margin-top: 20px;
+//   }
+
+//   .item {
+//     &-card {
+//       padding-top: 0;
+//       padding-left: 0;
+//       padding-right: 0;
+//     }
+
+//     &-img {
+//       position: relative;
+//       height: auto;
+//       overflow: hidden;
+//       padding-top: 50%;
+//       background-position: 50% 50%;
+//       background-size: cover;
+
+//       &-container {
+//         padding: 0;
+//         margin-bottom: 20px;
+//       }
+
+//       img {
+//         right: 0;
+//         width: 100%;
+//         height: 100%;
+//         bottom: 0;
+//         left: 0;
+//         top: 0;
+//         position: absolute;
+//         object-position: 50% 50%;
+//         object-fit: cover;
+//       }
+//     }
+
+//     &-expires {
+//       position: absolute;
+//       z-index: 1;
+//       right: -1px;
+//       bottom: 30%;
+//       background-color: $primary;
+//       color: #fff;
+//       padding: 5px 15px;
+//       font-size: 1.22rem;
+//     }
+
+//     &-heading {
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-between;
+//       margin-bottom: 18px;
+//       position: relative;
+
+//       .points {
+//         font-size: 1.1rem;
+//       }
+//     }
+
+//     &-description {
+//       font-size: 1.1rem;
+//       color: #8b8b8b;
+//       margin-bottom: 20px;
+//       padding-bottom: 15px;
+//       border-bottom: 1px solid #eee;
+
+//       &.partner {
+//         border-bottom: none;
+//         padding-bottom: 0;
+//       }
+//     }
+
+//     &-title {
+//       font-size: 1.4rem;
+//     }
+
+//     &-subtitle {
+//       font-size: 14px;
+//       margin-bottom: 5px;
+//       color: #8b8b8b;
+
+//       img {
+//         position: relative;
+//         top: -2px;
+//         margin-right: 5px;
+//         max-width: fit-content;
+//       }
+//     }
+
+//     &-info {
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-between;
+
+//       .share {
+//         cursor: pointer;
+//       }
+//     }
+//   }
+// }
+
+//Post Modal
+// .singlePost {
+//   &-title {
+//     font-size: 24px;
+//     margin-bottom: 2px;
+//   }
+
+//   &-createdAt {
+//     margin-bottom: 15px;
+//     color: #8b8b8b;
+//     font-size: 14px;
+//   }
+
+//   &-img {
+//     position: relative;
+//     height: auto;
+//     overflow: hidden;
+//     padding-top: 50%;
+//     background-position: 50% 50%;
+//     background-size: cover;
+
+//     &-container {
+//       padding: 0;
+//       margin-bottom: 20px;
+//     }
+
+//     img {
+//       right: 0;
+//       width: 100%;
+//       height: 100%;
+//       bottom: 0;
+//       left: 0;
+//       top: 0;
+//       position: absolute;
+//       object-position: 50% 50%;
+//       object-fit: cover;
+//     }
+//   }
+
+//   &-info {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+
+//     .share {
+//       cursor: pointer;
+//     }
+
+//     .mdi {
+//       font-size: 24px;
+//       margin-right: 7px;
+//       color: $secondary;
+//     }
+//   }
+
+//   &-subtitle {
+//     font-size: 14px;
+//     margin-bottom: 2px;
+//     color: #8b8b8b;
+//     display: flex;
+//     align-items: center;
+//   }
+
+//   .post-date {
+//     position: absolute;
+//     z-index: 1;
+//     right: 0;
+//     bottom: 20%;
+//     background-color: $secondary;
+//     color: #fff;
+//     padding: 10px 22px;
+//     font-size: 1.42rem;
+//   }
+// }
+
+// .item-card.offer-card {
+//   // cursor: default;
+// }
+// .item-card {
+// }
+// .post_event-card {
+// }
+// .loyalty_offer-card {
+// }
+// .microcredit_campaign-card {
+// }
+// .microcredit_support-card {
+// }

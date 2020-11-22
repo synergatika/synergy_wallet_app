@@ -1,0 +1,26 @@
+<div class="step-final">
+  <p>
+    {{'MEMBER.WIZARD.SUB_FINAL.AMOUNT' | translate}}: {{transaction.amount}}
+  </p>
+  <p>
+    {{'MEMBER.WIZARD.SUB_FINAL.PAYMENT' | translate}}: {{transaction.method}}
+  </p>
+  <p>
+    {{'MEMBER.WIZARD.SUB_FINAL.PAYMENT_ID' | translate}}: {{transaction.payment_id}}
+  </p>
+  <p *ngIf="transaction.method!='store'">
+    {{'MEMBER.WIZARD.SUB_FINAL.INSTRUCTIONS' | translate}}:
+    {{'SUPPORT.PAYMENT.BANK' | translate}} ||
+    {{transaction.how.title | translate}} : {{transaction.how.value}}
+  </p>
+  <p *ngIf="transaction.method=='store'">
+    {{'MEMBER.WIZARD.SUB_FINAL.INSTRUCTIONS' | translate}}: {{'SUPPORT.PAYMENT.STORE' | translate}}
+  </p>
+
+  <!--begin::Wizard Buttons-->
+  <button (click)="onNextStep()">
+    {{'MEMBER.WIZARD.CLOSE' | translate}}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

@@ -1,0 +1,71 @@
+<div class="step-quantity">
+  <h4 class="heading">{{ 'PARTNER.WIZARD.SUB_OFFER_FORM.HEADING_MAIN' | translate }}
+    <div class="stepper-subtitle">
+      {{ 'PARTNER.WIZARD.SUB_OFFER_FORM.OFFER' | translate }}: {{transaction.offer_title}}
+    </div>
+  </h4>
+
+  <hr>
+
+  <div class="mb-3">
+    <h4 class="heading">{{ 'PARTNER.WIZARD.SUB_OFFER_FORM.SUB_HEADING' | translate }}
+    </h4>
+    <div class="stepper-info offer-info">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="col-head cost">{{ 'PARTNER.WIZARD.SUB_OFFER_FORM.COST' | translate }}</div>
+          <div class="offer-num">{{transaction.cost}}</div>
+        </div>
+        <div class="col-md-6">
+          <div class="col-head points">{{ 'PARTNER.WIZARD.SUB_OFFER_FORM.POINTS' | translate }}</div>
+          <div class="offer-num">{{transaction.points}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!--begin::Case hasEnoughPoints-->
+    <div *ngIf='transaction.possible_quantity'>
+
+      <hr>
+      <h6 class="stepper-label">{{ 'PARTNER.WIZARD.SUB_OFFER_FORM.FORM_TITLE' | translate }}</h6>
+
+      <!--begin::Form(Wizard Step 2)-->
+      <form [formGroup]="stepperForm">
+
+        <!--begin::Form Group "Offer's Quantity"-->
+        <div class="form-group">
+          <div class="input-group amount-input">
+            <input type="number" class="form-control" name="quantity" formControlName="quantity">
+          </div>
+          <span *ngIf="isControlHasError('quantity','required')" class="error text-danger">
+            {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+          </span>
+          <span *ngIf="isControlHasError('quantity','min')" class="error text-danger">
+            {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{ '1' }}
+          </span>
+          <span *ngIf="isControlHasError('quantity','max')" class="error text-danger">
+            {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{ transaction.possible_quantity }}
+          </span>
+          <span class="form-text text-muted">
+            {{ 'PARTNER.WIZARD.SUB_OFFER_FORM.FORM_HINT' | translate }}
+          </span>
+        </div>
+        <!--end::Form Group "Offer's Quantity"-->
+
+      </form>
+      <!--end::Form(Wizard Step 2)-->
+
+    </div>
+    <!--end::Case hasEnoughPoints-->
+
+    <!--begin::Wizard Buttons-->
+    <button mat-raised-button class="mr-2" (click)="onPreviousStep()">
+      {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}
+    </button>
+    <button *ngIf='transaction.possible_quantity' mat-raised-button (click)="onNextStep()">
+      {{ 'PARTNER.WIZARD.COMPLETE' | translate }}
+    </button>
+    <!--end::Wizard Buttons-->
+
+  </div>
+</div>

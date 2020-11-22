@@ -1,0 +1,12 @@
+<div class="step-final">
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_TO_REDEEM' | translate }}: {{transaction.discount_points}}</p>
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.QUANTITY' | translate }}: {{transaction.quantity}}</p>
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.POINTS_REMAINING' | translate }}: {{transaction.final_points}}</p>
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.CLOSE' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

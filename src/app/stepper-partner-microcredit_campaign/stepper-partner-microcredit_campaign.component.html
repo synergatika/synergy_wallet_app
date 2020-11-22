@@ -1,0 +1,77 @@
+<div class="stepper-modal-container">
+
+  <!--begin::Wizard Button (Exit)-->
+  <button type="button" class="close-btn" aria-label="Close" (click)="onFinalStep()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <!--end::Wizard Button (Exit)-->
+
+  <aw-wizard>
+
+    <!--begin::Step A - Scan/Enter Identifier-->
+    <aw-wizard-step stepTitle="Scan Or Add">
+
+      <!--begin::Stepper Notice-->
+      <stepper-notice></stepper-notice>
+      <!--end::Stepper Notice-->
+
+      <div class="step-container row justify-content-md-center">
+        <div class="col-xl-6">
+          <app-sub-scanner *ngIf="!showIdentifierForm" (scan_identifier)="onSuccessScanIdentifier($event)">
+          </app-sub-scanner>
+          <button class="btn btn-primary" type="button" (click)="onShowIdentifierFormChange()">
+            <span *ngIf="!showIdentifierForm; else back_to_scanner">
+              {{ 'PARTNER.WIZARD.SCAN_LOYALTY.ALT_PROMPT' | translate }}
+            </span>
+            <ng-template #back_to_scanner>
+              <span>
+                {{ 'PARTNER.WIZARD.BACK_TO_SCANNER' | translate }}
+              </span>
+            </ng-template>
+          </button>
+          <div *ngIf="showIdentifierForm">
+            <app-sub-identifier-form (add_identifier)="onSubmitIdentifierForm($event)">
+            </app-sub-identifier-form>
+          </div>
+        </div>
+      </div>
+    </aw-wizard-step>
+    <!--end::Step A - Scan/Enter Identifier-->
+
+    <!--begin::Step B - Enter Tokens-->
+    <aw-wizard-step stepTitle="Microcredit">
+
+      <!--begin::Stepper Notice-->
+      <stepper-notice></stepper-notice>
+      <!--end::Stepper Notice-->
+
+      <div class="step-container row justify-content-md-center">
+        <app-sub-microcredit-form (previous_step)="onPreviousStep($event)"
+          (add_microcredit)="onSubmitMicrocreditForm($event)">
+        </app-sub-microcredit-form>
+        <!--<button type="button" awPreviousStep>Previous Step</button>-->
+      </div>
+    </aw-wizard-step>
+    <!--end::Step B - Enter Tokens-->
+
+    <!--begin::Step C - Final-->
+    <aw-wizard-step stepTitle="Final">
+
+      <!--begin::Stepper Notice-->
+      <stepper-notice></stepper-notice>
+      <!--end::Stepper Notice-->
+
+      <div class="step-container row justify-content-md-center">
+        <app-sub-final-step (finalize)="onFinalStep($event)"></app-sub-final-step>
+      </div>
+    </aw-wizard-step>
+    <!--end::Step C - Final-->
+
+    <!--begin::Loading Spinner-->
+    <div *ngIf="loading" class="spinner-overlay">
+      <mat-spinner></mat-spinner>
+    </div>
+    <!--end::Loading Spinner-->
+
+  </aw-wizard>
+</div>

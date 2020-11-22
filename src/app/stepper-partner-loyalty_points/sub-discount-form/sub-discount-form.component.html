@@ -1,0 +1,67 @@
+<div class="step-discount">
+
+  <!--begin::Form(Wizard Step 4)-->
+  <form [formGroup]="stepperForm">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="form-group transaction">
+          <h4 class="transaction-title">{{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.HEADING' | translate }}</h4>
+
+          <!--begin::Form Group "Amount"-->
+          <div class="form-group">
+            <div class="input-group amount-input">
+              <span class="input-group-text">€</span>
+              <input type="number" class="form-control final-amount" name="final_amount" formControlName="final_amount"
+                placeholder="10">
+            </div>
+          </div>
+          <!--end::Form Group "Amount"-->
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 discount-container">
+        <div class="">
+          <h4>
+            {{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.TITLE' | translate }}
+            <span class="discount">{{transaction.possible_discount_amount | currency:'EUR'}}</span>.
+          </h4>
+
+          <!--begin::Form Group "Redeem or Not"-->
+          <div class="form-group">
+            <div class="checkbox">
+              <mat-checkbox name="redeem" formControlName="wantRedeem" placeholder="Redeem"
+                (click)="onWantRedeemCheckboxChange()">
+                {{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.CTA' | translate }}
+              </mat-checkbox>
+            </div>
+          </div>
+          <!--end::Form Group "Redeem or Not"-->
+
+        </div>
+      </div>
+    </div>
+  </form>
+  <!--end::Form(Wizard Step 4)-->
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button class="mr-2" (click)="onPreviousStep()">
+    {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}
+  </button>
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.COMPLETE' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>
+
+
+<!--
+  <div class="">
+    <mat-checkbox (click)="onWantRedeemCheckboxChange()" type="checkbox" name="redeem"
+      formControlName="wantRedeem" value="false">
+      {{ 'PARTNER.WIZARD.SUB_DISCOUNT_FORM.CTA' | translate }}
+    </mat-checkbox>
+  </div> 
+-->

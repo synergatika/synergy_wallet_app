@@ -1,0 +1,57 @@
+<div class="new-member">
+  <mat-card>
+    <mat-card-content>
+
+      <!--begin::Form-->
+      <form [formGroup]="submitForm" class="form" id="personal_form">
+        <div class="row">
+          <div class="heading col-md-12">{{ 'USER.MEMBER.CREATE_SUB' | translate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Email"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{ 'FIELDS.PROFILE.EMAIL.TITLE' | translate }}</mat-label>
+                <input matInput type="text" name="name" formControlName="email"
+                  placeholder="{{ 'FIELDS.PROFILE.EMAIL.PLACEHOLDER' | translate }}">
+                <mat-error *ngIf="isControlHasError('email','email')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.name.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.name.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{ 'FIELDS.PROFILE.EMAIL.DESC' | translate }}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Email"-->
+
+          </div>
+        </div>
+
+        <!--begin::Form Actions-->
+        <div class="row">
+          <div class="form-actions col-md-12">
+            <button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()">
+              {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+            </button>
+          </div>
+        </div>
+        <!--end::Form Actions-->
+
+      </form>
+      <!--end::Form-->
+
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,453 @@
+<div class="new-partner">
+  <mat-card>
+    <mat-card-content>
+
+      <!--begin::Form-->
+      <form [formGroup]="submitForm" class="form" id="personal_form">
+        <div class="row">
+          <div class="heading col-md-12">{{ 'USER.PARTNER.CREATE_SUB' | translate }}</div>
+        </div>
+
+        <hr>
+        <div class="row">
+          <div class="sub-heading col-md-12">{{ 'FIELDS.PROFILE.SUBSECTIONS.BASIC' | translate }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Email"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{ 'FIELDS.PROFILE.EMAIL.TITLE' | translate }}</mat-label>
+                <input matInput type="text" name="name" formControlName="email"
+                  placeholder="{{ 'FIELDS.PROFILE.EMAIL.PLACEHOLDER' | translate }}">
+                <mat-error *ngIf="isControlHasError('email','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.name.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.name.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{ 'FIELDS.PROFILE.EMAIL.DESC' | translate }}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Email"-->
+
+          </div>
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Name"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{ 'FIELDS.PROFILE.PARTNER_NAME.TITLE' | translate }}</mat-label>
+                <input matInput type="text" name="name" formControlName="name"
+                  placeholder="{{ 'FIELDS.PROFILE.PARTNER_NAME.PLACEHOLDER' | translate }}">
+                <mat-error *ngIf="isControlHasError('name','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('name','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.name.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('name','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.name.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{ 'FIELDS.PROFILE.PARTNER_NAME.DESC' | translate }}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Name"-->
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Sector"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.PROFILE.SECTOR.TITLE' | translate}}</mat-label>
+                <mat-select formControlName="sector">
+                  <mat-option value="{{item.value}}" *ngFor="let item of sectorList">
+                    {{item.title | translate}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="isControlHasError('sector','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.PROFILE.SECTOR.DESC' | translate}}</mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Sector"-->
+
+          </div>
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Subtitle"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{ 'FIELDS.PROFILE.SUBTITLE.TITLE' | translate }}</mat-label>
+                <input matInput type="text" formControlName="subtitle"
+                  placeholder="{{ 'FIELDS.PROFILE.SUBTITLE.PLACEHOLDER' | translate }}">
+                <mat-error *ngIf="isControlHasError('subtitle','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.subtitle.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('subtitle','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.subtitle.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{ 'FIELDS.PROFILE.SUBTITLE.DESC' | translate }}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Subtitle"-->
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Description"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.PROFILE.DESCRIPTION.TITLE' | translate}}</mat-label>
+                <textarea matInput type="text" rows="5" class="short" formControlName="description"
+                  placeholder="{{'FIELDS.PROFILE.DESCRIPTION.PLACEHOLDER' | translate}}">
+                </textarea>
+                <mat-error *ngIf="isControlHasError('description','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('description','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.description.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('description','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.description.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.PROFILE.DESCRIPTION.DESC' | translate}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Description"-->
+
+          </div>
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Image"-->
+            <div class="form-group">
+              <label class="col-form-label">{{ 'FIELDS.PROFILE.PARTNER_IMAGE.TITLE' | translate }}</label>
+              <div class="">
+                <div class="avatar" id="merchat_avatar">
+                  <button type="button" mat-raised-button (click)="fileInputMerch.click()">
+                    {{ 'FIELDS.PROFILE.PARTNER_IMAGE.ACTION' | translate }}
+                  </button>
+                  <label class="avatar-upload">
+                    <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+                      accept=".png, .jpg, .jpeg" #fileInputMerch>
+                  </label>
+                  <mat-error *ngIf="showImageError" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <div class="avatar-img">
+                    <div class="avatar-container">
+                      <img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
+                      <div *ngIf="previewUrl" class="image-cancel">
+                        <span class="mdi mdi-close-circle" (click)="onImageCancel()">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end::Form Group "Image"-->
+
+          </div>
+        </div>
+
+        <!--begin::Case hasAddress-->
+        <div *ngIf="subAccessConfig[0]">
+          <div class="row">
+            <div class="col-md-6">
+
+              <!--begin::Form Group "Timetable"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.TIMETABLE.TITLE' | translate}}</mat-label>
+                  <textarea matInput type="text" rows="5" class="short" formControlName="timetable"
+                    placeholder="{{'FIELDS.PROFILE.TIMETABLE.PLACEHOLDER' | translate}}">
+                  </textarea>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.TIMETABLE.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "Timetable"-->
+
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="sub-heading col-md-12">{{ 'FIELDS.PROFILE.SUBSECTIONS.ADDRESS' | translate }}</div>
+          </div>
+          <div class="row">
+            <div *ngIf="subAccessConfig[0]" class="col-md-6">
+
+              <!--begin::Form Group "Address"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.ADDRESS.TITLE' | translate}}</mat-label>
+                  <input matInput type="text" name="address" formControlName="street"
+                    placeholder="{{'FIELDS.PROFILE.ADDRESS.PLACEHOLDER' | translate}}">
+                  <mat-error *ngIf="isControlHasError('street','required')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('street','minlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.address.street.minLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('street','maxlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.address.street.maxLength}}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.ADDRESS.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "Address"-->
+
+            </div>
+            <div class="col-md-6">
+
+              <!--begin::Form Group "City"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.CITY.TITLE' | translate}}</mat-label>
+                  <input matInput type="text" name="city" formControlName="city"
+                    placeholder="{{'FIELDS.PROFILE.CITY.PLACEHOLDER' | translate}}">
+                  <mat-error *ngIf="isControlHasError('city','required')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('city','minlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.address.city.minLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('city','maxlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.address.city.maxLength}}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.CITY.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "City"-->
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+
+              <!--begin::Form Group "Postcode"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.POSTCODE.TITLE' | translate}}</mat-label>
+                  <input matInput type="text" formControlName="postCode"
+                    placeholder="{{'FIELDS.PROFILE.POSTCODE.PLACEHOLDER' | translate}}">
+                  <mat-error *ngIf="isControlHasError('postCode','required')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('postCode','minlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.address.postCode.minLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('postCode','maxlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.address.postCode.maxLength}}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.POSTCODE.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "Postcode"-->
+
+            </div>
+            <div class="col-md-3">
+
+              <!--begin::Form Group "LAT"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.LAT.TITLE' | translate}}</mat-label>
+                  <input matInput type="text" name="lat" formControlName="lat"
+                    placeholder="{{'FIELDS.PROFILE.LAT.PLACEHOLDER' | translate}}">
+                  <mat-error *ngIf="isControlHasError('lat','required')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('lat','minlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.address.coordinates.minLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('lat','maxlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.address.coordinates.maxLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('lat','min')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{validator.address.lat.minValue}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('lat','max')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{validator.address.lat.maxValue}}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.LAT.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "LAT"-->
+
+            </div>
+            <div class="col-md-3">
+
+              <!--begin::Form Group "LONG"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.LONG.TITLE' | translate}}</mat-label>
+                  <input matInput type="text" name="long" formControlName="long"
+                    placeholder="{{'FIELDS.PROFILE.LONG.PLACEHOLDER' | translate}}">
+                  <mat-error *ngIf="isControlHasError('long','required')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('long','minlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.address.coordinates.minLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('long','maxlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.address.coordinates.maxLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('long','min')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{validator.address.long.minValue}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('long','max')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{validator.address.long.maxValue}}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.LONG.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "LONG"-->
+
+            </div>
+          </div>
+        </div>
+        <!--end::Case hasAddress-->
+
+        <!--begin::Case hasContact-->
+        <div *ngIf="subAccessConfig[1]">
+          <hr>
+          <div class="row">
+            <div class="sub-heading col-md-12">{{ 'FIELDS.PROFILE.SUBSECTIONS.CONTACT' | translate }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+
+              <!--begin::Form Group "Phone"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.PHONE.TITLE' | translate}}</mat-label>
+                  <input matInput type="text" formControlName="phone"
+                    placeholder="{{'FIELDS.PROFILE.PHONE.PLACEHOLDER' | translate}}">
+                  <mat-error *ngIf="isControlHasError('phone','required')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('phone','minlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.contact.phone.minLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('phone','maxlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.contact.phone.maxLength}}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.PHONE.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "Phone"-->
+
+            </div>
+            <div class="col-md-6">
+
+              <!--begin::Form Group "Website"-->
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label>{{'FIELDS.PROFILE.WEBSITE.TITLE' | translate}}</mat-label>
+                  <input matInput type="text" formControlName="websiteURL"
+                    placeholder="{{'FIELDS.PROFILE.WEBSITE.PLACEHOLDER' | translate}}">
+                  <mat-error *ngIf="isControlHasError('websiteURL','required')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('websiteURL','minlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.contact.websiteURL.minLength}}
+                  </mat-error>
+                  <mat-error *ngIf="isControlHasError('websiteURL','maxlength')" class="error text-danger">
+                    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.contact.websiteURL.maxLength}}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.WEBSITE.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <!--end::Form Group "Website"-->
+
+            </div>
+          </div>
+        </div>
+        <!--end::Case hasContact-->
+
+        <!--begin::Case hasPayments-->
+        <div *ngIf="subAccessConfig[2]">
+          <hr>
+          <div class="row">
+            <div class="sub-heading col-md-12">{{ 'FIELDS.PROFILE.SUBSECTIONS.PAYMENTS' | translate }}</div>
+          </div>
+          <div class="row">
+
+            <!--begin::Form Group "Payments"-->
+            <div class="form-group">
+              <div formArrayName="payments">
+                <mat-form-field class="payment col-md-6" *ngFor="let payment of payments.controls; index as i">
+                  <input matInput type="text" [formControlName]="i" placeholder="{{paymentsList[i].title | translate}}">
+                  <mat-error *ngIf="showPaymentError">
+                    {{ 'FORM.VALIDATION.REQUIRED_ONE' | translate }}
+                  </mat-error>
+                  <mat-hint class="form-text text-muted">
+                    {{'FIELDS.PROFILE.PAYMENT.DESC' | translate}}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+            <!--end::Form Group "Payments"-->
+
+          </div>
+        </div>
+        <!--end::Case hasPayments-->
+
+        <hr>
+
+        <!--begin::Form Actions-->
+        <div class="row">
+          <div class="form-actions col-md-12">
+            <button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()">
+              {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+            </button>
+          </div>
+        </div>
+        <!--end::Form Actions-->
+
+      </form>
+      <!--end::Form-->
+
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,18 +1,17 @@
-// Core
 import { Injectable } from '@angular/core';
-
-// Common
 import { HttpClient } from '@angular/common/http';
-
-// Rxjs
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// Env
+/**
+ * Environment
+ */
 import { environment } from '../../../environments/environment';
 
-// Models
-import { Partner } from '../models/partner.model'
+/**
+ * Models & Interfaces
+ */
+import { Partner } from 'sng-core';
 
 @Injectable({
   providedIn: 'root'

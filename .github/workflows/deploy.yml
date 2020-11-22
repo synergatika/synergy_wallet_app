@@ -9,26 +9,41 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - name: Checkout the Wallet
+        uses: actions/checkout@v2
         with:
-          node-version: '12'
-      - run: npm install
+          path: 'synergy-wallet'
+      - name: Checkout the Core project
+        uses: actions/checkout@v2
+        with:
+          repository: 'synergatika/synergy-core'
+          path: 'synergy-core'
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '14'
+      - name: Install core library dependencies
+        working-directory: synergy-core
+        run: npm install
+      - name: Install wallet dependencies
+        working-directory: synergy-wallet
+        run: npm install
       - name: set env
         run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
       - name: update project version
+        working-directory: synergy-wallet
         run: |
           RELEASE_VERSION=${RELEASE_VERSION#"v"}
           echo $RELEASE_VERSION
           sed -i -e "s/version:.*/version: '"$RELEASE_VERSION"',"/g src/environments/environment.prod.ts
       - run: npx ng build --prod
+        working-directory: synergy-wallet
       - name: deploy to server
         uses: AEnterprise/rsync-deploy@v1.0
         env:
           DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-e -c -r --delete"
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          FOLDER: "./dist/synergy-wallet/*"
+          FOLDER: "./ynergy-wallet/dist/synergy-wallet/*"
           SERVER_IP: ${{ secrets.SERVER_IP }}
           USERNAME: ${{ secrets.USERNAME }}
           SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}

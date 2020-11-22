@@ -13,11 +13,13 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 // Models
-import { Message } from '../models/message.model';
-import { AuthUser } from '../models/auth.model';
-import { VerificationRequired } from '../models/verification_required.model';
-import { RegistrationStatus } from '../models/registration_status.model';
-import { OneClickToken } from '../models/one_click_token.model';
+import {
+  Message,
+  AuthUser,
+  VerificationRequired,
+  RegistrationStatus,
+  OneClickToken,
+} from 'sng-core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {

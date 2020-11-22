@@ -11,7 +11,7 @@ import { PartnersService } from '../../../core/services/partners.service';
 /**
  * Models & Interfaces
  */
-import { Partner } from '../../../core/models/partner.model';
+import { Partner } from 'sng-core';
 
 @Component({
 	selector: 'app-archive-partners',
@@ -25,9 +25,9 @@ export class ArchivePartnersComponent implements OnInit {
 	 */
 	public partners: Partner[] = [];
 
-	counter: number = 0;
+	counter = 0;
 
-	loading: boolean = false;
+	loading = false;
 	private unsubscribe: Subject<any>;
 
 	/**

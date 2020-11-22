@@ -1,0 +1,90 @@
+<h1 *ngIf="campaign" class="section-heading">{{campaign.title}}</h1>
+
+<div>
+  <button mat-raised-button class="plegde-button" (click)="openModal(campaign)" [disabled]="!canSupportCampaign">
+    <span matTooltip="{{'CAMPAIGN.PLEDGE_DISABLE' | translate}}" [matTooltipPosition]="'right'"
+      [matTooltipDisabled]="canSupportCampaign">
+      {{'CAMPAIGN.PLEDGE' | translate}}
+    </span>
+  </button>
+</div>
+
+<div>
+  <div class="row">
+    <div class="col-md-5">
+      <mat-form-field>
+        <mat-label>{{'SUPPORT.FILTER.TEXT.TITLE' | translate}}</mat-label>
+        <input matInput [(ngModel)]="textValueFilter" (keyup)="applyFilterText($event)"
+          placeholder="{{'SUPPORT.FILTER.TEXT.PLACEHOLDER' | translate}}">
+      </mat-form-field>
+    </div>
+    <div class="col-md-5">
+      <mat-form-field *ngIf="currentMethods">
+        <mat-label>{{'SUPPORT.FILTER.SELECT.TITLE' | translate}}</mat-label>
+        <mat-select [(value)]="selectedMethod.bic" (selectionChange)="applyFilterSelected($event)">
+          <mat-option *ngFor="let item of currentMethods" value="{{item.bic}}">
+            {{item.title | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>{{'SUPPORT.FILTER.DATE.TITLE' | translate}}</mat-label>
+        <input matInput [(ngModel)]="dateFilter" [matDatepickerFilter]="activeDates.bind(this)"
+          [matDatepicker]="startDateFilterPicker" [max]="maxDate" (dateChange)="applyFilterDate($event)">
+        <mat-datepicker-toggle matSuffix [for]="startDateFilterPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDateFilterPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!--- Note that these columns can be defined in any order.
+				The actual rendered columns are set as a property on the row definition" -->
+    <ng-container matColumnDef="payment_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SUPPORT.ARRAY.PAYMENT_ID' | translate}} </th>
+      <td mat-cell *matCellDef="let item"> {{item.payment_id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="method">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SUPPORT.ARRAY.METHOD' | translate}} </th>
+      <td mat-cell *matCellDef="let item"> {{item.method}} </td>
+    </ng-container>
+    <ng-container matColumnDef="remainingTokens">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SUPPORT.ARRAY.REMAINING_TOKENS' | translate}} </th>
+      <td mat-cell *matCellDef="let item"> {{item.initialTokens - item.redeemedTokens}} </td>
+    </ng-container>
+    <ng-container matColumnDef="initialTokens">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SUPPORT.ARRAY.INITIAL_TOKENS' | translate}} </th>
+      <td mat-cell *matCellDef="let item"> {{item.initialTokens}} </td>
+    </ng-container>
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SUPPORT.ARRAY.DATE' | translate}} </th>
+      <td mat-cell *matCellDef="let item"> {{item.createdAt | date: 'd/M/y, HH:mm'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SUPPORT.ARRAY.STATUS' | translate}} </th>
+      <td mat-cell *matCellDef="let item">
+        <mat-checkbox name="" value="{{item.status}}" [checked]="item.status=='confirmation'"
+          (change)="changeSupportState(item.support_id, $event)"
+          [disabled]="(item.status=='confirmation'&&!canRevertPayment)||(item.status=='order'&&!canConfirmPayment)"
+          matTooltip="{{'SUPPORT.CHANGE_STATUS_TOOLTIP' | translate}}" [matTooltipPosition]="'left'"
+          [matTooltipDisabled]="(item.status=='order'&&canConfirmPayment)||(item.status=='confirmation'&&canRevertPayment)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<!--begin::Offer Statistics-->
+<sng-microcredit_campaign-statistics *ngIf="campaign" [campaign]="campaign"></sng-microcredit_campaign-statistics>
+<!--end::Offer Statistics-->
+
+<!--begin::Loading Spinner-->
+<div *ngIf="loading" class="spinner-overlay">
+  <mat-spinner></mat-spinner>
+</div>
+<!--end::Loading Spinner-->

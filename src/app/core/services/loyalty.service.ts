@@ -1,22 +1,23 @@
-// Core
 import { Injectable } from '@angular/core';
-
-// Common
 import { HttpClient } from '@angular/common/http';
-
-// Rxjs
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 
-// Env
+/**
+ * Environment
+ */
 import { environment } from '../../../environments/environment';
 
-// Models
-import { Message } from '../models/message.model';
-import { Points } from '../models/points.model';
-import { Activity } from '../models/activity.model';
-import { LoyaltyTransaction } from '../models/loyalty_transaction.model';
-import { RegistrationStatus } from '../models/registration_status.model';
+/**
+ * Models & Interfaces
+ */
+import {
+  Activity,
+  Points,
+  LoyaltyTransaction,
+  Message,
+  Statistics
+} from 'sng-core';
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +82,13 @@ export class LoyaltyService {
     return this.http.post<any>(`${environment.apiUrl}/loyalty/redeem/${partner_id}/${offer_id}/${_to}`, { password, _points, quantity })
       .pipe(map(data => {
         return data;
+      }));
+  }
+
+  readStatistics(): Observable<Statistics> {
+    return this.http.get<any>(`${environment.apiUrl}/loyalty/statistics`)
+      .pipe(map(response => {
+        return response.data;
       }));
   }
 }

@@ -1,0 +1,63 @@
+@import "../../../variables.scss";
+
+label {
+  font-size: 18px;
+}
+
+.menu-item {
+  margin: 2px 0;
+  transition: background-color 0.3s;
+
+  &-active {
+    background-color: #eee;
+    border-radius: 4px;
+
+    a {
+      color: #0c1a33;
+    }
+  }
+
+  &:hover {
+    background-color: #eee;
+    border-radius: 4px;
+  }
+}
+
+.transaction {
+  .title {
+    font-weight: 500;
+  }
+
+  &-receipt {
+    padding: 15px 0 9px;
+  }
+
+  &-subtitle {
+    padding: 0px 0 9px;
+  }
+
+  &-desc {
+    font-size: 15px;
+    word-break: break-all;
+  }
+
+  &-details {
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  &-number {
+    font-weight: 500;
+  }
+
+  .font {
+    &-danger {
+      color: $secondary;
+    }
+
+    &-success {
+      color: $primary;
+    }
+  }
+}

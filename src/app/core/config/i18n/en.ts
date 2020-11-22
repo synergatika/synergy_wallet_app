@@ -59,13 +59,13 @@ export const locale = {
         WELCOME_SUBTITLE: 'A Financial Toolkit for Cooperatives',
         HAVE_ACCOUNT: 'Don\'t have an account yet?',
         ALREADY_VALIDATED: 'Do you have already validated your email address?',
+        ALREADY_RESTORATION: 'Do you have already restore your password?',
         ALREADY_UPDATED: 'Do you have already updated your password?',
         PARTNER_ACCOUNT: 'Do you want to register as a partner?'
       },
       GENERAL: {
         OR: 'Or',
         SUBMIT_BUTTON: 'Submit',
-        SIGNUP_BUTTON: 'Sign Up',
         FORGOT_BUTTON: 'Forgot Password',
         BACK_BUTTON: 'Back',
         PRIVACY: 'Privacy',
@@ -80,75 +80,36 @@ export const locale = {
         PASSWORD_NEEDS_UPDATE: 'You have to update your password',
         ACCOUNT_NEEDS_ACTIVATION: 'You have to reactivate your account'
       },
+      LOGOUT: {
+        BUTTON: 'Sign out'
+      },
       REGISTER: {
         TITLE: 'Sign Up',
         BUTTON: 'Sign Up',
         DESC: 'Enter your details to create your account',
         SUCCESS: 'Your account has been successfuly registered. We have send an email in your address. Please follow the link to verify your account',
-        ERROR: 'Something went wrong during your registration. Please repeat the process'
       },
       TERMS: {
         A: 'I agree with the',
         B: 'Terms & Conditions'
       },
-      LOGOUT: {
-        BUTTON: 'Sign out'
-      },
-      FORGOT: {
-        TITLE: 'Forgotten Password?',
-        DESC: 'Enter your email to reset your password',
-        SUCCESS: 'Your account has been successfully reset.'
+      VERIFY_EMAIL: {
+        TITLE: 'Email Verification',
+        TITLE_ASK: 'Non Validated Email Address?',
+        SUCCESS_CHECK: 'Your email address has been validated!',
+        SUCCESS_SEND: 'You will receive an email! Follow the link to validate your address!',
       },
       VERIFY_PASSWORD: {
         TITLE: 'Update Password',
-        BUTTON: 'Update',
         SUCCESS: 'Your password has been successfully updated!',
-        ERROR: 'Your password is wrong or the process has already completed!',
       },
       FORGOT_PASSWORD: {
         TITLE_ASK: 'Forgotten Password?',
         DESC: 'Enter your email to reset your password',
         SUCCESS_SEND: 'You will receive an email! Follow the link to reset your password!',
-        ERROR_SEND: 'Email address is wrong!',
         SUCCESS_CHECK: 'Your can procceed to reseting password!',
-        ERROR_CHECK: 'Validation Link is wrong or expired! Please step back to repeat the proccess!',
         SUCCESS_UPDATE: 'Your password has been successfully reset!',
-        ERROR_UPDATE: 'Validation Link is wrong or expired! Please step back to repeat the proccess!'
       },
-      VERIFY_EMAIL: {
-        TITLE: 'Email Verification',
-        TITLE_ASK: 'Non Validated Email Address?',
-        BUTTON: 'Update',
-        SUCCESS_CHECK: 'Your email address has been validated!',
-        ERROR_CHECK: 'Validation Link is wrong or expired! Please enter your email address to repeat the proccess!',
-        SUCCESS_SEND: 'You will receive an email! Follow the link to validate your address!',
-        ERROR_SEND: 'Email address is wrong or already validated!',
-      },
-      INPUT: {
-        EMAIL: 'Email',
-        MEMBER_NAME: 'Fullname',
-        PARTNER_NAME: 'Partner\'s Name/Brand',
-        PASSWORD: 'Password',
-        NEW_PASSWORD: 'New Password',
-        CONFIRM_PASSWORD: 'Confirm Password',
-        USERNAME: 'Username'
-      },
-      VALIDATION: {
-        INVALID: '{{name}} is not valid',
-        REQUIRED: '{{name}} is required',
-        MIN_LENGTH: '{{name}} minimum length is {{min}}',
-        AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
-        PAYMENT_REQUIRED: 'Fill at least one payment method',
-        NOT_FOUND: 'The requested {{name}} is not found',
-        INVALID_LOGIN: 'The login detail is incorrect',
-        INVALID_UPDATE: 'The update detail is incorrect',
-        REQUIRED_FIELD: 'Required field',
-        MIN_LENGTH_FIELD: 'Minimum field length:',
-        MAX_LENGTH_FIELD: 'Maximum field length:',
-        INVALID_FIELD: 'Field is not valid',
-        PASSWORD_CONFIRMATION: 'Passsword and ConfirmPassword didn\'t match.',
-        REQUIRED_ONE: 'At least one field requiered'
-      }
     },
 
 
@@ -170,17 +131,17 @@ export const locale = {
         CURRENT_PASSWORD: {
           TITLE: 'Current Password',
           PLACEHOLDER: 'Password',
-          DESC: ''
+          DESC: 'Please insert current password'
         },
         NEW_PASSWORD: {
           TITLE: 'New Password',
           PLACEHOLDER: 'Password',
-          DESC: ''
+          DESC: 'Please insert a new password'
         },
         CONFIRM_PASSWORD: {
           TITLE: 'Confirm Password',
           PLACEHOLDER: 'Password',
-          DESC: ''
+          DESC: 'Please confirm your password'
         },
         MEMBER_NAME: {
           TITLE: 'Name',
@@ -214,16 +175,6 @@ export const locale = {
           TITLE: 'Sector',
           PLACEHOLDER: '',
           DESC: 'Please choose your company\'s sector'
-        },
-        SECTOR_CHOICES: {
-          _: 'Other',
-          A: 'Β2Β Services',
-          B: 'Durables',
-          C: 'Durables (Technology)',
-          D: 'Education',
-          E: 'Food',
-          F: 'Hotels, Cafés and Restaurants',
-          G: 'Recreation and Culture',
         },
         TIMETABLE: {
           TITLE: 'Timetable',
@@ -268,12 +219,35 @@ export const locale = {
         PAYMENT: {
           DESC: 'IBAN/Link or other info about bank account'
         },
+        DEACTIVATION_REASON: {
+          TITLE: '',
+          PLACEHOLDER: 'Please, feel free to tell us the reason that you want to deactivate your account (optional)',
+          DESC: ''
+        },
+        SUBSECTIONS: {
+          BASIC: 'Basic Info',
+          ADDRESS: 'Address',
+          CONTACT: 'Contact Info',
+          PAYMENTS: 'Payments'
+        },
+        SECTOR_CHOICES: {
+          _: 'Other',
+          A: 'Β2Β Services',
+          B: 'Durables',
+          C: 'Durables (Technology)',
+          D: 'Education',
+          E: 'Food',
+          F: 'Hotels, Cafés and Restaurants',
+          G: 'Recreation and Culture',
+        },
         PAYMENT_CHOICES: {
           A: 'National Bank of Greece',
           B: 'Pireaus Bank',
           C: 'EFG Eurobank Ergasias',
           D: 'Alpha Bank A.E.',
-          E: 'PayPal.Me'
+          E: 'PayPal.Me',
+          _F: 'Pay at the Store',
+          _G: 'All Payment Methods'
         },
       },
       OFFER: {
@@ -287,9 +261,9 @@ export const locale = {
           ACTION: 'Choose File'
         },
         SUBTITLE: {
-          TITLE: 'Abstact',
-          PLACEHOLDER: 'Abstact',
-          DESC: 'Please, enter Offer\'s Abstact.'
+          TITLE: 'Abstract',
+          PLACEHOLDER: 'Abstract',
+          DESC: 'Please, enter Offer\'s Abstract.'
         },
         DESCRIPTION: {
           TITLE: 'Offer Description',
@@ -318,9 +292,9 @@ export const locale = {
           ACTION: 'Choose File'
         },
         SUBTITLE: {
-          TITLE: 'Abstact',
-          PLACEHOLDER: 'Abstact',
-          DESC: 'Please, enter Post\'s abstact.'
+          TITLE: 'Abstract',
+          PLACEHOLDER: 'Abstract',
+          DESC: 'Please, enter Post\'s abstract.'
         },
         CONTENT: {
           TITLE: 'Post Content',
@@ -349,9 +323,9 @@ export const locale = {
           ACTION: 'Choose File'
         },
         SUBTITLE: {
-          TITLE: 'Abstact',
-          PLACEHOLDER: 'Abstact',
-          DESC: 'Please, enter Event\'s abstact.'
+          TITLE: 'Abstract',
+          PLACEHOLDER: 'Abstract',
+          DESC: 'Please, enter Event\'s abstract.'
         },
         DESCRIPTION: {
           TITLE: 'Event Description',
@@ -395,9 +369,9 @@ export const locale = {
           ACTION: 'Choose File'
         },
         SUBTITLE: {
-          TITLE: 'Abstact',
-          PLACEHOLDER: 'Abstact',
-          DESC: 'Please, enter Campaign\'s abstact.'
+          TITLE: 'Abstract',
+          PLACEHOLDER: 'Abstract',
+          DESC: 'Please, enter Campaign\'s abstract.'
         },
         TERMS: {
           TITLE: 'Terms Description',
@@ -449,12 +423,12 @@ export const locale = {
           B: 'Private',
           C: 'Partners'
         },
-        INITIATION: {
+        SUPPORT_STARTS: {
           TITLE: 'Initiation Date',
           PLACEHOLDER: 'Date',
           DESC: 'Please, enter when your Campaign will begin.'
         },
-        EXPIRATION: {
+        SUPPORT_ENDS: {
           TITLE: 'Expiration Date',
           PLACEHOLDER: 'Date',
           DESC: 'Please, enter when your Campaign will expire.'
@@ -470,9 +444,14 @@ export const locale = {
           DESC: 'Please, enter when redeem can end.'
         },
         QUANTITATIVE: 'Is it Quantitative?',
-        DATE_TOO_EARLY: 'The end date cannot be earlier tha th start date',
         SUBMIT_DRAFT: 'Save as Draft',
         SUBMIT_CAMPAIGN: 'Publish Campaign',
+        SUBSECTIONS: {
+          BASIC: 'Basic Info',
+          TERMS: 'Terms and Access',
+          FINANCIAL: 'Financial',
+          DATES: 'Dates'
+        }
       },
       CONTENT: {
         NAME: {
@@ -516,7 +495,16 @@ export const locale = {
         MAX_LENGTH_FIELD: 'Maximum field length:',
         INVALID_FIELD: 'Field is not valid.',
         MIN_VALUE_FIELD: 'Minimum field value:',
-        MAX_VALUE_FIELD: 'Maximum field value:'
+        MAX_VALUE_FIELD: 'Maximum field value:',
+        REQUIRED_ONE: 'At least one field requiered',
+        PASSWORD_CONFIRMATION: 'Passsword and ConfirmPassword didn\'t match.',
+        AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
+        CAMPAIGN_DATES: {
+          SUPPORTSTARTSTOSUPPORTENDS: 'Support Starting Date cannot be greater than Support Ending Date',
+          SUPPORTSTARTSTOREDEEMSTARTS: 'Support Starting Date cannot be greater than Redeem Starting Date',
+          REDEEMSTARTSTOREDEEMENDS: 'Redeem Starting Date cannot be greater than Redeem Ending Date',
+          SUPPORTENDSTOREDEEMENDS: 'Support Ending Date cannot be greater than Redeem Ending Date',
+        },
       },
     },
 
@@ -530,7 +518,8 @@ export const locale = {
         TITLE: 'All good!',
         PASSWORD_UPDATED: 'Your password has been successfully updated!',
         PROFILE_UPDATED: 'Your Personal Information has been successfully updated!',
-        ACCOUNT_DEACTIVATED: 'Your account has been succesfully deactivated',
+        ACCOUNT_DEACTIVATED: 'Your account has been succesfully deactivated!',
+        INVITATION_SEND: 'Invtation has been successfully sent!',
 
         /* Partner Messages (Μηνύματα Συνεργάτη) */
         OFFER_CREATED: 'A new Offer has been successfully created!',
@@ -556,6 +545,9 @@ export const locale = {
       },
       ERROR: {
         TITLE: 'Something went wrong!',
+      },
+      CANCEL: {
+        TITLE: 'Action Cancelled!',
       }
     },
 
@@ -594,12 +586,16 @@ export const locale = {
       CAMPAIGN_REDEEM_NOT_STARTED: 'Campaign\'s redeeming period has not started yet',
       CAMPAIGN_REDEEM_ENDED: 'Campaign\'s redeeming period has expired',
 
-      WRONG_IDENTIFIER: 'Identifier must be an Email or a Card',
-      WRONG_CREDENTIALS: 'No user found with this credentials',
+      /**
+       * AUTHENTICATION - Not Found (404)
+       */
       MEMBER_NOT_EXISTS: 'No user found with this identifier',
       USER_EXISTS: 'A user with there credentials already exists',
       USER_HAS_CARD: 'A card is already linked to this account',
-      USER_HAS_EMAIL: 'An email is already linked to this account'
+      USER_HAS_EMAIL: 'An email is already linked to this account',
+      WRONG_IDENTIFIER: 'Identifier must be an Email or a Card',
+      WRONG_CREDENTIALS: 'No user found with this credentials',
+      WRONG_TOKEN: 'Link is wrong or has been expired'
     },
 
 
@@ -615,11 +611,12 @@ export const locale = {
       TRANSACTIONS: 'Your Recent Transactions',
       RECEIPT: 'Receipt',
       OFFER: 'Offer',
+      CAMPAIGN: 'Campaign',
       SUPPORT: 'Support',
       POINTS: 'Points',
       TOKENS: 'Tokens',
+      PARTNER: 'Partner',
       MEMBER: 'To',
-      PARTNER: 'By',
       PAID: 'Payment Confirmation',
       UNPAID: 'Payment Withdrawal',
     },
@@ -627,13 +624,15 @@ export const locale = {
       SUBMENU: {
         PERSONAL_INFORMATION: 'Personal Information',
         CHANGE_PASSWORD: 'Change Password',
-        ACCOUNT_SETTINGS: 'Account Settings'
+        ACCOUNT_SETTINGS: 'Account Settings',
+        INVITATION: 'Invite a friend'
       },
       ACCOUNT: 'Account',
       PERSONAL_INFO: 'Setup Your Personal Information',
       CHANGE_PASSWORD: 'Update Your Password',
       DEACTIVATE: 'Deactivate Account',
       DEACTIVATE_CONFRIRM: 'Are you sure that you want to deactivate your account',
+      INVITATION: 'Submit your friend\'s email and we will send an invite',
       CANCEL: 'Cancel',
     },
 
@@ -699,8 +698,8 @@ export const locale = {
       PRICE: 'Price',
       PRICE_PER_ITEM: 'Price per item',
       PLEDGE: 'Pledge',
-      PLEDGE_DISABLE: 'Supporting Period is over/has not yet started',
-      REDEEM_DISABLE: 'Redeeming Period is over/has not yet started',
+      PLEDGE_DISABLE: 'You cannot add a "Pledge" outside the supporting period',
+      REDEEM_DISABLE: 'You cannot redeem a "Support" outside the redemption period',
       PARTNER: 'Partner Info',
       TERMS: 'What do I get?',
       STATUS: {
@@ -708,17 +707,44 @@ export const locale = {
         EXPECTED: 'Is Expected',
         EXPIRED: 'Expired',
         REDEEM_TO: 'redeem until'
-      }
+      },
     },
     SUPPORT: {
+      REMAINING: 'Remain',
+      PAYMENT_METHOD: 'Payment Method',
+      PAYMENT_DETAILS: 'Details',
+      CHANGE_STATUS_TOOLTIP: 'Cannot Revert a Payment as Redeeming Period in on',
       PAYMENT: {
         STORE: 'At Store',
         BANK: 'Bank Deposit'
       },
       STATUS: {
         CONFIRMED: 'Confirmed',
+        CONFIRMED_TOOLTIP: 'Payment has been Confirmed',
         PENDING: 'Pending',
-        COMPLETED: 'Completed'
+        PENDING_TOOLTIP: 'Payment has not been confirmed yet',
+        COMPLETED: 'Completed',
+        COMPLETED_TOOLTIP: 'Has been total redeemed',
+      },
+      FILTER: {
+        TEXT: {
+          TITLE: 'Search by...',
+          PLACEHOLDER: 'Payment ID'
+        },
+        SELECT: {
+          TITLE: 'Payment Method'
+        },
+        DATE: {
+          TITLE: 'Date'
+        }
+      },
+      ARRAY: {
+        PAYMENT_ID: 'Payment ID',
+        METHOD: 'Payment Method',
+        INITIAL_TOKENS: 'Initial Tokens',
+        REMAINING_TOKENS: 'Remaining Tokens',
+        DATE: 'Registration Date',
+        STATUS: 'Payment Status'
       }
     },
 
@@ -748,6 +774,19 @@ export const locale = {
       MEMBER: {
         CREATE: 'Add New Member',
         CREATE_SUB: 'Create a new member of our community'
+      },
+      FILTER: {
+        TITLE: 'Search by...',
+        PARTNER_PLACEHOLDER: 'User ID, Email, Name',
+        MEMBER_PLACEHOLDER: 'User ID, Email, Card Number'
+      },
+      ARRAY: {
+        USER_ID: 'User ID',
+        EMAIL: 'Email',
+        NAME: 'Name',
+        CARD: 'Card Number',
+        DATE: 'Registration Date',
+        STATUS: 'Status'
       }
     },
 
@@ -820,17 +859,6 @@ export const locale = {
           TITLE: 'You can have a discount of',
           CTA: 'Check to Redeem discount'
         },
-        SUB_OFFER_FORM: {
-          HEADING_MAIN: 'Offer Transaction Details',
-          HEADING: 'Transaction quantity',
-          OFFER: 'Offer',
-          TITLE: 'Quantity',
-          HINT: 'Please enter transaction quantity.',
-          ALERT: 'Not enough points',
-          ID: 'ID',
-          COST: 'Cost',
-          POINTS: 'Member Points'
-        },
         SUB_FINAL_STEP: {
           AMOUNT: 'Transaction Amount',
           DISCOUNT_AMOUNT: 'Discount Amount',
@@ -843,18 +871,31 @@ export const locale = {
           TOKENS_REMAINING: 'Tokens Remaining',
           PAYMENT_ID: 'Payment ID'
         },
+        SUB_OFFER_FORM: {
+          HEADING_MAIN: 'Offer\'s Transaction Details',
+          OFFER: 'Offer',
+          OFFER_ID: 'Offer ID',
+          SUB_HEADING: 'Points',
+          COST: 'required',
+          POINTS: 'available',
+          FORM_TITLE: 'Quantity',
+          FORM_HINT: 'Please enter transaction\'s quantity.',
+          ALERT: 'Not enough points. Unable to proceed.'
+        },
         SUB_MICROCREDIT_FORM: {
-          HEADING: 'Support items',
-          CAMPAIGN: 'Campaign',
+          HEADING_MAIN: 'Microcredit Campaign\'s Transaction Details',
+          CAMPAIGN: 'Microcredit Campaign',
           CAMPAIGN_ID: 'Campaign ID',
-          HEADING_2: 'Tokens',
+          SUB_HEADING: 'Supports List',
+          SUB_HEADING_2: 'Tokens',
+          SUB_HEADING_3: 'History',
           SUPPORT_ID: 'Support ID',
           INITIAL: 'initial',
           REDEEMED: 'redeemed',
           REMAINING: 'remaining',
+          FORM_TITLE: 'Tokens',
+          FORM_HINT: 'Please enter transaction\'s tokens.',
           ALERT: 'No Transactions. Unable to proceed.',
-          HEADING_3: 'Transaction Tokens',
-          HINT: 'Please enter transaction tokens.'
         }
       }
     },

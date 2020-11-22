@@ -1,19 +1,14 @@
-import { Subscription } from 'rxjs';
-// Angular
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { TranslationService } from './core/helpers/translation.service';
-// language list
+
 import { locale as enLang } from './core/config/i18n/en';
 import { locale as elLang } from './core/config/i18n/el';
 
+import { StaticDataService } from './core/helpers/static-data.service';
 
-interface LanguageFlag {
-  lang: string;
-  name: string;
-  flag: string;
-  active?: boolean;
-}
+import { LanguageFlag } from 'sng-core';
 
 @Component({
   selector: 'app-root',
@@ -22,40 +17,33 @@ interface LanguageFlag {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
+  /**
+   * Content Variables
+   */
+  public languages: LanguageFlag[];
+  public language: LanguageFlag;
   title = 'synergy-wallet';
 
-
-  // Public properties
   loader: boolean;
   private unsubscribe: Subscription[] = [];
   // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
-  language: LanguageFlag;
-  languages: LanguageFlag[] = [
-    {
-      lang: 'en',
-      name: 'English',
-      flag: './assets/flags/united-kingdom.svg'
-    },
-    {
-      lang: 'el',
-      name: 'Ελληνικά',
-      flag: './assets/flags/greece.svg'
-    },
-  ];
-	/**
+  /**
 	 * Component Constructor
 	 *
-	 * @param translationService: TranslationService
 	 * @param router: Router
+	 * @param translationService: TranslationService
 	 * @param layoutConfigService: LayoutCongifService
 	 * @param splashScreenService: SplashScreenService
 	 */
-  constructor(private translationService: TranslationService,
+  constructor(
     private router: Router,
+    private translationService: TranslationService,
+    private staticDataService: StaticDataService
     // private layoutConfigService: LayoutConfigService,
     // private splashScreenService: SplashScreenService
   ) {
+    this.languages = this.staticDataService.getLanguages;
 
     // register translations
     this.translationService.loadTranslations(enLang, elLang);
@@ -98,11 +86,18 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
- * Set language
- *
- * @param lang: any
- */
-  setLanguage(lang) {
+   * On Destroy
+   */
+  ngOnDestroy() {
+    // this.unsubscribe.forEach(sb => sb.unsubscribe());
+  }
+
+  /**
+   * Set language
+   *
+   * @param lang: string
+   */
+  setLanguage(lang: string) {
     this.languages.forEach((language: LanguageFlag) => {
       if (language.lang === lang) {
         language.active = true;
@@ -115,16 +110,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
- * Set selected language
- */
+   * Set selected language
+   */
   setSelectedLanguage(): any {
     this.setLanguage(this.translationService.getSelectedLanguage());
-  }
-
-	/**
-	 * On Destroy
-	 */
-  ngOnDestroy() {
-    // this.unsubscribe.forEach(sb => sb.unsubscribe());
   }
 }

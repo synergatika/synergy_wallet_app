@@ -1,0 +1,47 @@
+@import "../../../variables.scss";
+
+label {
+	font-size: 18px;
+}
+.menu-item {
+	margin: 2px 0;
+	transition: background-color 0.3s;
+	&-active {
+		background-color: #eee;
+		border-radius: 4px;
+		a {
+			color: #0c1a33;
+		}
+	}
+	&:hover {
+		background-color: #eee;
+		border-radius: 4px;
+	}
+}
+
+.form {
+	margin-bottom: 1.5rem;
+
+	.form-group {
+		padding-left: 30px;
+		padding-right: 30px;
+		margin-bottom: 1.5rem;
+
+		.payment {
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	.form-actions {
+		margin-top: 20px;
+		button {
+			float: right;
+			font-size: 18px;
+			padding: 4px 22px;
+		}
+	}
+
+	mat-form-field {
+		width: 100%;
+	}
+}

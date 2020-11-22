@@ -1,49 +1,59 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
-//import { MemberDashboardComponent } from './views/pages/member-dashboard/member-dashboard.component';
-//import { MemberExploreComponent } from './views/pages/member-explore/member-explore.component';
-import { MemberDashboardComponent } from './member-dashboard/member-dashboard.component';
-import { MemberExploreComponent } from './member-explore/member-explore.component';
-import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
 
-import { InvitationComponent } from './views/pages/invitation/invitation.component';
-import { ArchivePartnersComponent } from './views/pages/archive-partners/archive-partners.component';
-import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
-import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
 import { LayoutComponent } from './views/layout/layout.component';
 import { NotFoundComponent } from './views/pages/not-found/not-found.component';
 
+/**
+ * Member Menu Components & Modules
+ */
+import { MemberDashboardComponent } from './member-menu/member-dashboard/member-dashboard.component';
+import { MemberExploreComponent } from './member-menu/member-explore/member-explore.component';
+import { MemberRedeemComponent } from './member-menu/member-redeem/member-redeem.component';
+import { MemberSupportComponent } from './member-menu/member-support/member-support.component';
 
-// Auth
-import { AuthGuard } from './core/helpers/auth.guard';
-import { UserGuard } from './core/helpers/user.guard';
-import { ConfigGuard } from './core/helpers/config.guard';
+/**
+ * Patner Menu Components & Modules
+ */
+import { PartnerDashboardComponent } from './partner-menu/partner-dashboard/partner-dashboard.component';
+
+
+/**
+ * Archive Item Components
+ */
+import { ArchivePartnersComponent } from './views/pages/archive-partners/archive-partners.component';
+import { ArchivePostsEventsComponent } from './views/pages/archive-posts_events/archive-posts_events.component';
+import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
+import { ArchiveMicrocreditCampaignsComponent } from './views/pages/archive-microcredit_campaigns/archive-microcredit_campaigns.component';
+
+
+/**
+ * CanActivate/CanDeactivate Guards
+ */
+import { AuthGuard } from './core/guards/auth.guard';
+import { UnAuthGuard } from './core/guards/unauth.guard';
+import { UserGuard } from './core/guards/user.guard';
+import { ConfigGuard } from './core/guards/config.guard';
 
 const routes: Routes = [
 	{
 		path: 'auth',
-		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+		//	canActivate: [UnAuthGuard],
 	},
 	{
-
-		/**
-		 * -- MEMBER --
-		 * Wallet - Open if 1 or 2 are true
-		 * Support - Open if 2 is true
-		 * Discover - Open if 0 or 1 are true 
-		 */
-
-		/**
-			* -- PARTNER --
-			* Offers - Open if 1 is true
-			* Campaigns - Open if 2 is true
-			* Posts & Events - Open if 0 is true 
-			*/
 		path: '',
 		component: LayoutComponent,
 		canActivate: [AuthGuard],
 		children: [
+			/**
+			 * Member Main Routes
+			 *
+			 * Explore - Activate: Config[0]=true || Config[1]=true
+			 * Offers - Activate: Config[1]=true
+			 * Support - Activate: Config[2]=true
+			 * Wallet - Activate: Config[1]=true || Config[2]=true
+			 */
 			{
 				path: '',
 				redirectTo: 'explore',
@@ -51,26 +61,8 @@ const routes: Routes = [
 				canActivate: [UserGuard],
 			},
 			{
-				path: 'wallet',
-				component: MemberDashboardComponent,
-				canActivate: [UserGuard],
-				data: {
-					title: 'MENU.WALLET',
-					expectedRole: 'member',
-				}
-			},
-			{
-				path: 'support',
-				loadChildren: () => import('./member-support/member-support.module').then(m => m.MemberSupportModule),
-				canActivate: [UserGuard && ConfigGuard],
-				data: {
-					title: 'MENU.SUPPORT',
-					expectedRole: 'member',
-					accessIndex: 2,
-				}
-			},
-			{
-				path: 'explore', component: MemberExploreComponent,
+        path: 'explore',
+        component: MemberExploreComponent,
 				canActivate: [UserGuard],
 				data: {
 					title: 'MENU.DISCOVER',
@@ -86,49 +78,40 @@ const routes: Routes = [
 					accessIndex: 1,
 				}
 			},
-
-
 			{
-				path: 'partners',
-				component: ArchivePartnersComponent,
-				// canActivate: [UserGuard],
-				data: { title: 'MENU.PARTNERS' }
-			},
-			// {
-			// path: 'offers',
-			// canActivate: [ConfigGuard],
-			// component: ArchiveOffersComponent,
-			// data: { title: 'MENU.OFFERS', accessIndex: 1 }
-			// },
-			{
-				path: 'posts',
-				canActivate: [ConfigGuard],
-				component: ArchivePostsComponent,
-				data: { title: 'MENU.POSTS', accessIndex: 0 }
-
-			},
-
-			{
-				path: 'settings',
-				loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
-				data: { title: 'settings' }
+				path: 'support', component: MemberSupportComponent,
+				canActivate: [UserGuard && ConfigGuard],
+				data: {
+					title: 'MENU.SUPPORT',
+					expectedRole: 'member',
+					accessIndex: 2,
+				}
 			},
 			{
-				path: 'history',
-				loadChildren: () => import('./history/history.module').then(m => m.HistoryModule),
-				data: { title: 'history' }
+				path: 'wallet',
+				component: MemberDashboardComponent,
+				canActivate: [UserGuard],
+				data: {
+					title: 'MENU.WALLET',
+					expectedRole: 'member',
+				}
 			},
 			// {
 			// 	path: 'invitation', component: InvitationComponent, data: { title: 'invitation' }
 			// },
 
 			/**
-			 * PARTNER's Pages
+			 * Partner Main Routes
+			 *
+			 * Dashboard - Activate: Config[0]=true || Config[1]=true || Config[2]=true
+			 * Loyalty Offers - Activate: Config[1]=true
+			 * Microcredit Campaigns - Activate: Config[2]=true
+			 * Posts - Activate: Config[0]=true
+			 * Events - Activate: Config[0]=true
 			 */
-
 			{
 				path: 'scanner',
-				loadChildren: () => import('./scanner/scanner.module').then(m => m.ScannerModule),
+				component: PartnerDashboardComponent,
 				canActivate: [UserGuard],
 				data: {
 					title: 'HEADER.MESSAGE',
@@ -136,28 +119,8 @@ const routes: Routes = [
 				}
 			},
 			{
-				path: 'm-posts',
-				loadChildren: () => import('./p-posts/p-posts.module').then(m => m.PostsModule),
-				canActivate: [UserGuard && ConfigGuard],
-				data: {
-					title: 'MENU.POSTS',
-					expectedRole: 'partner',
-					accessIndex: 0
-				}
-			},
-			{
-				path: 'm-events',
-				loadChildren: () => import('./p-events/p-events.module').then(m => m.EventsModule),
-				canActivate: [UserGuard && ConfigGuard],
-				data: {
-					title: 'MENU.EVENTS',
-					expectedRole: 'partner',
-					accessIndex: 0
-				}
-			},
-			{
 				path: 'm-offers',
-				loadChildren: () => import('./p-loyalty/p-loyalty.module').then(m => m.LoyaltyModule),
+				loadChildren: () => import('./partner-menu/partner-loyalty/partner-loyalty.module').then(m => m.PartnerLoyaltyModule),
 				canActivate: [UserGuard && ConfigGuard],
 				data: {
 					title: 'MENU.OFFERS',
@@ -167,7 +130,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'm-campaigns',
-				loadChildren: () => import('./p-microcredit/p-microcredit.module').then(m => m.MicrocreditModule),
+				loadChildren: () => import('./partner-menu/partner-microcredit/partner-microcredit.module').then(m => m.PartnerMicrocreditModule),
 				canActivate: [UserGuard && ConfigGuard],
 				data: {
 					title: 'MENU.CAMPAIGNS',
@@ -175,105 +138,37 @@ const routes: Routes = [
 					accessIndex: 2
 				}
 			},
+			{
+				path: 'm-posts',
+				loadChildren: () => import('./partner-menu/partner-posts/partner-posts.module').then(m => m.PartnerPostsModule),
+				canActivate: [UserGuard && ConfigGuard],
+				data: {
+					title: 'MENU.POSTS',
+					expectedRole: 'partner',
+					accessIndex: 0
+				}
+			},
+			{
+				path: 'm-events',
+				loadChildren: () => import('./partner-menu/partner-events/partner-events.module').then(m => m.PartnerEventsModule),
+				canActivate: [UserGuard && ConfigGuard],
+				data: {
+					title: 'MENU.EVENTS',
+					expectedRole: 'partner',
+					accessIndex: 0
+				}
+			},
 
-			// {
-			// 	path: 'microcredit',
-			// 	loadChildren: () => import('./microcreditDEPR/microcredit.module').then(m => m.MicrocreditModule),
-			// 	canActivate: [UserGuard],
-			// 	data: {
-			// 		expectedRole: 'partner'
-			// 	}
-			// },
-			// {
-			// 	path: 'create',
-			// 	loadChildren: () => import('./create-itemsDEPR/create-items.module').then(m => m.CreateItemsModule),
-			// 	canActivate: [UserGuard],
-			// 	data: {
-			// 		expectedRole: 'partner'
-			// 	}
-			// },
-			// {
-			// 	path: 'm-offers',
-			// 	children: [
-			// 		{
-			// 			path: '', component: PartnerOffersComponent,
-			// 		},
-			// 		{
-			// 			path: 'create', component: NewOfferComponent
-			// 		},
-			// 		{
-			// 			path: 'edit/:_id', component: EditOfferComponent
-			// 		},
-			// 	],
-			// 	canActivate: [UserGuard],
-			// 	data: {
-			// 		title: 'MENU.OFFERS',
-			// 		expectedRole: 'partner'
-			// 	}
-			// },
-			// {
-			// 	path: 'm-campaigns',
-			// 	children: [
-			// 		{
-			// 			path: '', component: PartnerCampaignsComponent,
-			// 		},
-			// 		{
-			// 			path: 'create', component: NewMicrocreditCampaignComponent
-			// 		},
-			// 		{
-			// 			path: 'edit/:_id', component: EditMicrocreditCampaignComponent
-			// 		},
-			// 		{
-			// 			path: 'edit-draft/:_id', component: EditMicrocreditCampaignComponentDraft
-			// 		},
-			// 	],
-			// 	canActivate: [UserGuard],
-			// 	data: {
-			// 		title: 'MENU.CAMPAIGNS',
-			// 		expectedRole: 'partner'
-			// 	}
-			// },
-			// {
-			// 	path: 'm-posts',
-			// 	children: [
-			// 		{
-			// 			path: '', component: PartnerPostsComponent,
-			// 		},
-			// 		{
-			// 			path: 'create', component: NewPostComponent
-			// 		},
-			// 		{
-			// 			path: 'edit/:_id', component: EditPostComponent
-			// 		},
-			// 	],
-			// 	canActivate: [UserGuard],
-			// 	data: {
-			// 		title: 'MENU.POSTS',
-			// 		expectedRole: 'partner'
-			// 	}
-			// },
-			// {
-			// 	path: 'm-events',
-			// 	children: [
-			// 		{
-			// 			path: '', component: PartnerEventsComponent,
-			// 		},
-			// 		{
-			// 			path: 'create', component: NewEventComponent
-			// 		},
-			// 		{
-			// 			path: 'edit/:_id', component: EditEventComponent
-			// 		},
-			// 	],
-			// 	canActivate: [UserGuard],
-			// 	data: {
-			// 		title: 'MENU.EVENTS',
-			// 		expectedRole: 'partner'
-			// 	}
-			// },
+			/**
+			 * Admin Main Routes
+			 *
+			 * Partners
+			 * Members
+			 * Content
+			 */
 			{
 				path: 'a-partners',
-				loadChildren: () => import('./a-partners/a-partners.module').then(m => m.PartnersModule),
+				loadChildren: () => import('./admin-menu/admin-partners/admin-partners.module').then(m => m.AdminPartnersModule),
 				canActivate: [UserGuard],
 				data: {
 					title: 'MENU.CONTENT',
@@ -282,7 +177,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'a-members',
-				loadChildren: () => import('./a-members/a-members.module').then(m => m.MembersModule),
+				loadChildren: () => import('./admin-menu/admin-members/admin-members.module').then(m => m.AdminMembersModule),
 				canActivate: [UserGuard],
 				data: {
 					title: 'MENU.CONTENT',
@@ -291,12 +186,61 @@ const routes: Routes = [
 			},
 			{
 				path: 'a-content',
-				loadChildren: () => import('./content/content.module').then(m => m.ContentModule),
+				loadChildren: () => import('./admin-menu/content/content.module').then(m => m.ContentModule),
 				canActivate: [UserGuard],
 				data: {
 					title: 'MENU.USERS',
 					expectedRole: 'admin'
 				}
+			},
+
+			/**
+			 * User Routes
+			 *
+			 */
+			{
+				path: 'settings',
+				loadChildren: () => import('./user-menu/settings/settings.module').then(m => m.SettingsModule),
+				data: { title: 'settings' }
+			},
+			{
+				path: 'history',
+				loadChildren: () => import('./user-menu/history/history.module').then(m => m.HistoryModule),
+				data: { title: 'history' }
+			},
+
+			/**
+			 * Archive Routes
+			 *
+			 * Partners
+			 * Posts
+			 * Loyalty Offers
+			 * Microcredit Campaigns
+			 */
+			{
+				path: 'partners',
+				component: ArchivePartnersComponent,
+				data: { title: 'MENU.PARTNERS' }
+			},
+			{
+				path: 'posts',
+				component: ArchivePostsEventsComponent,
+				canActivate: [ConfigGuard],
+				data: { title: 'MENU.POSTS', accessIndex: 0 }
+
+			},
+			{
+				path: 'offers',
+				component: ArchiveOffersComponent,
+				canActivate: [ConfigGuard],
+				data: { title: 'MENU.OFFERS', accessIndex: 1 }
+
+			},
+			{
+				path: 'microcredit',
+				component: ArchiveMicrocreditCampaignsComponent,
+				canActivate: [ConfigGuard],
+				data: { title: 'MENU.CAMPAIGNS', accessIndex: 2 }
 			},
 		]
 	},

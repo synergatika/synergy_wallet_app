@@ -1,0 +1,7 @@
+ <div class="step-scanner">
+   <div class="zxing-scanner">
+     <zxing-scanner [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']"
+       (scanSuccess)="scanSuccessHandler($event)" (scanError)="scanErrorHandler($event)">
+     </zxing-scanner>
+   </div>
+ </div>

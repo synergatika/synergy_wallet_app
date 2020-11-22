@@ -2,7 +2,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 // RxJS
 import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
@@ -13,17 +13,15 @@ import { MessageNoticeService } from '../../core/helpers/message-notice/message-
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { ItemsService } from '../../core/services/items.service';
 // Others
-import { ConfirmPasswordValidator } from './confirm-password.validator';
+import { ConfirmPasswordValidator } from '../confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
-import { StaticDataService } from '../../core/services/static-data.service';
+import { StaticDataService } from '../../core/helpers/static-data.service';
 import { environment } from '../../../environments/environment';
-import { PartnerPayment } from '../../core/models/partner_payment.model';
 
-import { PaymentList } from '../../core/interfaces/payment-list.interface';
-import { GeneralList } from 'src/app/core/interfaces/general-list.interface';
+import { GeneralList, PaymentList, PartnerPayment } from 'sng-core';
 
 @Component({
-	selector: 'kt-register-partner',
+	selector: 'app-register-partner',
 	templateUrl: './register-partner.component.html',
 	styleUrls: ['./register-partner.component.scss'],
 	encapsulation: ViewEncapsulation.None
@@ -38,8 +36,12 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
 	public subAccessConfig: Boolean[] = environment.subAccess;
 
+	step = false;
+	/**
+	 * Form
+	 */
+	authForm: FormGroup;
 	validator: any;
-	registerForm: FormGroup;
 
 	fileData: File = null;
 	previewUrl: any = null;
@@ -52,32 +54,30 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	/**
 	 * Component Constructor
 	 *
+	 * @param cdr: ChangeDetectorRef
 	 * @param router: Router
 	 * @param fb: FormBuilder,
-	 * @param cdr: ChangeDetectorRef
-	 * @param activatedRoute: ActivatedRoute
 	 * @param dialog: MatDialog
 	 * @param translate: TranslateService
+	 * @param staticDataService: StaticDataService
 	 * @param authNoticeService: MessageNoticeService
 	 * @param authenticationService: AuthenticationService,
 	 * @param itemsService: ItemsService,
-	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
+		private cdr: ChangeDetectorRef,
 		private router: Router,
 		private fb: FormBuilder,
-		private cdr: ChangeDetectorRef,
-		private activatedRoute: ActivatedRoute,
 		public dialog: MatDialog,
 		private translate: TranslateService,
+		private staticDataService: StaticDataService,
 		private authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
-		private itemsService: ItemsService,
-		private staticDataService: StaticDataService,
+		private itemsService: ItemsService
 	) {
 		this.paymentsList = this.staticDataService.getPaymentsList;
 		this.sectorList = this.staticDataService.getSectorList;
-		this.validator = this.staticDataService.getUserValidator;
+		this.validator = this.staticDataService.getValidators.user;
 		this.unsubscribe = new Subject();
 	}
 
@@ -89,7 +89,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
 	ngOnInit() {
-		this.initRegisterForm();
+		this.initializeForm();
 	}
 
 	/*
@@ -103,11 +103,10 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form initalization
-	 * Default params, validators
+	 * Form Initialization
 	 */
-	initRegisterForm() {
-		this.registerForm = this.fb.group({
+	initializeForm() {
+		this.authForm = this.fb.group({
 			fullname: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(this.validator.name.minLength),
@@ -134,21 +133,26 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 			])
 			],
 			description: ['', Validators.compose([
-				Validators.required,
+				// Validators.required,
+				// Validators.minLength(this.validator.description.minLength),
+				// Validators.maxLength(this.validator.description.maxLength)
 			])
 			],
 			sector: ['', Validators.compose([
-				Validators.required,
+				// Validators.required,
 			])
 			],
 			payments: new FormArray([]),
-			agree: [false, Validators.compose([Validators.requiredTrue])]
+			agree: [false, Validators.compose([
+				//	Validators.requiredTrue
+			]
+			)]
 		}, {
 			validator: ConfirmPasswordValidator.MatchPassword
 		});
 
-		//	(this.subAccessConfig[0]) ? this.clearPartnerAddressValidators(this.registerForm) : '';
-		//	(this.subAccessConfig[1]) ? this.clearPartnerContactValidators(this.registerForm) : '';
+		//	(this.subAccessConfig[0]) ? this.clearPartnerAddressValidators(this.authForm) : '';
+		//	(this.subAccessConfig[1]) ? this.clearPartnerContactValidators(this.authForm) : '';
 
 		this.paymentsList.forEach(element => {
 			const payment = new FormControl('');
@@ -157,16 +161,49 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	}
 
 	get payments() {
-		return this.registerForm.get('payments') as FormArray;
+		return this.authForm.get('payments') as FormArray;
+	}
+
+	changeStep(step: boolean) {
+		if (this.step) {
+			this.authForm.get('sector').clearValidators();
+			this.authForm.get('sector').updateValueAndValidity();
+			this.authForm.get('description').clearValidators();
+			this.authForm.get('description').updateValueAndValidity();
+			this.authForm.get('agree').clearValidators();
+			this.authForm.get('agree').updateValueAndValidity();
+		} else {
+			const controls = this.authForm.controls;
+			/** check form */
+			if (this.authForm.invalid) {
+				Object.keys(controls).forEach(controlName =>
+					controls[controlName].markAsTouched()
+				);
+				return;
+			}
+
+			this.authForm.get('sector').setValidators([
+				Validators.required
+			]);
+			this.authForm.get('description').setValidators([
+				Validators.required,
+				Validators.minLength(this.validator.description.minLength),
+				Validators.maxLength(this.validator.description.maxLength)
+			]);
+			this.authForm.get('agree').setValidators([
+				Validators.requiredTrue
+			]);
+			this.authForm.get('sector').updateValueAndValidity();
+			this.authForm.get('description').updateValueAndValidity();
+			this.authForm.get('agree').updateValueAndValidity();
+		}
+		this.step = step;
 	}
 
 	/**
-	 * Set / Clear Validators 
+	 * Set/Clear Validators
 	 */
 	clearPartnerAddressValidators(form: FormGroup) {
-		form.get('timetable').clearValidators();
-		form.get('timetable').updateValueAndValidity();
-
 		form.get('street').clearValidators();
 		form.get('street').updateValueAndValidity();
 		form.get('postCode').clearValidators();
@@ -178,6 +215,9 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		form.get('lat').updateValueAndValidity();
 		form.get('long').clearValidators();
 		form.get('long').updateValueAndValidity();
+
+		form.get('timetable').clearValidators();
+		form.get('timetable').updateValueAndValidity();
 	}
 
 	clearPartnerContactValidators(form: FormGroup) {
@@ -251,21 +291,6 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		this.cdr.markForCheck();
 	}
 
-
-	/*
-	this.registerForm.get('nationalBank').setValidators(Validators.required)
-	this.registerForm.get('nationalBank').updateValueAndValidity();
-	this.registerForm.get('pireausBank').setValidators(Validators.required)
-	this.registerForm.get('pireausBank').updateValueAndValidity();
-	this.registerForm.get('eurobank').setValidators(Validators.required)
-	this.registerForm.get('eurobank').updateValueAndValidity();
-	this.registerForm.get('alphaBank').setValidators(Validators.required)
-	this.registerForm.get('alphaBank').updateValueAndValidity();
-	this.registerForm.get('paypal').setValidators(Validators.required)
-	this.registerForm.get('paypal').updateValueAndValidity();
-*/
-
-
 	setPaymentsValues(controls: { [key: string]: AbstractControl }) {
 		var payments: PartnerPayment[] = [];
 		this.paymentsList.forEach((value, i) => {
@@ -278,24 +303,20 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 				})
 			}
 		});
-
 		return payments;
 	}
 
 	/**
-	 * Form Submit
+	 * On Submit Form
 	 */
-	submit() {
+	submitForm() {
 
 		if (this.loading) return;
 
-		const controls = this.registerForm.controls;
+		const controls = this.authForm.controls;
 		const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
-
-		//if (partner_payments.length) this.updatePaymentsValidators(controls);
-
 		/** check form */
-		if (this.registerForm.invalid || !this.fileData || !partner_payments.length) {
+		if (this.authForm.invalid || !this.fileData || !partner_payments.length) {
 
 			(partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();
 			this.showPaymentError = (partner_payments.length === 0)
@@ -328,7 +349,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 							setTimeout(() => { this.router.navigateByUrl('/auth/login'); }, 2500);
 						}
 					}, error => {
-						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.ERROR'), 'danger');
+						this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
 						this.loading = false;
 					}),
 				takeUntil(this.unsubscribe),
@@ -360,15 +381,13 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		formData.append('description', campaign.description);
 		formData.append('category', campaign.category);
 		formData.append('access', campaign.access);
+
 		formData.append('quantitative', campaign.quantitative);
+		formData.append('stepAmount', (campaign.quantitative) ? campaign.stepAmount : '0');
 		formData.append('minAllowed', campaign.minAllowed);
-		if (campaign.quantitative) {
-			formData.append('maxAllowed', campaign.maxAllowed);
-			formData.append('stepAmount', campaign.stepAmount);
-		} else {
-			formData.append('maxAllowed', campaign.minAllowed);
-		}
+		formData.append('maxAllowed', (campaign.quantitative) ? campaign.maxAllowed : campaign.minAllowed);
 		formData.append('maxAmount', campaign.maxAmount);
+
 		formData.append('redeemStarts', _newDate3.toString());
 		formData.append('redeemEnds', _newDate4.toString());
 		formData.append('startsAt', _newDate1.toString());
@@ -386,7 +405,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 							this.router.navigateByUrl('/auth/login');
 						}, 2500);
 					}, error => {
-						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.ERROR'), 'danger');
+						this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
@@ -402,8 +421,9 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	 * @param validationType: string => Equals to valitors name
 	 */
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.registerForm.controls[controlName];
+		const control = this.authForm.controls[controlName];
 
+		console.log("Control", this.authForm.controls[controlName])
 		if (!control) {
 			return false;
 		}
@@ -411,26 +431,4 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		const result = control.hasError(validationType) && (control.dirty || control.touched);
 		return result;
 	}
-
-	// 	/**
-	//  * Checking control validation
-	//  *
-	//  * @param controlName: string => Equals to formControlName
-	//  * @param validationType: string => Equals to valitors name
-	//  */
-	// 	isControlArrayHasError(controlName: string, index: number, validationType: string): boolean {
-	// 		const control = this.payments.at(index);
-
-	// 		if (!control) {
-	// 			return false;
-	// 		}
-
-	// 		const result = control.hasError(validationType) && (control.dirty || control.touched);
-	// 		console.log('name', controlName)
-	// 		console.log('e', control.hasError(validationType))
-	// 		console.log('d', control.dirty);
-	// 		console.log('t', control.touched)
-	// 		console.log(result);
-	// 		return result;
-	// 	}
 }

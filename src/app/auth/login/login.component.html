@@ -1,85 +1,93 @@
 <!--begin::Body-->
-<div class="kt-login__body">
+<div class="auth_body">
 
   <!--begin::Signin-->
-  <div class="kt-login__form">
-    <div class="kt-login__title mb-3">
+  <div class="auth_container">
+    <div class="login_title mb-3">
       <h3>{{ 'AUTH.LOGIN.TITLE' | translate }}</h3>
     </div>
 
-    <!--begin::Notice-->
+    <!--begin::Auth Notice-->
     <auth-notice></auth-notice>
-    <!--end::Notice-->
+    <!--end::Auth Notice-->
 
     <!-- {{test}} -->
 
     <!--begin::Form-->
-    <form class="kt-form" [formGroup]="loginForm" autocomplete="off" class="login-form">
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>{{ 'AUTH.INPUT.EMAIL' | translate }}</mat-label>
-          <input matInput type="email" placeholder="{{ 'AUTH.INPUT.EMAIL' | translate }}" formControlName="email"
-            autocomplete="off" />
-          <mat-error *ngIf="isControlHasError('email','required')">
-            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-          </mat-error>
-          <mat-error *ngIf="isControlHasError('email','email')">
-            <strong>{{ 'AUTH.VALIDATION.INVALID_FIELD' | translate }}</strong>
-          </mat-error>
-          <mat-error *ngIf="isControlHasError('email','minlength')">
-            <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-              {{validator.email.minLength}}</strong>
-          </mat-error>
-          <mat-error *ngIf="isControlHasError('email','maxlength')">
-            <strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-              {{validator.email.maxLength}}</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>{{ 'AUTH.INPUT.PASSWORD' | translate }}</mat-label>
-          <input matInput type="password" placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}"
-            formControlName="password" autocomplete="off" />
-          <mat-error *ngIf="isControlHasError('password','required')">
-            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-          </mat-error>
-          <mat-error *ngIf="isControlHasError('password','minlength')">
-            <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }}
-              {{validator.password.minLength}}</strong>
-          </mat-error>
-          <mat-error *ngIf="isControlHasError('password','maxlength')">
-            <strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }}
-              {{validator.password.maxLength}}</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
+    <form class="auth_form" [formGroup]="authForm" autocomplete="off">
 
-      <!--begin::Action-->
-      <div class="kt-login__actions">
-        <a href="javascript:;" routerLink="/auth/forgot-password" class="link-forgot mr-3">
+      <!--begin::Form Group "Email"-->
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>{{ 'FIELDS.PROFILE.EMAIL.TITLE' | translate }}</mat-label>
+          <input matInput type="email" placeholder="{{ 'FIELDS.PROFILE.EMAIL.PLACEHOLDER' | translate }}"
+            formControlName="email" autocomplete="off" />
+          <mat-error *ngIf="isControlHasError('email','required')" class="error text-danger">
+            {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('email','email')" class="error text-danger">
+            {{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('email','minlength')" class="error text-danger">
+            {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.email.minLength}}
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('email','maxlength')" class="error text-danger">
+            {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.email.maxLength}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <!--end::Form Group "Email"-->
+
+      <!--begin::Form Group "Password"-->
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>{{ 'FIELDS.PROFILE.PASSWORD.TITLE' | translate }}</mat-label>
+          <input matInput type="password" placeholder="{{ 'FIELDS.PROFILE.PASSWORD.PLACEHOLDER' | translate }}"
+            formControlName="password" autocomplete="off" />
+          <mat-error *ngIf="isControlHasError('password','required')" class="error text-danger">
+            {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('password','minlength')" class="error text-danger">
+            {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.password.minLength}}
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('password','maxlength')" class="error text-danger">
+            {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.password.maxLength}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <!--end::Form Group "Password"-->
+
+      <!--begin::Form Actions-->
+      <div class="auth_actions">
+        <a class="auth-link mr-3" href="javascript:;" routerLink="/auth/forgot-password">
           {{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
         </a>
-        <a href="javascript:;" routerLink="/" class="kt-link kt-login__link-forgot">
-        </a>
-        <button (click)="submit()" (keyup.enter)="submit()"
-          [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
-          id="kt_login_signin_submit"
-          class="btn btn-primary btn-elevate kt-login__btn-primary">{{ 'AUTH.LOGIN.BUTTON' | translate }}</button>
+        <button class="btn btn-primary" (click)="submitForm()" (keyup.enter)="submitForm()">
+          {{ 'AUTH.LOGIN.BUTTON' | translate }}
+        </button>
       </div>
-      <!--end::Action-->
+      <!--end::Form Actions-->
 
     </form>
     <!--end::Form-->
 
-    <div class="kt-login__head">
-      <span class="kt-login__signup-label">{{ 'AUTH.MESSAGES.HAVE_ACCOUNT' | translate }}</span>&nbsp;&nbsp;
-      <a href="javascript:;" routerLink="/auth/register"
-        class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
+    <div class="auth_head">
+      <span class="auth_label">
+        {{ 'AUTH.MESSAGES.HAVE_ACCOUNT' | translate }}
+      </span>&nbsp;&nbsp;
+      <a class="auth_link" href="javascript:;" routerLink="/auth/register">
+        {{ 'AUTH.REGISTER.BUTTON' | translate }}
+      </a>
     </div>
 
   </div>
   <!--end::Signin-->
+
+  <!--begin::Loading Spinner-->
+  <div *ngIf="loading" class="spinner-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!--end::Loading Spinner-->
 
 </div>
 <!--end::Body-->

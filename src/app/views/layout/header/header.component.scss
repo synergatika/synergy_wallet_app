@@ -1,7 +1,7 @@
 @import "../../../../variables.scss";
 
 .app-header {
-  background-color: $primary;
+  background-color: var(--top-toolbar-background-color);
   padding: 6px 30px;
 
   .logo {

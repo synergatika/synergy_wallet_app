@@ -1,24 +1,33 @@
 <!--begin::Body-->
-<div class="kt-login__body">
+<div class="auth_body">
 
   <!--begin::Check Email Verification-->
-  <div class="kt-login__form">
-    <div class="kt-login__title">
+  <div class="auth_container">
+    <div class="auth_title">
       <h3>{{ 'AUTH.VERIFY_EMAIL.TITLE' | translate }}</h3>
     </div>
 
-    <!--begin::Notice-->
+    <!--begin::Auth Notice-->
     <auth-notice></auth-notice>
-    <!--end::Notice-->
+    <!--end::Auth Notice-->
 
-    <div class="kt-login__head">
-      <span class="kt-login__signup-label">{{ 'AUTH.MESSAGES.ALREADY_VALIDATED' | translate }}</span>&nbsp;&nbsp;
-      <a href="javascript:;" routerLink="/auth/login"
-        class="kt-link kt-login__signup-link">{{ 'AUTH.LOGIN.BUTTON' | translate }}</a>
+    <div class="auth_head">
+      <span class="auth-label">
+        {{ 'AUTH.MESSAGES.ALREADY_VALIDATED' | translate }}
+      </span>&nbsp;&nbsp;
+      <a class="auth_link" href="javascript:;" routerLink="/auth/login">
+        {{ 'AUTH.LOGIN.BUTTON' | translate }}
+      </a>
     </div>
 
   </div>
   <!--end::Check Email Verification-->
+
+  <!--begin::Loading Spinner-->
+  <div *ngIf="loading" class="spinner-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!--end::Loading Spinner-->
 
 </div>
 <!--end::Body-->

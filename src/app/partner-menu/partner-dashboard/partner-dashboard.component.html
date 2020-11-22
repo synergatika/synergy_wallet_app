@@ -1,0 +1,44 @@
+<div class="scanner">
+  <div *ngIf="configAccess[1]||configAccess[2]">
+    <h2 class="col-md-12 section-heading"> {{'PARTNER.DASHBOARD.SCANNER' | translate}}</h2>
+
+    <div class="row">
+
+      <!--begin::Scan for Points-->
+      <div *ngIf="configAccess[1]" class="item item-wrapper col-md-4" (click)="openModalA()">
+        <mat-card class="item-card loyalty-item-card" style="height:100%;">
+          <mat-card-content>
+            <div class="loyalty-item">{{ 'PARTNER.WIZARD.LOYALTY_TITLE' | translate }}</div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <!--end::Scan for Points-->
+
+      <!--begin::Loyalty Offers List-->
+      <ng-container *ngIf="configAccess[1]&&offers">
+        <div class="item item-wrapper col-md-4" *ngFor="let item of offers" (click)="openModalB(item)">
+          <sng-offer-card [offer]="item"></sng-offer-card>
+        </div>
+      </ng-container>
+      <!--end::Loyalty Offers List-->
+
+      <!--begin::Microcredit Campaigns List-->
+      <ng-container *ngIf="configAccess[2]&&microcredit">
+        <div class="item item-wrapper col-md-4" *ngFor="let item of microcredit" (click)="openModalC(item)">
+          <sng-microcredit_campaign-card [campaign]="item" type="all"></sng-microcredit_campaign-card>
+        </div>
+      </ng-container>
+      <!--end::Microcredit Campaigns List-->
+
+    </div>
+  </div>
+
+  <!--begin::Posts/Events List(Carousel)-->
+  <sng-posts_events-list-carousel type='all' *ngIf="configAccess[0]"></sng-posts_events-list-carousel>
+  <!--end::Posts/Events List(Carousel)-->
+
+  <!--begin::Loyalty Statistics-->
+  <sng-loyalty-statistics>
+  </sng-loyalty-statistics>
+  <!--end::Loyalty Statistics-->
+</div>

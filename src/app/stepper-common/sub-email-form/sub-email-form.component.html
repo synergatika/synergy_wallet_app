@@ -1,0 +1,41 @@
+<div class="step-email">
+
+  <!--begin::Form(Wizard Step 2)-->
+  <form [formGroup]="stepperForm">
+    <h5 class="heading">{{ 'PARTNER.WIZARD.SUB_EMAIL_FORM.HEADING' | translate }}</h5>
+
+    <!--begin::Form Group "Email to Register/Link"-->
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>{{ 'FIELDS.PROFILE.EMAIL.TITLE' | translate }}</mat-label>
+        <input matInput type="email" name="email" formControlName="email"
+          placeholder="{{ 'FIELDS.PROFILE.EMAIL.PLACEHOLDER' | translate }}">
+        <mat-error *ngIf="isControlHasError('email','email')" class="error text-danger">
+          {{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}
+        </mat-error>
+        <mat-error *ngIf="isControlHasError('email','minLength')" class="error text-danger">
+          {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+        </mat-error>
+        <mat-error *ngIf="isControlHasError('email','maxLength')" class="error text-danger">
+          {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+        </mat-error>
+        <mat-hint class="form-text text-muted">
+          {{ 'PARTNER.WIZARD.SUB_EMAIL_FORM.HINT' | translate }}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <!--end::Form Group "Email to Register/Link"-->
+
+  </form>
+  <!--end::Form(Wizard Step 2)-->
+
+  <!--begin::Wizard Buttons-->
+  <button class="mr-2" mat-raised-button (click)="onPreviousStep()">
+    {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}
+  </button>
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.NEXT_STEP' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

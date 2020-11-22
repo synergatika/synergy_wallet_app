@@ -1,0 +1,46 @@
+<div class="stepper-modal-container">
+
+  <!--begin::Wizard Button (Exit)-->
+  <button type="button" class="close-btn" aria-label="Close" (click)="onFinalStep()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <!--end::Wizard Button (Exit)-->
+
+  <aw-wizard>
+
+    <!--begin::Step A - Enter Amount-->
+    <aw-wizard-step stepTitle="Amount">
+
+      <!--begin::Stepper Notice-->
+      <stepper-notice></stepper-notice>
+      <!--end::Stepper Notice-->
+
+      <div class="step-container row justify-content-md-center">
+        <app-sub-amount-form (add_amount)="onSubmitAmountForm($event)">
+        </app-sub-amount-form>
+        <!--<button type="button" awPreviousStep>Previous Step</button>-->
+      </div>
+    </aw-wizard-step>
+    <!--end::Step A - Enter Amount-->
+
+    <!--begin::Step B - Final-->
+    <aw-wizard-step stepTitle="Final">
+
+      <!--begin::Stepper Notice-->
+      <stepper-notice></stepper-notice>
+      <!--end::Stepper Notice-->
+
+      <div class="step-container row justify-content-md-center">
+        <app-sub-final-step (finalize)="onFinalStep($event)"></app-sub-final-step>
+      </div>
+    </aw-wizard-step>
+    <!--end::Step B - Final-->
+
+    <!--begin::Loading Spinner-->
+    <div *ngIf="loading" class="spinner-overlay">
+      <mat-spinner></mat-spinner>
+    </div>
+    <!--end::Loading Spinner-->
+
+  </aw-wizard>
+</div>

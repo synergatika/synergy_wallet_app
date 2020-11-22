@@ -70,14 +70,24 @@ mat-card {
   font-family: $main-font, sans-serif;
 }
 .mat-mini-fab {
+  width: 30px;
+  height: 30px;
+  line-height: 27px;
+  font-size: 22px;
+  margin-left: 8px;
+  margin-top: 5px;
+  &.mat-accent {
+    background-color: $tertiary;
+  }
+
   span.mat-button-wrapper {
     padding: 1px 0;
     line-height: inherit;
   }
 }
-button.mat-mini-fab.mat-accent {
-  background-color: #0c1a33;
-}
+// button.mat-mini-fab.mat-accent {
+//   background-color: #0c1a33;
+// }
 th .mat-sort-header-sorted {
   color: $secondary;
 }
@@ -89,6 +99,8 @@ th .mat-sort-header-sorted {
 .btn {
   transition: background-color 0.3s;
 }
+
+.btn-success,
 .btn-primary {
   background-color: $primary;
   border-color: $primary-light;
@@ -100,6 +112,8 @@ th .mat-sort-header-sorted {
     border-color: $primary-light;
   }
 }
+
+.btn-danger,
 .btn-secondary {
   background-color: $secondary;
   border-color: $secondary-light;
@@ -111,7 +125,9 @@ th .mat-sort-header-sorted {
     border-color: $secondary-light;
   }
 }
-.btn-success {
+
+.btn-warning,
+.btn-tertiary {
   color: #fff;
   background-color: $tertiary;
   border-color: $tertiary;
@@ -121,6 +137,7 @@ th .mat-sort-header-sorted {
     border-color: $tertiary-dark;
   }
 }
+
 .dropdown-menu {
   border: none;
   box-shadow: 0 0 40px 0 rgba(40, 70, 120, 0.15);
@@ -320,6 +337,7 @@ th .mat-sort-header-sorted {
   .form-actions {
     margin-top: 20px;
     button {
+      float: right;
       font-size: 18px;
       padding: 4px 22px;
     }

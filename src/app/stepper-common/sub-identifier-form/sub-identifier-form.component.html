@@ -1,0 +1,32 @@
+<div class="step-identifier">
+
+  <!--begin::Form(Wizard Step 1B)-->
+  <form [formGroup]="stepperForm" class="mt-3">
+
+    <h5 class="heading">{{ 'PARTNER.WIZARD.SUB_IDENTIFIER_FORM.HEADING' | translate }}</h5>
+
+    <!--begin::Form Group "Identifier(Email or Card Number)"-->
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>{{ 'PARTNER.WIZARD.SUB_IDENTIFIER_FORM.TITLE' | translate }}</mat-label>
+        <input matInput type="text" name="identifier" formControlName="identifier">
+        <mat-error *ngIf="isControlHasError('identifier','required')" class="error text-danger">
+          {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+        </mat-error>
+        <mat-hint class="form-text text-muted">
+          {{ 'PARTNER.WIZARD.SUB_IDENTIFIER_FORM.HINT' | translate }}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <!--end::Form Group "Identifier(Email or Card Number)"-->
+
+  </form>
+  <!--end::Form(Wizard Step 1B)-->
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.NEXT_STEP' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

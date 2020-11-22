@@ -1,0 +1,60 @@
+<div class="step-amount">
+
+  <h5>{{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.HEADING' | translate }}</h5>
+
+  <!--begin::Form(Wizard Step 3)-->
+  <form [formGroup]="stepperForm">
+
+    <!--begin::Form Group "Support Amount"-->
+    <div class="form-group">
+      <label>{{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.TITLE' | translate }}</label>
+      <div class="input-group">
+        <span class="input-group-text">€</span>
+        <input type="number" [readonly]="!campaign.quantitative||campaign.stepAmount>0" class="form-control"
+          name="amount" formControlName="amount" placeholder="Amount" value="0">
+        <div *ngIf="campaign.quantitative&&campaign.stepAmount>0" class="amount-controller">
+          <button [disabled]="!showSubStep" mat-mini-fab class="remove" (click)="onChangeAmount(false)">
+            -
+          </button>
+          <button [disabled]="!showAddStep" mat-mini-fab class="add" (click)="onChangeAmount(true)">
+            +
+          </button>
+        </div>
+      </div>
+      <span *ngIf="isControlHasError('amount','required')" class="error text-danger">
+        {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+      </span>
+      <span *ngIf="isControlHasError('amount','min')" class="error text-danger">
+        {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{ campaign.minAllowed | currency: 'EUR'}}
+      </span>
+      <span *ngIf="isControlHasError('amount','max')" class="error text-danger">
+        {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{ campaign.maxAllowed | currency: 'EUR'}}
+      </span>
+      <span class="form-text text-muted">
+        {{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.HINT' | translate }}
+      </span>
+    </div>
+    <!--end::Form Group "Support Amount"-->
+
+    <!--begin::Form Group "Support Paid"-->
+    <div class="form-group">
+      <div class="checkbox">
+        <label><input type="checkbox" name="paid" formControlName="paid" placeholder="Paid" value="0">
+          {{ 'PARTNER.WIZARD.SUB_AMOUNT_FORM.PAID' | translate }}</label>
+      </div>
+    </div>
+    <!--end::Form Group "Support Paid"-->
+
+  </form>
+  <!--end::Form(Wizard Step 3)-->
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button class="mr-2" (click)="onPreviousStep()">
+    {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}
+  </button>
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.COMPLETE' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

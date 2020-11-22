@@ -1,10 +1,6 @@
-/*
-/* Variables
-*/
+/** Variables */
 
-// App Colors
-
-//Basic Colors
+/** Basic Colors*/
 $primary: #415daa;
 $primary-light: #6986db;
 $secondary: #e4509e;
@@ -13,25 +9,25 @@ $tertiary: #fdca27;
 $tertiary-dark: #a07b04;
 $grey: #eee;
 
-/* Basic Colors SYNERGY 
-$primary: #2b3a59;
-$secondary: #ef3f4a;
-$tertiary: #faa635;
-*/
-//Font
-$main-font:'Fira Sans';
+$menu-color: #f1f1f1;
+
+/** Basic Colors SYNERGY  */
+//$primary: #2b3a59;
+//$secondary: #ef3f4a;
+//$tertiary: #faa635;
 
 //Font Colors
 $main-font-color: #707070;
-$dark-font:rgb(34, 34, 34);
-$darker-font: rgba(0, 0, 0, .87);
+$dark-font: rgb(34, 34, 34);
+$darker-font: rgba(0, 0, 0, 0.87);
 $amount-color: #575757;
-$grey-font:#b6c1c9;
+$grey-font: #b6c1c9;
 
-//Font Sizes
-$main-font-size:0.9em;
+/** Fonts Type & Size */
+$main-font: "Fira Sans";
+$main-font-size: 0.9em;
 
-//Shadow
+/** Shadows */
 .light-shadow {
   -webkit-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 17px 22px 68px -2px rgba(0, 0, 0, 0.1);

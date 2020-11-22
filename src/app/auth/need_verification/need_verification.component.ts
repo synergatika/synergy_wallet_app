@@ -12,18 +12,21 @@ import { MessageNoticeService } from '../../core/helpers/message-notice/message-
 import { AuthenticationService } from '../../core/services/authentication.service';
 // Environment
 import { environment } from '../../../environments/environment';
-import { StaticDataService } from 'src/app/core/services/static-data.service';
+import { StaticDataService } from 'src/app/core/helpers/static-data.service';
 
 @Component({
-	selector: 'kt-need-verification',
+	selector: 'app-need-verification',
 	templateUrl: './need_verification.component.html',
 	styleUrls: ['./need_verification.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class NeedVerificationComponent implements OnInit, OnDestroy {
 
+	/**
+	 * Form
+	 */
+	authForm: FormGroup;
 	validator: any;
-	emailForm: FormGroup;
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 	loading: boolean = false;
@@ -31,24 +34,24 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	/**
 	 * Component Constructor
 	 *
+	 * @param cdr: ChangeDetectorRef
 	 * @param router: Router
 	 * @param fb: FormBuilder
-	 * @param cdr: ChangeDetectorRef
 	 * @param translate: TranslateService
 	 * @param authNoticeService: AuthNoticeService
-	 * @param authenticationService: AuthenticationService
 	 * @param staticDataService: StaticDataService
+	 * @param authenticationService: AuthenticationService
 	 */
 	constructor(
+		private cdr: ChangeDetectorRef,
 		private router: Router,
 		private fb: FormBuilder,
-		private cdr: ChangeDetectorRef,
 		private translate: TranslateService,
 		public authNoticeService: MessageNoticeService,
-		private authenticationService: AuthenticationService,
 		private staticDataService: StaticDataService,
+		private authenticationService: AuthenticationService
 	) {
-		this.validator = this.staticDataService.getUserValidator;
+		this.validator = this.staticDataService.getValidators.user;
 		this.unsubscribe = new Subject();
 	}
 
@@ -60,13 +63,13 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
 	ngOnInit() {
-		this.initForm();
+		this.initializeForm();
 	}
 
 	/**
 	 * On destroy
 	 */
-	ngOnDestroy(): void {
+	ngOnDestroy() {
 		this.authNoticeService.setNotice(null);
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
@@ -74,11 +77,10 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form initalization
-	 * Default params, validators
+	 * Form Initialization
 	 */
-	initForm() {
-		this.emailForm = this.fb.group({
+	initializeForm() {
+		this.authForm = this.fb.group({
 			email: ['', Validators.compose([
 				Validators.required,
 				Validators.email,
@@ -90,24 +92,25 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form Submit
+	 * On Submit Form
 	 */
-	submit() {
+	submitForm() {
 		if (this.loading) return;
-		this.loading = true;
 
-		const controls = this.emailForm.controls;
+		const controls = this.authForm.controls;
 		/** check form */
-		if (this.emailForm.invalid) {
+		if (this.authForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
 			);
 			return;
 		}
+		this.loading = true;
 
 		const authData = {
 			email: (controls.email.value).toLowerCase()
 		};
+
 		this.authenticationService.verification_askEmail(authData.email)
 			.pipe(
 				tap(
@@ -118,7 +121,7 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 						}, environment.authTimeOuter);
 					},
 					error => {
-						this.authNoticeService.setNotice(this.translate.instant('AUTH.VERIFY_EMAIL.ERROR_SEND'), 'danger');
+						this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
@@ -136,7 +139,7 @@ export class NeedVerificationComponent implements OnInit, OnDestroy {
 	 * @param validationType: string => Equals to valitors name
 	 */
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.emailForm.controls[controlName];
+		const control = this.authForm.controls[controlName];
 		if (!control) {
 			return false;
 		}

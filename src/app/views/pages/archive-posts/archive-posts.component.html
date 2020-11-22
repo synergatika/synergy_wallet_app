@@ -1,6 +1,0 @@
-<div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
-  *ngIf="posts">
-  <div class="col-md-4" *ngFor="let post of (posts)">
-    <app-card-post [post]="post"></app-card-post>
-  </div>
-</div>

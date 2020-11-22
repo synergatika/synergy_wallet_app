@@ -1,0 +1,44 @@
+<button mat-raised-button [routerLink]="['create']" class="mb-5"> {{ 'USER.MEMBER.CREATE' | translate }} </button>
+
+<div>
+  <mat-form-field>
+    <mat-label>{{'USER.FILTER.TITLE' | translate}}</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="{{'USER.FILTER.MEMBER_PLACEHOLDER' | translate}}">
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!--- Note that these columns can be defined in any order.
+				The actual rendered columns are set as a property on the row definition" -->
+    <ng-container matColumnDef="user_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'USER.ARRAY.USER_ID' | translate }} </th>
+      <td mat-cell *matCellDef="let item"> {{item._id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'USER.ARRAY.EMAIL' | translate }} </th>
+      <td mat-cell *matCellDef="let item"> {{item.email}} </td>
+    </ng-container>
+    <ng-container matColumnDef="card">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'USER.ARRAY.CARD' | translate }} </th>
+      <td mat-cell *matCellDef="let item"> {{item.card}} </td>
+    </ng-container>
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'USER.ARRAY.DATE' | translate }} </th>
+      <td mat-cell *matCellDef="let item"> {{item.createdAt | date: 'd/M/y, HH:mm'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="activated">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'USER.ARRAY.STATUS' | translate }} </th>
+      <td style="vertical-align:middle" mat-cell *matCellDef="let item">
+        <div>
+          <button mat-raised-button class="activate-button" (click)="changeUserStatus(item._id, $event)"
+            [disabled]="item.activated"><span matTooltip="{{'USER.REACTIVATE_DISABLE' | translate}}"
+              [matTooltipPosition]="'left'" [matTooltipDisabled]="!item.activated"> {{'USER.REACTIVATE' | translate}}
+            </span>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,0 +1,16 @@
+<div class="step-final">
+
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.TOKENS_BEFORE' | translate }}:
+    {{transaction.initial_tokens - transaction.redeemed_tokens}}</p>
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.TOKENS_REDEEMED' | translate }}: {{transaction.discount_tokens}}</p>
+  <p>{{ 'PARTNER.WIZARD.SUB_FINAL_STEP.TOKENS_REMAINING' | translate }}:
+    {{transaction.initial_tokens - (transaction.redeemed_tokens + transaction.discount_tokens)}}
+  </p>
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.CLOSE' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
+</div>

@@ -1,5 +1,5 @@
 <div *ngIf="user.access!=='member'" id="mySidenav" class="sidenav">
-  <app-menu></app-menu>
+  <sng-menu></sng-menu>
 </div>
 
 <div [attr.id]="user.access !== 'member' ? 'main' : null">
@@ -12,7 +12,7 @@
     </div>
   </div>
   <div *ngIf="user.access==='member'">
-    <app-footer></app-footer>
+    <sng-footer></sng-footer>
   </div>
 </div>
 <div id="menu_overlay" (click)="closeNav()">

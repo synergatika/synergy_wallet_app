@@ -1,0 +1,27 @@
+<div class="microcredit">
+  <h1 class="heading"> {{'CAMPAIGN.PLURAL' | translate}} </h1>
+
+  <div class="row">
+
+    <!--begin::Button (Create Microcredit Campaign)-->
+    <div class="item item-wrapper col-md-4">
+      <mat-card class="item-card new-item-card" routerLink="create">
+        <mat-card-content>
+          <div class="new-item">{{'CAMPAIGN.CREATE' | translate}}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!--end::Button (Create Microcredit Campaign)-->
+
+    <!--begin::Microcredit Campaigns List-->
+    <ng-container *ngIf="campaigns">
+      <div class="item item-wrapper col-md-4" *ngFor="let item of campaigns">
+        <sng-microcredit_campaign-card [campaign]="item" type="all"
+          [routerLink]="item.status=='draft' ? ['edit/'+item.campaign_id] : ['manage/'+item.campaign_id]">
+        </sng-microcredit_campaign-card>
+      </div>
+    </ng-container>
+    <!--end::Microcredit Campaigns List-->
+
+  </div>
+</div>

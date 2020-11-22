@@ -1,0 +1,52 @@
+<div class="account-setting">
+  <h1 class="heading">{{ 'SETTINGS.ACCOUNT' | translate }}</h1>
+
+  <!--begin::Form-->
+  <form class="form" [formGroup]="submitForm">
+
+    <div class="row">
+      <div class="col-md-6">
+
+        <!--begin::Form Group "Email"-->
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>{{ 'FIELDS.PROFILE.EMAIL.TITLE' | translate }}</mat-label>
+            <input matInput type="email" name="email" formControlName="email">
+          </mat-form-field>
+        </div>
+        <!--end::Form Group "Email"-->
+
+      </div>
+    </div>
+
+  </form>
+  <!--end::Form-->
+
+</div>
+
+<!--begin::Button (Deactivate User)-->
+<div class="single-delete">
+  <button mat-raised-button class="delete-text" (click)="deleteItemModal()">
+    {{'SETTINGS.DEACTIVATE' | translate}}
+  </button>
+</div>
+<!--end::Button (Deactivate User)-->
+
+<!--begin::Confirmation Modal (Remove Item)-->
+<ng-template #remove_item let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{'SETTINGS.DEACTIVATE' | translate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{'SETTINGS.DEACTIVATE_CONFRIRM' | translate}}?
+  </div>
+  <div class="modal-footer">
+    <button mat-raised-button class="btn btn-secondary mr-3"
+      (click)="deleteItem();c('Close click'); ">{{'SETTINGS.DEACTIVATE' | translate}}</button>
+    <button mat-raised-button class="btn" (click)="c('Close click');">{{'SETTINGS.CANCEL' | translate}}</button>
+  </div>
+</ng-template>
+<!--end::Confirmation Modal (Remove Item)-->

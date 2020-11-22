@@ -2,10 +2,26 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatCardModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
+/**
+ * Guards
+ */
+import { AuthGuard } from '../core/guards/auth.guard';
+import { SubConfigGuard } from '../core/guards/subConfig.guard';
+
+/**
+ * Components
+ */
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -17,12 +33,28 @@ import { NeedVerificationComponent } from './need_verification/need_verification
 import { PasswordRestorationComponent } from './password_restoration/password_restoration.component';
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { TermsComponent } from './terms/synergy_terms.component';
+// import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 
+/**
+ * Services
+ */
 import { AuthenticationService } from '../core/services/authentication.service';
-import { AuthGuard } from '../core/helpers/auth.guard';
-import { SubConfigGuard } from '../core/helpers/subConfig.guard';
 
-import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
+import {
+  SngCoreModule,
+  ITranslationService,
+  IAuthenticationService,
+  IStaticDataService,
+  IPartnersService,
+  IMenuService
+} from 'sng-core';
+
+import { MenuService } from '../core/helpers/menu.service';
+import { StaticDataService } from '../core/helpers/static-data.service';
+import { TranslationService } from '../core/helpers/translation.service';
+import { PartnersService } from '../core/services/partners.service';
+
+import { from } from 'rxjs';
 
 const routes: Routes = [
     {
@@ -91,9 +123,15 @@ const routes: Routes = [
         MatProgressSpinnerModule,
         MatSelectModule,
         NgbModalModule,
-        NgbDropdownModule
+        NgbDropdownModule,
+        SngCoreModule,
     ],
     providers: [
+      { provide: IMenuService, useClass: MenuService },
+      { provide: IStaticDataService, useClass: StaticDataService },
+      { provide: ITranslationService, useClass: TranslationService },
+      { provide: IAuthenticationService, useClass: AuthenticationService },
+      { provide: IPartnersService, useClass: PartnersService },
     ],
     exports: [AuthComponent],
     declarations: [
@@ -108,7 +146,6 @@ const routes: Routes = [
         PasswordRestorationComponent,
         AuthNoticeComponent,
         TermsComponent,
-        LanguageSwitcherComponent
     ],
     entryComponents: [
         TermsComponent
@@ -116,7 +153,7 @@ const routes: Routes = [
 })
 
 export class AuthModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<AuthModule> {
         return {
             ngModule: AuthModule,
             providers: [

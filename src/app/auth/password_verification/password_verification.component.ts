@@ -2,7 +2,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 // RxJS
 import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
@@ -11,23 +11,29 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
-import { StaticDataService } from 'src/app/core/services/static-data.service';
+import { StaticDataService } from 'src/app/core/helpers/static-data.service';
 // Others
-import { ConfirmPasswordValidator } from './confirm-password.validator';
+import { ConfirmPasswordValidator } from '../confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
 
 @Component({
-	selector: 'kt-register',
+	selector: 'app-password-verification',
 	templateUrl: './password_verification.component.html',
 	styleUrls: ['./password_verification.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class PasswordVerificationComponent implements OnInit, OnDestroy {
 
-	validator: any;
-	verifyForm: FormGroup;
-
+	/**
+	 * Parameters
+	 */
 	public token: string = '';
+
+	/**
+	 * Form
+	 */
+	authForm: FormGroup;
+	validator: any;
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 	loading: boolean = false;
@@ -56,7 +62,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 		private authenticationService: AuthenticationService,
 		private staticDataService: StaticDataService,
 	) {
-		this.validator = this.staticDataService.getUserValidator;
+		this.validator = this.staticDataService.getValidators.user;
 		this.unsubscribe = new Subject();
 	}
 
@@ -71,7 +77,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 		this.activatedRoute.params.subscribe(params => {
 			this.token = params['token'];
 		});
-		this.initForm();
+		this.initializeForm();
 	}
 
 	/*
@@ -85,11 +91,10 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form initalization
-	 * Default params, validators
+	 * Form Initialization
 	 */
-	initForm() {
-		this.verifyForm = this.fb.group({
+	initializeForm() {
+		this.authForm = this.fb.group({
 			password: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(this.validator.password.minLength),
@@ -125,53 +130,50 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form Submit
+	 * On Submit Form
 	 */
-	submit() {
+	submitForm() {
 		if (this.loading) return;
-		this.loading = true;
 
-		const controls = this.verifyForm.controls;
+		const controls = this.authForm.controls;
 		/** check form */
-		if (this.verifyForm.invalid) {
+		if (this.authForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
 			);
 			return;
 		}
+		this.loading = true;
 
-		// if (!controls.agree.value) {
-		// 	this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
-		// 	return;
-		// }
+		const authData = {
+			oldPassword: controls.password.value,
+			newPassword: controls.newPassword.value
+		};
 
-		const _user = {
-			old_password: controls.password.value,
-			new_password: controls.newPassword.value
-		}
-		this.authenticationService.set_password(this.token, _user.old_password, _user.new_password).pipe(
-			tap(
-				data => {
-					this.authNoticeService.setNotice(this.translate.instant('AUTH.VERIFY_PASSWORD.SUCCESS'), 'success');
-					setTimeout(() => {
-						this.router.navigateByUrl('/auth/login');
-						this.authNoticeService.setNotice(null);
-					}, 2500);
+		this.authenticationService.set_password(this.token, authData.oldPassword, authData.newPassword)
+			.pipe(
+				tap(
+					data => {
+						this.authNoticeService.setNotice(this.translate.instant('AUTH.VERIFY_PASSWORD.SUCCESS'), 'success');
+						setTimeout(() => {
+							this.router.navigateByUrl('/auth/login');
+							this.authNoticeService.setNotice(null);
+						}, 2500);
 
-				},
-				error => {
-					this.authNoticeService.setNotice(this.translate.instant('AUTH.VERIFY_PASSWORD.ERROR'), 'danger');
-					setTimeout(() => {
-						this.router.navigateByUrl('/auth/login');
-						this.authNoticeService.setNotice(null);
-					}, 2500);
-				}),
-			takeUntil(this.unsubscribe),
-			finalize(() => {
-				this.loading = false;
-				this.cdr.markForCheck();
-			})
-		).subscribe();
+					},
+					error => {
+						this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
+						setTimeout(() => {
+							this.router.navigateByUrl('/auth/login');
+							this.authNoticeService.setNotice(null);
+						}, 2500);
+					}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdr.markForCheck();
+				})
+			).subscribe();
 	}
 
 	/**
@@ -181,7 +183,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	 * @param validationType: string => Equals to valitors name
 	 */
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.verifyForm.controls[controlName];
+		const control = this.authForm.controls[controlName];
 		if (!control) {
 			return false;
 		}

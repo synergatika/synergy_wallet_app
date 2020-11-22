@@ -1,7 +1,0 @@
-<a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-<a href="javascript:void(0)" class="togglebtn" (click)="toggleNav()"><span class="mdi mdi-chevron-double-left"></span></a>
-<ul class="nav flex-column">
-	<li *ngFor="let item of menu" class="nav-item" [ngClass]="getItemCssClasses('/'+item.link)">
-		<a class="nav-link" [routerLink]="['/'+item.link]" (click)="closeNav()"><span class="mdi mdi-{{item.icon}}"></span><span class="menu-text">{{item.title | translate}}</span></a>
-	</li>
-</ul>

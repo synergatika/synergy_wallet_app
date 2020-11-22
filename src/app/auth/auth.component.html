@@ -1,10 +1,9 @@
 <div class="login">
   <div class="">
     <div class="header_right__wrapper">
-      <app-language-switcher></app-language-switcher>
+      <sng-language-switcher></sng-language-switcher>
     </div>
 
-    <!--begin::Aside-->
     <div class=" page-wrapper">
       <div class="auth-logo">
         <a routerLink='' class="login-logo">
@@ -17,15 +16,17 @@
           <mat-card-title>{{ 'AUTH.MESSAGES.WELCOME_TITLE' | translate }}</mat-card-title>
           <mat-card-subtitle>{{ 'AUTH.MESSAGES.WELCOME_SUBTITLE' | translate }}</mat-card-subtitle>
         </mat-card-header>
+        <hr>
         <mat-card-content>
           <!--begin::Content-->
-          <div class="login_wrapper">
+          <div class="login__wrapper">
             <router-outlet></router-outlet>
           </div>
           <!--end::Content-->
         </mat-card-content>
       </mat-card>
     </div>
+
     <!--begin::Aside-->
     <div class="container footer">
       <div class="row">
@@ -33,7 +34,7 @@
           This application is part of a
           project that has
           received funding from the European Union’s Horizon 2020 research and
-          innovation programme under grant agreement No 825268”.
+          innovation programme under grant agreement No 825268.
         </div>
         <div class="col-md-3">
           <img src="../assets/media/images/ngi-logo.png" />
@@ -42,10 +43,14 @@
           <img class="eu-img" src="../assets/media/images/eu-logo.jpg" />
         </div>
       </div>
-      <div>
-        <p>Version: {{version}}</p>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <p>Version: {{version}}</p>
+        </div>
       </div>
     </div>
+    <!--end::Aside-->
 
   </div>
 </div>

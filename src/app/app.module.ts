@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
-//import { RouterModule, Routes } from '@angular/router';
+import { AgmCoreModule } from '@agm/core';
+// import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,13 +14,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxPaginationModule } from 'ngx-pagination';
-//Materialize
+// Materialize
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule, MatInputModule, MatCardModule, MatProgressSpinnerModule } from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatInputModule } from "@angular/material/input";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatTooltipModule } from "@angular/material/tooltip";
 // Interceptors
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from './core/helpers/jwt.interceptor';
-import { ErrorInterceptor } from './core/helpers/error.interceptor';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
 //Application Components
 
@@ -29,14 +34,11 @@ import { ErrorInterceptor } from './core/helpers/error.interceptor';
  */
 import { LayoutComponent } from './views/layout/layout.component';
 import { HeaderComponent } from './views/layout/header/header.component';
-import { TopbarComponent } from './views/layout/header/topbar/topbar.component';
-import { MenuComponent } from './views/layout/header/menu/menu.component';
-import { UserMenuComponent } from './views/layout/header/user-menu/user-menu.component';
-import { FooterComponent } from './views/layout/footer/footer.component';
-import { NotFoundComponent } from './views/pages/not-found/not-found.component';
-import { LanguageSwitcherComponent } from './views/layout/header/language-switcher/language-switcher.component';
 
-import { MenuService } from './core/services/menu.service';
+import { NotFoundComponent } from './views/pages/not-found/not-found.component';
+//import { LanguageSwitcherComponent } from './views/layout/header/language-switcher/language-switcher.component';
+
+import { MenuService } from './core/helpers/menu.service';
 
 
 /**
@@ -55,26 +57,35 @@ import { MenuService } from './core/services/menu.service';
 // import { SinglePostComponent } from './views/layout/single-post/single-post.component';
 
 /**
- * Member Basic Pages Components
+ * Member Menu Components & Modules
  */
-import { MemberDashboardComponent } from './member-dashboard/member-dashboard.component';
-import { MemberExploreComponent } from './member-explore/member-explore.component';
-import { MemberSupportModule } from './member-support/member-support.module';
-//This has it's own module due to functionality
+import { MemberDashboardComponent } from './member-menu/member-dashboard/member-dashboard.component';
+import { MemberExploreComponent } from './member-menu/member-explore/member-explore.component';
+import { MemberRedeemComponent } from './member-menu/member-redeem/member-redeem.component';
+import { MemberSupportComponent } from './member-menu/member-support/member-support.component';
 
-//User Centered Components
-import { QrCodeComponent } from './views/pages/qr-code/qr-code.component';
-import { InvitationComponent } from './views/pages/invitation/invitation.component';
+/**
+ * Patner Menu Components & Modules
+ */
+import { PartnerDashboardComponent } from './partner-menu/partner-dashboard/partner-dashboard.component';
+
+
+/**
+ * Admin Menu Components & Modules
+ */
+import { AdminPartnersModule } from './admin-menu/admin-partners/admin-partners.module';
+import { AdminMembersModule } from './admin-menu/admin-members/admin-members.module';
+
 
 //Archives
 import { ArchivePartnersComponent } from './views/pages/archive-partners/archive-partners.component';
+import { ArchivePostsEventsComponent } from './views/pages/archive-posts_events/archive-posts_events.component';
 import { ArchiveOffersComponent } from './views/pages/archive-offers/archive-offers.component';
-import { ArchivePostsComponent } from './views/pages/archive-posts/archive-posts.component';
+import { ArchiveMicrocreditCampaignsComponent } from './views/pages/archive-microcredit_campaigns/archive-microcredit_campaigns.component';
 
 //2. Partner
 
 //Basic Functionality
-import { ScannerModule } from './scanner/scanner.module';
 // import { CreateItemsModule } from './create-itemsDEPR/create-items.module';
 // import { EditItemsModule } from './edit-itemsDEPR/edit-items.module';
 // import { MicrocreditModule } from './microcreditDEPR/microcredit.module';
@@ -89,13 +100,44 @@ import { ScannerModule } from './scanner/scanner.module';
 //import { NewMemberComponent } from './create-users/new-member/new-member.component';
 //import { NewPartnerComponent } from './create-users/new-partner/new-partner.component';
 
-import { PartnersModule } from './a-partners/a-partners.module';
-import { MembersModule } from './a-members/a-members.module';
+// import { MemberMicrocreditSupportModule } from './member-microcredit-support/member-microcredit-support.module';
+// import { PartnerMicrocreditSupportModule } from './partner-microcredit-support/partner-microcredit-support.module';
+// import { StepperPartnerLoyaltyPointsModule } from './stepper-partner-loyalty_points/stepper-partner-loyalty_points.module';
 // import { SingleMicrocreditComponent } from './views/layout/single-microcredit/single-microcredit.component';
-import { SupportMicrocreditComponent } from './member-support/support-microcredit/support-microcredit.component';
-import { CardsModule } from './views/layout/cards/cards.module';
-import { SingleItemsModule } from './views/layout/single-items/single-items.module';
-import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
+//import { SupportMicrocreditComponent } from './member-support/support-microcredit/support-microcredit.component';
+
+import { StepperMemberMicrocreditSupportModule } from './stepper-member-microcredit_support/stepper-member-microcredit_support.module';
+import { StepperPartnerMicrocreditSupportModule } from './stepper-partner-microcredit_support/stepper-partner-microcredit_support.module';
+import { StepperPartnerLoyaltyPointsModule } from './stepper-partner-loyalty_points/stepper-partner-loyalty_points.module';
+import { StepperPartnerLoyaltyOfferModule } from './stepper-partner-loyalty_offer/stepper-partner-loyalty_offer.module';
+import { StepperPartnerMicrocreditCampaignModule } from './stepper-partner-microcredit_campaign/stepper-partner-microcredit_campaign.module';
+
+
+import {
+  SngCoreModule,
+  ITranslationService,
+  IAuthenticationService,
+  IStaticDataService,
+  IMenuService,
+  IPartnersService,
+  IItemsService,
+  ILoyaltyService,
+  IMicrocreditService,
+  IContentService,
+  IEnvironmentService,
+  IStepperService,
+} from 'sng-core';
+
+import { StaticDataService } from './core/helpers/static-data.service';
+import { TranslationService } from './core/helpers/translation.service';
+import { AuthenticationService } from './core/services/authentication.service';
+import { PartnersService } from './core/services/partners.service';
+import { ItemsService } from './core/services/items.service';
+import { environment } from '../environments/environment';
+import { ContentService } from './core/services/content.service';
+import { LoyaltyService } from './core/services/loyalty.service';
+import { MicrocreditService } from './core/services/microcredit.service';
+import { StepperService } from './core/services/stepper.service';
 
 @NgModule({
 	declarations: [
@@ -104,53 +146,33 @@ import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
 		AppComponent,
 
 		//0. General
-		MenuComponent,
 		LayoutComponent,
 		HeaderComponent,
-		TopbarComponent,
-		UserMenuComponent,
-		FooterComponent,
 		NotFoundComponent,
-		LanguageSwitcherComponent,
 
-		//Cards
-		// CardOfferComponent,
-		// CardPartnerComponent,
-		// CardPostComponent,
-		// CardMicrocreditComponent,
-		// CardSupportComponent,
-
-		//Singles
-		// SinglePartnerComponent,
-		// SinglePostComponent,
-		// SingleMicrocreditComponent,
-
-		//1. Member
-		//	ShareIconComponent,
-
-		//User Centered Components
-		QrCodeComponent,
-		InvitationComponent,
-
-		//Basic Papes
+		/**
+		 * Member Menu Pages
+		 */
 		MemberDashboardComponent,
 		MemberExploreComponent,
+		MemberRedeemComponent,
+		MemberSupportComponent,
 
-		//Archives
+		/**
+		 * Partner Menu Pages
+		 */
+		PartnerDashboardComponent,
+
+		/**
+		 * Archive Pages
+		 */
 		ArchivePartnersComponent,
 		ArchiveOffersComponent,
-		ArchivePostsComponent,
-		MemberRedeemComponent,
+		ArchivePostsEventsComponent,
+		ArchiveMicrocreditCampaignsComponent,
 
-		//2. Partner		
-		// PartnerOffersComponent,
-		// PartnerPostsComponent,
-		// PartnerEventsComponent,
-		// PartnerCampaignsComponent,
 	],
 	imports: [
-
-		//Assets
 		QRCodeModule,
 		AppRoutingModule,
 		HttpClientModule,
@@ -169,30 +191,49 @@ import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
 		MatCardModule,
 		MatInputModule,
 		MatProgressSpinnerModule,
+		MatTooltipModule,
 		NgxPaginationModule,
 		// Member Modules
-		MemberSupportModule,
-
 		// Partner Modules
-		ScannerModule,
+
+		StepperMemberMicrocreditSupportModule,
+		StepperPartnerMicrocreditSupportModule,
+		StepperPartnerLoyaltyPointsModule,
+		StepperPartnerLoyaltyOfferModule,
+		StepperPartnerMicrocreditCampaignModule,
 
 		// Admin Modules
-		PartnersModule,
-		MembersModule,
-		CardsModule,
-		SingleItemsModule
+		AdminPartnersModule,
+    AdminMembersModule,
+
+    AgmCoreModule.forRoot({
+      apiKey: `${environment.mapApiKey}`
+    }),
+
+    SngCoreModule,
 	],
-	exports: [],
+	exports: [CarouselModule],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: IMenuService, useClass: MenuService },
+    { provide: IStaticDataService, useClass: StaticDataService },
+    { provide: ITranslationService, useClass: TranslationService },
+    { provide: IAuthenticationService, useClass: AuthenticationService },
+    { provide: IPartnersService, useClass: PartnersService },
+    { provide: IItemsService, useClass: ItemsService },
+    { provide: IContentService, useClass: ContentService },
+    { provide: ILoyaltyService, useClass: LoyaltyService },
+    { provide: IMicrocreditService, useClass: MicrocreditService },
+    { provide: IStepperService, useClass: StepperService },
+    { provide: IEnvironmentService, useValue: environment},
 		/*{
 		  provide: SWIPER_CONFIG,
 		  useValue: DEFAULT_SWIPER_CONFIG
 		},*/
 		MenuService
 	],
-	entryComponents: [QrCodeComponent],
+	entryComponents: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

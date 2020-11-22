@@ -1,0 +1,219 @@
+<div class="new-event">
+  <mat-card>
+    <mat-card-content>
+
+      <!--begin::Form-->
+      <form [formGroup]="submitForm" class="form container single-form">
+
+        <div class="row">
+          <div class="heading col-md-12">{{'EVENT.EDIT' | translate}}: {{title}}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Title"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.EVENT.TITLE.TITLE' | translate}}</mat-label>
+                <input matInput type="text" formControlName="title"
+                  placeholder="{{'FIELDS.EVENT.TITLE.PLACEHOLDER' | translate}}">
+                <mat-error *ngIf="isControlHasError('title','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('title','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.title.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('title','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.title.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.EVENT.TITLE.DESC' | translate}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Title"-->
+
+            <!--begin::Form Group "Description"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.EVENT.DESCRIPTION.TITLE' | translate}}</mat-label>
+                <textarea matInput type="text" formControlName="description"
+                  placeholder="{{'FIELDS.EVENT.DESCRIPTION.PLACEHOLDER' | translate}}">
+                </textarea>
+                <mat-error *ngIf="isControlHasError('description','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('description','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.description.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('description','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.description.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.EVENT.DESCRIPTION.DESC' | translate}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Description"-->
+
+            <!--begin::Form Group "Access"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.EVENT.ACCESS.TITLE' | translate}}</mat-label>
+                <mat-select name="access" formControlName="access">
+                  <mat-option *ngFor="let item of accessList" value="{{item.value}}">
+                    {{item.title | translate}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="isControlHasError('Access','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.EVENT.ACCESS.DESC' | translate}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Access"-->
+
+          </div>
+          <div class="col-md-6">
+
+            <!--begin::Form Group "Subtitle"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.EVENT.SUBTITLE.TITLE' | translate}}</mat-label>
+                <input matInput type="text" formControlName="subtitle"
+                  placeholder="{{'FIELDS.EVENT.SUBTITLE.PLACEHOLDER' | translate}}">
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.EVENT.SUBTITLE.DESC' | translate}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Subtitle"-->
+
+            <!--begin::Form Group "Location"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.EVENT.LOCATION.TITLE' | translate}}</mat-label>
+                <input matInput type="text" formControlName="location"
+                  placeholder="{{'FIELDS.EVENT.LOCATION.PLACEHOLDER' | translate}}">
+                <mat-error *ngIf="isControlHasError('location','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('location','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.location.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('location','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.location.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.EVENT.LOCATION.DESC' | translate}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Location"-->
+
+            <!--begin::Form Group "Datetime"-->
+            <div class="form-group">
+              <div class="form-group-inline">
+                <div class="form-group-inline-date">
+                  <mat-form-field>
+                    <mat-label>{{'FIELDS.EVENT.DATE.TITLE' | translate}}</mat-label>
+                    <input matInput [matDatepicker]="eventDate" [min]="minDate" formControlName="eventDate"
+                      placeholder="{{'FIELDS.EVENT.DATE.PLACEHOLDER' | translate}}">
+                    <mat-datepicker-toggle matSuffix [for]="eventDate"></mat-datepicker-toggle>
+                    <mat-datepicker #eventDate></mat-datepicker>
+                    <mat-error *ngIf="isControlHasError('Access','required')" class="error text-danger">
+                      {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                    </mat-error>
+                    <mat-hint class="form-text text-muted">
+                      {{'FIELDS.EVENT.DATE.DESC' | translate}}
+                    </mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="form-group-inline-time">
+                  <mat-form-field>
+                    <mat-label>{{'FIELDS.EVENT.TIME.TITLE' | translate}}</mat-label>
+                    <input matInput [ngxTimepicker]="timePicker" formControlName="eventTime" [format]="24">
+                    <ngx-material-timepicker #timePicker [theme]="timePickerTheme">
+                    </ngx-material-timepicker>
+                    <mat-error *ngIf="isControlHasError('eventTime','required')" class="error text-danger">
+                      {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!--end::Form Group "Datetime"-->
+
+            <!--begin::Form Group "Datetime"-->
+            <div class="form-group">
+              <label class="">{{'FIELDS.EVENT.IMAGE.TITLE' | translate}}</label>
+              <div class="">
+                <div class="upload-img">
+                  <div class="upload-img-container">
+                    <img *ngIf="initialImage" class="upload-img-holder" [src]="previewUrl">
+                    <div *ngIf="!originalImage" class="image-cancel">
+                      <span class="mdi mdi-close-circle" (click)="onImageCancel()">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" mat-raised-button (click)="fileInput.click()">
+                  {{'FIELDS.EVENT.IMAGE.ACTION' | translate}}
+                </button>
+                <label class="avatar__upload" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                  <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
+                    accept=".png, .jpg, .jpeg" #fileInput>
+                </label>
+              </div>
+            </div>
+            <!--end::Form Group "Datetime"-->
+
+          </div>
+        </div>
+
+        <!--begin::Form Actions-->
+        <div class="row">
+          <div class="form-actions col-md-12">
+            <button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-primary">
+              {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+            </button>
+          </div>
+        </div>
+        <!--end::Form Actions-->
+
+      </form>
+      <!--end::Form-->
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!--begin::Button (Delete Event)-->
+<div class="single-delete">
+  <button mat-raised-button class="delete-text" (click)="deleteItemModal()">
+    {{'EVENT.DELETE' | translate}}
+  </button>
+</div>
+<!--end::Button (Delete Event)-->
+
+<!--begin::Confirmation Modal (Remove Item)-->
+<ng-template #remove_item let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{'EVENT.DELETE' | translate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{'EVENT.DELETE_CONFIRM' | translate}} '{{title}}'?
+  </div>
+  <div class="modal-footer">
+    <button mat-raised-button class="btn btn-secondary mr-3"
+      (click)="deleteItem();c('Close click'); ">{{'EVENT.DELETE' | translate}}</button>
+    <button mat-raised-button class="btn" (click)="c('Close click');">{{'EVENT.CANCEL' | translate}}</button>
+  </div>
+</ng-template>
+<!--end::Confirmation Modal (Remove Item)-->

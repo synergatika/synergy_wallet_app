@@ -1,34 +1,36 @@
 // Core
 import { Injectable } from '@angular/core';
-
-// Common
 import { HttpClient } from '@angular/common/http';
-
-// Rxjs
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// Env
-import { environment } from '../../../environments/environment';
+import {
+  Offer,
+  Event,
+  Message,
+  Post,
+  MicrocreditCampaign,
+  PostEvent,
+  IItemsService
+} from 'sng-core';
 
-// Models
-import { Offer } from '../models/offer.model';
-import { PostEvent } from '../models/post_event.model';
-import { Post } from '../models/post.model';
-import { Event } from '../models/event.model';
-import { MicrocreditCampaign } from '../models/microcredit_campaign.model';
-import { Message } from '../models/message.model';
+/**
+ * Environment
+ */
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ItemsService {
+export class ItemsService extends IItemsService {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+    super();
+  }
 
-  /** 
+  /**
     * Offers
     */
   readAllOffers(offset: string): Observable<Offer[]> {
@@ -46,7 +48,6 @@ export class ItemsService {
   }
 
   createOffer(formData: FormData): Observable<Message> {
-    //return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/${partner_id}/`, formData)
     return this.http.post<any>(`${environment.apiUrl}/loyalty/offers/`, formData)
       .pipe(map(data => {
         return data;
@@ -74,23 +75,15 @@ export class ItemsService {
       }));
   }
 
-  /** 
+  /**
     * Events
     */
   readAllPrivateEvents(offset: string): Observable<Event[]> {
     return this.http.get<any>(`${environment.apiUrl}/community/private/${offset}`)
-      //    return this.http.get<any>(`${environment.apiUrl}/events/private/`)
       .pipe(map(response => {
         return response.data;
       }));
   }
-
-  // readAllPublicEvents(offset: string): Observable<Event[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/events/public//${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
 
   readPrivateEventsByStore(partner_id: string, offset: string): Observable<Event[]> {
     // return this.http.get<any>(`${environment.apiUrl}/community/private/${partner_id}`)
@@ -99,13 +92,6 @@ export class ItemsService {
         return response.data;
       }));
   }
-
-  // readPublicEventsByStore(partner_id: string, offset: string): Observable<Event[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/events/public/${partner_id}/${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
 
   createEvent(formData: FormData): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/events`, formData)
@@ -135,23 +121,15 @@ export class ItemsService {
       }));
   }
 
-  /** 
+  /**
     * Posts
     */
   readAllPrivatePosts(offset: string): Observable<Post[]> {
-    //return this.http.get<any>(`${environment.apiUrl}/community/private/`)
     return this.http.get<any>(`${environment.apiUrl}/posts/private/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
-
-  // readAllPublicPosts(offset: string): Observable<Post[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/posts/public/${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
 
   readPrivatePostsByStore(partner_id: string, offset: string): Observable<Post[]> {
     //return this.http.get<any>(`${environment.apiUrl}/community/private/${partner_id}`)
@@ -160,13 +138,6 @@ export class ItemsService {
         return response.data;
       }));
   }
-
-  // readPublicPostsByStore(partner_id: string, offset: string): Observable<Post[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/posts/public/${partner_id}/${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
 
   createPost(formData: FormData): Observable<Message[]> {
     return this.http.post<any>(`${environment.apiUrl}/posts`, formData)
@@ -195,7 +166,8 @@ export class ItemsService {
         return response.data;
       }));
   }
-  /** 
+
+  /**
     * Posts & Events
     */
 
@@ -206,13 +178,6 @@ export class ItemsService {
       }));
   }
 
-  // readAllPublicPostsEvents(offset: string): Observable<PostEvent[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/community/public/${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
-
   readPrivatePostsEventsByStore(partner_id: string, offset: string): Observable<PostEvent[]> {
     return this.http.get<any>(`${environment.apiUrl}/community/private/${partner_id}/${offset}`)
       .pipe(map(response => {
@@ -220,14 +185,7 @@ export class ItemsService {
       }));
   }
 
-  // readPublicPostsEventsByStore(partner_id: string, offset: string): Observable<PostEvent[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/community/public/${partner_id}/${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
-
-  /** 
+  /**
    * Microcredit Campaigns
    */
   readAllPrivateMicrocreditCampaigns(offset: string): Observable<MicrocreditCampaign[]> {
@@ -237,26 +195,12 @@ export class ItemsService {
       }));
   }
 
-  // readAllPublicMicrocreditCampaigns(offset: string): Observable<MicrocreditCampaign[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
-
   readPrivateMicrocreditCampaignsByStore(partner_id: string, offset: string): Observable<MicrocreditCampaign[]> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/private/${partner_id}/${offset}`)
       .pipe(map(response => {
         return response.data;
       }));
   }
-
-  // readPublicMicrocreditCampaignsByStore(partner_id: string, offset: string): Observable<MicrocreditCampaign[]> {
-  //   return this.http.get<any>(`${environment.apiUrl}/microcredit/campaigns/public/${partner_id}/${offset}`)
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
 
   oneClickCreateMicrocreditCampaign(formData: FormData, token: string): Observable<Message> {
     return this.http.post<any>(`${environment.apiUrl}/microcredit/campaigns/one-click/${token}`, formData)

@@ -1,22 +1,18 @@
-// Core
 import { Injectable } from '@angular/core';
-
-// Common
 import { HttpClient } from '@angular/common/http';
-
-// Rxjs
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 
-// Env
 import { environment } from '../../../environments/environment';
 
-// Models
-import { Message } from '../models/message.model';
-import { MicrocreditSupport } from '../models/microcredit_support.model';
-import { PaymentDetails } from '../models/payment_details.model';
-import { MicrocreditTransaction } from '../models/microcredit_transaction.model';
-import { Activity } from '../models/activity.model';
+import {
+  Activity,
+  Message,
+  MicrocreditSupport,
+  PaymentDetails,
+  MicrocreditTransaction,
+} from 'sng-core';
+
 
 @Injectable({
   providedIn: 'root'
@@ -64,13 +60,6 @@ export class MicrocreditService {
       }));
   }
 
-  // unConfirmPayment(partner_id: string, campaign_id: string, payment: string, payment_id: string[]): Observable<PaymentDetails> {
-  //   return this.http.put<any>(`${environment.apiUrl}/microcredit/supports/${partner_id}/${campaign_id}/${payment}`, { payment_id: payment_id })
-  //     .pipe(map(response => {
-  //       return response.data;
-  //     }));
-  // }
-
   readTransactions(offset: string): Observable<MicrocreditTransaction[]> {
     return this.http.get<any>(`${environment.apiUrl}/microcredit/transactions/${offset}`)
       .pipe(map(response => {
@@ -78,8 +67,8 @@ export class MicrocreditService {
       }));
   }
 
-  earnTokens(partner_id: string, campaign_id: string, _amount: number, method: string): Observable<PaymentDetails> {
-    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${partner_id}/${campaign_id}`, { _amount: _amount, method: method })
+  earnTokens(partner_id: string, campaign_id: string, _amount: number, method: string, paid: boolean): Observable<PaymentDetails> {
+    return this.http.post<any>(`${environment.apiUrl}/microcredit/earn/${partner_id}/${campaign_id}`, { _amount: _amount, method: method, paid: paid })
       .pipe(map(response => {
         return response.data;
       }));

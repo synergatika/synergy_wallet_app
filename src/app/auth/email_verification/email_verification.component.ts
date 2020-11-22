@@ -1,65 +1,57 @@
 // Angular
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// RxJS
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
-// Translate
 import { TranslateService } from '@ngx-translate/core';
-// Store
-// import { Store } from '@ngrx/store';
-// import { AppState } from '../../../../core/reducers';
-// Auth
-//import { AuthNoticeService, AuthService, Register, User } from '../../../../core/auth';
+
+/**
+ * Environment
+ */
+import { environment } from '../../../environments/environment';
+
+/**
+ * Services
+ */
 import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 
-// Environment
-import { environment } from '../../../environments/environment';
-import { StaticDataService } from '../../core/services/static-data.service';
-
 @Component({
-	selector: 'kt-login',
+	selector: 'app-login',
 	templateUrl: './email_verification.component.html',
 	styleUrls: ['./email_verification.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class EmailVerificationComponent implements OnInit, OnDestroy {
-	validator: any;
-	verifyForm: FormGroup;
 
+	/**
+	 * Parameters
+	 */
 	public token: string = '';
-	check = false;
 
-	private unsubscribe: Subject<any>;
 	loading: boolean = false;
+	private unsubscribe: Subject<any>;
 
 	// Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
 	/**
 	 * Component Constructor
 	 *
-	 * @param router: Router
-	 * @param fb: FormBuilder,
 	 * @param cdr: ChangeDetectorRef
 	 * @param activatedRoute: ActivatedRoute
+	 * @param router: Router
 	 * @param translate: TranslateService
 	 * @param authNoticeService: MessageNoticeService
 	 * @param authenticationService: AuthenticationService,
-	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
-		private router: Router,
-		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
 		private activatedRoute: ActivatedRoute,
+		private router: Router,
 		private translate: TranslateService,
 		private authNoticeService: MessageNoticeService,
-		private authenticationService: AuthenticationService,
-		private staticDataService: StaticDataService,
+		private authenticationService: AuthenticationService
 	) {
-		this.validator = this.staticDataService.getUserValidator;
 		this.unsubscribe = new Subject();
 	}
 
@@ -78,7 +70,7 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * On destroy
+	 * On Destroy
 	 */
 	ngOnDestroy(): void {
 		this.authNoticeService.setNotice(null);
@@ -87,25 +79,28 @@ export class EmailVerificationComponent implements OnInit, OnDestroy {
 		this.loading = false;
 	}
 
+	/**
+	 * Validate Token
+	 */
 	checkToken() {
+		this.loading = true;
 
-		this.authenticationService
-			.verification_checkToken(this.token)
+		this.authenticationService.verification_checkToken(this.token)
 			.pipe(
 				tap(data => {
 					this.authNoticeService.setNotice(this.translate.instant('AUTH.VERIFY_EMAIL.SUCCESS_CHECK'), 'success');
-					this.check = true;
 					setTimeout(() => {
 						this.router.navigateByUrl('/auth/login');
 					}, environment.authTimeOuter);
 				}, error => {
-					this.authNoticeService.setNotice(this.translate.instant('AUTH.VERIFY_EMAIL.ERROR_CHECK'), 'danger');
+					this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
 					setTimeout(() => {
 						this.router.navigateByUrl('/auth/need-verification');
 					}, environment.authTimeOuter);
 				}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
+					this.loading = false;
 					this.cdr.markForCheck();
 				})
 			)

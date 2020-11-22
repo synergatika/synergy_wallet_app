@@ -2,7 +2,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 // RxJS
 import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
@@ -12,14 +12,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { MessageNoticeService } from '../../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../../core/services/authentication.service';
 // Others
-import { ConfirmPasswordValidator } from './confirm-password.validator';
+import { ConfirmPasswordValidator } from '../confirm-password.validator';
 import { TermsComponent } from '../terms/synergy_terms.component';
-import { StaticDataService } from '../../core/services/static-data.service';
+import { StaticDataService } from '../../core/helpers/static-data.service';
 
 import { environment } from '../../../environments/environment';
 
 @Component({
-	selector: 'kt-register',
+	selector: 'app-register',
 	templateUrl: './register.component.html',
 	styleUrls: ['./register.component.scss'],
 	encapsulation: ViewEncapsulation.None
@@ -28,8 +28,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 	public subAccessConfig: Boolean[] = environment.subAccess;
 
+	/**
+	 * Form
+	 */
+	authForm: FormGroup;
 	validator: any;
-	registerForm: FormGroup;
 
 	private unsubscribe: Subject<any>; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 	loading: boolean = false;
@@ -58,7 +61,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		private authenticationService: AuthenticationService,
 		private staticDataService: StaticDataService,
 	) {
-		this.validator = this.staticDataService.getUserValidator;
+		this.validator = this.staticDataService.getValidators.user;
 		this.unsubscribe = new Subject();
 	}
 
@@ -70,7 +73,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 * On Init
 	 */
 	ngOnInit() {
-		this.initRegisterForm();
+		this.initializeForm();
 	}
 
 	/*
@@ -84,11 +87,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form initalization
-	 * Default params, validators
+	 * Form Initialization
 	 */
-	initRegisterForm() {
-		this.registerForm = this.fb.group({
+	initializeForm() {
+		this.authForm = this.fb.group({
 			fullname: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(this.validator.name.minLength),
@@ -131,34 +133,28 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form Submit
+	 * On Submit Form
 	 */
-	submit() {
+	submitForm() {
 		if (this.loading) return;
-		this.loading = true;
 
-		const controls = this.registerForm.controls;
+		const controls = this.authForm.controls;
 		/** check form */
-		if (this.registerForm.invalid) {
+		if (this.authForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
 			);
 			return;
 		}
+		this.loading = true;
 
-		// if (!controls.agree.value) {
-		// 	this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.AGREEMENT_REQUIRED'), 'danger');
-		// 	this.loading = false;
-		// 	return;
-		// }
-
-		const _user = {
+		const authData = {
 			fullname: controls.fullname.value,
 			email: (controls.email.value).toLowerCase(),
 			password: controls.password.value
 		}
 
-		this.authenticationService.register_as_member(_user.fullname, _user.email, _user.password)
+		this.authenticationService.register_as_member(authData.fullname, authData.email, authData.password)
 			.pipe(
 				tap(
 					user => {
@@ -167,7 +163,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 							this.router.navigateByUrl('/auth/login');
 						}, 2500);
 					}, error => {
-						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.ERROR'), 'danger');
+						this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
 					}),
 				takeUntil(this.unsubscribe),
 				finalize(() => {
@@ -184,7 +180,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 * @param validationType: string => Equals to valitors name
 	 */
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.registerForm.controls[controlName];
+		const control = this.authForm.controls[controlName];
 		if (!control) {
 			return false;
 		}

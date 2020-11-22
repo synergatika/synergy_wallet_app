@@ -1,0 +1,27 @@
+<div class="m-posts">
+  <div class="heading-container">
+    <h1 class="heading"> {{'POST.PLURAL' | translate}} </h1>
+  </div>
+
+  <div class="row">
+
+    <!--begin::Button (Create Post)-->
+    <div class="item item-wrapper col-md-4">
+      <mat-card class="item-card new-item-card" routerLink="create">
+        <mat-card-content>
+          <div class="new-item">{{'POST.CREATE' | translate}}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!--end::Button (Create Post)-->
+
+    <!--begin::Posts List-->
+    <ng-container *ngIf="posts">
+      <div class="item item-wrapper col-md-4" *ngFor="let item of posts">
+        <sng-post_event-card [post_event]="item" routerLink="edit/{{item.post_id}}"></sng-post_event-card>
+      </div>
+    </ng-container>
+    <!--end::Posts List-->
+
+  </div>
+</div>
