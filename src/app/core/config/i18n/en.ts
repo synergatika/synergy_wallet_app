@@ -186,11 +186,11 @@ export const locale = {
           PLACEHOLDER: 'Phone',
           DESC: 'Please enter your company\'s phone'
         },
-        WEBSITE: {
-          TITLE: 'Website',
-          PLACEHOLDER: 'Website',
-          DESC: 'Please enter your company\'s website'
-        },
+        // WEBSITE: {
+        //   TITLE: 'Website',
+        //   PLACEHOLDER: 'Website',
+        //   DESC: 'Please enter your company\'s website'
+        // },
         ADDRESS: {
           TITLE: 'Address',
           PLACEHOLDER: 'Address',
@@ -219,6 +219,9 @@ export const locale = {
         PAYMENT: {
           DESC: 'IBAN/Link or other info about bank account'
         },
+        CONTACT: {
+          DESC: 'Link of your site/profile'
+        },
         DEACTIVATION_REASON: {
           TITLE: '',
           PLACEHOLDER: 'Please, feel free to tell us the reason that you want to deactivate your account (optional)',
@@ -228,7 +231,8 @@ export const locale = {
           BASIC: 'Basic Info',
           ADDRESS: 'Address',
           CONTACT: 'Contact Info',
-          PAYMENTS: 'Payments'
+          PAYMENTS: 'Payments',
+          COMMUNICATION: 'Communication',
         },
         SECTOR_CHOICES: {
           _: 'Other',
@@ -245,9 +249,18 @@ export const locale = {
           B: 'Pireaus Bank',
           C: 'EFG Eurobank Ergasias',
           D: 'Alpha Bank A.E.',
-          E: 'PayPal.Me',
-          _F: 'Pay at the Store',
-          _G: 'All Payment Methods'
+          E: 'PayPal',
+          F: 'PayPal.Me',
+          _G: 'Pay at the Store',
+          _H: 'All Payment Methods'
+        },
+        CONTACT_CHOICES: {
+          // A: 'Telephone',
+          B: 'Website',
+          C: 'Facebook',
+          D: 'Twitter',
+          E: 'Instagram',
+          F: 'Youtube',
         },
       },
       OFFER: {
@@ -288,7 +301,7 @@ export const locale = {
           DESC: 'Please, enter Post Title.'
         },
         IMAGE: {
-          TITLE: 'Post\'s Image',
+          TITLE: 'Image',
           ACTION: 'Choose File'
         },
         SUBTITLE: {
@@ -499,6 +512,8 @@ export const locale = {
         REQUIRED_ONE: 'At least one field requiered',
         PASSWORD_CONFIRMATION: 'Passsword and ConfirmPassword didn\'t match.',
         AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
+        IMAGE_SIZE: 'Τhe file size cannot exceed ',
+        IMAGES_NUMBER: 'The Number of Images cannot be greater than ',
         CAMPAIGN_DATES: {
           SUPPORTSTARTSTOSUPPORTENDS: 'Support Starting Date cannot be greater than Support Ending Date',
           SUPPORTSTARTSTOREDEEMSTARTS: 'Support Starting Date cannot be greater than Redeem Starting Date',
@@ -539,7 +554,8 @@ export const locale = {
         /* Admin Messages (Μηνύματα Διαχειριστή) */
         MEMBER_CREATED: 'A new Member has been successfully created!',
         PARTNER_CREATED: 'A new Partner has been successfully created!',
-        USER_REACTIVATED: 'User is now \'Active\'',
+        USER_ACTIVATED: 'User status is now \'Active\'',
+        USER_DEACTIVATED: 'User status is now \'Non Active\'',
         CONTENT_CREATED: 'Content has been successfully created!',
         CONTENT_UPDATED: 'Content has been successfully updated!',
       },
@@ -612,7 +628,7 @@ export const locale = {
       RECEIPT: 'Receipt',
       OFFER: 'Offer',
       CAMPAIGN: 'Campaign',
-      SUPPORT: 'Support',
+      SUPPORT: 'Payment ID',
       POINTS: 'Points',
       TOKENS: 'Tokens',
       PARTNER: 'Partner',
@@ -625,7 +641,8 @@ export const locale = {
         PERSONAL_INFORMATION: 'Personal Information',
         CHANGE_PASSWORD: 'Change Password',
         ACCOUNT_SETTINGS: 'Account Settings',
-        INVITATION: 'Invite a friend'
+        INVITATION: 'Invite a friend',
+        PAYMENTS: 'Payments'
       },
       ACCOUNT: 'Account',
       PERSONAL_INFO: 'Setup Your Personal Information',
@@ -763,8 +780,10 @@ export const locale = {
      */
     USER: {
       PLURAL: 'Users',
-      REACTIVATE: 'Reactivate',
-      REACTIVATE_DISABLE: 'User is activated',
+      ACTIVATE: 'Activate',
+      DEACTIVATE: 'Deactivate',
+      ACTIVATE_DISABLE: 'User is activated',
+      DEACTIVATE_DISABLE: 'User is deactivated',
       PARTNER: {
         PLURAL: 'Partners',
         ALL: 'All Partners',

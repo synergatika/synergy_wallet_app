@@ -1,4 +1,3 @@
-// Angular
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
@@ -21,7 +20,7 @@ import { environment } from '../../../environments/environment';
 import { GeneralList, PaymentList, PartnerPayment } from 'sng-core';
 
 @Component({
-	selector: 'app-register-partner',
+	selector: 'kt-register-partner',
 	templateUrl: './register-partner.component.html',
 	styleUrls: ['./register-partner.component.scss'],
 	encapsulation: ViewEncapsulation.None
@@ -36,12 +35,8 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
 	public subAccessConfig: Boolean[] = environment.subAccess;
 
-	step = false;
-	/**
-	 * Form
-	 */
-	authForm: FormGroup;
 	validator: any;
+	registerForm: FormGroup;
 
 	fileData: File = null;
 	previewUrl: any = null;
@@ -54,28 +49,30 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	/**
 	 * Component Constructor
 	 *
-	 * @param cdr: ChangeDetectorRef
 	 * @param router: Router
 	 * @param fb: FormBuilder,
+	 * @param cdr: ChangeDetectorRef
+	 * @param activatedRoute: ActivatedRoute
 	 * @param dialog: MatDialog
 	 * @param translate: TranslateService
-	 * @param staticDataService: StaticDataService
 	 * @param authNoticeService: MessageNoticeService
 	 * @param authenticationService: AuthenticationService,
 	 * @param itemsService: ItemsService,
+	 * @param staticDataService: StaticDataService
 	 */
 	constructor(
-		private cdr: ChangeDetectorRef,
 		private router: Router,
 		private fb: FormBuilder,
+		private cdr: ChangeDetectorRef,
+		private activatedRoute: ActivatedRoute,
 		public dialog: MatDialog,
 		private translate: TranslateService,
-		private staticDataService: StaticDataService,
 		private authNoticeService: MessageNoticeService,
 		private authenticationService: AuthenticationService,
-		private itemsService: ItemsService
+		private itemsService: ItemsService,
+		private staticDataService: StaticDataService,
 	) {
-		this.paymentsList = this.staticDataService.getPaymentsList;
+		// this.paymentsList = this.staticDataService.getPaymentsList;
 		this.sectorList = this.staticDataService.getSectorList;
 		this.validator = this.staticDataService.getValidators.user;
 		this.unsubscribe = new Subject();
@@ -83,18 +80,18 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 
 	/*
 	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-    */
+	*/
 
 	/**
 	 * On Init
 	 */
 	ngOnInit() {
-		this.initializeForm();
+		this.initRegisterForm();
 	}
 
 	/*
-    * On destroy
-    */
+	* On destroy
+	*/
 	ngOnDestroy(): void {
 		this.authNoticeService.setNotice(null);
 		this.unsubscribe.next();
@@ -103,10 +100,11 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Form Initialization
+	 * Form initalization
+	 * Default params, validators
 	 */
-	initializeForm() {
-		this.authForm = this.fb.group({
+	initRegisterForm() {
+		this.registerForm = this.fb.group({
 			fullname: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(this.validator.name.minLength),
@@ -132,114 +130,73 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 				Validators.maxLength(this.validator.password.maxLength)
 			])
 			],
-			description: ['', Validators.compose([
-				// Validators.required,
-				// Validators.minLength(this.validator.description.minLength),
-				// Validators.maxLength(this.validator.description.maxLength)
-			])
-			],
+			// description: ['', Validators.compose([
+			// 	Validators.required,
+			// ])
+			// ],
 			sector: ['', Validators.compose([
-				// Validators.required,
+				Validators.required,
 			])
 			],
-			payments: new FormArray([]),
-			agree: [false, Validators.compose([
-				//	Validators.requiredTrue
-			]
-			)]
+			// payments: new FormArray([]),
+			agree: [false, Validators.compose([Validators.requiredTrue])]
 		}, {
 			validator: ConfirmPasswordValidator.MatchPassword
 		});
 
-		//	(this.subAccessConfig[0]) ? this.clearPartnerAddressValidators(this.authForm) : '';
-		//	(this.subAccessConfig[1]) ? this.clearPartnerContactValidators(this.authForm) : '';
+		//	(this.subAccessConfig[0]) ? this.clearPartnerAddressValidators(this.registerForm) : '';
+		//	(this.subAccessConfig[1]) ? this.clearPartnerContactValidators(this.registerForm) : '';
 
-		this.paymentsList.forEach(element => {
-			const payment = new FormControl('');
-			this.payments.push(payment);
-		});
+		// this.paymentsList.forEach(element => {
+		// 	const payment = new FormControl('');
+		// 	this.payments.push(payment);
+		// });
 	}
 
-	get payments() {
-		return this.authForm.get('payments') as FormArray;
-	}
-
-	changeStep(step: boolean) {
-		if (this.step) {
-			this.authForm.get('sector').clearValidators();
-			this.authForm.get('sector').updateValueAndValidity();
-			this.authForm.get('description').clearValidators();
-			this.authForm.get('description').updateValueAndValidity();
-			this.authForm.get('agree').clearValidators();
-			this.authForm.get('agree').updateValueAndValidity();
-		} else {
-			const controls = this.authForm.controls;
-			/** check form */
-			if (this.authForm.invalid) {
-				Object.keys(controls).forEach(controlName =>
-					controls[controlName].markAsTouched()
-				);
-				return;
-			}
-
-			this.authForm.get('sector').setValidators([
-				Validators.required
-			]);
-			this.authForm.get('description').setValidators([
-				Validators.required,
-				Validators.minLength(this.validator.description.minLength),
-				Validators.maxLength(this.validator.description.maxLength)
-			]);
-			this.authForm.get('agree').setValidators([
-				Validators.requiredTrue
-			]);
-			this.authForm.get('sector').updateValueAndValidity();
-			this.authForm.get('description').updateValueAndValidity();
-			this.authForm.get('agree').updateValueAndValidity();
-		}
-		this.step = step;
-	}
+	// get payments() {
+	// 	return this.registerForm.get('payments') as FormArray;
+	// }
 
 	/**
-	 * Set/Clear Validators
+	 * Set / Clear Validators 
 	 */
-	clearPartnerAddressValidators(form: FormGroup) {
-		form.get('street').clearValidators();
-		form.get('street').updateValueAndValidity();
-		form.get('postCode').clearValidators();
-		form.get('postCode').updateValueAndValidity();
-		form.get('city').clearValidators();
-		form.get('city').updateValueAndValidity();
+	// clearPartnerAddressValidators(form: FormGroup) {
+	// 	form.get('timetable').clearValidators();
+	// 	form.get('timetable').updateValueAndValidity();
 
-		form.get('lat').clearValidators();
-		form.get('lat').updateValueAndValidity();
-		form.get('long').clearValidators();
-		form.get('long').updateValueAndValidity();
+	// 	form.get('street').clearValidators();
+	// 	form.get('street').updateValueAndValidity();
+	// 	form.get('postCode').clearValidators();
+	// 	form.get('postCode').updateValueAndValidity();
+	// 	form.get('city').clearValidators();
+	// 	form.get('city').updateValueAndValidity();
 
-		form.get('timetable').clearValidators();
-		form.get('timetable').updateValueAndValidity();
-	}
+	// 	form.get('lat').clearValidators();
+	// 	form.get('lat').updateValueAndValidity();
+	// 	form.get('long').clearValidators();
+	// 	form.get('long').updateValueAndValidity();
+	// }
 
-	clearPartnerContactValidators(form: FormGroup) {
-		form.get('phone').clearValidators();
-		form.get('phone').updateValueAndValidity();
-		form.get('websiteURL').clearValidators();
-		form.get('websiteURL').updateValueAndValidity();
-	}
+	// clearPartnerContactValidators(form: FormGroup) {
+	// 	form.get('phone').clearValidators();
+	// 	form.get('phone').updateValueAndValidity();
+	// 	form.get('websiteURL').clearValidators();
+	// 	form.get('websiteURL').updateValueAndValidity();
+	// }
 
-	setPartnerPaymentsValidators() {
-		this.paymentsList.forEach((value, i) => {
-			this.payments.at(i).setValidators(Validators.required);
-			this.payments.at(i).updateValueAndValidity();
-		});
-	}
+	// setPartnerPaymentsValidators() {
+	// 	this.paymentsList.forEach((value, i) => {
+	// 		this.payments.at(i).setValidators(Validators.required);
+	// 		this.payments.at(i).updateValueAndValidity();
+	// 	});
+	// }
 
-	clearPartnerPaymentsValidators() {
-		this.paymentsList.forEach((value, i) => {
-			this.payments.at(i).clearValidators();
-			this.payments.at(i).updateValueAndValidity();
-		});
-	}
+	// clearPartnerPaymentsValidators() {
+	// 	this.paymentsList.forEach((value, i) => {
+	// 		this.payments.at(i).clearValidators();
+	// 		this.payments.at(i).updateValueAndValidity();
+	// 	});
+	// }
 
 	/**
 	 * Terms Aggrement
@@ -257,70 +214,90 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	/**
 	 * Image Upload
 	 */
-	fileProgress(fileInput: any) {
-		this.fileData = <File>fileInput.target.files[0];
-		this.preview();
-	}
+	// fileProgress(fileInput: any) {
+	// 	this.fileData = <File>fileInput.target.files[0];
+	// 	this.preview();
+	// }
 
-	preview() {
-		if (this.fileData == null) {
-			this.onImageCancel();
-			return;
-		}
-		this.showImageError = false;
+	// preview() {
+	// 	if (this.fileData == null) {
+	// 		this.onImageCancel();
+	// 		return;
+	// 	}
+	// 	this.showImageError = false;
 
-		var mimeType = this.fileData.type;
-		if (mimeType.match(/image\/*/) == null) {
-			return;
-		}
+	// 	var mimeType = this.fileData.type;
+	// 	if (mimeType.match(/image\/*/) == null) {
+	// 		return;
+	// 	}
 
-		var reader = new FileReader();
-		reader.readAsDataURL(this.fileData);
-		reader.onload = (_event) => {
-			if (this.previewUrl !== reader.result) {
-				this.cdr.markForCheck();
-			}
-			this.previewUrl = reader.result;
-		}
-	}
+	// 	var reader = new FileReader();
+	// 	reader.readAsDataURL(this.fileData);
+	// 	reader.onload = (_event) => {
+	// 		if (this.previewUrl !== reader.result) {
+	// 			this.cdr.markForCheck();
+	// 		}
+	// 		this.previewUrl = reader.result;
+	// 	}
+	// }
 
-	onImageCancel() {
-		this.previewUrl = null;
-		this.fileData = null;
-		this.showImageError = true;
-		this.cdr.markForCheck();
-	}
+	// onImageCancel() {
+	// 	this.previewUrl = null;
+	// 	this.fileData = null;
+	// 	this.showImageError = true;
+	// 	this.cdr.markForCheck();
+	// }
 
-	setPaymentsValues(controls: { [key: string]: AbstractControl }) {
-		var payments: PartnerPayment[] = [];
-		this.paymentsList.forEach((value, i) => {
-			console.log(controls.payments.value[i])
-			if (controls.payments.value[i]) {
-				payments.push({
-					bic: this.paymentsList[i].bic,
-					name: this.paymentsList[i].name,
-					value: controls.payments.value[i]
-				})
-			}
-		});
-		return payments;
-	}
+
+	/*
+	this.registerForm.get('nationalBank').setValidators(Validators.required)
+	this.registerForm.get('nationalBank').updateValueAndValidity();
+	this.registerForm.get('pireausBank').setValidators(Validators.required)
+	this.registerForm.get('pireausBank').updateValueAndValidity();
+	this.registerForm.get('eurobank').setValidators(Validators.required)
+	this.registerForm.get('eurobank').updateValueAndValidity();
+	this.registerForm.get('alphaBank').setValidators(Validators.required)
+	this.registerForm.get('alphaBank').updateValueAndValidity();
+	this.registerForm.get('paypal').setValidators(Validators.required)
+	this.registerForm.get('paypal').updateValueAndValidity();
+*/
+
+
+	// setPaymentsValues(controls: { [key: string]: AbstractControl }) {
+	// 	var payments: PartnerPayment[] = [];
+	// 	this.paymentsList.forEach((value, i) => {
+	// 		console.log(controls.payments.value[i])
+	// 		if (controls.payments.value[i]) {
+	// 			payments.push({
+	// 				bic: this.paymentsList[i].bic,
+	// 				name: this.paymentsList[i].name,
+	// 				value: controls.payments.value[i]
+	// 			})
+	// 		}
+	// 	});
+
+	// 	return payments;
+	// }
 
 	/**
-	 * On Submit Form
+	 * Form Submit
 	 */
-	submitForm() {
+	submit() {
 
 		if (this.loading) return;
 
-		const controls = this.authForm.controls;
-		const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
-		/** check form */
-		if (this.authForm.invalid || !this.fileData || !partner_payments.length) {
+		const controls = this.registerForm.controls;
+		// const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
 
-			(partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();
-			this.showPaymentError = (partner_payments.length === 0)
-			this.showImageError = (!this.fileData);
+		//if (partner_payments.length) this.updatePaymentsValidators(controls);
+
+		/** check form */
+		if (this.registerForm.invalid) {
+			// || !this.fileData || !partner_payments.length) {
+
+			// (partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();
+			// this.showPaymentError = (partner_payments.length === 0)
+			// this.showImageError = (!this.fileData);
 
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
@@ -329,25 +306,28 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		}
 		this.loading = true;
 
-		const formData = new FormData();
-		formData.append('name', controls.fullname.value);
-		formData.append('email', (controls.email.value).toLowerCase());
-		formData.append('password', controls.password.value);
-		formData.append('imageURL', this.fileData);
-		formData.append('description', controls.description.value);
-		formData.append('sector', controls.sector.value);
-		formData.append('payments', JSON.stringify(partner_payments));
+		// const formData = new FormData();
+		// formData.append('name', controls.fullname.value);
+		// formData.append('email', (controls.email.value).toLowerCase());
+		// formData.append('password', controls.password.value);
+		// formData.append('imageURL', this.fileData);
+		// formData.append('description', controls.description.value);
+		// formData.append('sector', controls.sector.value);
+		// formData.append('payments', JSON.stringify(partner_payments));
 
-		this.authenticationService.register_as_partner(formData)
+		const authData = {
+			fullname: controls.fullname.value,
+			email: (controls.email.value).toLowerCase(),
+			password: controls.password.value,
+			sector: controls.sector.value
+		}
+
+		this.authenticationService.register_as_partner(authData.fullname, authData.email, authData.password, authData.sector)
 			.pipe(
 				tap(
 					data => {
-						console.log(data);
-						if (this.subAccessConfig[4]) this.autoCreateCampaign(data.oneClickToken)
-						else {
-							this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
-							setTimeout(() => { this.router.navigateByUrl('/auth/login'); }, 2500);
-						}
+						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
+						setTimeout(() => { this.router.navigateByUrl('/auth/login'); }, 2500);
 					}, error => {
 						this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
 						this.loading = false;
@@ -359,60 +339,61 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 			).subscribe();
 	}
 
-	autoCreateCampaign(token: string) {
+	// autoCreateCampaign(token: string) {
 
-		const campaign = environment.fixedMicrocreditCampaign;
+	// 	const campaign = environment.fixedMicrocreditCampaign;
 
-		var _date_1 = new Date();
-		var _newDate1 = _date_1.setDate(_date_1.getDate() + campaign.whenSupportStarts);
-		var _date_2 = new Date();
-		var _newDate2 = _date_2.setDate(_date_2.getDate() + campaign.whenSupportEnds);
-		var _date_3 = new Date();
-		var _newDate3 = _date_3.setDate(_date_3.getDate() + campaign.whenRedeemStarts);
-		var _date_4 = new Date();
-		var _newDate4 = _date_4.setDate(_date_4.getDate() + campaign.whenRedeemEnds);
+	// 	var _date_1 = new Date();
+	// 	var _newDate1 = _date_1.setDate(_date_1.getDate() + campaign.whenSupportStarts);
+	// 	var _date_2 = new Date();
+	// 	var _newDate2 = _date_2.setDate(_date_2.getDate() + campaign.whenSupportEnds);
+	// 	var _date_3 = new Date();
+	// 	var _newDate3 = _date_3.setDate(_date_3.getDate() + campaign.whenRedeemStarts);
+	// 	var _date_4 = new Date();
+	// 	var _newDate4 = _date_4.setDate(_date_4.getDate() + campaign.whenRedeemEnds);
 
-		const formData = new FormData();
-		formData.append("imageURL", this.fileData);
+	// 	const formData = new FormData();
+	// 	formData.append("imageURL", this.fileData);
 
-		formData.append('title', campaign.title);
-		formData.append('subtitle', campaign.subtitle);
-		formData.append('terms', campaign.terms);
-		formData.append('description', campaign.description);
-		formData.append('category', campaign.category);
-		formData.append('access', campaign.access);
+	// 	formData.append('title', campaign.title);
+	// 	formData.append('subtitle', campaign.subtitle);
+	// 	formData.append('terms', campaign.terms);
+	// 	formData.append('description', campaign.description);
+	// 	formData.append('category', campaign.category);
+	// 	formData.append('access', campaign.access);
+	// 	formData.append('quantitative', campaign.quantitative);
+	// 	formData.append('minAllowed', campaign.minAllowed);
+	// 	if (campaign.quantitative) {
+	// 		formData.append('maxAllowed', campaign.maxAllowed);
+	// 		formData.append('stepAmount', campaign.stepAmount);
+	// 	} else {
+	// 		formData.append('maxAllowed', campaign.minAllowed);
+	// 	}
+	// 	formData.append('maxAmount', campaign.maxAmount);
+	// 	formData.append('redeemStarts', _newDate3.toString());
+	// 	formData.append('redeemEnds', _newDate4.toString());
+	// 	formData.append('startsAt', _newDate1.toString());
+	// 	formData.append('expiresAt', _newDate2.toString());
 
-		formData.append('quantitative', campaign.quantitative);
-		formData.append('stepAmount', (campaign.quantitative) ? campaign.stepAmount : '0');
-		formData.append('minAllowed', campaign.minAllowed);
-		formData.append('maxAllowed', (campaign.quantitative) ? campaign.maxAllowed : campaign.minAllowed);
-		formData.append('maxAmount', campaign.maxAmount);
 
-		formData.append('redeemStarts', _newDate3.toString());
-		formData.append('redeemEnds', _newDate4.toString());
-		formData.append('startsAt', _newDate1.toString());
-		formData.append('expiresAt', _newDate2.toString());
-
-
-		this.itemsService.oneClickCreateMicrocreditCampaign(formData, token)
-			.pipe(
-				tap(
-					data => {
-						console.log(data);
-						this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
-						setTimeout(() => {
-							this.loading = false;
-							this.router.navigateByUrl('/auth/login');
-						}, 2500);
-					}, error => {
-						this.authNoticeService.setNotice(this.translate.instant(error), 'danger');
-					}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.cdr.markForCheck();
-				})
-			).subscribe();
-	}
+	// 	this.itemsService.oneClickCreateMicrocreditCampaign(formData, token)
+	// 		.pipe(
+	// 			tap(
+	// 				data => {
+	// 					this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
+	// 					setTimeout(() => {
+	// 						this.loading = false;
+	// 						this.router.navigateByUrl('/auth/login');
+	// 					}, 2500);
+	// 				}, error => {
+	// 					this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.ERROR'), 'danger');
+	// 				}),
+	// 			takeUntil(this.unsubscribe),
+	// 			finalize(() => {
+	// 				this.cdr.markForCheck();
+	// 			})
+	// 		).subscribe();
+	// }
 
 	/**
 	 * Checking control validation
@@ -421,9 +402,8 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 	 * @param validationType: string => Equals to valitors name
 	 */
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.authForm.controls[controlName];
+		const control = this.registerForm.controls[controlName];
 
-		console.log("Control", this.authForm.controls[controlName])
 		if (!control) {
 			return false;
 		}
@@ -431,4 +411,26 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		const result = control.hasError(validationType) && (control.dirty || control.touched);
 		return result;
 	}
+
+	// 	/**
+	//  * Checking control validation
+	//  *
+	//  * @param controlName: string => Equals to formControlName
+	//  * @param validationType: string => Equals to valitors name
+	//  */
+	// 	isControlArrayHasError(controlName: string, index: number, validationType: string): boolean {
+	// 		const control = this.payments.at(index);
+
+	// 		if (!control) {
+	// 			return false;
+	// 		}
+
+	// 		const result = control.hasError(validationType) && (control.dirty || control.touched);
+	// 		console.log('name', controlName)
+	// 		console.log('e', control.hasError(validationType))
+	// 		console.log('d', control.dirty);
+	// 		console.log('t', control.touched)
+	// 		console.log(result);
+	// 		return result;
+	// 	}
 }

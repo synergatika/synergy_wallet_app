@@ -99,7 +99,9 @@
             <!--end::Form Group "Category"-->
 
             <!--begin::Form Group "Image"-->
-            <div class="form-group">
+            <app-image-upload [parentForm]="submitForm" previousURL=''>
+            </app-image-upload>
+            <!-- <div class="form-group">
               <label class="">{{'FIELDS.MICROCREDIT_CAMPAIGN.IMAGE.TITLE' | translate}}</label>
               <div class="">
                 <div class="upload-img">
@@ -122,7 +124,7 @@
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
                 </mat-error>
               </div>
-            </div>
+            </div> -->
             <!--end::Form Group "Image"-->
 
           </div>

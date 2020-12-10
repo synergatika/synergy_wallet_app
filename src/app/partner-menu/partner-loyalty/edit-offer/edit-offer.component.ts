@@ -40,9 +40,9 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   /**
    * File Variables
    */
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = true;
+  // fileData: File = null;
+  // previewUrl: any = null;
+  // originalImage: boolean = true;
   public initialImage: string = '';
 
   /** 
@@ -129,44 +129,48 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         Validators.required
       ])
       ],
+      image_url: ['', Validators.compose([
+        Validators.required
+      ])
+      ],
     });
   }
 
   /**
    * Image Upload
    */
-  fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
-  }
+  // fileProgress(fileInput: any) {
+  //   this.fileData = <File>fileInput.target.files[0];
+  //   this.preview();
+  // }
 
-  preview() {
-    if (this.fileData == null) {
-      this.onImageCancel();
-      return;
-    }
-    this.originalImage = false;
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
+  // preview() {
+  //   if (this.fileData == null) {
+  //     this.onImageCancel();
+  //     return;
+  //   }
+  //   this.originalImage = false;
+  //   var mimeType = this.fileData.type;
+  //   if (mimeType.match(/image\/*/) == null) {
+  //     return;
+  //   }
 
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(this.fileData);
+  //   reader.onload = (_event) => {
+  //     if (this.previewUrl !== reader.result) {
+  //       this.cdRef.markForCheck();
+  //     }
+  //     this.previewUrl = reader.result;
+  //   }
+  // }
 
-  onImageCancel() {
-    this.previewUrl = this.initialImage;
-    this.fileData = null;
-    this.originalImage = true;
-    this.imageInput.nativeElement.value = null;
-  }
+  // onImageCancel() {
+  //   this.previewUrl = this.initialImage;
+  //   this.fileData = null;
+  //   this.originalImage = true;
+  //   this.imageInput.nativeElement.value = null;
+  // }
 
   /**
    * Fetch Offer Data
@@ -179,7 +183,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
             this.offer = data;
             this.title = data.title;
             this.initialImage = data.offer_imageURL;
-            this.previewUrl = this.initialImage;
+            // this.previewUrl = this.initialImage;
             this.submitForm.patchValue(
               {
                 ...data,
@@ -215,7 +219,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+    formData.append('imageURL', controls.image_url.value);
+    // formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
     formData.append('subtitle', controls.subtitle.value);
     formData.append('cost', controls.cost.value);

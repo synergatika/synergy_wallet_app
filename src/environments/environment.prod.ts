@@ -17,7 +17,7 @@ export const environment = {
   ],
   subAccess: [
     true, //partner_address,
-    true, // partner_contact,
+    true, // partner_contacts,
     true, // partner_payments, 
     true, // partner_auto_registration, 
     false // true  // partner_fixed_campaign

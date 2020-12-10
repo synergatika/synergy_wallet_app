@@ -33,29 +33,6 @@
             </div>
             <!--end::Form Group "Title"-->
 
-            <!--begin::Form Group "Description"-->
-            <div class="form-group">
-              <mat-form-field>
-                <mat-label>{{'FIELDS.EVENT.DESCRIPTION.TITLE' | translate}}</mat-label>
-                <textarea matInput type="text" formControlName="description"
-                  placeholder="{{'FIELDS.EVENT.DESCRIPTION.PLACEHOLDER' | translate}}">
-                </textarea>
-                <mat-error *ngIf="isControlHasError('description','required')" class="error text-danger">
-                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-                </mat-error>
-                <mat-error *ngIf="isControlHasError('description','minlength')" class="error text-danger">
-                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.description.minLength}}
-                </mat-error>
-                <mat-error *ngIf="isControlHasError('description','maxlength')" class="error text-danger">
-                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.description.maxLength}}
-                </mat-error>
-                <mat-hint class="form-text text-muted">
-                  {{'FIELDS.EVENT.DESCRIPTION.DESC' | translate}}
-                </mat-hint>
-              </mat-form-field>
-            </div>
-            <!--end::Form Group "Description"-->
-
             <!--begin::Form Group "Access"-->
             <div class="form-group">
               <mat-form-field>
@@ -75,9 +52,6 @@
             </div>
             <!--end::Form Group "Access"-->
 
-          </div>
-          <div class="col-md-6">
-
             <!--begin::Form Group "Subtitle"-->
             <div class="form-group">
               <mat-form-field>
@@ -90,6 +64,9 @@
               </mat-form-field>
             </div>
             <!--end::Form Group "Subtitle"-->
+
+          </div>
+          <div class="col-md-6">
 
             <!--begin::Form Group "Location"-->
             <div class="form-group">
@@ -147,7 +124,9 @@
             <!--end::Form Group "Datetime"-->
 
             <!--begin::Form Group "Image"-->
-            <div class="form-group">
+            <app-image-upload [parentForm]="submitForm" previousURL=''>
+            </app-image-upload>
+            <!-- <div class="form-group">
               <label class="">{{'FIELDS.EVENT.IMAGE.TITLE' | translate}}</label>
               <div class="">
                 <div class="upload-img">
@@ -170,9 +149,39 @@
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
                 </mat-error>
               </div>
-            </div>
+            </div> -->
             <!--end::Form Group "Image"-->
 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <!--begin::Form Group "Content"-->
+            <div class="form-group">
+              <app-content-images (finalize)="onFinalStep($event)" [formGroup]="submitForm"
+                parentService='postContentImage'>
+              </app-content-images>
+              <!-- <mat-form-field>
+              <mat-label>{{'FIELDS.POST.CONTENT.TITLE' | translate}}</mat-label>
+              <textarea matInput class=" short" type="text" formControlName="content"
+              placeholder="{{'FIELDS.POST.CONTENT.PLACEHOLDER' | translate}}">
+              </textarea>
+              <mat-error *ngIf="isControlHasError('content','required')" class="error text-danger">
+                {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+              </mat-error>
+              <mat-error *ngIf="isControlHasError('content','minlength')" class="error text-danger">
+                {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.content.minLength}}
+              </mat-error>
+              <mat-error *ngIf="isControlHasError('content','maxlength')" class="error text-danger">
+                {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.content.maxLength}}
+              </mat-error>
+              <mat-hint class="form-text text-muted">
+                {{'FIELDS.POST.CONTENT.DESC' | translate}}
+              </mat-hint>
+              </mat-form-field> -->
+            </div>
+            <!--end::Form Group "Content"-->
           </div>
         </div>
 

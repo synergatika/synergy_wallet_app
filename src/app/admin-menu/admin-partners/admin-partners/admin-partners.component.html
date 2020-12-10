@@ -26,13 +26,24 @@
     <ng-container matColumnDef="activated">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'USER.ARRAY.STATUS' | translate }} </th>
       <td style="vertical-align:middle" mat-cell *matCellDef="let item">
-        <div>
-          <button mat-raised-button class="activate-button" (click)="changeUserStatus(item._id, $event)"
-            [disabled]="item.activated"><span matTooltip="{{'USER.REACTIVATE_DISABLE' | translate}}"
+
+        <div *ngIf="!item.activated">
+          <button mat-raised-button class="activate-button btn btn-primary"
+            (click)="activateUser(item._id, $event)">{{'USER.ACTIVATE' | translate}}
+            <!-- <span matTooltip="{{'USER.ACTIVATE_DISABLE' | translate}}"
               [matTooltipPosition]="'left'"
-              [matTooltipDisabled]="!item.activated">{{'USER.REACTIVATE' | translate}}</span>
+              [matTooltipDisabled]="!item.activated">{{'USER.ACTIVATE' | translate}}</span> -->
           </button>
         </div>
+        <div *ngIf="item.activated">
+          <button mat-raised-button class="activate-button btn btn-danger"
+            (click)="deactivateUser(item._id, $event)">{{'USER.DEACTIVATE' | translate}}
+            <!-- <span matTooltip="{{'USER.ACTIVATE_DISABLE' | translate}}"
+              [matTooltipPosition]="'left'"
+              [matTooltipDisabled]="!item.activated">{{'USER.DEACTIVATE' | translate}}</span> -->
+          </button>
+        </div>
+
       </td>
     </ng-container>
 

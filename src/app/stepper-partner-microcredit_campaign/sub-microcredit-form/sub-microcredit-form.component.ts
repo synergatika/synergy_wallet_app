@@ -51,9 +51,9 @@ export class SubMicrocreditFormComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any>;
   private subscription: Subscription = new Subscription;
 
-	/**
-	 * Component Constructor
-	 */
+  /**
+   * Component Constructor
+   */
   constructor(
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
@@ -96,46 +96,26 @@ export class SubMicrocreditFormComponent implements OnInit, OnDestroy {
   initializeSupportData(support: LocalMicrocreditInterface["MicrocreditSupport"]) {
     this.transaction.support_id = support.support_id;
     this.transaction.initial_tokens = support.initialTokens;
-    this.transaction.redeemed_tokens = support.redeemedTokens;
+    this.transaction.redeemed_tokens = support.initialTokens - support.currentTokens;
     this.transaction.possible_tokens = (this.transaction.initial_tokens - this.transaction.redeemed_tokens);
     this.stepperService.changeTransaction(this.transaction);
     // this.fetchTransactions();
-    this.transactions = support.transactions;
+    this.transactions = support.transactions.sort((a: MicrocreditTransaction, b: MicrocreditTransaction) => { return (a._id < b._id) ? -1 : 1 });
+
   }
 
   initializeSelectedSupport() {
-    const currentOrder = this.supports.find(support => (support.initialTokens - support.redeemedTokens > 0) && (support.status === 'confirmation'));
+    console.log(this.supports)
+    const currentOrder = this.supports.find(support =>
+      (support.currentTokens > 0) && (support.status == 'paid'))//.length > 0;
     if (currentOrder) {
       this.initializeSupportData(currentOrder)
     }
   }
 
-  /**
-   * Fetch Transactions List (for One User)
-   */
-  fetchTransactions() {
-    console.log("On Transaction: ", this.transaction.support_id)
-    this.microcreditService.readTransactions('0-0-0')
-      .pipe(
-        tap(
-          data => {
-            this.transactions = data.filter(obj => { return obj.data.support_id == this.transaction.support_id });
-            console.log("Transactions: ", this.transactions)
-          },
-          error => {
-            console.log(error);
-          }),
-        takeUntil(this.unsubscribe),
-        finalize(() => {
-          this.loading = false;
-          this.cdRef.markForCheck();
-        })
-      )
-      .subscribe();
-  }
-
   isRadioButtonDisable(support: LocalMicrocreditInterface["MicrocreditSupport"]) {
-    return (support.redeemedTokens === support.initialTokens) || (support.status === 'order');
+    return (support.status === 'completed') || (support.status === 'unpaid');
+    // return (support.currentTokens === 0) || ((support.status === 'PromiseFund') || (support.status === 'RevertFund'));
   }
 
   isRadioButtonChecked(support: LocalMicrocreditInterface["MicrocreditSupport"]) {

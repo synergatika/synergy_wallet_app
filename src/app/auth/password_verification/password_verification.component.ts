@@ -68,7 +68,7 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 
 	/*
 	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-    */
+		*/
 
 	/**
 	 * On Init
@@ -81,8 +81,8 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	}
 
 	/*
-    * On destroy
-    */
+		* On destroy
+		*/
 	ngOnDestroy(): void {
 		this.authNoticeService.setNotice(null);
 		this.unsubscribe.next();
@@ -95,13 +95,13 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 	 */
 	initializeForm() {
 		this.authForm = this.fb.group({
-			password: ['', Validators.compose([
+			oldPassword: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(this.validator.password.minLength),
 				Validators.maxLength(this.validator.password.maxLength)
 			])
 			],
-			newPassword: ['', Validators.compose([
+			password: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(this.validator.password.minLength),
 				Validators.maxLength(this.validator.password.maxLength)
@@ -146,8 +146,8 @@ export class PasswordVerificationComponent implements OnInit, OnDestroy {
 		this.loading = true;
 
 		const authData = {
-			oldPassword: controls.password.value,
-			newPassword: controls.newPassword.value
+			oldPassword: controls.oldPassword.value,
+			newPassword: controls.password.value
 		};
 
 		this.authenticationService.set_password(this.token, authData.oldPassword, authData.newPassword)

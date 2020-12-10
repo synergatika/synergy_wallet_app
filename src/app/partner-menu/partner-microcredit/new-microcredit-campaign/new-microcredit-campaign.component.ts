@@ -33,17 +33,17 @@ import { DatesValidator } from '../dates.validator';
 export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
   @ViewChild('publish_item') publish_item;
 
-	/**
-	 * Configuration and Static Data
-	 */
+  /**
+   * Configuration and Static Data
+   */
   public accessList: GeneralList[];
 
   /**
    * File Variables
    */
-  fileData: File = null;
-  previewUrl: any = null;
-  showImageError: boolean = false;
+  // fileData: File = null;
+  // previewUrl: any = null;
+  // showImageError: boolean = false;
 
   /**
    * Content Variables
@@ -90,16 +90,16 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
 
   /**
-	 * On Init
-	 */
+   * On Init
+   */
   ngOnInit() {
     this.minDate = new Date();
     this.initForm();
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -167,7 +167,11 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
         Validators.required,
       ])
       ],
-      profile_avatar: ['', Validators.compose([
+      // profile_avatar: ['', Validators.compose([
+      //   Validators.required
+      // ])
+      // ],
+      image_url: ['', Validators.compose([
         Validators.required
       ])
       ],
@@ -180,40 +184,40 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
   /**
    * Image Upload
    */
-  fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
-  }
+  // fileProgress(fileInput: any) {
+  //   this.fileData = <File>fileInput.target.files[0];
+  //   this.preview();
+  // }
 
-  preview() {
-    if (this.fileData == null) {
-      this.onImageCancel();
-      return;
-    }
-    this.showImageError = false;
+  // preview() {
+  //   if (this.fileData == null) {
+  //     this.onImageCancel();
+  //     return;
+  //   }
+  //   this.showImageError = false;
 
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
+  //   var mimeType = this.fileData.type;
+  //   if (mimeType.match(/image\/*/) == null) {
+  //     return;
+  //   }
 
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(this.fileData);
+  //   reader.onload = (_event) => {
+  //     if (this.previewUrl !== reader.result) {
+  //       this.cdRef.markForCheck();
+  //     }
+  //     this.previewUrl = reader.result;
+  //   }
+  // }
 
-  onImageCancel() {
-    console.log('Image canceled');
-    this.previewUrl = null;
-    this.fileData = null;
-    this.showImageError = true;
-    this.cdRef.markForCheck();
-  }
+  // onImageCancel() {
+  //   console.log('Image canceled');
+  //   this.previewUrl = null;
+  //   this.fileData = null;
+  //   this.showImageError = true;
+  //   this.cdRef.markForCheck();
+  // }
 
   onIsQuantitativeCheckboxChange() {
     this.isQuantitative = !this.isQuantitative;
@@ -223,7 +227,8 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     const controls = this.submitForm.controls;
 
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+    formData.append('imageURL', controls.image_url.value);
+    //    formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
     formData.append('subtitle', controls.subtitle.value);
     formData.append('terms', controls.terms.value);
@@ -317,8 +322,8 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
 
     const controls = this.submitForm.controls;
     /** check form */
-    if (this.submitForm.invalid || !this.fileData) {
-      if (!this.fileData) this.showImageError = true;
+    if (this.submitForm.invalid) {// || !this.fileData) {
+      // if (!this.fileData) this.showImageError = true;
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );

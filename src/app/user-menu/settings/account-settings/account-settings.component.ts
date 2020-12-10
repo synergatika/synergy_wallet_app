@@ -27,7 +27,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
    * Content Variables
    */
   public email: string = '';
-
+  public activated: boolean = false;
   /**
    * Forms
    */
@@ -65,6 +65,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const currentUser = this.authenticationService.currentUserValue;
     this.email = currentUser["user"].email;
+    this.activated = currentUser["user"].activated;
     this.initializeForm();
   }
 

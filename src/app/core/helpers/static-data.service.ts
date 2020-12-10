@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 //import Swal from 'sweetalert2';
 
-import { PaymentList, GeneralList, LanguageFlag } from 'sng-core';
+import { PaymentList, ContactList, GeneralList, LanguageFlag } from 'sng-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class StaticDataService {
 
+    imageMaxSize: number = 2097152;
+    imagesMaxNumber: number = 3;
     /**
      * Owl Carousel
      */
@@ -81,6 +83,65 @@ export class StaticDataService {
     };
 
     /**
+     * Contacts List
+     */
+    contactsList: ContactList[] = [
+        // {
+        //     slug: 'Phone',
+        //     title: 'FIELDS.PROFILE.CONTACT_CHOICES.A',
+        //     name: 'Phone',
+        //     icon: 'phone',
+        //     value: '',
+        //     description: '',
+        // }
+        {
+            slug: 'WEB',
+            prefix: 'https://www.',
+            title: 'FIELDS.PROFILE.CONTACT_CHOICES.B',
+            name: 'Website',
+            icon: 'web',
+            value: '',
+            description: '',
+        },
+        {
+            slug: 'FB',
+            prefix: 'https://www.facebook.com/',
+            title: 'FIELDS.PROFILE.CONTACT_CHOICES.C',
+            name: 'Facebook',
+            icon: 'facebook-box',
+            value: '',
+            description: '',
+        },
+        {
+            slug: 'TW',
+            prefix: 'https://twitter.com/',
+            title: 'FIELDS.PROFILE.CONTACT_CHOICES.D',
+            name: 'Twitter',
+            icon: 'twitter-box',
+            value: '',
+            description: '',
+        },
+        {
+            slug: 'IG',
+            prefix: 'https://www.instagram.com/',
+            title: 'FIELDS.PROFILE.CONTACT_CHOICES.E',
+            name: 'Instagram',
+            icon: 'instagram',
+            value: '',
+            description: '',
+        },
+        {
+            slug: 'YT',
+            prefix: 'https://www.youtube.com/channel/',
+            title: 'FIELDS.PROFILE.CONTACT_CHOICES.F',
+            name: 'Youtube',
+            icon: 'youtube',
+            value: '',
+            description: '',
+        },
+    ];
+
+    /**
      * Payments List
      */
     paymentsList: PaymentList[] = [
@@ -88,6 +149,7 @@ export class StaticDataService {
             bic: 'ETHNGRAA',
             title: 'FIELDS.PROFILE.PAYMENT_CHOICES.A',
             name: 'NationalBankofGreece',
+            icon: '',
             value: '',
             description: '',
         },
@@ -95,6 +157,7 @@ export class StaticDataService {
             bic: 'PIRBGRAA',
             title: 'FIELDS.PROFILE.PAYMENT_CHOICES.B',
             name: 'PiraeusBank',
+            icon: '',
             value: '',
             description: '',
         },
@@ -102,6 +165,7 @@ export class StaticDataService {
             bic: 'EFGBGRAA',
             title: 'FIELDS.PROFILE.PAYMENT_CHOICES.C',
             name: 'EFGEurobankErgasias',
+            icon: '',
             value: '',
             description: '',
         },
@@ -109,16 +173,26 @@ export class StaticDataService {
             bic: 'CRBAGRAA',
             title: 'FIELDS.PROFILE.PAYMENT_CHOICES.D',
             name: 'AlphaBankAE',
+            icon: '',
             value: '',
             description: '',
         },
+        // {
+        //     bic: 'PAYPAL',
+        //     title: 'FIELDS.PROFILE.PAYMENT_CHOICES.E',
+        //     name: 'Paypal',
+        //     icon: '',
+        //     value: '',
+        //     description: '',
+        // },
         {
-            bic: 'PAYPAL',
-            title: 'FIELDS.PROFILE.PAYMENT_CHOICES.E',
-            name: 'Paypal',
+            bic: 'PAYPAL.ME',
+            title: 'FIELDS.PROFILE.PAYMENT_CHOICES.F',
+            name: 'PayPal.Me',
+            icon: '',
             value: '',
             description: '',
-        }
+        },
     ];
 
     /**
@@ -300,6 +374,10 @@ export class StaticDataService {
      * Form Validators
      */
     validators = {
+        imageURL: {
+            maxSize: this.imageMaxSize,
+            maxNumber: this.imagesMaxNumber
+        },
         user: {
             email: {
                 minLength: 4,
@@ -347,16 +425,20 @@ export class StaticDataService {
                     maxValue: 180,
                 },
             },
-            contact: {
-                phone: {
-                    minLength: 0,
-                    maxLength: 16
-                },
-                websiteURL: {
-                    minLength: 0,
-                    maxLength: 256
-                }
+            phone: {
+                minLength: 0,
+                maxLength: 16
             },
+            // contact: {
+            //     phone: {
+            //         minLength: 0,
+            //         maxLength: 16
+            //     },
+            // websiteURL: {
+            //     minLength: 0,
+            //     maxLength: 256
+            // }
+            // },
             timeTable: {
                 minLength: 0,
                 maxLength: 1024
@@ -393,7 +475,7 @@ export class StaticDataService {
                 minLength: 4,
                 maxLength: 512
             },
-            description: {
+            content: {
                 minLength: 16,
                 maxLength: 4096
             },
@@ -418,7 +500,7 @@ export class StaticDataService {
             cost: {
                 minValue: 0,
                 maxValue: 100000
-            },
+            }
         },
         microcredit: {
             title: {
@@ -477,6 +559,10 @@ export class StaticDataService {
 
     public get getPaymentsList(): PaymentList[] {
         return this.paymentsList;
+    };
+
+    public get getContactsList(): ContactList[] {
+        return this.contactsList;
     };
 
     public get getSectorList(): GeneralList[] {

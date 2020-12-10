@@ -8,6 +8,11 @@ import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 
 /**
+ * Components
+ */
+import { ContentImagesComponent } from '../../../core/components/content-images/content-images.component';
+
+/**
  * Services
  */
 import { StaticDataService } from '../../../core/helpers/static-data.service';
@@ -19,6 +24,13 @@ import { ItemsService } from '../../../core/services/items.service';
  */
 import { GeneralList } from 'sng-core';
 
+
+interface EditorFile {
+  preview: string;
+  file: File;
+  url: string;
+}
+
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
@@ -27,11 +39,16 @@ import { GeneralList } from 'sng-core';
 
 export class EditPostComponent implements OnInit, OnDestroy {
   @ViewChild('remove_item') remove_item;
-  @ViewChild('fileInput') imageInput: ElementRef;
+  // @ViewChild('fileInput') imageInput: ElementRef;
+  /**
+   * Imported Component
+   */
+  @ViewChild(ContentImagesComponent, { static: true })
+  public editorTextarea: ContentImagesComponent;
 
   /**
-	 * Configuration and Static Data
-	 */
+   * Configuration and Static Data
+   */
   public accessList: GeneralList[];
 
   /**
@@ -43,13 +60,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
    * Content Variables
    */
   public title: string = '';
-
-  /**
-   * File Variables
-   */
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = true;
   public initialImage: string = '';
 
   /**
@@ -94,17 +104,17 @@ export class EditPostComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.initForm();
     this.fetchPostData();
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -122,56 +132,20 @@ export class EditPostComponent implements OnInit, OnDestroy {
       subtitle: [''],
       content: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.content.minLength),
-        Validators.maxLength(this.validator.content.maxLength)
+        //    Validators.minLength(this.validator.content.minLength),
+        //    Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
       access: ['public', Validators.compose([
         Validators.required
       ])
       ],
+      image_url: [null, Validators.compose([
+        Validators.required
+      ])
+      ],
+      contentFiles: [null]
     });
-  }
-
-  /**
-   * Image Upload
-   */
-  fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    if (fileInput) {
-      this.fileData = <File>fileInput.target.files[0];
-      this.originalImage = false;
-      this.preview();
-    }
-  }
-
-  preview() {
-    if (this.fileData == null) {
-      this.onImageCancel();
-      return;
-    }
-    this.originalImage = false;
-
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
-
-  onImageCancel() {
-    this.previewUrl = this.initialImage;
-    this.fileData = null;
-    this.originalImage = true;
-    this.imageInput.nativeElement.value = null;
   }
 
   /**
@@ -184,7 +158,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
           data => {
             this.title = data.title;
             this.initialImage = data.post_imageURL;
-            this.previewUrl = this.initialImage;
+            //     this.previewUrl = this.initialImage;
             this.submitForm.patchValue({ ...data });
           },
           error => {
@@ -198,10 +172,11 @@ export class EditPostComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-	/**
-	 * On Submit Form
-	 */
-  onSubmit() {
+  /**
+   * On Submit Form
+   */
+
+  async onSubmit() {
     if (this.loading) return;
 
     const controls = this.submitForm.controls;
@@ -212,13 +187,19 @@ export class EditPostComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    this.loading = true;
 
+    await this.editorTextarea.uploadContentFiles();
+  }
+
+  onFinalStep(editorFiles: string[]) {
+    this.loading = true;
+    const controls = this.submitForm.controls;
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+    formData.append('imageURL', controls.image_url.value);
     formData.append('subtitle', controls.subtitle.value);
     formData.append('content', controls.content.value);
+    formData.append('contentFiles', editorFiles.join())
     formData.append('access', controls.access.value);
 
     this.itemsService.editPost(this.authenticationService.currentUserValue.user["_id"], this.post_id, formData)

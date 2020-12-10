@@ -100,6 +100,12 @@ export class ItemsService extends IItemsService {
       }));
   }
 
+  eventContentImage(image: FormData): Observable<any> {
+    return this.http
+      .post<any>(`${environment.apiUrl}/events/image`, image)
+      .pipe(map((response: any) => response));
+  }
+
   readEvent(partner_id: string, post_id: string): Observable<Event> {
     return this.http.get<any>(`${environment.apiUrl}/events/${partner_id}/${post_id}`)
       .pipe(map(response => {
@@ -144,6 +150,12 @@ export class ItemsService extends IItemsService {
       .pipe(map(response => {
         return response;
       }));
+  }
+
+  postContentImage(image: FormData): Observable<any> {
+    return this.http
+      .post<any>(`${environment.apiUrl}/posts/image`, image)
+      .pipe(map((response: any) => response));
   }
 
   readPost(partner_id: string, post_id: string): Observable<Post> {

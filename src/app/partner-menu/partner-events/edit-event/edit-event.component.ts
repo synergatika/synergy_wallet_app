@@ -8,6 +8,12 @@ import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 
 /**
+ * Components
+ */
+import { ContentImagesComponent } from '../../../core/components/content-images/content-images.component';
+
+
+/**
  * Services
  */
 import { StaticDataService } from '../../../core/helpers/static-data.service';
@@ -27,11 +33,16 @@ import { GeneralList } from 'sng-core';
 
 export class EditEventComponent implements OnInit {
   @ViewChild('remove_item') remove_item: NgbModalRef;
-  @ViewChild('fileInput') imageInput: ElementRef;
+  //  @ViewChild('fileInput') imageInput: ElementRef;
+  /**
+   * Imported Component
+   */
+  @ViewChild(ContentImagesComponent, { static: true })
+  public editorTextarea: ContentImagesComponent;
 
-	/**
-	 * Configuration and Static Data
-	 */
+  /**
+   * Configuration and Static Data
+   */
   public configDialog;
   public accessList: GeneralList[];
 
@@ -64,9 +75,9 @@ export class EditEventComponent implements OnInit {
   /**
    * FIle Variables
    */
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = true;
+  // fileData: File = null;
+  // previewUrl: any = null;
+  // originalImage: boolean = true;
   public initialImage: string = '';
 
   /**
@@ -112,18 +123,18 @@ export class EditEventComponent implements OnInit {
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.minDate = new Date();
     this.fetchEventData();
     this.initForm();
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -139,10 +150,10 @@ export class EditEventComponent implements OnInit {
       ])
       ],
       subtitle: [''],
-      description: ['', Validators.compose([
+      content: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.description.minLength),
-        Validators.maxLength(this.validator.description.maxLength)
+        //    Validators.minLength(this.validator.content.minLength),
+        //    Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
       access: ['', Validators.compose([
@@ -163,47 +174,12 @@ export class EditEventComponent implements OnInit {
         Validators.required
       ])
       ],
+      image_url: ['', Validators.compose([
+        Validators.required
+      ])
+      ],
+      contentFiles: [null]
     });
-  }
-
-  /**
-   * Image Upload
-   */
-  fileProgress(fileInput: any) {
-    console.log(fileInput);
-    if (fileInput) {
-      this.fileData = <File>fileInput.target.files[0];
-      this.originalImage = false;
-      this.preview();
-    }
-  }
-
-  preview() {
-    if (this.fileData == null) {
-      this.onImageCancel();
-      return;
-    }
-    this.originalImage = false;
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
-
-  onImageCancel() {
-    this.previewUrl = this.initialImage;
-    this.fileData = null;
-    this.originalImage = true;
-    this.imageInput.nativeElement.value = null;
   }
 
   /**
@@ -216,7 +192,7 @@ export class EditEventComponent implements OnInit {
           data => {
             this.title = data.title;
             this.initialImage = data.event_imageURL;
-            this.previewUrl = this.initialImage;
+            //this.previewUrl = this.initialImage;
 
             const eventDate = ((this.minDate).getDate() > data.dateTime) ? this.minDate : (new Date(data.dateTime));
             const eventTime = eventDate.getHours().toString() + ':' + eventDate.getMinutes().toString();
@@ -237,10 +213,11 @@ export class EditEventComponent implements OnInit {
       .subscribe();
   }
 
-	/**
-	 * On Submit Form
-	 */
-  onSubmit() {
+  /**
+   * On Submit Form
+   */
+
+  async onSubmit() {
     if (this.loading) return;
 
     const controls = this.submitForm.controls;
@@ -251,17 +228,25 @@ export class EditEventComponent implements OnInit {
       );
       return;
     }
+
+    await this.editorTextarea.uploadContentFiles();
+  }
+
+  onFinalStep(editorFiles: string[]) {
     this.loading = true;
+    const controls = this.submitForm.controls;
 
     const timeArray = controls.eventTime.value.split(':');
     const timeInMiliseconds = ((timeArray[0]) * 60 * 60 + (+timeArray[1]) * 60) * 1000;
     const totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
 
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+    formData.append('imageURL', controls.image_url.value);
+    //    formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
     formData.append('subtitle', controls.subtitle.value);
-    formData.append('description', controls.description.value);
+    formData.append('content', controls.content.value);
+    formData.append('contentFiles', editorFiles.join())
     formData.append('access', controls.access.value);
     formData.append('location', controls.location.value);
     formData.append('dateTime', totalMiliseconds.toString());

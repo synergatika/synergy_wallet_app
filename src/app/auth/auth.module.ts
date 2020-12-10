@@ -24,7 +24,7 @@ import { SubConfigGuard } from '../core/guards/subConfig.guard';
  */
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterMemberComponent } from './register-member/register-member.component';
 import { RegisterPartnerComponent } from './register-partner/register-partner.component';
 import { ForgotPasswordComponent } from './forgot_password/forgot_password.component';
 import { PasswordVerificationComponent } from './password_verification/password_verification.component';
@@ -41,12 +41,12 @@ import { TermsComponent } from './terms/synergy_terms.component';
 import { AuthenticationService } from '../core/services/authentication.service';
 
 import {
-  SngCoreModule,
-  ITranslationService,
-  IAuthenticationService,
-  IStaticDataService,
-  IPartnersService,
-  IMenuService
+    SngCoreModule,
+    ITranslationService,
+    IAuthenticationService,
+    IStaticDataService,
+    IPartnersService,
+    IMenuService
 } from 'sng-core';
 
 import { MenuService } from '../core/helpers/menu.service';
@@ -73,7 +73,7 @@ const routes: Routes = [
             },
             {
                 path: 'register',
-                component: RegisterComponent
+                component: RegisterMemberComponent
             },
             {
                 path: 'partner',
@@ -127,17 +127,17 @@ const routes: Routes = [
         SngCoreModule,
     ],
     providers: [
-      { provide: IMenuService, useClass: MenuService },
-      { provide: IStaticDataService, useClass: StaticDataService },
-      { provide: ITranslationService, useClass: TranslationService },
-      { provide: IAuthenticationService, useClass: AuthenticationService },
-      { provide: IPartnersService, useClass: PartnersService },
+        { provide: IMenuService, useClass: MenuService },
+        { provide: IStaticDataService, useClass: StaticDataService },
+        { provide: ITranslationService, useClass: TranslationService },
+        { provide: IAuthenticationService, useClass: AuthenticationService },
+        { provide: IPartnersService, useClass: PartnersService },
     ],
     exports: [AuthComponent],
     declarations: [
         AuthComponent,
         LoginComponent,
-        RegisterComponent,
+        RegisterMemberComponent,
         RegisterPartnerComponent,
         ForgotPasswordComponent,
         PasswordVerificationComponent,

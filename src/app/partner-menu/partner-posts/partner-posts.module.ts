@@ -22,11 +22,12 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { PartnerPostsComponent } from './partner-posts/partner-posts.component';
 
+import { WidgetsModule } from '../../core/components/widgets.module';
 
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import {
-  SngCoreModule,
+    SngCoreModule,
 } from 'sng-core';
 
 
@@ -73,14 +74,14 @@ const routes: Routes = [
         NgxMaterialTimepickerModule,
         NgbDropdownModule,
         SngCoreModule,
-    ],
+        WidgetsModule],
     providers: [
     ],
     // exports: [AuthComponent],
     declarations: [
         PartnerPostsComponent,
         NewPostComponent,
-        EditPostComponent,
+        EditPostComponent
     ],
     entryComponents: [
         // TermsComponent

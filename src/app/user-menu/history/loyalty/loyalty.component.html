@@ -25,22 +25,24 @@
         <div class="transaction-desc col"><span class="title">{{ 'HISTORY.RECEIPT' | translate }}:</span> {{item.tx}}
         </div>
       </div>
-      <div *ngIf="item.data.offer_id!='-1'" class="transaction-subtitle row">
+      <div *ngIf="item.offer_id!='-1'" class="transaction-subtitle row">
         <div class="transaction-info col">
-          <span class="transaction-desc">{{ 'HISTORY.OFFER' | translate }}: {{item.data.offer_title}} <br> </span>
+          <span class="transaction-desc">{{ 'HISTORY.OFFER' | translate }}: {{item.offer_title}} (x{{item.quantity}})
+            <br>
+          </span>
         </div>
       </div>
       <div class="transaction-details row">
         <div class="transaction-info col">
           <span class="transaction-title"><span class="title">{{ 'HISTORY.PARTNER' | translate }}:</span>
-            {{item.data.partner_name}}</span>
+            {{item.partner_name}}</span>
         </div>
         <div class="transaction-info col">
           <span class="transaction-title">{{item.createdAt | date:'medium' }}</span>
         </div>
         <div class="transaction-number col" [ngClass]="(item.type==='EarnPoints') ? 'font-success' : 'font-danger'">
           {{ (item.type==='EarnPoints') ? '+' : '-' }}
-          {{item.data.points}} {{ 'HISTORY.POINTS' | translate }}
+          {{item.points}} {{ 'HISTORY.POINTS' | translate }}
         </div>
       </div>
     </ng-template>
@@ -74,9 +76,10 @@
           <span class="transaction-desc">{{ 'HISTORY.RECEIPT' | translate }}: {{item.tx}} <br> </span>
         </div>
       </div>
-      <div *ngIf="item.data.offer_id!='-1'" class="transaction-item transaction-subtitle row">
+      <div *ngIf="item.offer_id!='-1'" class="transaction-item transaction-subtitle row">
         <div class="transaction-info col">
-          <span class="transaction-desc">{{ 'HISTORY.OFFER' | translate }}: {{item.data.offer_title}} <br> </span>
+          <span class="transaction-desc">{{ 'HISTORY.OFFER' | translate }}: {{item.offer_title}} (x{{item.quantity}})
+            <br> </span>
         </div>
       </div>
       <div class="transaction-details row">
@@ -88,8 +91,8 @@
         </div>
         <div class="transaction-info col">
           <span class="transaction-number" [ngClass]="(item.type==='EarnPoints') ? 'font-success' : 'font-danger'">
-            <div *ngIf="item.type==='EarnPoints'"> {{item.data.amount | currency: 'EUR'}} </div>
-            <div *ngIf="item.type!=='EarnPoints'"> ~ {{item.data.points}} {{'HISTORY.POINTS' | translate}} </div>
+            <div *ngIf="item.type==='EarnPoints'"> {{item.amount | currency: 'EUR'}} </div>
+            <div *ngIf="item.type!=='EarnPoints'"> ~ {{item.points}} {{'HISTORY.POINTS' | translate}} </div>
           </span>
         </div>
       </div>

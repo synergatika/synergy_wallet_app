@@ -27,9 +27,9 @@ export class StepperMemberMicrocreditSupportComponent implements OnInit, OnDestr
   @ViewChild(WizardComponent, { static: true })
   public wizard: WizardComponent;
 
-	/**
-	 * Configuration and Static Data
-	 */
+  /**
+   * Configuration and Static Data
+   */
   public paymentsList: PaymentList[];
 
   /**
@@ -42,18 +42,18 @@ export class StepperMemberMicrocreditSupportComponent implements OnInit, OnDestr
   private unsubscribe: Subject<any>;
   private subscription: Subscription = new Subscription;
 
-	/**
-	 * Component Constructor
-	 *
-	 * @param cdr: ChangeDetectorRef
-	 * @param translate: TranslateService,
-	 * @param stepperNoticeService: MessageNoticeService
-	 * @param staticDataService: StaticDataService
-	 * @param microcreditService: MicrocreditService
-	 * @param supportService: SupportService
-	 * @param dialogRef: MatDialogRef<MemberMicrocreditSupportComponent>
+  /**
+   * Component Constructor
+   *
+   * @param cdr: ChangeDetectorRef
+   * @param translate: TranslateService,
+   * @param stepperNoticeService: MessageNoticeService
+   * @param staticDataService: StaticDataService
+   * @param microcreditService: MicrocreditService
+   * @param supportService: SupportService
+   * @param dialogRef: MatDialogRef<MemberMicrocreditSupportComponent>
    * @param data: any (@Inject(MAT_DIALOG_DATA))
-	 */
+   */
   constructor(
     private cdRef: ChangeDetectorRef,
     private translate: TranslateService,
@@ -71,9 +71,9 @@ export class StepperMemberMicrocreditSupportComponent implements OnInit, OnDestr
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnInit() {
     this.campaign = this.data.campaign;
     this.stepperService.changeMicrocreditCampaign(this.campaign);
@@ -83,9 +83,9 @@ export class StepperMemberMicrocreditSupportComponent implements OnInit, OnDestr
     this.stepperService.changeTransaction(this.transaction);
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.stepperNoticeService.setNotice(null);
     this.subscription.unsubscribe();

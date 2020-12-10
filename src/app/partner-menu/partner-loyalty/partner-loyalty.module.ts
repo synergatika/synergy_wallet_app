@@ -26,8 +26,9 @@ import { PartnerOffersComponent } from './partner-offers/partner-offers.componen
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import {
-  SngCoreModule,
+    SngCoreModule,
 } from 'sng-core';
+import { WidgetsModule } from '../../core/components/widgets.module';
 
 
 const routes: Routes = [
@@ -74,6 +75,7 @@ const routes: Routes = [
         NgxMaterialTimepickerModule,
         NgbDropdownModule,
         SngCoreModule,
+        WidgetsModule
     ],
     providers: [
     ],

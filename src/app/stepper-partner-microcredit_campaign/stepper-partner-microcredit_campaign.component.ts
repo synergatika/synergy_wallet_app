@@ -75,9 +75,9 @@ export class StepperPartnerMicrocreditCampaignComponent implements OnInit, OnDes
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.campaign = this.data.campaign;
     this.stepperService.changeMicrocreditCampaign(this.campaign);
@@ -87,9 +87,9 @@ export class StepperPartnerMicrocreditCampaignComponent implements OnInit, OnDes
     this.stepperService.changeTransaction(this.transaction);
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.stepperNoticeService.setNotice(null);
     this.subscription.unsubscribe();
@@ -168,7 +168,8 @@ export class StepperPartnerMicrocreditCampaignComponent implements OnInit, OnDes
             this.supports = data as any;
             console.log(this.supports);
             this.stepperService.changeMicrocreditSupports(this.supports);
-            const canRedeem = (this.supports.filter(support => (support.initialTokens - support.redeemedTokens > 0) && (support.status === 'confirmation'))).length > 0;
+            const canRedeem = (this.supports.filter(support =>
+              (support.currentTokens > 0) && ((support.type === 'ReceiveFund') || (support.type === 'SpendFund'))).length > 0);
             if (!canRedeem) {
               this.stepperNoticeService.setNotice(this.translate.instant('WIZARD_MESSAGES.NOT_ENOUGH_TOKENS'), 'danger');
             }

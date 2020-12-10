@@ -78,7 +78,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.password.maxLength)
       ])
       ],
-      newPassword: ['', Validators.compose([
+      password: ['', Validators.compose([
         Validators.required,
         Validators.minLength(this.validator.password.minLength),
         Validators.maxLength(this.validator.password.maxLength)
@@ -111,7 +111,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
     const authData = {
       oldPassword: controls.oldPassword.value,
-      newPassword: controls.newPassword.value
+      newPassword: controls.password.value
     };
 
     this.authenticationService.change_pass(authData.oldPassword, authData.newPassword)

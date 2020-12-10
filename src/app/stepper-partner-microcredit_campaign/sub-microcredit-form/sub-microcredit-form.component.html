@@ -55,8 +55,7 @@
           <div class="col-md-6" *ngIf="(tran.type === 'PromiseFund') || ((tran.type === 'SpendFund'))"
             class="stepper-info microcredit-info">
             <span class="col-head" [ngClass]="(tran.type==='PromiseFund') ? 'init' : 'redeemed'">
-              {{ (tran.type==='SpendFund') ? '-' : '+' }}
-              {{tran.data.tokens}} {{ 'HISTORY.TOKENS' | translate }}
+              {{tran.tokens}} {{ 'HISTORY.TOKENS' | translate }}
             </span>
           </div>
           <div class="col-md-6" *ngIf="(tran.type === 'RevertFund') || ((tran.type === 'ReceiveFund'))"

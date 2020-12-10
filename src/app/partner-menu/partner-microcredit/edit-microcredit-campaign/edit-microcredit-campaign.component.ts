@@ -35,9 +35,9 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   @ViewChild('publish_item') publish_item: any;
   @ViewChild('remove_item') remove_item: any;
 
-	/**
-	 * Configuration and Static Data
-	 */
+  /**
+   * Configuration and Static Data
+   */
   public accessList: GeneralList[];
 
   /**
@@ -55,9 +55,9 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   /**
    * File Variables
    */
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = true;
+  // fileData: File = null;
+  // previewUrl: any = null;
+  // originalImage: boolean = true;
   public initialImage: string = '';
 
   /**
@@ -120,17 +120,17 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   }
 
   /**
-	 * On Init
-	 */
+   * On Init
+   */
   ngOnInit() {
     this.minDate = new Date();
     this.fetchCampaignData();
     this.initForm();
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -203,6 +203,10 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
         Validators.required,
       ])
       ],
+      image_url: [new Date(), Validators.compose([
+        Validators.required,
+      ])
+      ],
     },
       {
         validator: DatesValidator.DatesValidator
@@ -213,41 +217,41 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   /**
    * Image Upload
    */
-  fileProgress(fileInput: any) {
-    if (fileInput) {
-      this.fileData = <File>fileInput.target.files[0];
-      this.originalImage = false;
-      this.preview();
-    }
-  }
+  // fileProgress(fileInput: any) {
+  //   if (fileInput) {
+  //     this.fileData = <File>fileInput.target.files[0];
+  //     this.originalImage = false;
+  //     this.preview();
+  //   }
+  // }
 
-  preview() {
-    if (this.fileData == null) {
-      this.onImageCancel();
-      return;
-    }
-    this.originalImage = false;
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
+  // preview() {
+  //   if (this.fileData == null) {
+  //     this.onImageCancel();
+  //     return;
+  //   }
+  //   this.originalImage = false;
+  //   var mimeType = this.fileData.type;
+  //   if (mimeType.match(/image\/*/) == null) {
+  //     return;
+  //   }
 
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(this.fileData);
+  //   reader.onload = (_event) => {
+  //     if (this.previewUrl !== reader.result) {
+  //       this.cdRef.markForCheck();
+  //     }
+  //     this.previewUrl = reader.result;
+  //   }
+  // }
 
-  onImageCancel() {
-    this.previewUrl = this.initialImage;
-    this.fileData = null;
-    this.originalImage = true;
-    this.imageInput.nativeElement.value = null;
-  }
+  // onImageCancel() {
+  //   this.previewUrl = this.initialImage;
+  //   this.fileData = null;
+  //   this.originalImage = true;
+  //   this.imageInput.nativeElement.value = null;
+  // }
 
   fetchCampaignData() {
     this.itemsService.readCampaign(this.authenticationService.currentUserValue.user["_id"], this.campaign_id)
@@ -256,7 +260,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
           data => {
             this.title = data.title;
             this.initialImage = data.campaign_imageURL;
-            this.previewUrl = this.initialImage;
+            // this.previewUrl = this.initialImage;
 
             this.isQuantitative = data.quantitative;
             this.submitForm.patchValue({
@@ -286,7 +290,8 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     const controls = this.submitForm.controls;
 
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+    formData.append('imageURL', controls.image_url.value);
+    // formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
     formData.append('subtitle', controls.subtitle.value);
     formData.append('terms', controls.terms.value);

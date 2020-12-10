@@ -54,6 +54,6 @@
   <button *ngIf="!showPaypalButton" mat-raised-button (click)="onNextStep()">
     {{'MEMBER.WIZARD.NEXT_STEP' | translate}}
   </button>
-  <ngx-paypal *ngIf="showPaypalButton" [config]="payPalConfig"></ngx-paypal>
+  <!-- <ngx-paypal *ngIf="showPaypalButton" [config]="payPalConfig"></ngx-paypal> -->
   <!--end::Wizard Buttons-->
 </div>

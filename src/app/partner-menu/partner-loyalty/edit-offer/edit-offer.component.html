@@ -116,7 +116,9 @@
             <!--end::Form Group "Cost"-->
 
             <!--begin::Form Group "Image"-->
-            <div class="form-group">
+            <app-image-upload *ngIf="initialImage" [parentForm]="submitForm" previousURL="{{initialImage}}">
+            </app-image-upload>
+            <!-- <div class="form-group">
               <label class="">{{'FIELDS.OFFER.IMAGE.TITLE' | translate}}</label>
               <div class="">
                 <div class="upload-img">
@@ -138,7 +140,7 @@
                     accept=".png, .jpg, .jpeg" #fileInput>
                 </label>
               </div>
-            </div>
+            </div> -->
             <!--end::Form Group "Image"-->
 
           </div>

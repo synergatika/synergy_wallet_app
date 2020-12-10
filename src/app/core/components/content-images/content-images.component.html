@@ -1,0 +1,46 @@
+<div [formGroup]="parentForm" class="form container single-form">
+  <ckeditor [editor]="Editor" formControlName="content" (ready)="onReady(editorFiles,  $event)">
+  </ckeditor>
+  <mat-error *ngIf="isControlHasError('content','required')" class="error text-danger">
+    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+  </mat-error>
+  <!-- <mat-error *ngIf="isControlHasError('content','minlength')" class="error text-danger">
+    {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.content.minLength}}
+  </mat-error>
+  <mat-error *ngIf="isControlHasError('content','maxlength')" class="error text-danger">
+    {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.content.maxLength}}
+  </mat-error> -->
+  <mat-error *ngIf="showImageSizeError" class="error text-danger">
+    {{ 'FORM.VALIDATION.IMAGE_SIZE' | translate }} {{bytesToSize()}} ({{fileName}})
+  </mat-error>
+  <mat-error *ngIf="showImagesNumberError" class="error text-danger">
+    {{ 'FORM.VALIDATION.IMAGES_NUMBER' | translate }} {{validator.maxNumber}}
+  </mat-error>
+  <mat-hint class="form-text text-muted">
+    {{'FIELDS.POST.CONTENT.DESC' | translate}}
+  </mat-hint>
+</div>
+
+<!-- <div class="form-group">
+  <label class="">{{'FIELDS.POST.IMAGE.TITLE' | translate}}</label>
+  <div class="">
+    <div class="upload-img">
+      <div class="upload-img-container">
+        <img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+        <div *ngIf="previewUrl" class="image-cancel">
+          <span class="mdi mdi-close-circle" (click)="onImageCancel()">
+          </span>
+        </div>
+      </div>
+    </div>
+    <button class="upload-img-btn" type="button" mat-raised-button
+      (click)="fileInput.click()">{{'FIELDS.POST.IMAGE.ACTION' | translate}}</button>
+    <label class="avatar__upload">
+      <i class="fa fa-pen"></i>
+      <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar" formControlName="profile_avatar"
+        accept=".png, .jpg, .jpeg" #fileInput>
+    </label>
+    <mat-error *ngIf="showImageError" class="error text-danger">
+      {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+  </div>
+</div> -->

@@ -5,7 +5,7 @@
   <div *ngIf="access === 'partner'">
 
     <!--begin::Form-->
-    <form [formGroup]="partnerForm" class="form" id="personal_form">
+    <form [formGroup]="partnerForm" class="form single-form" id="personal_form">
       <hr>
       <div class="row">
         <div class="sub-heading col-md-12">{{ 'FIELDS.PROFILE.SUBSECTIONS.BASIC' | translate }}</div>
@@ -114,7 +114,9 @@
         <div class="col-md-6">
 
           <!--begin::Form Group "Image"-->
-          <div class="form-group">
+          <app-image-upload *ngIf="loadImageUploader" [parentForm]="partnerForm" previousURL="{{initialImage}}">
+          </app-image-upload>
+          <!-- <div class="form-group">
             <label class="col-form-label">{{ 'FIELDS.PROFILE.PARTNER_IMAGE.TITLE' | translate }}</label>
             <div class="">
               <div class="avatar" id="merchat_avatar">
@@ -136,7 +138,7 @@
                 </label>
               </div>
             </div>
-          </div>
+          </div> -->
           <!--end::Form Group "Image"-->
 
         </div>
@@ -313,8 +315,59 @@
       </div>
       <!--end::Case hasAddress-->
 
-      <!--begin::Case hasContact-->
+      <!--begin::Case hasContacts-->
       <div *ngIf="subAccessConfig[1]">
+        <hr>
+        <div class="row">
+          <div class="sub-heading col-md-12">
+            {{ 'FIELDS.PROFILE.SUBSECTIONS.COMMUNICATION' | translate }}
+          </div>
+        </div>
+
+        <!--begin::Form Group "Name"-->
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>{{ 'FIELDS.PROFILE.PHONE.TITLE' | translate }}</mat-label>
+            <input matInput type="text" name="phone" formControlName="phone"
+              placeholder="{{ 'FIELDS.PROFILE.PHONE.PLACEHOLDER' | translate }}">
+            <mat-error *ngIf="isPartnerControlHasError('phone','required')" class="error text-danger">
+              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+            </mat-error>
+            <mat-error *ngIf="isPartnerControlHasError('phone','minlength')" class="error text-danger">
+              {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.phone.minLength}}
+            </mat-error>
+            <mat-error *ngIf="isPartnerControlHasError('phone','maxlength')" class="error text-danger">
+              {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.phone.maxLength}}
+            </mat-error>
+            <mat-hint class="form-text text-muted">
+              {{ 'FIELDS.PROFILE.PHONE.DESC' | translate }}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <!--end::Form Group "Name"-->
+
+        <!--begin::Form Group "Contacts"-->
+        <div class="form-group">
+          <div formArrayName="contacts">
+            <mat-form-field class="payment col-md-6" *ngFor="let contact of contacts.controls; index as i">
+              <input matInput type="text" [formControlName]="i" placeholder="{{contactsList[i].title | translate}}">
+              <span matPrefix>{{contactsList[i].prefix}}</span>
+              <mat-hint class="form-text text-muted">
+                {{'FIELDS.PROFILE.CONTACT.DESC' | translate}}
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <!--end::Form Group "Contacts"-->
+
+        <!-- </div> -->
+      </div>
+      <!--end::Case hasContacts-->
+
+      <hr>
+
+      <!--begin::Case hasContact-->
+      <!-- <div *ngIf="subAccessConfig[1]">
 
         <hr>
         <div class="row">
@@ -322,10 +375,10 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6"> -->
 
-            <!--begin::Form Group "Phone"-->
-            <div class="form-group">
+      <!--begin::Form Group "Phone"-->
+      <!-- <div class="form-group">
               <mat-form-field>
                 <mat-label>{{'FIELDS.PROFILE.PHONE.TITLE' | translate}}</mat-label>
                 <input matInput type="text" formControlName="phone"
@@ -343,14 +396,14 @@
                   {{'FIELDS.PROFILE.PHONE.DESC' | translate}}
                 </mat-hint>
               </mat-form-field>
-            </div>
-            <!--end::Form Group "Phone"-->
+            </div> -->
+      <!--end::Form Group "Phone"-->
 
-          </div>
-          <div class="col-md-6">
+      <!-- </div>
+          <div class="col-md-6"> -->
 
-            <!--begin::Form Group "Website"-->
-            <div class="form-group">
+      <!--begin::Form Group "Website"-->
+      <!-- <div class="form-group">
               <mat-form-field>
                 <mat-label>{{'FIELDS.PROFILE.WEBSITE.TITLE' | translate}}</mat-label>
                 <input matInput type="text" formControlName="websiteURL"
@@ -368,16 +421,16 @@
                   {{'FIELDS.PROFILE.WEBSITE.DESC' | translate}
                 }</mat-hint>
               </mat-form-field>
-            </div>
-            <!--end::Form Group "Website"-->
+            </div> -->
+      <!--end::Form Group "Website"-->
 
-          </div>
+      <!-- </div>
         </div>
-      </div>
+      </div> -->
       <!--end::Case hasContact-->
 
       <!--begin::Case hasPayments-->
-      <div *ngIf="subAccessConfig[2]">
+      <!-- <div *ngIf="subAccessConfig[2]">
 
         <hr>
         <div class="row">
@@ -385,10 +438,10 @@
             </div>
           </div>
 
-          <div class="row">
+          <div class="row"> -->
 
-            <!--begin::Form Group "Payments"-->
-            <div class="form-group">
+      <!--begin::Form Group "Payments"-->
+      <!-- <div class="form-group">
               <div formArrayName="payments">
                 <mat-form-field class="payment col-md-6" *ngFor="let payment of payments.controls; index as i">
                   <input matInput type="text" [formControlName]="i" placeholder="{{paymentsList[i].title | translate}}">
@@ -400,25 +453,25 @@
                   </mat-hint>
                 </mat-form-field>
               </div>
-            </div>
-            <!--end::Form Group "Payments"-->
+            </div> -->
+      <!--end::Form Group "Payments"-->
 
-          </div>
+      <!-- </div>
+        </div> -->
+      <!--end::Case hasPayments-->
+
+      <!-- <hr> -->
+
+      <!--begin::Form Actions-->
+      <div class="row">
+        <div class="form-actions col-md-12">
+          <button mat-raised-button class="btn btn-primary" (click)="onPartnerSubmit()"
+            (keyup.enter)="onPartnerSubmit()">
+            {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+          </button>
         </div>
-        <!--end::Case hasPayments-->
-
-        <hr>
-
-        <!--begin::Form Actions-->
-        <div class="row">
-          <div class="form-actions col-md-12">
-            <button mat-raised-button class="btn btn-primary" (click)="onPartnerSubmit()"
-              (keyup.enter)="onPartnerSubmit()">
-              {{ 'FORM.BUTTONS.SUBMIT' | translate }}
-            </button>
-          </div>
-        </div>
-        <!--end::Form Actions-->
+      </div>
+      <!--end::Form Actions-->
 
     </form>
     <!--end::Form-->
@@ -430,7 +483,7 @@
   <div *ngIf="access !== 'partner'">
 
     <!--begin::Form-->
-    <form [formGroup]="memberForm" class="form" id="personal_form">
+    <form [formGroup]="memberForm" class="form single-form" id="personal_form">
       <div class="row">
         <div class="col-md-6">
 
@@ -460,7 +513,9 @@
         <div class="col-md-6">
 
           <!--begin::Form Group "Image"-->
-          <div class="form-group">
+          <app-image-upload *ngIf="loadImageUploader" [parentForm]="memberForm" previousURL="{{initialImage}}">
+          </app-image-upload>
+          <!-- <div class="form-group">
             <label class="">{{'FIELDS.PROFILE.MEMBER_IMAGE.TITLE' | translate}}</label>
             <div class="">
               <div class="avatar" id="user_avatar">
@@ -482,7 +537,7 @@
                 </label>
               </div>
             </div>
-          </div>
+          </div> -->
           <!--end::Form Group "Image"-->
 
         </div>

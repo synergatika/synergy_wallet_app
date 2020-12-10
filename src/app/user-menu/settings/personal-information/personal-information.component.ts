@@ -18,13 +18,17 @@ import { StaticDataService } from '../../../core/helpers/static-data.service';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { PartnersService } from '../../../core/services/partners.service';
 import { MembersService } from '../../../core/services/members.service';
+// import { PartnerContact } from '../../../core/models/partner_contact.model';
+// import { ContactList } from '../../../core/interfaces/contact-list.interface';
 
 import {
   Member,
   Partner,
   PartnerPayment,
+  PartnerContact,
   PaymentList,
-  GeneralList
+  GeneralList,
+  ContactList
 } from 'sng-core';
 
 @Component({
@@ -33,14 +37,15 @@ import {
   styleUrls: ['./personal-information.component.scss']
 })
 export class PersonalInformationComponent implements OnInit, OnDestroy {
-  @ViewChild('fileInputMerch') imageInputMerch: ElementRef;
-  @ViewChild('fileInput') imageInput: ElementRef;
+  //  @ViewChild('fileInputMerch') imageInputMerch: ElementRef;
+  //  @ViewChild('fileInput') imageInput: ElementRef;
 
-	/**
-	 * Configuration and Static Data
-	 */
+  /**
+   * Configuration and Static Data
+   */
   public subAccessConfig: Boolean[] = environment.subAccess;
-  public paymentsList: PaymentList[];
+  //public paymentsList: PaymentList[];
+  public contactsList: ContactList[];
   public sectorList: GeneralList[];
 
   /**
@@ -62,17 +67,17 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   /**
    * Form Errors
    */
-  showImageError: boolean = false;
+  // showImageError: boolean = false;
   showPaymentError: boolean = false;
 
   /**
    * File Variables
    */
-  fileData: File = null;
-  previewUrl: any = null;
-  originalImage: boolean = true;
+  // fileData: File = null;
+  // previewUrl: any = null;
+  // originalImage: boolean = true;
   public initialImage: string = '';
-
+  public loadImageUploader: boolean = false;
 
   /**
    * @param cdRef: ChangeDetectorRef
@@ -94,15 +99,16 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     private partnersService: PartnersService,
     private membersService: MembersService
   ) {
-    this.paymentsList = this.staticDataService.getPaymentsList;
+    this.contactsList = this.staticDataService.getContactsList;
+    // this.paymentsList = this.staticDataService.getPaymentsList;
     this.sectorList = this.staticDataService.getSectorList;
     this.validator = this.staticDataService.getValidators.user;
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     // console.log(this.authenticationService.currentUserValue.user["access"])
     this.access = this.authenticationService.currentUserValue.user["access"];
@@ -110,9 +116,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     (this.access === 'partner') ? this.fetchPartnerData() : this.fetchMemberData();
   }
 
-	/**
-	 * On Destroy
-	 */
+  /**
+   * On Destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -129,22 +135,33 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (partner.contact && this.subAccessConfig[1]) {
-      this.partnerForm.patchValue({
-        ...partner.contact
-      });
-    }
+    // if (partner.contacts && this.subAccessConfig[1]) {
+    //   this.partnerForm.patchValue({
+    //     ...partner.contacts
+    //   });
+    // }
 
-    if (partner.payments && this.subAccessConfig[1]) {
+    if (partner.contacts && this.subAccessConfig[1]) {
       this.partnerForm.patchValue({
         ...{
-          payments: (this.paymentsList.map(item => {
-            const obj = (partner.payments).find(o => o.bic === item.bic);
+          contacts: (this.contactsList.map(item => {
+            const obj = (partner.contacts).find(o => o.slug === item.slug);
             return { ...item, ...obj };
           })).map(a => a.value)
         }
       });
     }
+
+    // if (partner.payments && this.subAccessConfig[1]) {
+    //   this.partnerForm.patchValue({
+    //     ...{
+    //       payments: (this.paymentsList.map(item => {
+    //         const obj = (partner.payments).find(o => o.bic === item.bic);
+    //         return { ...item, ...obj };
+    //       })).map(a => a.value)
+    //     }
+    //   });
+    // }
   };
 
   /**
@@ -156,8 +173,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.initialImage = data.imageURL;
-            this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
+            this.initialImage = data.imageURL || '';
+            this.loadImageUploader = true;
+            //  this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
             this.memberForm.patchValue({ ...data });
           },
           error => {
@@ -187,8 +205,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         tap(
           data => {
             console.log(data);
-            this.initialImage = data.imageURL;
-            this.previewUrl = this.initialImage || '../../../../assets/media/users/default.png';
+            this.initialImage = data.imageURL || '';
+            this.loadImageUploader = true;
+            //   this.previewUrl = this.initialImage || '../../../../assets/media/users/default.png';
             this.partnerForm.patchValue({ ...data });
             this.configurationOnFetchPartnerData(data)
           },
@@ -218,6 +237,10 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(this.validator.name.minLength),
         Validators.maxLength(this.validator.name.maxLength)
+      ])
+      ],
+      image_url: [null, Validators.compose([
+        Validators.required
       ])
       ],
     });
@@ -280,37 +303,59 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         Validators.minLength(this.validator.address.coordinates.minLength),
         Validators.maxLength(this.validator.address.coordinates.maxLength),
         Validators.min(this.validator.address.long.minValue),
-        Validators.max(this.validator.address.long.maxValue)])
-      ],
-
-      /** Form Groups Related with Partner's Contact */
-      phone: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(this.validator.contact.phone.minLength),
-        Validators.maxLength(this.validator.contact.phone.maxLength)
+        Validators.max(this.validator.address.long.maxValue)
       ])
       ],
-      websiteURL: ['', Validators.compose([
+      phone: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.contact.websiteURL.minLength),
-        Validators.maxLength(this.validator.contact.websiteURL.maxLength),])
+        Validators.minLength(this.validator.address.coordinates.minLength),
+        Validators.maxLength(this.validator.address.coordinates.maxLength)
+      ])
       ],
-
+      /** Form Groups Related with Partner's Contact */
+      // phone: ['', Validators.compose([
+      //   Validators.required,
+      //   Validators.minLength(this.validator.contact.phone.minLength),
+      //   Validators.maxLength(this.validator.contact.phone.maxLength)
+      // ])
+      // ],
+      // websiteURL: ['', Validators.compose([
+      //   Validators.required,
+      //   Validators.minLength(this.validator.contact.websiteURL.minLength),
+      //   Validators.maxLength(this.validator.contact.websiteURL.maxLength),])
+      // ],
+      image_url: [null, Validators.compose([
+        Validators.required
+      ])
+      ],
       /** Form Groups Related with Partner's Payments */
-      payments: new FormArray([]),
+      // payments: new FormArray([]),
+      contacts: new FormArray([]),
+    });
+
+    this.contactsList.forEach(element => {
+      const payment = new FormControl('',
+      );
+      this.contacts.push(payment);
     });
 
     if (this.subAccessConfig[0]) this.clearPartnerAddressValidators(this.partnerForm);
-    if (this.subAccessConfig[1]) this.clearPartnerContactValidators(this.partnerForm);
+    if (this.subAccessConfig[1]) this.clearPartnerContactsValidators(this.partnerForm);
 
-    this.paymentsList.forEach(element => {
-      const payment = new FormControl('',);
-      this.payments.push(payment);
-    });
+    // this.paymentsList.forEach(element => {
+    //   const payment = new FormControl('',);
+    //   this.payments.push(payment);
+    // });
+
+
   }
 
   get payments() {
     return this.partnerForm.get('payments') as FormArray;
+  }
+
+  get contacts() {
+    return this.partnerForm.get('contacts') as FormArray;
   }
 
   /**
@@ -333,73 +378,91 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     form.get('timetable').updateValueAndValidity();
   }
 
-  clearPartnerContactValidators(form: FormGroup) {
+  // clearPartnerContactValidators(form: FormGroup) {
+  //   form.get('phone').clearValidators();
+  //   form.get('phone').updateValueAndValidity();
+  //   form.get('websiteURL').clearValidators();
+  //   form.get('websiteURL').updateValueAndValidity();
+  // }
+
+  clearPartnerContactsValidators(form: FormGroup) {
     form.get('phone').clearValidators();
     form.get('phone').updateValueAndValidity();
-    form.get('websiteURL').clearValidators();
-    form.get('websiteURL').updateValueAndValidity();
-  }
 
-  clearPartnerPaymentsValidators() {
-    console.log("On Clear");
-    this.paymentsList.forEach((value, i) => {
-      this.payments.at(i).clearValidators();
-      this.payments.at(i).updateValueAndValidity();
+    this.contactsList.forEach((value, i) => {
+      this.contacts.at(i).clearValidators();
+      this.contacts.at(i).updateValueAndValidity();
     });
   }
 
-  setPartnerPaymentsValidators() {
+  // clearPartnerPaymentsValidators() {
+  //   console.log("On Clear");
+  //   this.paymentsList.forEach((value, i) => {
+  //     this.payments.at(i).clearValidators();
+  //     this.payments.at(i).updateValueAndValidity();
+  //   });
+  // }
+
+  // setPartnerPaymentsValidators() {
+  //   console.log("On Set");
+  //   this.paymentsList.forEach((value, i) => {
+  //     this.payments.at(i).setValidators(Validators.required);
+  //     this.payments.at(i).updateValueAndValidity();
+  //   });
+  // }
+
+  setPartnerContactsValidators() {
     console.log("On Set");
-    this.paymentsList.forEach((value, i) => {
-      this.payments.at(i).setValidators(Validators.required);
-      this.payments.at(i).updateValueAndValidity();
+    this.contactsList.forEach((value, i) => {
+      this.contacts.at(i).setValidators(Validators.required);
+      this.contacts.at(i).updateValueAndValidity();
     });
   }
 
   /**
    * Image Upload
    */
-  fileProgress(fileInput: any) {
-    console.log(fileInput);
-    if (fileInput) {
-      this.fileData = <File>fileInput.target.files[0];
-      this.originalImage = false;
-      this.preview();
-    }
-  }
+  // fileProgress(fileInput: any) {
+  //   console.log(fileInput);
+  //   if (fileInput) {
+  //     this.fileData = <File>fileInput.target.files[0];
+  //     this.originalImage = false;
+  //     this.preview();
+  //   }
+  // }
 
-  preview() {
-    if (this.fileData == null) {
-      this.onImageCancel();
-      return;
-    }
+  // preview() {
+  //   if (this.fileData == null) {
+  //     this.onImageCancel();
+  //     return;
+  //   }
 
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
+  //   var mimeType = this.fileData.type;
+  //   if (mimeType.match(/image\/*/) == null) {
+  //     return;
+  //   }
 
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(this.fileData);
+  //   reader.onload = (_event) => {
+  //     if (this.previewUrl !== reader.result) {
+  //       this.cdRef.markForCheck();
+  //     }
+  //     this.previewUrl = reader.result;
+  //   }
+  // }
 
-  onImageCancel() {
-    if (this.access === 'partner') {
-      this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
-      this.imageInputMerch.nativeElement.value = null;
-    } else {
-      this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
-      this.imageInput.nativeElement.value = null;
-    }
-    this.fileData = null;
-    this.originalImage = true;
-  }
+  // onImageCancel() {
+  //   if (this.access === 'partner') {
+  //     this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
+  //     this.imageInputMerch.nativeElement.value = null;
+  //   } else {
+  //     this.previewUrl = this.initialImage || '../../../../assets/media/users/default.jpg';
+  //     this.imageInput.nativeElement.value = null;
+  //   }
+  //   this.fileData = null;
+  //   this.originalImage = true;
+  // }
 
   /**
    * On Submit Form (Member)
@@ -418,7 +481,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+    formData.append('imageURL', controls.image_url.value);
+    //formData.append('imageURL', this.fileData);
     formData.append('name', controls.name.value);
 
     this.membersService.updateProfile(formData)
@@ -451,19 +515,33 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  setPaymentsValues(controls: { [key: string]: AbstractControl }) {
-    var payments: PartnerPayment[] = [];
-    this.paymentsList.forEach((value, i) => {
-      console.log(controls.payments.value[i])
-      if (controls.payments.value[i]) {
-        payments.push({
-          bic: this.paymentsList[i].bic,
-          name: this.paymentsList[i].name,
-          value: controls.payments.value[i]
+  // setPaymentsValues(controls: { [key: string]: AbstractControl }) {
+  //   var payments: PartnerPayment[] = [];
+  //   this.paymentsList.forEach((value, i) => {
+  //     console.log(controls.payments.value[i])
+  //     if (controls.payments.value[i]) {
+  //       payments.push({
+  //         bic: this.paymentsList[i].bic,
+  //         name: this.paymentsList[i].name,
+  //         value: controls.payments.value[i]
+  //       })
+  //     }
+  //   });
+  //   return payments;
+  // }
+
+  setContactsValues(controls: { [key: string]: AbstractControl }) {
+    var contacts: PartnerContact[] = [];
+    this.contactsList.forEach((value, i) => {
+      if (controls.contacts.value[i]) {
+        contacts.push({
+          slug: this.contactsList[i].slug,
+          name: this.contactsList[i].name,
+          value: controls.contacts.value[i]
         })
       }
     });
-    return payments;
+    return contacts;
   }
 
   /**
@@ -473,13 +551,14 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     if (this.loading) return;
 
     const controls = this.partnerForm.controls;
-    const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
+    // const partner_payments: PartnerPayment[] = this.setPaymentsValues(controls);
+    const partner_contact: any[] = this.setContactsValues(controls);
     /** check form */
-    if (this.partnerForm.invalid || !partner_payments.length) {
+    if (this.partnerForm.invalid) {// || !partner_payments.length) {
 
-      (partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();
-      this.showPaymentError = (partner_payments.length === 0)
-      this.showImageError = (!this.fileData);
+      // (partner_payments.length) ? this.clearPartnerPaymentsValidators() : this.setPartnerPaymentsValidators();
+      // this.showPaymentError = (partner_payments.length === 0)
+      //  this.showImageError = (!this.fileData);
 
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
@@ -489,7 +568,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
+    // formData.append('imageURL', this.fileData);
+    formData.append('imageURL', controls.image_url.value);
+
     formData.append('name', controls.name.value);
     formData.append('subtitle', controls.subtitle.value);
     formData.append('description', controls.description.value);
@@ -503,9 +584,10 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     formData.append('long', controls.long.value);
 
     formData.append('phone', controls.phone.value);
-    formData.append('websiteURL', controls.websiteURL.value);
+    // formData.append('websiteURL', controls.websiteURL.value);
 
-    formData.append('payments', JSON.stringify(partner_payments));
+    formData.append('contacts', JSON.stringify(partner_contact));
+    //    formData.append('payments', JSON.stringify(partner_payments));
 
     this.partnersService.updatePartnerInfo(this.authenticationService.currentUserValue.user["_id"], formData)
       .pipe(

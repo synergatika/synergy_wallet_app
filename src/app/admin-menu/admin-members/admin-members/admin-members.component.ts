@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
  * Services
  */
 import { UsersService } from '../../../core/services/users.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 import { User } from 'sng-core';
 
@@ -45,12 +46,14 @@ export class AdminMembersComponent implements OnInit, OnDestroy {
    * @param cdRef: ChangeDetectorRef
    * @param matDialog: MatDialog
    * @param translate: TranslateService
+   * @param authenticationService: AuthenticationService
    * @param usersService: UsersService
    */
   constructor(
     private cdRef: ChangeDetectorRef,
     public matDialog: MatDialog,
     private translate: TranslateService,
+    private authenticationService: AuthenticationService,
     private usersService: UsersService
   ) {
     this.unsubscribe = new Subject();
@@ -102,19 +105,18 @@ export class AdminMembersComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Reactivate User
+   * Activate User
    */
-  changeUserStatus(user_id: string, event: MatCheckboxChange) {
+  activateUser(user_id: string, event: MatCheckboxChange) {
 
     this.loading = true;
-
-    this.usersService.reactivateUser(user_id)
+    this.authenticationService.activateUser(user_id)
       .pipe(
         tap(
           data => {
             Swal.fire({
               title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
-              text: this.translate.instant('MESSAGE.SUCCESS.USER_REACTIVATED'),
+              text: this.translate.instant('MESSAGE.SUCCESS.USER_ACTIVATED'),
               icon: 'success',
               timer: 2500
             })
@@ -135,4 +137,40 @@ export class AdminMembersComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
+
+
+  /**
+   * Deactivate User
+   */
+  deactivateUser(user_id: string, event: MatCheckboxChange) {
+
+    this.loading = true;
+    this.authenticationService.deactivateUser(user_id)
+      .pipe(
+        tap(
+          data => {
+            Swal.fire({
+              title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
+              text: this.translate.instant('MESSAGE.SUCCESS.USER_DEACTIVATED'),
+              icon: 'success',
+              timer: 2500
+            })
+          },
+          error => {
+            Swal.fire(
+              this.translate.instant('MESSAGE.ERROR.TITLE'),
+              this.translate.instant(error),
+              'error'
+            );
+          }),
+        takeUntil(this.unsubscribe),
+        finalize(() => {
+          this.fetchUsersData();
+          this.loading = false;
+          this.cdRef.markForCheck();
+        })
+      )
+      .subscribe();
+  }
+
 }

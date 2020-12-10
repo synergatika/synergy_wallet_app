@@ -75,16 +75,16 @@ export class StepperPartnerLoyaltyPointsComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     // this.controlModalState(true);
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.stepperNoticeService.setNotice(null);
     this.subscription.unsubscribe();
@@ -307,6 +307,8 @@ export class StepperPartnerLoyaltyPointsComponent implements OnInit, OnDestroy {
    * Deside the registration action (Registration, Link Email, Link Card)
    */
   actionsHandler() {
+    this.loading = true;
+
     const user = {
       identifier: this.user.identifier_scan || this.user.identifier_form,
       email: this.user.email

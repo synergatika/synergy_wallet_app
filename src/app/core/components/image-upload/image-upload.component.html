@@ -1,0 +1,49 @@
+<!-- <div [formGroup]="parentForm" class="form container single-form"> -->
+<div class="form-group">
+  <mat-label for="image_url">{{'FIELDS.POST.IMAGE.TITLE' | translate}}</mat-label>
+  <button class="upload-img-btn" type="button" mat-raised-button (click)="fileInput.click()">
+    {{'FIELDS.POST.IMAGE.ACTION' | translate}}
+  </button>
+  <input id="image" type="file" class="form-control-file" hidden (change)="showPreview($event)"
+    accept=".png, .jpg, .jpeg" #fileInput />
+
+  <div class="upload-img">
+    <div class="upload-img-container" *ngIf="imageURL">
+      <img class="upload-img-holder" [src]="imageURL" />
+      <div *ngIf="imageURL != previousURL" class="image-cancel">
+        <span class="mdi mdi-close-circle" (click)="cancelImage()"></span>
+      </div>
+    </div>
+  </div>
+  <mat-error *ngIf="isControlHasError('image_url', 'required')" class="error text-danger">
+    {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+  </mat-error>
+  <mat-error *ngIf="showImageSizeError" class="error text-danger">
+    {{ 'FORM.VALIDATION.IMAGE_SIZE' | translate }} {{bytesToSize()}}
+  </mat-error>
+</div>
+<!-- </div> -->
+
+<!-- <div class="form-group">
+  <label class="">{{'FIELDS.POST.IMAGE.TITLE' | translate}}</label>
+  <div class="">
+    <div class="upload-img">
+      <div class="upload-img-container">
+        <img *ngIf="previewUrl" class="upload-img-holder" [src]="previewUrl">
+        <div *ngIf="previewUrl" class="image-cancel">
+          <span class="mdi mdi-close-circle" (click)="onImageCancel()">
+          </span>
+        </div>
+      </div>
+    </div>
+    <button class="upload-img-btn" type="button" mat-raised-button
+      (click)="fileInput.click()">{{'FIELDS.POST.IMAGE.ACTION' | translate}}</button>
+    <label class="avatar__upload">
+      <i class="fa fa-pen"></i>
+      <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar" formControlName="profile_avatar"
+        accept=".png, .jpg, .jpeg" #fileInput>
+    </label>
+    <mat-error *ngIf="showImageError" class="error text-danger">
+      {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
+  </div>
+</div> -->

@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 /**
  * Models & Interfaces
  */
-import { Partner } from 'sng-core';
+import { Partner, PartnerPayment } from 'sng-core';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +38,13 @@ export class PartnersService {
 
   updatePartnerInfo(partner_id: string, formData: FormData): Observable<Partner> {
     return this.http.put<any>(`${environment.apiUrl}/partners/${partner_id}`, formData)
+      .pipe(map(response => {
+        return response.data;
+      }));
+  }
+
+  updatePartnerPayments(partner_id: string, payments: PartnerPayment[]): Observable<Partner> {
+    return this.http.put<any>(`${environment.apiUrl}/partners/payments/${partner_id}`, { payments: payments })
       .pipe(map(response => {
         return response.data;
       }));

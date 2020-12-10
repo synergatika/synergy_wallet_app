@@ -3,248 +3,144 @@
 
   <!--begin::Register-->
   <div class="auth_container">
-    <div class="auth_title">
-      <h3>{{ 'AUTH.REGISTER.TITLE' | translate }} {{ 'AUTH.GENERAL.AS_PARTNER' | translate }} ({{step? '2':'1'}}/2)</h3>
+    <div class="login_title mb-3">
+      <h3>{{ 'AUTH.REGISTER.TITLE' | translate }} {{ 'AUTH.GENERAL.AS_PARTNER' | translate }}</h3>
     </div>
 
-    <!--begin::Auth Notice-->
+    <!--begin::Notice-->
     <auth-notice></auth-notice>
-    <!--end::Auth Notice-->
+    <!--end::Notice-->
 
     <!--begin::Form-->
-    <form class="auth_form" [formGroup]="authForm" autocomplete="off">
-
-      <div *ngIf="!step">
-        <!--begin::Form Group "Name"-->
-        <div class="form-group">
-          <mat-form-field>
-            <mat-label>{{ 'FIELDS.PROFILE.PARTNER_NAME.TITLE' | translate }}</mat-label>
-            <input matInput type="text" placeholder="{{ 'FIELDS.PROFILE.PARTNER_NAME.PLACEHOLDER' | translate }}"
-              formControlName="fullname" />
-            <mat-error *ngIf="isControlHasError('fullname','required')" class="error text-danger">
-              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('fullname','minlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.name.minLength}}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('fullname','maxlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.name.maxLength}}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--end::Form Group "Name"-->
-
-        <!--begin::Form Group "Email"-->
-        <div class="form-group">
-          <mat-form-field>
-            <mat-label>{{ 'FIELDS.PROFILE.EMAIL.TITLE' | translate }}</mat-label>
-            <input matInput type="email" placeholder="{{ 'FIELDS.PROFILE.EMAIL.PLACEHOLDER' | translate }}"
-              formControlName="email" autocomplete="off" />
-            <mat-error *ngIf="isControlHasError('email','email')" class="error text-danger">
-              {{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('email','required')" class="error text-danger">
-              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('email','minlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.email.minLength}}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('email','maxlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.email.maxLength}}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--end::Form Group "Email"-->
-
-        <!--begin::Form Group "Password"-->
-        <div class="form-group">
-          <mat-form-field>
-            <mat-label>{{ 'FIELDS.PROFILE.PASSWORD.TITLE' | translate }}</mat-label>
-            <input matInput type="password" placeholder="{{ 'FIELDS.PROFILE.PASSWORD.PLACEHOLDER' | translate }}"
-              formControlName="password" autocomplete="off" />
-            <mat-error *ngIf="isControlHasError('password','required')" class="error text-danger">
-              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('password','minlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.password.minLength}}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('password','maxlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.password.maxLength}}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--end::Form Group "Password"-->
-
-        <!--begin::Form Group "Password(confirm)"-->
-        <div class="form-group">
-          <mat-form-field>
-            <mat-label>{{ 'FIELDS.PROFILE.CONFIRM_PASSWORD.TITLE' | translate }}</mat-label>
-            <input matInput type="password"
-              placeholder="{{ 'FIELDS.PROFILE.CONFIRM_PASSWORD.PLACEHOLDER' | translate }}"
-              formControlName="confirmPassword" autocomplete="off" />
-            <mat-error *ngIf="isControlHasError('confirmPassword','required')" class="error text-danger">
-              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('confirmPassword','minlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.password.minLength}}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('confirmPassword','maxlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.password.maxLength}}
-            </mat-error>
-            <mat-error
-              *ngIf="authForm.get('confirmPassword').errors && authForm.get('confirmPassword').errors.ConfirmPassword"
-              class="error text-danger">
-              {{ 'FORM.VALIDATION.PASSWORD_CONFIRMATION' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--end::Form Group "Password(confirm)"-->
-
-      </div>
-      <div *ngIf="step">
-
-        <!--begin::Form Group "Description"-->
-        <div class="form-group">
-          <mat-form-field>
-            <mat-label>{{'FIELDS.PROFILE.DESCRIPTION.TITLE' | translate}}</mat-label>
-            <textarea matInput rows="5" class="short" type="text" formControlName="description"
-              placeholder="{{'FIELDS.PROFILE.DESCRIPTION.PLACEHOLDER' | translate}}">
-          </textarea>
-            <mat-error *ngIf="isControlHasError('description','required')" class="error text-danger">
-              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('description','minlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.description.minLength}}
-            </mat-error>
-            <mat-error *ngIf="isControlHasError('description','maxlength')" class="error text-danger">
-              {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.description.maxLength}}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--end::Form Group "Description"-->
-
-        <!--begin::Form Group "Sector"-->
-        <div class="form-group">
-          <mat-form-field>
-            <mat-label>{{'FIELDS.PROFILE.SECTOR.TITLE' | translate}}</mat-label>
-            <mat-select formControlName="sector">
-              <mat-option value="{{item.value}}" *ngFor="let item of sectorList">
-                {{item.title | translate}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="isControlHasError('sector','required')" class="error text-danger">
-              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--end::Form Group "Sector"-->
-
-
-        <!--begin::Form Group "Payments"-->
-        <div class="form-group">
-          <div formArrayName="payments">
-            <mat-form-field class="col-md-6 payment" *ngFor="let payment of payments.controls; index as i">
-              <input matInput type="text" [formControlName]="i" placeholder="{{paymentsList[i].title | translate}}">
-              <mat-error *ngIf="showPaymentError" class="error text-danger">
-                {{ 'FORM.VALIDATION.REQUIRED_ONE' | translate }}
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <!--end::Form Group "Payments"-->
-
-        <!--begin::Form Group "Image"-->
-        <div class="form-group upload_image">
-          <label class="col-form-label">{{ 'FIELDS.PROFILE.PARTNER_IMAGE.TITLE' | translate }}</label>
-          <div class="avatar" id="merchat_avatar">
-            <div class="avatar-img">
-              <div class="avatar-container">
-                <img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
-                <div *ngIf="previewUrl" class="image-cancel">
-                  <span class="mdi mdi-close-circle" (click)="onImageCancel()">
-                  </span>
-                </div>
-              </div>
-            </div>
-            <button type="button" mat-raised-button (click)="fileInputMerch.click()">
-              {{ 'FIELDS.PROFILE.PARTNER_IMAGE.ACTION' | translate }}
-            </button>
-            <label class="avatar-upload">
-              <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar" accept=".png, .jpg, .jpeg"
-                #fileInputMerch>
-            </label>
-            <mat-error *ngIf="showImageError" class="error text-danger">
-              {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
-            </mat-error>
-          </div>
-        </div>
-        <!--end::Form Group "Image"-->
-
-
-        <!--begin::Form Group "Terms"-->
-        <div class="form-group">
-          <mat-checkbox name="agree" formControlName="agree">
-            {{ 'AUTH.TERMS.A' | translate }}
-            <a (click)="openTermsDialog()">
-              <strong>
-                {{ 'AUTH.TERMS.B' | translate }}
-              </strong>
-            </a>
-          </mat-checkbox>
-          <mat-error *ngIf="isControlHasError('agree','required')" class="error text-danger">
-            {{ 'FORM.VALIDATION.AGREEMENT_REQUIRED' | translate }}
+    <form class="auth_form" [formGroup]="registerForm" autocomplete="off">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>{{ 'FIELDS.PROFILE.PARTNER_NAME.TITLE' | translate }}</mat-label>
+          <input matInput type="text" placeholder="{{ 'FIELDS.PROFILE.PARTNER_NAME.PLACEHOLDER' | translate }}"
+            formControlName="fullname" autocomplete="off" />
+          <mat-error *ngIf="isControlHasError('fullname','required')">
+            <strong>{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
           </mat-error>
-        </div>
-        <!--end::Form Group "Terms"-->
-
+          <mat-error *ngIf="isControlHasError('fullname','minlength')">
+            <strong>{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+              {{validator.name.minLength}}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('fullname','maxlength')">
+            <strong>{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+              {{validator.name.maxLength}}</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>{{ 'FIELDS.PROFILE.EMAIL.TITLE' | translate }}</mat-label>
+          <input matInput type="text" placeholder="{{ 'FIELDS.PROFILE.PASSWORD.PLACEHOLDER' | translate }}"
+            formControlName="email" autocomplete="off" />
+          <mat-error *ngIf="isControlHasError('email','email')">
+            <strong>{{ 'FORM.VALIDATION.INVALID_FIELD' | translate }}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('email','required')">
+            <strong>{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('fullname','minlength')">
+            <strong>{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+              {{validator.name.minLength}}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('email','maxlength')">
+            <strong>{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+              {{validator.email.maxLength}}</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>{{ 'FIELDS.PROFILE.PASSWORD.TITLE' | translate }}</mat-label>
+          <input matInput type="password" placeholder="{{ 'FIELDS.PROFILE.PASSWORD.PLACEHOLDER' | translate }}"
+            formControlName="password" autocomplete="off" />
+          <mat-error *ngIf="isControlHasError('password','required')">
+            <strong>{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('password','minlength')">
+            <strong>{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+              {{validator.password.minLength}}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('password','maxlength')">
+            <strong>{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+              {{validator.password.maxLength}}</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>{{ 'FIELDS.PROFILE.CONFIRM_PASSWORD.TITLE' | translate }}</mat-label>
+          <input matInput type="password" placeholder="{{ 'FIELDS.PROFILE.CONFIRM_PASSWORD.PLACEHOLDER' | translate }}"
+            formControlName="confirmPassword" autocomplete="off" />
+          <mat-error *ngIf="isControlHasError('confirmPassword','required')">
+            <strong>{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('confirmPassword','minlength')">
+            <strong>{{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}
+              {{validator.password.minLength}}</strong>
+          </mat-error>
+          <mat-error *ngIf="isControlHasError('confirmPassword','maxlength')">
+            <strong>{{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}
+              {{validator.password.maxLength}}</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').errors.ConfirmPassword">
+            <strong>{{ 'FORM.VALIDATION.PASSWORD_CONFIRMATION' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
       </div>
 
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>{{'FIELDS.PROFILE.SECTOR.TITLE' | translate}}</mat-label>
+          <mat-select formControlName="sector">
+            <mat-option value="{{item.value}}" *ngFor="let item of sectorList">{{item.title | translate}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="isControlHasError('sector','required')">
+            <strong>{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+          </mat-error>
+          <mat-hint class="form-text text-muted">{{'FIELDS.PROFILE.SECTOR.DESC' | translate}}</mat-hint>
+        </mat-form-field>
+      </div>
 
-      <div *ngIf="!step">
-        <!--begin::Form Actions-->
-        <div class="auth_actions">
-          <a class="auth_link mr-2" href="javascript:;" routerLink="/auth/forgot-password">
-            {{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
-          </a>
-          <button type="button" class="btn btn-secondary mr-2" routerLink="/auth/login">
-            {{ 'AUTH.GENERAL.BACK_BUTTON' | translate }}
-          </button>
-          <button class="btn btn-primary" (click)="changeStep(true)" (keyup.enter)="changeStep(true)">
-            {{ 'FORM.BUTTONS.NEXT_STEP' | translate }}
-          </button>
-        </div>
-        <!--end::Form Actions-->
+      <div class="form-group">
+        <mat-checkbox name="agree" formControlName="agree">
+          {{ 'AUTH.TERMS.A' | translate }} <a
+            (click)="openTermsDialog()"><strong>{{ 'AUTH.TERMS.B' | translate }}</strong></a>
+        </mat-checkbox>
+        <mat-error *ngIf="isControlHasError('agree','required')">
+          <strong>{{ 'FORM.VALIDATION.AGREEMENT_REQUIRED' | translate }}</strong>
+        </mat-error>
+      </div>
+
+      <!--begin::Action-->
+      <div class="login__actions">
+        <a href="javascript:;" routerLink="/auth/forgot-password" class="login__link-forgot mr-2">
+          {{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
+        </a>
+        <a href="javascript:;" routerLink="/" class="link login__link-forgot">
+        </a>
+        <button [disabled]="loading" routerLink="/auth/login" type="button" [disabled]="loading"
+          id="kt_login_signup_cancel"
+          class="btn btn-secondary btn-elevate mr-2">{{ 'AUTH.GENERAL.BACK_BUTTON' | translate }}</button>
+        <button [disabled]="loading" (click)="submit()" (keyup.enter)="submit()" id="kt_login_signin_submit"
+          class="btn btn-primary btn-elevate login__btn-primary"
+          [ngClass]="{'spinner spinner--right spinner--md spinner--light': loading}">{{ 'AUTH.REGISTER.BUTTON' | translate }}
+        </button>
+        <p *ngIf="loading">Loading...</p>
 
       </div>
-      <div *ngIf="step">
-
-        <!--begin::Form Actions-->
-        <div class="auth_actions">
-          <a class="auth_link mr-2" href="javascript:;" routerLink="/auth/forgot-password">
-            {{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
-          </a>
-          <button type="button" class="btn btn-secondary mr-2" (click)="changeStep(false)">
-            {{ 'FORM.BUTTONS.PREVIOUS' | translate }}
-          </button>
-          <button class="btn btn-primary" (click)="submitForm()" (keyup.enter)="submitForm()">
-            {{ 'AUTH.REGISTER.BUTTON' | translate }}
-          </button>
-        </div>
-        <!--end::Form Actions-->
-
-      </div>
+      <!--end::Action-->
 
     </form>
     <!--end::Form-->
 
   </div>
   <!--end::Register-->
-
-  <!--begin::Loading Spinner-->
-  <div *ngIf="loading" class="spinner-overlay">
-    <mat-spinner></mat-spinner>
-  </div>
-  <!--end::Loading Spinner-->
 
 </div>
 <!--end::Body-->

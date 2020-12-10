@@ -48,8 +48,9 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 // import { SupportNoticeComponent } from './manage-microcredit-campaign/support-notice/support-notice.component';
 
 import {
-  SngCoreModule,
+    SngCoreModule,
 } from 'sng-core';
+import { WidgetsModule } from '../../core/components/widgets.module';
 
 const routes: Routes = [
     {
@@ -108,6 +109,7 @@ const routes: Routes = [
         NgxMaterialTimepickerModule,
         NgbDropdownModule,
         SngCoreModule,
+        WidgetsModule
     ],
     providers: [
         // SupportService

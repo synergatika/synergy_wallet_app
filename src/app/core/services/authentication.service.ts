@@ -91,28 +91,28 @@ export class AuthenticationService {
   }
 
   register_as_member(name: string, email: string, password: string): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/auto-register/member`, { name, email, password })
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/auto-member`, { name, email, password })
       .pipe(map(response => {
         return response;
       }));
   }
 
-  register_as_partner(formData: FormData): Observable<OneClickToken> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/auto-register/partner`, formData)
+  register_as_partner(name: string, email: string, password: string, sector: string): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/auto-partner`, { name, email, password, sector })
       .pipe(map(response => {
         return response.data;
       }));
   }
 
   register_member(email?: string, card?: string): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/register/member`, { email: email, card: card })
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/invite-member`, { email: email, card: card })
       .pipe(map(response => {
         return response;
       }));
   }
 
-  register_partner(formData: FormData): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/register/partner`, formData)
+  register_partner(name: string, email: string, sector: string): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/register/invite-partner`, { name, email, sector })
       .pipe(map(response => {
         return response;
       }));
@@ -174,8 +174,25 @@ export class AuthenticationService {
       }));
   }
 
+  /**
+   * Activate - Deactivate Account
+   */
   deactivate(reason: string): Observable<Message> {
     return this.http.put<any>(`${environment.apiUrl}/auth/deactivate`, { reason })
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  activateUser(user_id: string): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/auth/activate/${user_id}`, {})
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  deactivateUser(user_id: string): Observable<Message> {
+    return this.http.put<any>(`${environment.apiUrl}/auth/deactivate/${user_id}`, {})
       .pipe(map(response => {
         return response;
       }));

@@ -20,6 +20,8 @@ import { PersonalInformationComponent } from './personal-information/personal-in
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { EmailSettingsComponent } from './email-settings/email-settings.component';
 import { InvitationComponent } from './invitation/invitation.component';
+import { PartnerPaymentsComponent } from './partner-payments/partner-payments.component';
+import { WidgetsModule } from '../../core/components/widgets.module';
 
 const routes: Routes = [
   {
@@ -35,6 +37,11 @@ const routes: Routes = [
         path: 'personal-information',
         component: PersonalInformationComponent,
         data: { title: 'SETTINGS.SUBMENU.PERSONAL_INFORMATION' }
+      },
+      {
+        path: 'payments',
+        component: PartnerPaymentsComponent,
+        data: { title: 'SETTINGS.SUBMENU.CHANGE_PASSWORD' }
       },
       {
         path: 'change-password',
@@ -76,6 +83,7 @@ const routes: Routes = [
     MatDialogModule,
     MatCardModule,
     MatSelectModule,
+    WidgetsModule
   ],
   providers: [
   ],
@@ -85,6 +93,7 @@ const routes: Routes = [
 
     ChangePasswordComponent,
     PersonalInformationComponent,
+    PartnerPaymentsComponent,
     AccountSettingsComponent,
     EmailSettingsComponent,
     InvitationComponent

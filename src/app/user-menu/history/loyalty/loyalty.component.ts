@@ -28,13 +28,13 @@ export class LoyaltyHistoryComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private unsubscribe: Subject<any>;
 
-	/**
-	 * Component Constructor
-	 *
-	 * @param cdRef: ChangeDetectorRef
-	 * @param authenticationService: AuthenticationService
-	 * @param loyaltyService: LoyaltyService
-	 */
+  /**
+   * Component Constructor
+   *
+   * @param cdRef: ChangeDetectorRef
+   * @param authenticationService: AuthenticationService
+   * @param loyaltyService: LoyaltyService
+   */
   constructor(
     private cdRef: ChangeDetectorRef,
     private authenticationService: AuthenticationService,
@@ -69,7 +69,8 @@ export class LoyaltyHistoryComponent implements OnInit, OnDestroy {
         tap(
           data => {
             this.transactions = data;
-            console.log(data);
+            console.log("Loyalty Transactions History");
+            console.log(this.transactions);
           },
           error => {
             console.log(error);

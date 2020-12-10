@@ -189,10 +189,10 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
     })
 
     if (availableMethods.includes('store')) {
-      this.currentMethods.push({ bic: "store", title: "FIELDS.PROFILE.PAYMENT_CHOICES._F", name: "Store", value: "", description: "" })
+      this.currentMethods.push({ bic: "store", title: "FIELDS.PROFILE.PAYMENT_CHOICES._G", icon: "", name: "Store", value: "", description: "" })
     }
     if (this.currentMethods.length > 1) {
-      this.currentMethods.unshift({ bic: "all", title: "FIELDS.PROFILE.PAYMENT_CHOICES._G", name: "All", value: "", description: "" })
+      this.currentMethods.unshift({ bic: "all", title: "FIELDS.PROFILE.PAYMENT_CHOICES._H", icon: "", name: "All", value: "", description: "" })
     }
     this.defaultMethod = { ...this.currentMethods[0] }
     this.selectedMethod = { ...this.defaultMethod };
@@ -206,11 +206,13 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
-            this.campaign = data;
-            const datesRedeem = (this.campaign.statisticsRedeem) ? this.campaign.statisticsRedeem.byDate.map(obj => { return obj.date }) : [];
-            const datesPromise = (this.campaign.statisticsPromise) ? this.campaign.statisticsPromise.byDate.map(obj => { return obj.date }) : [];
-            this.validatedDates = datesRedeem.concat(datesPromise);
+            console.log("Campaign in ManageCampaign");
+            console.log(data);
 
+            this.campaign = data;
+            const datesRedeem = (this.campaign.statistics.redeemed) ? this.campaign.statistics.redeemed.byDate.map(obj => { return obj.date }) : [];
+            const datesPromise = (this.campaign.statistics.earned) ? this.campaign.statistics.earned.byDate.map(obj => { return obj.date }) : [];
+            this.validatedDates = datesRedeem.concat(datesPromise);
             this.canSupportCampaign = ((this.campaign.startsAt < this.seconds) && (this.campaign.expiresAt > this.seconds)) ? true : false;
             this.canRevertPayment = (this.campaign.redeemStarts > this.seconds) ? true : false;
             this.canConfirmPayment = (this.campaign.redeemEnds > this.seconds) ? true : false;
@@ -234,6 +236,7 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
+            console.log("Supports in ManageMicrocreditCampaign");
             console.log(data);
             this.supports = data;
             this.dataSource = new MatTableDataSource(data);
@@ -255,7 +258,7 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
 
   changeSupportState(support_id: string, event: MatCheckboxChange) {
     this.loading = true;
-
+    console.log("Support ID", support_id)
     this.microcreditService.confirmPayment(this.authenticationService.currentUserValue.user["_id"], this.campaign_id, support_id)
       .pipe(
         tap(
@@ -269,9 +272,13 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
             })
           },
           error => {
-            event.source.checked = (this.supports[this.supports.map((x) => { return x.support_id; }).
-              indexOf(support_id)].status === 'order') ?
+            event.source.checked = ((this.supports[this.supports.map((x) => { return x.support_id; }).
+              indexOf(support_id)].status === 'unpaid')) ?
               false : true;
+            // event.source.checked = ((this.supports[this.supports.map((x) => { return x.support_id; }).
+            //   indexOf(support_id)].type === 'PromiseFund') || (this.supports[this.supports.map((x) => { return x.support_id; }).
+            //     indexOf(support_id)].type === 'RevertFund')) ?
+            //   false : true;
             Swal.fire(
               this.translate.instant('MESSAGE.ERROR.TITLE'),
               this.translate.instant(error),

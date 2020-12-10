@@ -14,9 +14,11 @@ export class LocalMicrocreditService {
         partner_email: '',
         partner_slug: '',
         partner_imageURL: '',
+        partner_phone: '',
+
         partner_address: { street: '', city: '', postCode: '', coordinates: ['', ''] },
-        partner_contact: { phone: '', websiteURL: '' },
-        partner_payments: [{ bic: '', name: '', value: '' }],
+        partner_payments: [{ bic: '', name: '', value: '' }, { bic: '', name: '', value: '' }],
+        partner_contacts: [{ slug: '', name: '', value: '' }],
 
         campaign_id: '',
         campaign_imageURL: '',
@@ -39,12 +41,15 @@ export class LocalMicrocreditService {
         redeemStarts: 0,
         redeemEnds: 0,
 
-        confirmationTokens: {
-            _id: '', initialTokens: 0, redeemedTokens: 0
+        tokens: {
+            _id: '', earnedTokens: 0, redeemedTokens: 0
         },
-        orderedTokens: {
-            _id: '', initialTokens: 0, redeemedTokens: 0
-        },
+        // confirmationTokens: {
+        //     _id: '', initialTokens: 0, redeemedTokens: 0
+        // },
+        // orderedTokens: {
+        //     _id: '', initialTokens: 0, redeemedTokens: 0
+        // },
         createdAt: new Date()
     });
     microcreditCampaign = this.microcreditCampaignSource.asObservable();

@@ -186,11 +186,11 @@ export const locale = {
           PLACEHOLDER: 'Τηλέφωνο',
           DESC: 'Παρακαλώ, εισάγετε το τηλέφωνο της εταιρίας σας'
         },
-        WEBSITE: {
-          TITLE: 'Ιστοσελίδα (προαιρετικά)',
-          PLACEHOLDER: 'Ιστοσελίδα',
-          DESC: 'Παρακαλώ, εισάγετε το το URI της ιστοσελίδας σας'
-        },
+        // WEBSITE: {
+        //   TITLE: 'Ιστοσελίδα (προαιρετικά)',
+        //   PLACEHOLDER: 'Ιστοσελίδα',
+        //   DESC: 'Παρακαλώ, εισάγετε το το URI της ιστοσελίδας σας'
+        // },
         ADDRESS: {
           TITLE: 'Διεύθυνση',
           PLACEHOLDER: 'Διεύθυνση',
@@ -219,6 +219,9 @@ export const locale = {
         PAYMENT: {
           DESC: 'IBAN/Link ή άλλες πληροφορίες για τον τραπεζικό σας λογαριασμό'
         },
+        CONTACT: {
+          DESC: 'Link της σελίδας ή του προφίλ σας'
+        },
         DEACTIVATION_REASON: {
           TITLE: '',
           PLACEHOLDER: 'Αν θέλετε μπορείτε να μας πείτε το λόγο που επιθυμείτε την απενεργοποίηση του λογαριασμού σας (προεραιτικό)',
@@ -228,7 +231,8 @@ export const locale = {
           BASIC: 'Βασικές Πληροφορίες',
           ADDRESS: 'Διεύθυνση',
           CONTACT: 'Πληροφορίες Επικοινωνίας',
-          PAYMENTS: 'Στοιχεία Πληρωμών'
+          PAYMENTS: 'Στοιχεία Πληρωμών',
+          COMMUNICATION: 'Στοιχεία Επικοινωνίας',
         },
         SECTOR_CHOICES: {
           _: 'Άλλο',
@@ -245,9 +249,18 @@ export const locale = {
           B: 'Τράπεζα Πειραιώς',
           C: 'Eurobank Ergasias',
           D: 'Alpha Bank',
-          E: 'PayPal.Me',
-          _F: 'Εξόφληση στο Κατάστημα',
-          _G: 'Όλες οι Μέθοδοι Πληρωμής'
+          E: 'PayPal',
+          F: 'PayPal.Me',
+          _G: 'Εξόφληση στο Κατάστημα',
+          _H: 'Όλες οι Μέθοδοι Πληρωμής'
+        },
+        CONTACT_CHOICES: {
+          // A: 'Telephone',
+          B: 'Ιστοσελίδα',
+          C: 'Facebook',
+          D: 'Twitter',
+          E: 'Instagram',
+          F: 'Youtube',
         },
       },
       OFFER: {
@@ -288,7 +301,7 @@ export const locale = {
           DESC: 'Παρακαλώ, εισάγετε τον τίτλο της ανάρτησης'
         },
         IMAGE: {
-          TITLE: 'Εικόνα Ανάρτησης',
+          TITLE: 'Εικόνα',
           ACTION: 'Επιλογή Αρχείου'
         },
         SUBTITLE: {
@@ -499,6 +512,8 @@ export const locale = {
         REQUIRED_ONE: 'Απαιτείται η συμπλήρωση τουλάχιστον ένος πεδίου.',
         PASSWORD_CONFIRMATION: 'Ο Κωδικός πρόσβασης δεν επαληθεύτηκε',
         AGREEMENT_REQUIRED: 'Χρειάζεται να αποδεκτείτε τους όρους χρήσσης',
+        IMAGE_SIZE: 'Το μέγεθος του αρχείου δεν μπορει να υπερβαίνει τα ',
+        IMAGES_NUMBER: 'Ο αριθμός των εικόνων δεν μπορεί να είναι μεγαλύτερος απο ',
         DATES: {
           SUPPORTSTARTSTOSUPPORTENDS: 'Η ημερομηνία Έναρξης της Προσφοράς δεν μπορεί να είναι μεταγενέστερη της ημερομηνίας Λήξης',
           SUPPORTSTARTSTOREDEEMSTARTS: 'Η ημερομηνία Έναρξης της Προσφοράς δεν μπορεί να είναι μεταγενέστερη της Ημερομηνία Εξαργύρωσης',
@@ -539,7 +554,8 @@ export const locale = {
         /* Admin Messages (Μηνύματα Διαχειριστή) */
         MEMBER_CREATED: 'A new Member has been successfully created!',
         PARTNER_CREATED: 'A new Partner has been successfully created!',
-        USER_REACTIVATED: 'Η Κατάσταση του Χρήστη επανήλθε σε \'Ενεργή\'',
+        USER_ACTIVATED: 'Η Κατάσταση του Χρήστη άλλαξε σε \'Ενεργή\'',
+        USER_DEACTIVATED: 'Η Κατάσταση του Χρήστη άλλαξε σε \'Ανενεργή\'',
         CONTENT_CREATED: 'Το περιεχόμενο δημιουργήθηκε επιτυχώς!',
         CONTENT_UPDATED: 'Το περιεχόμενο ανανεώθηκε επιτυχώς!',
       },
@@ -612,7 +628,7 @@ export const locale = {
       RECEIPT: 'Απόδειξη',
       OFFER: 'Προσφορά',
       CAMPAIGN: 'Καμπάνια',
-      SUPPORT: 'Υποστήριξη',
+      SUPPORT: 'ID Πληρωμής',
       POINTS: 'Πόντοι',
       TOKENS: 'Κουπόνια',
       PARTNER: 'Συνεργάτης',
@@ -625,7 +641,8 @@ export const locale = {
         PERSONAL_INFORMATION: 'Προσωπικές Πληροφορίες',
         CHANGE_PASSWORD: 'Αλλαγή Κωδικού Πρόσβασης',
         ACCOUNT_SETTINGS: 'Πληροφορίες Λογαριασμού',
-        INVITATION: 'Αποστολή Πρόσκλησης'
+        INVITATION: 'Αποστολή Πρόσκλησης',
+        PAYMENTS: 'Στοιχεία Πληρωμών'
       },
       ACCOUNT: 'Λογαριασμός',
       PERSONAL_INFO: 'Ανανέωσε τα στοιχεία σου',
@@ -763,8 +780,10 @@ export const locale = {
      */
     USER: {
       PLURAL: 'Χρήστες',
-      REACTIVATE: 'Επανεργοποίηση',
-      REACTIVATE_DISABLE: 'Ο Χρήστης είναι ενεργοποιημένος',
+      ACTIVATE: 'Επανεργοποίηση',
+      DEACTIVATE: 'Απενεργοποίηση',
+      ACTIVATE_DISABLE: 'Ο Χρήστης είναι ενεργοποιημένος',
+      DEACTIVATE_DISABLE: 'Ο Χρήστης είναι απενεργοποιημένος',
       PARTNER: {
         PLURAL: 'Συνεργάτες',
         ALL: 'Όλοι οι Συνεργάτες',

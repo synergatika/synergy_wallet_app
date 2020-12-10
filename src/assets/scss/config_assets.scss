@@ -7,36 +7,45 @@
   font-family: $main-font, sans-serif;
   color: $darker-font;
 }
+
 mat-card {
   font-family: $main-font, sans-serif;
+
   .mdi.share-icon {
     color: $grey-font;
     font-size: 35px;
     cursor: pointer;
   }
+
   .mdi {
     color: $primary;
     font-size: 18px;
     margin-right: 5px;
+
     &.white {
       color: #fff;
     }
   }
 }
+
 .mat-card:not([class*="mat-elevation-z"]) {
   @extend .light-shadow;
   border-bottom-left-radius: 9px;
   border-bottom-right-radius: 9px;
   overflow: hidden;
 }
+
 .owl-theme .mat-card {
   box-shadow: none !important;
 }
+
 .mat-card.wallet-card:not([class*="mat-elevation-z"]) {
   overflow: visible;
 }
+
 .mat-card.item-card {
   cursor: pointer;
+
   .item-draft {
     position: absolute;
     right: -1px;
@@ -55,6 +64,7 @@ mat-card {
 .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
   background-color: $tertiary;
 }
+
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color: $tertiary;
 }
@@ -69,6 +79,7 @@ mat-card {
 .mat-stroked-button {
   font-family: $main-font, sans-serif;
 }
+
 .mat-mini-fab {
   width: 30px;
   height: 30px;
@@ -76,6 +87,7 @@ mat-card {
   font-size: 22px;
   margin-left: 8px;
   margin-top: 5px;
+
   &.mat-accent {
     background-color: $tertiary;
   }
@@ -85,12 +97,14 @@ mat-card {
     line-height: inherit;
   }
 }
+
 // button.mat-mini-fab.mat-accent {
 //   background-color: #0c1a33;
 // }
 th .mat-sort-header-sorted {
   color: $secondary;
 }
+
 .cdk-overlay-container {
   z-index: 9999;
 }
@@ -104,6 +118,7 @@ th .mat-sort-header-sorted {
 .btn-primary {
   background-color: $primary;
   border-color: $primary-light;
+
   &:hover,
   &:active,
   &:not(:disabled):not(.disabled):active,
@@ -117,6 +132,7 @@ th .mat-sort-header-sorted {
 .btn-secondary {
   background-color: $secondary;
   border-color: $secondary-light;
+
   &:hover,
   &:active,
   &:not(:disabled):not(.disabled):active,
@@ -131,6 +147,7 @@ th .mat-sort-header-sorted {
   color: #fff;
   background-color: $tertiary;
   border-color: $tertiary;
+
   &:hover,
   &:active {
     background-color: $tertiary-dark;
@@ -142,6 +159,7 @@ th .mat-sort-header-sorted {
   border: none;
   box-shadow: 0 0 40px 0 rgba(40, 70, 120, 0.15);
 }
+
 .dropdown-toggle {
   &:after {
     content: none;
@@ -157,36 +175,45 @@ th .mat-sort-header-sorted {
     width: 100%;
     justify-content: space-between;
     pointer-events: none;
+
     @media (max-width: 600px) {
       display: none;
     }
+
     [class*="owl-"] {
       font-size: 34px;
       line-height: 1.1;
       background-color: $primary;
+
       &:hover {
         background-color: $primary-light;
       }
     }
+
     .owl-prev {
       margin-left: -25px;
       pointer-events: all;
+
       &:before {
         content: "\f141";
         font-family: "Material Design Icons";
       }
     }
+
     .owl-next {
       margin-right: -25px;
       pointer-events: all;
+
       &:before {
         content: "\f142";
         font-family: "Material Design Icons";
       }
     }
   }
+
   .owl-dots {
     .owl-dot {
+
       &.active,
       &:hover {
         span {
@@ -200,18 +227,22 @@ th .mat-sort-header-sorted {
 ///2.3 Modal Diaglog
 .modal-dialog {
   margin: 5rem auto;
+
   @media (max-width: 576px) {
     max-width: 92%;
   }
+
   .modal-content {
     border: none;
   }
+
   .mat-card {
     @extend .dark-shadow;
     border-bottom-left-radius: 9px;
     border-bottom-right-radius: 9px;
   }
 }
+
 .close-btn {
   position: absolute;
   right: -10px;
@@ -222,17 +253,21 @@ th .mat-sort-header-sorted {
   height: 35px;
   font-size: 30px;
   z-index: 1;
+
   span {
     position: relative;
     top: -6px;
   }
 }
+
 .fullscrenn-backdrop {
   background-color: #fff;
+
   &.modal-backdrop.show {
     opacity: 1;
   }
 }
+
 .fullscrenn-modal {
   .modal-content {
     border: none;
@@ -252,24 +287,34 @@ th .mat-sort-header-sorted {
       padding: 10px;
     }
   }
+
+  .payment {
+    width: 50%;
+  }
+
   textarea {
     height: 400px;
+
     &.short {
       height: 200px;
     }
   }
+
   .upload-img {
     &-holder {
       max-width: 250px;
       margin-bottom: 15px;
     }
+
     &-container {
       position: relative;
       display: inline-block;
     }
+
     &-btn {
       margin-bottom: 10px;
     }
+
     .image-cancel {
       position: absolute;
       top: -6px;
@@ -279,6 +324,7 @@ th .mat-sort-header-sorted {
       height: 20px;
       background: #fff;
       border-radius: 50%;
+
       span {
         position: relative;
         top: -10px;
@@ -288,43 +334,53 @@ th .mat-sort-header-sorted {
       }
     }
   }
+
   .form-group-inline {
     display: flex;
     max-width: 400px;
+
     //justify-content: space-between;
     &-date {
       flex-grow: 6;
       margin-right: 30px;
     }
+
     &-time {
       flex-grow: 6;
+
       .mat-form-field-infix {
         width: 100px;
       }
+
       .ngx-timepicker {
         background-color: #f8f6f6;
         padding: 18px 0 10px;
         width: 150px;
         height: auto;
         border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+
         input {
           font-size: 14px;
           background: transparent;
         }
+
         &-control {
           width: 50px;
+
           &--active {
             &:after {
               content: none;
             }
           }
         }
+
         &__toggle {
           button {
             margin-left: 6px;
             padding-left: 6px;
             padding-right: 5px;
           }
+
           svg {
             width: 18px;
             height: 18px;
@@ -334,8 +390,10 @@ th .mat-sort-header-sorted {
       }
     }
   }
+
   .form-actions {
     margin-top: 20px;
+
     button {
       float: right;
       font-size: 18px;
@@ -343,22 +401,27 @@ th .mat-sort-header-sorted {
     }
   }
 }
+
 .avatar {
   &-holder {
     max-width: 80px;
     max-height: 80px;
     margin-right: 20px;
   }
+
   &-img {
     float: left;
   }
+
   &-container {
     position: relative;
     display: inline-block;
   }
+
   button {
     margin-top: 10px;
   }
+
   .image-cancel {
     position: absolute;
     top: -9px;
@@ -368,6 +431,7 @@ th .mat-sort-header-sorted {
     height: 20px;
     background: #fff;
     border-radius: 50%;
+
     span {
       position: relative;
       top: -5px;
@@ -404,23 +468,29 @@ aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li {
       height: 24px;
       line-height: 24px;
     }
+
     .label {
       color: #222;
     }
   }
+
   &.optional .step-indicator {
     background-color: $tertiary;
   }
+
   &.navigable.optional a:hover .step-indicator {
     background-color: $secondary;
   }
+
   &.done .step-indicator {
     background-color: #a4cfce;
   }
+
   &.navigable.done a:hover .step-indicator {
     background-color: $primary;
   }
 }
+
 // TEMPORARY
 /*aw-wizard-navigation-bar ul.steps-indicator li {
     pointer-events: auto;
@@ -438,9 +508,11 @@ aw-wizard-navigation-bar ul.steps-indicator li a {
 //Paginator
 .pagination-wrapper {
   text-align: center;
+
   ul {
     display: inline;
     margin: 10px 0;
+
     .current {
       background-color: #0c1a33;
     }

@@ -116,6 +116,12 @@ export class MenuService extends IMenuService {
 			enable: true
 		},
 		{
+			title: 'SETTINGS.SUBMENU.PAYMENTS',
+			link: 'payments',
+			icon: '',
+			enable: environment.subAccess[2] && (JSON.parse(localStorage.getItem('currentUser'))['user'].access == 'partner')
+		},
+		{
 			title: 'SETTINGS.SUBMENU.CHANGE_PASSWORD',
 			link: 'change-password',
 			icon: '',
@@ -154,37 +160,37 @@ export class MenuService extends IMenuService {
 		return this.memberMenu.filter((el) => {
 			return el.enable === true
 		});
-  };
+	};
 
 	public get getPartnerMenu(): Menu[] {
 		return this.partnerMenu.filter((el) => {
 			return el.enable === true
 		});
-  };
+	};
 
 	public get getAdminMenu(): Menu[] {
 		return this.adminMenu.filter((el) => {
 			return el.enable === true
 		});
-  };
+	};
 
 	public get getUserMenu(): Menu[] {
 		return this.userMenu.filter((el) => {
 			return el.enable === true
 		});
-  };
+	};
 
 	public get getSettingsSubMenu(): Menu[] {
 		return this.subMenuSettings.filter((el) => {
 			return el.enable === true
 		});
-  };
+	};
 
 	public get getHistorySubMenu(): Menu[] {
 		return this.subMenuHistory.filter((el) => {
 			return el.enable === true
 		});
-  };
+	};
 
 	openNav() {
 		//document.getElementById("mySidenav").style.width = "250px";

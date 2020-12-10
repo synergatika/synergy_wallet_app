@@ -7,6 +7,12 @@ import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 
 /**
+ * Components
+ */
+import { ContentImagesComponent } from '../../../core/components/content-images/content-images.component';
+
+
+/**
  * Services
  */
 import { StaticDataService } from 'src/app/core/helpers/static-data.service';
@@ -23,6 +29,11 @@ import { GeneralList } from 'sng-core';
   styleUrls: ['./new-event.component.scss']
 })
 export class NewEventComponent implements OnInit, OnDestroy {
+  /**
+   * Imported Component
+   */
+  @ViewChild(ContentImagesComponent, { static: true })
+  public editorTextarea: ContentImagesComponent;
 
   timePickerTheme: any = {
     container: {
@@ -40,21 +51,14 @@ export class NewEventComponent implements OnInit, OnDestroy {
   };
 
   /**
-	 * Configuration and Static Data
-	 */
+   * Configuration and Static Data
+   */
   public accessList: GeneralList[];
 
   /**
    * Content Variables
    */
   public minDate: Date;
-
-  /**
-   * File Variables
-   */
-  fileData: File = null;
-  previewUrl: any = null;
-  showImageError: boolean = false;
 
   /**
    * Forms
@@ -88,17 +92,17 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.validator = this.staticDataService.getValidators.event;
     this.unsubscribe = new Subject();
   }
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.minDate = new Date();
     this.initForm();
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -113,10 +117,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.title.maxLength)
       ])
       ],
-      description: ['', Validators.compose([
+      content: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(this.validator.description.minLength),
-        Validators.maxLength(this.validator.description.maxLength)
+        //     Validators.minLength(this.validator.content.minLength),
+        //     Validators.maxLength(this.validator.content.maxLength)
       ])
       ],
       subtitle: [''],
@@ -138,77 +142,46 @@ export class NewEventComponent implements OnInit, OnDestroy {
         Validators.required
       ])
       ],
-      profile_avatar: ['', Validators.compose([
+      image_url: [null, Validators.compose([
         Validators.required
       ])
       ],
+      contentFiles: [null]
     });
   }
 
   /**
-   * Image Upload
+   * On Submit Form
    */
-  fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
-    this.preview();
-  }
-
-  preview() {
-    if (this.fileData == null) {
-      this.onImageCancel();
-      return;
-    }
-    this.showImageError = false;
-
-    var mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = (_event) => {
-      if (this.previewUrl !== reader.result) {
-        this.cdRef.markForCheck();
-      }
-      this.previewUrl = reader.result;
-    }
-  }
-
-  onImageCancel() {
-    this.previewUrl = null;
-    this.fileData = null;
-    this.showImageError = false;
-    this.cdRef.markForCheck();
-  }
-
-
-	/**
-	 * On Submit Form
-	 */
-  onSubmit() {
+  async onSubmit() {
     if (this.loading) return;
 
     const controls = this.submitForm.controls;
     /** check form */
-    if (this.submitForm.invalid || !this.fileData) {
-      if (!this.fileData) this.showImageError = true;
+    if (this.submitForm.invalid) {
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
       return;
     }
+
+    await this.editorTextarea.uploadContentFiles();
+  }
+
+  onFinalStep(editorFiles: string[]) {
     this.loading = true;
+    const controls = this.submitForm.controls;
 
     const timeArray = controls.eventTime.value.split(':');
     var timeInMiliseconds = ((timeArray[0]) * 60 * 60 + (+timeArray[1]) * 60) * 1000;
     var totalMiliseconds = controls.eventDate.value.getTime() + timeInMiliseconds;
 
     const formData = new FormData();
-    formData.append('imageURL', this.fileData);
     formData.append('title', controls.title.value);
+    formData.append('imageURL', controls.image_url.value);
     formData.append('subtitle', controls.subtitle.value);
-    formData.append('description', controls.description.value);
+    formData.append('content', controls.content.value);
+    formData.append('contentFiles', editorFiles.join())
     formData.append('access', controls.access.value);
     formData.append('location', controls.location.value);
     formData.append('dateTime', totalMiliseconds);
