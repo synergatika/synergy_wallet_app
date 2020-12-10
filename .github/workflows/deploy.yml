@@ -47,7 +47,7 @@ jobs:
           DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-e -c -r --delete"
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          FOLDER: "./ynergy-wallet/dist/synergy-wallet/*"
+          FOLDER: "./synergy-wallet/dist/synergy-wallet/*"
           SERVER_IP: ${{ secrets.SERVER_IP }}
           USERNAME: ${{ secrets.USERNAME }}
           SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
