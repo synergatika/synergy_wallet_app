@@ -144,7 +144,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
       ])
       ],
       maxAllowed: [0],
-      step: [''],
+      stepAmount: [''],
       maxAmount: [0, Validators.compose([
         Validators.required,
         Validators.min(this.validator.maxAmount.minLength),
@@ -239,7 +239,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     formData.append('quantitative', controls.quantitative.value);
     formData.append('minAllowed', controls.minAllowed.value);
     formData.append('maxAllowed', (controls.quantitative.value) ? controls.maxAllowed.value : controls.minAllowed.value);
-    formData.append('stepAmount', (controls.quantitative.value) ? controls.step.value : '0');
+    formData.append('stepAmount', (controls.quantitative.value) ? controls.stepAmount.value : '0');
     formData.append('maxAmount', controls.maxAmount.value);
 
     formData.append('startsAt', controls.supportStarts.value.getTime().toString());

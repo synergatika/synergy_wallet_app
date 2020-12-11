@@ -378,6 +378,7 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
   * On Submit Form
   */
   onSubmit(campaignStatus: string) {
+    console.log("On Submit", campaignStatus)
     if (this.loading) return;
 
     const controls = this.submitForm.controls;
@@ -393,10 +394,11 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
     this.title = controls.title.value;
 
     if (campaignStatus === 'draft') this.editCampaign('draft');
-    else if (campaignStatus === 'publish') this.publishItemModal;
+    else if (campaignStatus === 'publish') this.publishItemModal();
   }
 
   publishItemModal() {
+    console.log("Publish Item")
     this.modalService.open(this.publish_item).result.then((result) => {
       console.log('closed');
     }, (reason) => {
