@@ -8,9 +8,13 @@
   <p>
     {{'MEMBER.WIZARD.SUB_FINAL.PAYMENT_ID' | translate}}: {{transaction.payment_id}}
   </p>
-  <p *ngIf="transaction.method!='store'">
+  <p *ngIf="transaction.method!='store'&&transaction.method!='PAYPAL.ME'">
     {{'MEMBER.WIZARD.SUB_FINAL.INSTRUCTIONS' | translate}}:
     {{'SUPPORT.PAYMENT.BANK' | translate}} ||
+    {{transaction.how.title | translate}} : {{transaction.how.value}}
+  </p>
+  <p *ngIf="transaction.method!='store'&&transaction.method=='PAYPAL.ME'">
+    {{'MEMBER.WIZARD.SUB_FINAL.INSTRUCTIONS' | translate}}:
     {{transaction.how.title | translate}} : {{transaction.how.value}}
   </p>
   <p *ngIf="transaction.method=='store'">

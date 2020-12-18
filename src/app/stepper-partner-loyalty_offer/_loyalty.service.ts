@@ -18,14 +18,14 @@ export class LocalLoyaltyService {
     private loyaltyOfferSource = new BehaviorSubject({
         partner_id: '',
         partner_name: '',
+        partner_email: '',
         partner_slug: '',
         partner_imageURL: '',
-        partner_address: {
-            street: '',
-            postCode: '',
-            city: '',
-            coordinates: ['', '']
-        },
+
+        partner_phone: '',
+        partner_address: { street: '', city: '', postCode: '', coordinates: ['', ''] },
+        partner_payments: [{ bic: '', name: '', value: '' }, { bic: '', name: '', value: '' }],
+        partner_contacts: [{ slug: '', name: '', value: '' }],
 
         offer_id: '',
         offer_imageURL: '',
@@ -33,6 +33,7 @@ export class LocalLoyaltyService {
         title: '',
         subtitle: '',
         description: '',
+        instructions: '',
         cost: 0,
         expiresAt: 0,
         createdAt: ''

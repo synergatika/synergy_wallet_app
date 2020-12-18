@@ -71,8 +71,8 @@ export class LoyaltyService {
       }));
   }
 
-  redeemPoints(_to: string, password: string, _points: number): Observable<Message> {
-    return this.http.post<any>(`${environment.apiUrl}/loyalty/redeem/${_to}`, { password, _points })
+  redeemPoints(_to: string, password: string, _points: number, _amount: number): Observable<Message> {
+    return this.http.post<any>(`${environment.apiUrl}/loyalty/redeem/${_to}`, { password, _points, _amount })
       .pipe(map(data => {
         return data;
       }));

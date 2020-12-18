@@ -60,6 +60,29 @@
           </div>
           <div class="col-md-6">
 
+            <!--begin::Form Group "Instructions"-->
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>{{'FIELDS.OFFER.INSTRUCTIONS.TITLE' | translate}}</mat-label>
+                <textarea class="short" matInput type="text" name="Instructions" formControlName="instructions"
+                  placeholder="{{'FIELDS.OFFER.INSTRUCTIONS.PLACEHOLDER' | translate}}">
+                </textarea>
+                <mat-error *ngIf="isControlHasError('instructions','required')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('instructions','minlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_LENGTH_FIELD' | translate }}: {{validator.instructions.minLength}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('instructions','maxlength')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_LENGTH_FIELD' | translate }}: {{validator.instructions.maxLength}}
+                </mat-error>
+                <mat-hint class="form-text text-muted">
+                  {{'FIELDS.OFFER.INSTRUCTIONS.DESC' | translate}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <!--end::Form Group "Instructions"-->
+
             <!--begin::Form Group "Subtitle"-->
             <div class="form-group">
               <mat-form-field>

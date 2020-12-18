@@ -42,8 +42,14 @@ export class MenuService extends IMenuService {
 	partnerMenu: Menu[] = [
 		{
 			title: 'MENU.HOME',
-			link: 'scanner',
+			link: 'control-panel',
 			icon: 'home-roof',
+			enable: true
+		},
+		{
+			title: 'MENU.COMMUNITY',
+			link: 'community',
+			icon: 'handshake',
 			enable: true
 		},
 		{

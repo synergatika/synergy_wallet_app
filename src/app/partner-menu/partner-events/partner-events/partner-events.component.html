@@ -18,7 +18,8 @@
     <!--begin::Events List-->
     <ng-container *ngIf="events">
       <div class="item item-wrapper col-md-4" *ngFor="let item of events">
-        <sng-post_event-card [post_event]="item" routerLink="edit/{{item.event_id}}"></sng-post_event-card>
+        <sng-post_event-card [post_event]="item" type="'internal'" routerLink="edit/{{item.event_id}}">
+        </sng-post_event-card>
       </div>
     </ng-container>
     <!--end::Events List-->

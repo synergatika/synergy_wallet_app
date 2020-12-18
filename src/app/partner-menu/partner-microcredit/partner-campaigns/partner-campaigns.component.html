@@ -16,7 +16,7 @@
     <!--begin::Microcredit Campaigns List-->
     <ng-container *ngIf="campaigns">
       <div class="item item-wrapper col-md-4" *ngFor="let item of campaigns">
-        <sng-microcredit_campaign-card [campaign]="item" type="all"
+        <sng-microcredit_campaign-card [campaign]="item" type="'internal'"
           [routerLink]="item.status=='draft' ? ['edit/'+item.campaign_id] : ['manage/'+item.campaign_id]">
         </sng-microcredit_campaign-card>
       </div>

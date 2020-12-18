@@ -51,16 +51,16 @@ export class NewMemberComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.initForm();
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -103,7 +103,7 @@ export class NewMemberComponent implements OnInit, OnDestroy {
               icon: 'success',
               timer: 2500
             }).then((result) => {
-              this.router.navigate(['/']);
+              this.router.navigate(['/a-members']);
             });
           },
           error => {

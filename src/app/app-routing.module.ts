@@ -16,6 +16,7 @@ import { MemberSupportComponent } from './member-menu/member-support/member-supp
  * Patner Menu Components & Modules
  */
 import { PartnerDashboardComponent } from './partner-menu/partner-dashboard/partner-dashboard.component';
+import { PartnerExploreComponent } from './partner-menu/partner-explore/partner-explore.component';
 
 
 /**
@@ -61,8 +62,8 @@ const routes: Routes = [
 				canActivate: [UserGuard],
 			},
 			{
-        path: 'explore',
-        component: MemberExploreComponent,
+				path: 'explore',
+				component: MemberExploreComponent,
 				canActivate: [UserGuard],
 				data: {
 					title: 'MENU.DISCOVER',
@@ -110,11 +111,20 @@ const routes: Routes = [
 			 * Events - Activate: Config[0]=true
 			 */
 			{
-				path: 'scanner',
+				path: 'control-panel',
 				component: PartnerDashboardComponent,
 				canActivate: [UserGuard],
 				data: {
 					title: 'HEADER.MESSAGE',
+					expectedRole: 'partner'
+				}
+			},
+			{
+				path: 'community',
+				component: PartnerExploreComponent,
+				canActivate: [UserGuard],
+				data: {
+					title: 'MENU.COMMUNITY',
 					expectedRole: 'partner'
 				}
 			},

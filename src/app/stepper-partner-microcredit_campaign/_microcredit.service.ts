@@ -54,7 +54,7 @@ export class LocalMicrocreditService {
         redeemEnds: 0,
 
         tokens: {
-            _id: '', earnedTokens: 0, redeemedTokens: 0
+            _id: '', earnedTokens: 0, paidTokens: 0, redeemedTokens: 0
         },
         // confirmationTokens: {
         //     _id: '', initialTokens: 0, redeemedTokens: 0
@@ -102,7 +102,7 @@ export class LocalMicrocreditService {
                 redeemEnds: 0,
 
                 tokens: {
-                    _id: '', earnedTokens: 0, redeemedTokens: 0
+                    _id: '', earnedTokens: 0, paidTokens: 0, redeemedTokens: 0
                 },
                 // confirmationTokens: {
                 //     _id: '', initialTokens: 0, redeemedTokens: 0
@@ -115,7 +115,6 @@ export class LocalMicrocreditService {
 
             support_id: '',
             payment_id: '',
-            backer_id: '',
             initialTokens: 0,
             currentTokens: 0,
 

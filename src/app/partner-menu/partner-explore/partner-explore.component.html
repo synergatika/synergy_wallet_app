@@ -1,0 +1,16 @@
+<div class="explore">
+
+  <!--begin::Partners List(Carousel)-->
+  <sng-partners-list-carousel>
+  </sng-partners-list-carousel>
+  <!--end::Partners List(Carousel)-->
+
+  <hr>
+  <br>
+
+  <!--begin::Posts/Events List(Carousel)-->
+  <sng-posts_events-list-carousel *ngIf="configAccess[0]" [type]="'all'">
+  </sng-posts_events-list-carousel>
+  <!--end::Posts/Events List(Carousel)-->
+
+</div>

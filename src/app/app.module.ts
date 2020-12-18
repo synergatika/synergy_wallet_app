@@ -68,7 +68,7 @@ import { MemberSupportComponent } from './member-menu/member-support/member-supp
  * Patner Menu Components & Modules
  */
 import { PartnerDashboardComponent } from './partner-menu/partner-dashboard/partner-dashboard.component';
-
+import { PartnerExploreComponent } from './partner-menu/partner-explore/partner-explore.component';
 
 /**
  * Admin Menu Components & Modules
@@ -114,18 +114,18 @@ import { StepperPartnerMicrocreditCampaignModule } from './stepper-partner-micro
 
 
 import {
-  SngCoreModule,
-  ITranslationService,
-  IAuthenticationService,
-  IStaticDataService,
-  IMenuService,
-  IPartnersService,
-  IItemsService,
-  ILoyaltyService,
-  IMicrocreditService,
-  IContentService,
-  IEnvironmentService,
-  IStepperService,
+	SngCoreModule,
+	ITranslationService,
+	IAuthenticationService,
+	IStaticDataService,
+	IMenuService,
+	IPartnersService,
+	IItemsService,
+	ILoyaltyService,
+	IMicrocreditService,
+	IContentService,
+	IEnvironmentService,
+	IStepperService,
 } from 'sng-core';
 
 import { StaticDataService } from './core/helpers/static-data.service';
@@ -162,7 +162,7 @@ import { StepperService } from './core/services/stepper.service';
 		 * Partner Menu Pages
 		 */
 		PartnerDashboardComponent,
-
+		PartnerExploreComponent,
 		/**
 		 * Archive Pages
 		 */
@@ -204,32 +204,32 @@ import { StepperService } from './core/services/stepper.service';
 
 		// Admin Modules
 		AdminPartnersModule,
-    AdminMembersModule,
+		AdminMembersModule,
 
-    AgmCoreModule.forRoot({
-      apiKey: `${environment.mapApiKey}`
-    }),
+		AgmCoreModule.forRoot({
+			apiKey: `${environment.mapApiKey}`
+		}),
 
-    SngCoreModule,
+		SngCoreModule,
 	],
 	exports: [CarouselModule],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: IMenuService, useClass: MenuService },
-    { provide: IStaticDataService, useClass: StaticDataService },
-    { provide: ITranslationService, useClass: TranslationService },
-    { provide: IAuthenticationService, useClass: AuthenticationService },
-    { provide: IPartnersService, useClass: PartnersService },
-    { provide: IItemsService, useClass: ItemsService },
-    { provide: IContentService, useClass: ContentService },
-    { provide: ILoyaltyService, useClass: LoyaltyService },
-    { provide: IMicrocreditService, useClass: MicrocreditService },
-    { provide: IStepperService, useClass: StepperService },
-    { provide: IEnvironmentService, useValue: environment},
+		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+		{ provide: IMenuService, useClass: MenuService },
+		{ provide: IStaticDataService, useClass: StaticDataService },
+		{ provide: ITranslationService, useClass: TranslationService },
+		{ provide: IAuthenticationService, useClass: AuthenticationService },
+		{ provide: IPartnersService, useClass: PartnersService },
+		{ provide: IItemsService, useClass: ItemsService },
+		{ provide: IContentService, useClass: ContentService },
+		{ provide: ILoyaltyService, useClass: LoyaltyService },
+		{ provide: IMicrocreditService, useClass: MicrocreditService },
+		{ provide: IStepperService, useClass: StepperService },
+		{ provide: IEnvironmentService, useValue: environment },
 		/*{
-		  provide: SWIPER_CONFIG,
-		  useValue: DEFAULT_SWIPER_CONFIG
+			provide: SWIPER_CONFIG,
+			useValue: DEFAULT_SWIPER_CONFIG
 		},*/
 		MenuService
 	],

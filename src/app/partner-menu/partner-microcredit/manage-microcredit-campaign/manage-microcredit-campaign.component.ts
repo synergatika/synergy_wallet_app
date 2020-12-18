@@ -263,6 +263,7 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         tap(
           data => {
+            this.fetchCampaignData();
             this.fetchSupportsData();
             Swal.fire({
               title: this.translate.instant('MESSAGE.SUCCESS.TITLE'),
@@ -312,7 +313,7 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(StepperPartnerMicrocreditSupportComponent, dialogConfig);
     modalDialog.afterClosed().subscribe(value => {
-      if (value) this.fetchSupportsData();
+      if (value) { this.fetchSupportsData(); this.fetchCampaignData(); }
     });
   }
 }

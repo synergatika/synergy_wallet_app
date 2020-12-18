@@ -16,6 +16,7 @@ import { SubDiscountFormComponent } from "./sub-discount-form/sub-discount-form.
 import { MessageNoticeService } from '../core/helpers/message-notice/message-notice.service';
 import { AuthenticationService } from '../core/services/authentication.service';
 import { LoyaltyService } from '../core/services/loyalty.service';
+import { StaticDataService } from '../core/helpers/static-data.service';
 
 /**
  * Local Services & Interfaces
@@ -53,7 +54,7 @@ export class StepperPartnerLoyaltyPointsComponent implements OnInit, OnDestroy {
   showIdentifierForm: boolean = false;
   showEmailForm: boolean = false;
 
-  conversionRatiο = 0.01;
+  conversionRatiο: number = 0.01;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -66,9 +67,11 @@ export class StepperPartnerLoyaltyPointsComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private loyaltyService: LoyaltyService,
     private stepperService: LocalLoyaltyService,
+    private staticDataService: StaticDataService,
     public dialogRef: MatDialogRef<StepperPartnerLoyaltyPointsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.conversionRatiο = this.staticDataService.getConversionRatiο;
     this.subscription.add(this.stepperService.user.subscribe(user => this.user = user));
     this.subscription.add(this.stepperService.actions.subscribe(actions => this.actions = actions));
     this.subscription.add(this.stepperService.transaction.subscribe(transaction => this.transaction = transaction));
@@ -349,7 +352,6 @@ export class StepperPartnerLoyaltyPointsComponent implements OnInit, OnDestroy {
       case '100101': { //link_email
         this.actionLinkEmail(
           { type: 'success', message: this.translate.instant('WIZARD_MESSAGES.LINK_EMAIL') }, user.email, user.identifier);
-
         break;
       }
       case '101101': { //link_email
@@ -516,7 +518,8 @@ export class StepperPartnerLoyaltyPointsComponent implements OnInit, OnDestroy {
             }
           },
           error => {
-            console.log(error);
+            this.stepperNoticeService.setNotice(this.translate.instant(error), 'danger');
+            this.loading = true;
           }),
         takeUntil(this.unsubscribe),
         finalize(() => {
@@ -573,10 +576,11 @@ export class StepperPartnerLoyaltyPointsComponent implements OnInit, OnDestroy {
     let redeemPoints = {
       password: 'all_ok',
       _to: _to,
-      _points: this.transaction.discount_points
+      _points: this.transaction.discount_points,
+      _amount: this.transaction.discount_amount
     }
     console.log(this.transaction)
-    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints.password, redeemPoints._points)
+    this.loyaltyService.redeemPoints(redeemPoints._to, redeemPoints.password, redeemPoints._points, redeemPoints._amount)
       .pipe(
         tap(
           data => {

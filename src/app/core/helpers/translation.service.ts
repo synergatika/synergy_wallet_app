@@ -10,25 +10,25 @@ export class TranslationService extends ITranslationService {
   // Private properties
   private langIds: any = [];
 
-	/**
-	 * Service Constructor
-	 *
-	 * @param translate: TranslateService
-	 */
+  /**
+   * Service Constructor
+   *
+   * @param translate: TranslateService
+   */
   constructor(private translate: TranslateService) {
     super();
     // add new langIds to the list
-    this.translate.addLangs(['en']);
+    this.translate.addLangs(['el']);
 
     // this language will be used as a fallback when a translation isn't found in the current language
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('el');
   }
 
-	/**
-	 * Load Translation
-	 *
-	 * @param args: Locale[]
-	 */
+  /**
+   * Load Translation
+   *
+   * @param args: Locale[]
+   */
   loadTranslations(...args: Locale[]): void {
     const locales = [...args];
 
@@ -44,11 +44,11 @@ export class TranslationService extends ITranslationService {
     this.translate.addLangs(this.langIds);
   }
 
-	/**
-	 * Setup language
-	 *
-	 * @param lang: string
-	 */
+  /**
+   * Setup language
+   *
+   * @param lang: string
+   */
   setLanguage(lang: string) {
     if (lang) {
       this.translate.use(this.translate.getDefaultLang());
@@ -57,9 +57,9 @@ export class TranslationService extends ITranslationService {
     }
   }
 
-	/**
-	 * Returns selected language
-	 */
+  /**
+   * Returns selected language
+   */
   getSelectedLanguage(): any {
     return localStorage.getItem('language') || this.translate.getDefaultLang();
   }

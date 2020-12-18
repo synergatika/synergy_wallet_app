@@ -20,7 +20,7 @@ export class UserGuard implements CanActivate {
                     return 'explore';
                     break;
                 case 'partner':
-                    return 'scanner';
+                    return 'control-panel';
                     break;
                 case 'admin':
                     return 'a-partners';

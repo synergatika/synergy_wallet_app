@@ -37,10 +37,11 @@ export const locale = {
       FEATURES: 'Features',
       APPS: 'Apps',
       DASHBOARD: 'Dashboard',
-      HOME: 'Home',
+      HOME: 'Control Panel',
       CAMPAIGNS: 'Campaigns',
       EVENTS: 'Events',
       POSTS: 'Posts',
+      COMMUNITY: 'Community',
       // OFFERS: 'Offers',
 
       /* ADMIN MENU (Μενού Διαχειριστή)*/
@@ -78,7 +79,7 @@ export const locale = {
         BUTTON: 'Sign In',
         EMAIL_NEEDS_VERIFICATION: 'You have to verify your email address',
         PASSWORD_NEEDS_UPDATE: 'You have to update your password',
-        ACCOUNT_NEEDS_ACTIVATION: 'You have to reactivate your account'
+        ACCOUNT_NEEDS_ACTIVATION: 'You have to activate your account'
       },
       LOGOUT: {
         BUTTON: 'Sign out'
@@ -282,6 +283,11 @@ export const locale = {
           TITLE: 'Offer Description',
           PLACEHOLDER: 'Description',
           DESC: 'Please, enter Offer Description.'
+        },
+        INSTRUCTIONS: {
+          TITLE: 'Offer Instructions',
+          PLACEHOLDER: 'Instructions',
+          DESC: 'Please, enter Offer Instructions.'
         },
         COST: {
           TITLE: 'Cost in points',
@@ -607,6 +613,7 @@ export const locale = {
        */
       MEMBER_NOT_EXISTS: 'No user found with this identifier',
       USER_EXISTS: 'A user with there credentials already exists',
+      USER_DEACTIVATED: 'User is not activated',
       USER_HAS_CARD: 'A card is already linked to this account',
       USER_HAS_EMAIL: 'An email is already linked to this account',
       WRONG_IDENTIFIER: 'Identifier must be an Email or a Card',
@@ -844,6 +851,7 @@ export const locale = {
     PARTNER: {
       DASHBOARD: {
         SCANNER: 'Scanner',
+        STATISTICS: 'Loyalty Statistics',
         NEWS: 'News from the Community',
       },
       WIZARD: {
@@ -957,6 +965,30 @@ export const locale = {
       LINK_CARD: 'A new card has been linked to an existing account',
 
       SUCCESS_TRANSACTION: 'Transaction completed successfully',
+    },
+
+    /**
+     * STATISTICS TRANSLATION (Μετάφραση Στατιστικών)
+     */
+    STATISTICS: {
+      LOYALTY_EARN: 'Income',
+      LOYALTY_REDEEM: 'Discounts',
+      OFFER_REDEEM: 'Transaction related to Offer',
+      MICEOCREDIT_EARN: 'Promise',
+      MICROCREDIT_REDEEM: 'Redeem',
+
+      MICROCREDIT_GENERAL: 'General',
+      PAID_TO_EARNED: 'Paid to Total Promises',
+      REDEEMED_TO_PAID: 'Redeemed to Paid Promises',
+      REMAINING_TO_PAID: 'Remaining to Paid Promises',
+
+      AMOUNT: 'Amount(€)',
+      USERS: 'Unique Users',
+      TRANSACTIONS: 'Number of Transactions',
+      QUANTITY: 'Quantity',
+      TOTAL: 'Total',
+      EXPORT: 'Export to .csv',
+      CLEAR_FILTER: 'Clear Filter'
     }
   }
 };

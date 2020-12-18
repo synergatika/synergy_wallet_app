@@ -9,8 +9,17 @@ import { PaymentList, ContactList, GeneralList, LanguageFlag } from 'sng-core';
 })
 export class StaticDataService {
 
+    /**
+     * Image
+     */
     imageMaxSize: number = 2097152;
     imagesMaxNumber: number = 3;
+
+    /**
+     * Points To Euro Ratios
+     */
+    conversionRatiο: number = 0.01;
+
     /**
      * Owl Carousel
      */
@@ -497,6 +506,10 @@ export class StaticDataService {
                 minLength: 16,
                 maxLength: 4096
             },
+            instructions: {
+                minLength: 0,
+                maxLength: 4096
+            },
             cost: {
                 minValue: 0,
                 maxValue: 100000
@@ -539,6 +552,10 @@ export class StaticDataService {
                 maxValue: 100000
             }
         }
+    }
+
+    public get getConversionRatiο(): number {
+        return this.conversionRatiο;
     }
 
     public get getOwlOptionsTwo(): OwlOptions {

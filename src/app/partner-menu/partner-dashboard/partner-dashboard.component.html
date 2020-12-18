@@ -17,7 +17,7 @@
       <!--begin::Loyalty Offers List-->
       <ng-container *ngIf="configAccess[1]&&offers">
         <div class="item item-wrapper col-md-4" *ngFor="let item of offers" (click)="openModalB(item)">
-          <sng-offer-card [offer]="item"></sng-offer-card>
+          <sng-offer-little-card [offer]="item"></sng-offer-little-card>
         </div>
       </ng-container>
       <!--end::Loyalty Offers List-->
@@ -25,7 +25,7 @@
       <!--begin::Microcredit Campaigns List-->
       <ng-container *ngIf="configAccess[2]&&microcredit">
         <div class="item item-wrapper col-md-4" *ngFor="let item of microcredit" (click)="openModalC(item)">
-          <sng-microcredit_campaign-card [campaign]="item" type="all"></sng-microcredit_campaign-card>
+          <sng-microcredit_campaign-little-card [campaign]="item" type="'all'"></sng-microcredit_campaign-little-card>
         </div>
       </ng-container>
       <!--end::Microcredit Campaigns List-->
@@ -33,12 +33,22 @@
     </div>
   </div>
 
+  <br>
+  <hr>
+  <br>
+
   <!--begin::Posts/Events List(Carousel)-->
-  <sng-posts_events-list-carousel type='all' *ngIf="configAccess[0]"></sng-posts_events-list-carousel>
+  <!-- <sng-posts_events-list-carousel type='all' *ngIf="configAccess[0]"></sng-posts_events-list-carousel> -->
   <!--end::Posts/Events List(Carousel)-->
 
-  <!--begin::Loyalty Statistics-->
-  <sng-loyalty-statistics>
-  </sng-loyalty-statistics>
-  <!--end::Loyalty Statistics-->
+  <div *ngIf="configAccess[1]||configAccess[2]">
+    <h2 class="col-md-12 section-heading"> {{'PARTNER.DASHBOARD.STATISTICS' | translate}}</h2>
+
+    <!--begin::Loyalty Statistics-->
+    <sng-loyalty-statistics>
+    </sng-loyalty-statistics>
+    <!--end::Loyalty Statistics-->
+
+  </div>
+
 </div>

@@ -63,9 +63,9 @@ export class StepperPartnerMicrocreditSupportComponent implements OnInit, OnDest
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.campaign = this.data.campaign
     this.stepperService.changeMicrocreditCampaign(this.campaign);
@@ -75,9 +75,9 @@ export class StepperPartnerMicrocreditSupportComponent implements OnInit, OnDest
     this.stepperService.changeTransaction(this.transaction);
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     this.stepperNoticeService.setNotice(null);
     this.subscription.unsubscribe();
@@ -289,6 +289,8 @@ export class StepperPartnerMicrocreditSupportComponent implements OnInit, OnDest
    * Deside the registration action (Registration, Link Email, Link Card)
    */
   actionsHandler() {
+    this.loading = true;
+
     const user = {
       identifier: this.user.identifier_scan || this.user.identifier_form,
       email: this.user.email

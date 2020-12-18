@@ -119,6 +119,11 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         Validators.maxLength(this.validator.description.maxLength)
       ])
       ],
+      instructions: ['', Validators.compose([
+        Validators.minLength(this.validator.description.minLength),
+        Validators.maxLength(this.validator.description.maxLength)
+      ])
+      ],
       cost: ['', Validators.compose([
         Validators.required,
         Validators.min(this.validator.cost.minValue),
@@ -225,6 +230,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     formData.append('subtitle', controls.subtitle.value);
     formData.append('cost', controls.cost.value);
     formData.append('description', controls.description.value);
+    formData.append('instructions', controls.instructions.value);
     formData.append('expiresAt', controls.expiration.value.getTime().toString());
     console.log(controls.expiration.value.getTime());
 

@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
  */
 import { LocalLoyaltyService } from '../_loyalty.service';
 import { LocalLoyaltyInterface } from '../_loyalty.interface';
+import { StaticDataService } from '../../core/helpers/static-data.service';
 
 @Component({
   selector: 'app-sub-discount-form',
@@ -36,25 +37,27 @@ export class SubDiscountFormComponent implements OnInit, OnDestroy {
   stepperForm: FormGroup;
   submitted: boolean = false;
 
-  conversionRatiο = 0.01;
+  conversionRatiο: number = 0.01;
 
   private subscription: Subscription = new Subscription;
 
-	/**
-	 * Component Constructor
-	 */
+  /**
+   * Component Constructor
+   */
   constructor(
     private fb: FormBuilder,
-    private stepperService: LocalLoyaltyService
+    private stepperService: LocalLoyaltyService,
+    private staticDataService: StaticDataService
   ) {
+    this.conversionRatiο = this.staticDataService.getConversionRatiο;
     this.subscription.add(this.stepperService.user.subscribe(user => this.user = user));
     this.subscription.add(this.stepperService.actions.subscribe(actions => this.actions = actions));
     this.subscription.add(this.stepperService.transaction.subscribe(transaction => this.transaction = transaction));
   }
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit() {
     this.initializeForm();
   }

@@ -14,8 +14,8 @@ export class LocalMicrocreditService {
         partner_email: '',
         partner_slug: '',
         partner_imageURL: '',
-        partner_phone: '',
 
+        partner_phone: '',
         partner_address: { street: '', city: '', postCode: '', coordinates: ['', ''] },
         partner_payments: [{ bic: '', name: '', value: '' }, { bic: '', name: '', value: '' }],
         partner_contacts: [{ slug: '', name: '', value: '' }],
@@ -42,7 +42,7 @@ export class LocalMicrocreditService {
         redeemEnds: 0,
 
         tokens: {
-            _id: '', earnedTokens: 0, redeemedTokens: 0
+            _id: '', earnedTokens: 0, paidTokens: 0, redeemedTokens: 0
         },
         // confirmationTokens: {
         //     _id: '', initialTokens: 0, redeemedTokens: 0

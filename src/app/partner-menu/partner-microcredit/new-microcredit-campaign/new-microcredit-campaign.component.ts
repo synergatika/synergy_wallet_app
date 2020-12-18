@@ -334,7 +334,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     this.title = controls.title.value;
 
     if (campaignStatus === 'draft') this.createCampaign('draft');
-    else if (campaignStatus === 'publish') this.publishItemModal;
+    else if (campaignStatus === 'publish') this.publishItemModal();
   }
 
   publishItemModal() {

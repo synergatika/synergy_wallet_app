@@ -18,7 +18,8 @@
     <!--begin::Loyalty Offers List-->
     <ng-container *ngIf="offers">
       <div class="item item-wrapper col-md-4" *ngFor="let item of offers">
-        <sng-offer-card class="item-card" [offer]="item" routerLink="edit/{{item.offer_id}}"></sng-offer-card>
+        <sng-offer-card class="item-card" [offer]="item" type="'internal'" routerLink="edit/{{item.offer_id}}">
+        </sng-offer-card>
       </div>
     </ng-container>
     <!--end::Loyalty Offers List-->

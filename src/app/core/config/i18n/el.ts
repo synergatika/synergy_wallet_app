@@ -37,10 +37,11 @@ export const locale = {
       FEATURES: 'Features',
       APPS: 'Apps',
       DASHBOARD: 'Dashboard',
-      HOME: 'Αρχική',
+      HOME: 'Πίνακας Ελέγχου',
       CAMPAIGNS: 'Καμπάνιες',
       EVENTS: 'Εκδηλώσεις',
       POSTS: 'Αναρτήσεις',
+      COMMUNITY: 'Κοινότητα',
       //OFFERS: 'Προσφορές',
 
       /* ADMIN MENU (Μενού Διαχειριστή)*/
@@ -282,6 +283,11 @@ export const locale = {
           TITLE: 'Περιγραφή Προσφοράς',
           PLACEHOLDER: 'Περιγραφή',
           DESC: 'Παρακαλώ, εισάγετε την περιγραφή της προσφοράς.'
+        },
+        INSTRUCTIONS: {
+          TITLE: 'Οδηγίες Απόκτησης Προσφοράς',
+          PLACEHOLDER: 'Οδηγίες',
+          DESC: 'Παρακαλώ, εισάγετε τις Οδηγίες για την απόκτηση της προσφοράς.'
         },
         COST: {
           TITLE: 'Κόστος Προσφοράς (σε πόντους)',
@@ -607,6 +613,7 @@ export const locale = {
        */
       MEMBER_NOT_EXISTS: 'Δεν υπάρχει χρήστης με το συγκεκριμένο αναγνωριστικό',
       USER_EXISTS: 'Υπάρχει ήδη χρήστης με τα στοιχεία που δόθηκαν',
+      USER_DEACTIVATED: 'Ο χρήστης δεν είναι ενεργός',
       USER_HAS_CARD: 'Έχει ήδη συνδεθεί μια κάρτα με τον συγκεκριμένο λογαριασμό χρήστη',
       USER_HAS_EMAIL: 'Έχει ήδη συνδεθεί μια διεύθυνση ηλεκτρονικου ταχυδρομείου με το συγκεκριμένο λογαριασμό',
       WRONG_IDENTIFIER: 'Το αναγνωριστικό θα πρέπει να είναι σε μορφή email ή κάρτας',
@@ -717,7 +724,7 @@ export const locale = {
       PLEDGE: 'Στήριξε',
       PLEDGE_DISABLE: 'Δεν μπορείται να προσθέσετε μια "Υποστήριξη" εκτός της περιόδου υποστήριξης',
       REDEEM_DISABLE: 'Δεν μπορείτε να εξαργυρώσετε μια "Υπόσχεση" εκτός της περιόδου εξαργύρωσης',
-      PARTNER: 'Πληροφορίες Συνεργάτη',
+      PARTNER: 'Πληροφοριες Συνεργατη',
       TERMS: 'Τι παίρνω;',
       STATUS: {
         DRAFT: 'Πρόχειρη',
@@ -844,6 +851,7 @@ export const locale = {
     PARTNER: {
       DASHBOARD: {
         SCANNER: 'Σάρωση',
+        STATISTICS: 'Στατιστικά Loyalty',
         NEWS: 'Νέα απο την Κοινότητα',
       },
       WIZARD: {
@@ -958,6 +966,30 @@ export const locale = {
       LINK_CARD: 'Μια κάρτα συνδέθηκε στο λογαριάσμο χρήστη',
 
       SUCCESS_TRANSACTION: 'Η συναλλαγή πραγματοποιήθηκε επιτυχώς',
+    },
+
+    /**
+     * STATISTICS TRANSLATION (Μετάφραση Στατιστικών)
+     */
+    STATISTICS: {
+      LOYALTY_EARN: 'Εισροές μέσω του Προγράμματος',
+      LOYALTY_REDEEM: 'Εκπτώσεις που δόθηκαν',
+      OFFER_REDEEM: 'Συναλλαγές σχετιζόμενες με την προσφορά',
+      MICROCREDIT_EARN: 'Εισροές απο Υποσχέσεις',
+      MICROCREDIT_REDEEM: 'Εξαργυρωμένα Ποσά',
+
+      MICROCREDIT_GENERAL: 'Γενική Εικόνα',
+      PAID_TO_EARNED: 'Πληρωμένες προς Συνολικές Υποσχέσεις',
+      REDEEMED_TO_PAID: 'Εξαργυρωμένες προς Πληρωμένες Υποσχέσεις',
+      REMAINING_TO_PAID: 'Εναπομείνασες προς Πληρωμένες Υποσχέσεις',
+
+      AMOUNT: 'Ποσό(€)',
+      USERS: 'Μοναδικοί Χρήστες',
+      TRANSACTIONS: 'Αριθμός Συναλλαγών',
+      QUANTITY: 'Ποσότητα',
+      TOTAL: 'Σύνολο',
+      EXPORT: 'Εξαγωγή Αρχείου .csv',
+      CLEAR_FILTER: 'Αφαίρεση Φίλτρου'
     }
   }
 };
