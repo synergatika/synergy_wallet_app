@@ -23,6 +23,7 @@ import { GeneralList } from 'sng-core';
  * Validators
  */
 import { DatesValidator } from '../dates.validator';
+import { AmountValidator } from '../amount.validator';
 
 @Component({
   selector: 'app-new-microcredit-campaign',
@@ -94,6 +95,8 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() + 1);
+
     this.initForm();
   }
 
@@ -128,43 +131,50 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
       ])
       ],
       category: ['', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       access: ['public', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
+
       quantitative: [false, Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       minAllowed: [0, Validators.compose([
         Validators.required,
+        Validators.min(this.validator.minAllowed.minValue),
+        Validators.max(this.validator.minAllowed.maxValue)
       ])
       ],
-      maxAllowed: [0],
+      maxAllowed: [0, Validators.compose([
+        Validators.required
+      ])
+      ],
       stepAmount: [''],
       maxAmount: [0, Validators.compose([
         Validators.required,
-        Validators.min(this.validator.maxAmount.minLength),
-        Validators.max(this.validator.maxAmount.maxLength)
+        Validators.min(this.validator.maxAmount.minValue),
+        Validators.max(this.validator.maxAmount.maxValue)
       ])
       ],
+
       supportStarts: ['', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       supportEnds: ['', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       redeemStarts: ['', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       redeemEnds: ['', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       // profile_avatar: ['', Validators.compose([
@@ -177,7 +187,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
       ],
     },
       {
-        validator: DatesValidator.DatesValidator
+        validator: [DatesValidator.DatesValidator, AmountValidator.AmountValidator]
       });
   }
 
@@ -242,6 +252,10 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     formData.append('stepAmount', (controls.quantitative.value) ? controls.stepAmount.value : '0');
     formData.append('maxAmount', controls.maxAmount.value);
 
+    console.log(controls.supportStarts.value.getTime().toString())
+    console.log(controls.supportEnds.value.getTime().toString())
+    console.log(controls.redeemStarts.value.getTime().toString())
+    console.log(controls.redeemEnds.value.getTime().toString())
     formData.append('startsAt', controls.supportStarts.value.getTime().toString());
     formData.append('expiresAt', controls.supportEnds.value.getTime().toString());
     formData.append('redeemStarts', controls.redeemStarts.value.getTime().toString());
@@ -323,6 +337,7 @@ export class NewMicrocreditCampaignComponent implements OnInit, OnDestroy {
     const controls = this.submitForm.controls;
     /** check form */
     if (this.submitForm.invalid) {// || !this.fileData) {
+      console.log(controls);
       // if (!this.fileData) this.showImageError = true;
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()

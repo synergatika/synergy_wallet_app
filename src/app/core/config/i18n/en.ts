@@ -526,6 +526,12 @@ export const locale = {
           REDEEMSTARTSTOREDEEMENDS: 'Redeem Starting Date cannot be greater than Redeem Ending Date',
           SUPPORTENDSTOREDEEMENDS: 'Support Ending Date cannot be greater than Redeem Ending Date',
         },
+        CAMPAIGN_AMOUNTS: {
+          NOTQUANTITATIVEMAXAMOUNTMINALLOWED: 'Max Amount must be greater than Min Allowed',
+          QUANTITATIVEMINALLOWEDMAXALLOWED: 'Max Allowed must be greater than Min Allowed',
+          QUANTITATIVESTEPAMOUNTMAXALLOWED: 'Max Allowed must be greater than Step Amount',
+          QUANTITATIVEMAXALLOWEDMAXAMOUNT: 'Max amount must be greater than Max Allowed',
+        }
       },
     },
 

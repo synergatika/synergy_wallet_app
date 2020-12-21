@@ -537,10 +537,11 @@ export class StaticDataService {
                 maxLength: 128
             },
             minAllowed: {
-
+                minValue: 1,
+                maxValue: 100000
             },
             maxAllowed: {
-                minValue: 0,
+                minValue: 1,
                 maxValue: 100000
             },
             stepAmount: {
@@ -548,7 +549,7 @@ export class StaticDataService {
                 maxValue: 100000
             },
             maxAmount: {
-                minValue: 0,
+                minValue: 1,
                 maxValue: 100000
             }
         }

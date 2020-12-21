@@ -394,6 +394,8 @@ th .mat-sort-header-sorted {
   .form-actions {
     margin-top: 20px;
 
+    float: right;
+
     button {
       float: right;
       font-size: 18px;
@@ -401,6 +403,15 @@ th .mat-sort-header-sorted {
     }
   }
 }
+
+.single-delete {
+  float: right;
+
+  button {
+    float: right;
+  }
+}
+
 
 .avatar {
   &-holder {

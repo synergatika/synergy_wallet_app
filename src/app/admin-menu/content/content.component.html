@@ -3,8 +3,8 @@
   <div class="row">
 
     <!--begin::Button (Create Content)-->
-    <div class="item item-wrapper col-md-4" routerLink="create">
-      <mat-card class="item-card new-item-card">
+    <div class="item item-wrapper col-md-4">
+      <mat-card class="item-card new-item-card" routerLink="create">
         <mat-card-content>
           <div class="new-item">{{'CONTENT.CREATE' | translate}}</div>
         </mat-card-content>
@@ -17,9 +17,9 @@
 
     <!--begin::Content List-->
     <ng-container *ngIf="content">
-      <div class="item item-wrapper col-md-4" *ngFor="let item of content" routerLink="edit/{{item._id}}">
+      <div class="item item-wrapper col-md-4" *ngFor="let item of content">
 
-        <mat-card class="item-card content-card">
+        <mat-card class="item-card content-card" routerLink="edit/{{item._id}}">
           <mat-card-content>
 
             <div class="wallet_offer_wrapper s_archive_wrapper">

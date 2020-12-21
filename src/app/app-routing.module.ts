@@ -32,7 +32,6 @@ import { ArchiveMicrocreditCampaignsComponent } from './views/pages/archive-micr
  * CanActivate/CanDeactivate Guards
  */
 import { AuthGuard } from './core/guards/auth.guard';
-import { UnAuthGuard } from './core/guards/unauth.guard';
 import { UserGuard } from './core/guards/user.guard';
 import { ConfigGuard } from './core/guards/config.guard';
 
@@ -40,7 +39,6 @@ const routes: Routes = [
 	{
 		path: 'auth',
 		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-		//	canActivate: [UnAuthGuard],
 	},
 	{
 		path: '',

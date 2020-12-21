@@ -23,6 +23,7 @@ import { GeneralList } from 'sng-core';
  * Validators
  */
 import { DatesValidator } from '../dates.validator';
+import { AmountValidator } from '../amount.validator';
 
 @Component({
   selector: 'app-edit-microcredit-campaign',
@@ -124,6 +125,8 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() + 1);
+
     this.fetchCampaignData();
     this.initForm();
   }
@@ -159,57 +162,59 @@ export class EditMicrocreditCampaignComponent implements OnInit, OnDestroy {
       ])
       ],
       category: ['', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       access: ['', Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
 
       quantitative: ['', Validators.compose([
+        Validators.required
+      ])
+      ],
+      minAllowed: [0, Validators.compose([
         Validators.required,
+        Validators.min(this.validator.minAllowed.minValue),
+        Validators.max(this.validator.minAllowed.maxValue)
+      ])
+      ],
+      maxAllowed: [0, Validators.compose([
+        Validators.required
       ])
       ],
       stepAmount: [''],
-      minAllowed: ['', Validators.compose([
+      maxAmount: [0, Validators.compose([
         Validators.required,
-      ])
-      ],
-      maxAllowed: ['', Validators.compose([
-        Validators.required,
-      ])
-      ],
-      maxAmount: ['', Validators.compose([
-        Validators.required,
-        Validators.min(this.validator.maxAmount.minLength),
-        Validators.max(this.validator.maxAmount.maxLength)
+        Validators.min(this.validator.maxAmount.minValue),
+        Validators.max(this.validator.maxAmount.maxValue)
       ])
       ],
 
       supportStarts: [new Date(), Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       supportEnds: [new Date(), Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       redeemStarts: [new Date(), Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       redeemEnds: [new Date(), Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
       image_url: [new Date(), Validators.compose([
-        Validators.required,
+        Validators.required
       ])
       ],
     },
       {
-        validator: DatesValidator.DatesValidator
+        validator: [DatesValidator.DatesValidator, AmountValidator.AmountValidator]
       }
     );
   }

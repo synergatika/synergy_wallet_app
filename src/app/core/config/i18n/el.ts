@@ -503,9 +503,9 @@ export const locale = {
 
     FORM: {
       BUTTONS: {
-        SUBMIT: 'Υποβολη',
-        PREVIOUS: 'Πισω',
-        NEXT_STEP: 'Επομενο',
+        SUBMIT: 'Υποβολή',
+        PREVIOUS: 'Πίσω',
+        NEXT_STEP: 'Επόμενο',
         SAVE: 'Αποθήκευση',
       },
       VALIDATION: {
@@ -520,12 +520,18 @@ export const locale = {
         AGREEMENT_REQUIRED: 'Χρειάζεται να αποδεκτείτε τους όρους χρήσσης',
         IMAGE_SIZE: 'Το μέγεθος του αρχείου δεν μπορει να υπερβαίνει τα ',
         IMAGES_NUMBER: 'Ο αριθμός των εικόνων δεν μπορεί να είναι μεγαλύτερος απο ',
-        DATES: {
+        CAMPAIGN_DATES: {
           SUPPORTSTARTSTOSUPPORTENDS: 'Η ημερομηνία Έναρξης της Προσφοράς δεν μπορεί να είναι μεταγενέστερη της ημερομηνίας Λήξης',
           SUPPORTSTARTSTOREDEEMSTARTS: 'Η ημερομηνία Έναρξης της Προσφοράς δεν μπορεί να είναι μεταγενέστερη της Ημερομηνία Εξαργύρωσης',
           REDEEMSTARTSTOREDEEMENDS: 'Η ημερομηνία Έναρξης της Εξαργύρωσης δεν μπορεί να είναι μεταγενέστερη της Ημερομηνίας Λήξης',
           SUPPORTENDSTOREDEEMENDS: 'Η ημερομηνίας Λήξης της Προσφοράς δεν μπορεί να είναι μεταγενέστερη της ημερομηνίας Λήξης της Εξαργύρωσης',
         },
+        CAMPAIGN_AMOUNTS: {
+          NOTQUANTITATIVEMAXAMOUNTMINALLOWED: 'Το Άνω Όριο Πωλήσεων δεν μπορεί να είναι μικρότερο από την Τιμή',
+          QUANTITATIVEMINALLOWEDMAXALLOWED: 'Το Άνω Όριο ανα Χρήστη δεν μπορεί να είναι μικρότερο από το Κάτω Όριο Χρήστη.',
+          QUANTITATIVESTEPAMOUNTMAXALLOWED: 'Το Άνω Όριο ανα Χρήστη δεν μπορεί να είναι μικρότερο από την Τιμή Βήματος.',
+          QUANTITATIVEMAXALLOWEDMAXAMOUNT: 'Το Άνω Όριο Πωλήσεων δεν μπορεί να είναι μικρότερο από Άνω Όριο ανα Χρήστη',
+        }
       },
     },
 

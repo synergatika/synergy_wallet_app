@@ -170,12 +170,10 @@
         </div>
 
         <!--begin::Form Actions-->
-        <div class="row">
-          <div class="form-actions col-md-12">
-            <button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-primary">
-              {{ 'FORM.BUTTONS.SUBMIT' | translate }}
-            </button>
-          </div>
+        <div class="form-actions row col-md-4">
+          <button mat-raised-button (click)="onSubmit()" (keyup.enter)="onSubmit()" class="btn btn-block btn-primary">
+            {{ 'FORM.BUTTONS.SUBMIT' | translate }}
+          </button>
         </div>
         <!--end::Form Actions-->
 
@@ -187,8 +185,8 @@
 </div>
 
 <!--end::Button (Delete Offer)-->
-<div class="single-delete">
-  <button mat-raised-button class="delete-text" (click)="deleteItemModal()">
+<div class="single-delete row col-md-4">
+  <button mat-raised-button (click)="deleteItemModal()" class="btn btn-block btn-danger">
     {{'OFFER.DELETE' | translate}}
   </button>
 </div>

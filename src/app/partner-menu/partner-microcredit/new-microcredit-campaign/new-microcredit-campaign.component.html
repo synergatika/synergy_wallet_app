@@ -218,6 +218,12 @@
                 <mat-error *ngIf="isControlHasError('minAllowed','required')" class="error text-danger">
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
                 </mat-error>
+                <mat-error *ngIf="isControlHasError('minAllowed','min')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{validator.minAllowed.minValue}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('minAllowed','max')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{validator.minAllowed.maxValue}}
+                </mat-error>
                 <mat-hint class="form-text text-muted">
                   {{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED_PRICE.DESC' | translate}}
                 </mat-hint>
@@ -237,11 +243,16 @@
                 <mat-error *ngIf="isControlHasError('maxAmount','required')" class="error text-danger">
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
                 </mat-error>
-                <mat-error *ngIf="isControlHasError('maxAmount','minlength')" class="error text-danger">
+                <mat-error *ngIf="isControlHasError('maxAmount','min')" class="error text-danger">
                   {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{validator.maxAmount.minValue}}
                 </mat-error>
-                <mat-error *ngIf="isControlHasError('maxAmount','maxlength')" class="error text-danger">
+                <mat-error *ngIf="isControlHasError('maxAmount','max')" class="error text-danger">
                   {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{validator.maxAmount.maxValue}}
+                </mat-error>
+                <mat-error
+                  *ngIf="submitForm.get('maxAmount').errors && submitForm.get('maxAmount').errors.MaxAmountGreaterThanMinAllowed"
+                  class="error text-danger">
+                  {{ 'FORM.VALIDATION.CAMPAIGN_AMOUNTS.NOTQUANTITATIVEMAXAMOUNTMINALLOWED' | translate }}
                 </mat-error>
                 <mat-hint class="form-text text-muted">
                   {{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.DESC' | translate}}
@@ -266,6 +277,12 @@
                   placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.PLACEHOLDER' | translate}}">
                 <mat-error *ngIf="isControlHasError('minAllowed','required')" class="error text-danger">
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('minAllowed','min')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{validator.minAllowed.minValue}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('minAllowed','max')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{validator.minAllowed.maxValue}}
                 </mat-error>
                 <mat-hint class="form-text text-muted">
                   {{'FIELDS.MICROCREDIT_CAMPAIGN.MIN_ALLOWED.DESC' | translate}}
@@ -299,6 +316,16 @@
                 <mat-error *ngIf="isControlHasError('maxAllowed','required')" class="error text-danger">
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
                 </mat-error>
+                <mat-error
+                  *ngIf="submitForm.get('maxAllowed').errors && submitForm.get('maxAllowed').errors.MinAllowedGreaterThanMaxAllowed"
+                  class="error text-danger">
+                  {{ 'FORM.VALIDATION.CAMPAIGN_AMOUNTS.QUANTITATIVEMINALLOWEDMAXALLOWED' | translate }}
+                </mat-error>
+                <mat-error
+                  *ngIf="submitForm.get('maxAllowed').errors && submitForm.get('maxAllowed').errors.StepAmountGreaterThanMaxAllowed"
+                  class="error text-danger">
+                  {{ 'FORM.VALIDATION.CAMPAIGN_AMOUNTS.QUANTITATIVESTEPAMOUNTMAXALLOWED' | translate }}
+                </mat-error>
                 <mat-hint class="form-text text-muted">
                   {{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_ALLOWED.DESC' | translate}}
                 </mat-hint>
@@ -314,6 +341,17 @@
                   placeholder="{{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.PLACEHOLDER' | translate}}">
                 <mat-error *ngIf="isControlHasError('maxAmount','required')" class="error text-danger">
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('maxAmount','min')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{validator.maxAmount.minValue}}
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('maxAmount','max')" class="error text-danger">
+                  {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{validator.maxAmount.maxValue}}
+                </mat-error>
+                <mat-error
+                  *ngIf="submitForm.get('maxAmount').errors && submitForm.get('maxAmount').errors.MaxAllowedGreaterThanMaxAmount"
+                  class="error text-danger">
+                  {{ 'FORM.VALIDATION.CAMPAIGN_AMOUNTS.QUANTITATIVEMAXALLOWEDMAXAMOUNT' | translate }}
                 </mat-error>
                 <mat-hint class="form-text text-muted">
                   {{'FIELDS.MICROCREDIT_CAMPAIGN.MAX_AMOUNT.DESC' | translate}}
@@ -454,17 +492,14 @@
         </div>
 
         <!--begin::Form Actions-->
-        <div class="row">
-          <div class="form-actions col-md-12">
-            <button mat-raised-button type="button" (click)="onSubmit('draft')" (keyup.enter)="onSubmit('draft')"
-              class="btn mr-3">
-              {{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_DRAFT' | translate }}
-            </button>
-            <button mat-raised-button type="button" (click)="onSubmit('publish')" (keyup.enter)="onSubmit('publish')"
-              class="btn btn-primary">
-              {{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
-            </button>
-          </div>
+        <div class="form-actions row col-md-4">
+          <button mat-raised-button type="button" (click)="onSubmit('draft')" (keyup.enter)="onSubmit('draft')"
+            class="btn btn-block btn-primary">
+            {{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_DRAFT' | translate }}
+          </button>
+          <button mat-raised-button type="button" (click)="onSubmit('publish')" class="btn btn-block btn-warning">
+            {{ 'FIELDS.MICROCREDIT_CAMPAIGN.SUBMIT_CAMPAIGN' | translate }}
+          </button>
         </div>
         <!--end::Form Actions-->
 
