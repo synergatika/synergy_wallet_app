@@ -1,5 +1,12 @@
 <h1 *ngIf="campaign" class="section-heading">{{campaign.title}}</h1>
 
+<div class="info-row">
+  <span class="tag">{{'CAMPAIGN.SUPPORT_PERIOD' | translate}}</span> {{campaign.startsAt | date: 'd.M.y'}} -
+  {{campaign.expiresAt | date: 'd.M.y'}}<br>
+  <span class="tag">{{'CAMPAIGN.REDEEM_PERIOD' | translate}}:</span> {{campaign.redeemStarts | date: 'd.M.y'}} -
+  {{campaign.redeemEnds | date: 'd.M.y'}}<br>
+</div>
+
 <div>
   <button mat-raised-button class="plegde-button" (click)="openModal(campaign)" [disabled]="!canSupportCampaign">
     <span matTooltip="{{'CAMPAIGN.PLEDGE_DISABLE' | translate}}" [matTooltipPosition]="'right'"

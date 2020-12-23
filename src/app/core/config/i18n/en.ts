@@ -723,6 +723,8 @@ export const locale = {
       DRAFT: 'draft',
       CANCEL: 'Cancel',
 
+      SUPPORT_PERIOD: 'Support Period',
+      SUPPORT_PERIOD_SUB: 'This is the period in which you can pledge for an the item',
       REDEEM_PERIOD: 'Redeem Period',
       REDEEM_PERIOD_SUB: 'This is the period in which you can get the items you pledged for',
       PRICE: 'Price',
@@ -734,7 +736,7 @@ export const locale = {
       TERMS: 'What do I get?',
       STATUS: {
         DRAFT: 'Draft',
-        EXPECTED: 'Is Expected',
+        EXPECTED: 'is expected',
         EXPIRED: 'Expired',
         REDEEM_TO: 'redeem until'
       },

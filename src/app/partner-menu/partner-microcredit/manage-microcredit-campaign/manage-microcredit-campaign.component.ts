@@ -71,17 +71,15 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
   /**
    * Flags(Check) Variables
    */
-  canSupportCampaign: boolean = false;
-  canConfirmPayment: boolean = false;
-  canRevertPayment: boolean = false;
+  public canSupportCampaign: boolean = false;
+  public canConfirmPayment: boolean = false;
+  public canRevertPayment: boolean = false;
 
   /**
    * Data Table Variables
    */
   displayedColumns: string[] = ['payment_id', 'method', 'remainingTokens', 'initialTokens', 'createdAt', 'status'];
   dataSource: MatTableDataSource<MicrocreditSupport>;
-
-  seconds: number = 0;
 
   loading: boolean = false;
   private unsubscribe: Subject<any>;
@@ -133,8 +131,6 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
   * On Init
   */
   ngOnInit() {
-    const now = new Date();
-    this.seconds = parseInt(now.getTime().toString());
     this.maxDate = new Date();
 
     this.fetchCampaignData();
@@ -198,6 +194,15 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
     this.selectedMethod = { ...this.defaultMethod };
   }
 
+  checkAvailableActions() {
+    const now = new Date();
+    const seconds: number = parseInt(now.getTime().toString());
+
+    this.canSupportCampaign = ((this.campaign.startsAt < seconds) && (this.campaign.expiresAt > seconds));
+    this.canRevertPayment = (this.campaign.redeemStarts > seconds);
+    this.canConfirmPayment = (this.campaign.redeemEnds > seconds);
+  }
+
   /**
    * Fetch Microcredit Campaign Data (One Campaign)
    */
@@ -213,9 +218,8 @@ export class ManageMicrocreditCampaignComponent implements OnInit, OnDestroy {
             const datesRedeem = (this.campaign.statistics.redeemed) ? this.campaign.statistics.redeemed.byDate.map(obj => { return obj.date }) : [];
             const datesPromise = (this.campaign.statistics.earned) ? this.campaign.statistics.earned.byDate.map(obj => { return obj.date }) : [];
             this.validatedDates = datesRedeem.concat(datesPromise);
-            this.canSupportCampaign = ((this.campaign.startsAt < this.seconds) && (this.campaign.expiresAt > this.seconds)) ? true : false;
-            this.canRevertPayment = (this.campaign.redeemStarts > this.seconds) ? true : false;
-            this.canConfirmPayment = (this.campaign.redeemEnds > this.seconds) ? true : false;
+
+            this.checkAvailableActions();
           },
           error => {
           }),

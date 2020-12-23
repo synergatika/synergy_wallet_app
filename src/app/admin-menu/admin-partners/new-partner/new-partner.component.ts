@@ -77,7 +77,7 @@ export class NewPartnerComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService
   ) {
     // this.paymentsList = this.staticDataService.getPaymentsList;
-    this.sectorList = this.staticDataService.getSectorList;
+    this.sectorList = this.staticDataService.getSectorsList;
     this.validator = this.staticDataService.getValidators.user;
     this.unsubscribe = new Subject();
   }

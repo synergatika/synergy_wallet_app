@@ -21,9 +21,9 @@ import { StaticDataService } from '../../core/helpers/static-data.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-	/**
-	 * Form
-	 */
+  /**
+   * Form
+   */
   authForm: FormGroup;
   validator: any;
 
@@ -34,18 +34,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
-	/**
-	 * Component Constructor
-	 *
-	 * @param router: Router
-	 * @param fb: FormBuilder,
-	 * @param cdr: ChangeDetectorRef
-	 * @param activatedRoute: ActivatedRoute
-	 * @param translate: TranslateService
-	 * @param authNoticeService: MessageNoticeService
-	 * @param authenticationService: AuthenticationService,
-	 * @param staticDataService: StaticDataService
-	 */
+  /**
+   * Component Constructor
+   *
+   * @param router: Router
+   * @param fb: FormBuilder,
+   * @param cdr: ChangeDetectorRef
+   * @param activatedRoute: ActivatedRoute
+   * @param translate: TranslateService
+   * @param authNoticeService: MessageNoticeService
+   * @param authenticationService: AuthenticationService,
+   * @param staticDataService: StaticDataService
+   */
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -60,13 +60,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.unsubscribe = new Subject();
   }
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
+  /**
+   * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
+   */
 
-	/**
-	 * On Init
-	 */
+  /**
+   * On Init
+   */
   ngOnInit(): void {
     this.initializeForm();
 
@@ -76,9 +76,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-	/**
-	 * On destroy
-	 */
+  /**
+   * On destroy
+   */
   ngOnDestroy(): void {
     this.authNoticeService.setNotice(null);
     this.unsubscribe.next();
@@ -86,9 +86,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-	/**
-	 * Form Initialization
-	 */
+  /**
+   * Form Initialization
+   */
   initializeForm() {
     this.authForm = this.fb.group({
       email: ['', Validators.compose([
@@ -107,9 +107,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-	/**
-	 * On Submit Form
-	 */
+  /**
+   * On Submit Form
+   */
   submitForm(): void {
     if (this.loading) return;
     this.authNoticeService.setNotice(null);
@@ -136,7 +136,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             if ((data.action) && (data.action === 'need_email_verification')) {
               this.authNoticeService.setNotice(
                 this.translate.instant('AUTH.LOGIN.EMAIL_NEEDS_VERIFICATION'), 'warning');
-              this.router.navigateByUrl('auth/need-verification');
+              // this.router.navigateByUrl('auth/need-verification');
             }
             else if ((data.action) && (data.action === 'need_password_verification')) {
               this.authNoticeService.setNotice(
@@ -164,12 +164,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-	/**
-	 * Checking control validation
-	 *
-	 * @param controlName: string => Equals to formControlName
-	 * @param validationType: string => Equals to valitors name
-	 */
+  /**
+   * Checking control validation
+   *
+   * @param controlName: string => Equals to formControlName
+   * @param validationType: string => Equals to valitors name
+   */
   isControlHasError(controlName: string, validationType: string): boolean {
     const control = this.authForm.controls[controlName];
     if (!control) {

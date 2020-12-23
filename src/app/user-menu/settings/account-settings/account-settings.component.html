@@ -26,7 +26,7 @@
 
 <!--begin::Button (Deactivate User)-->
 <div class="single-delete">
-  <button [disabled]="!activated" mat-raised-button class="delete-text" (click)="deleteItemModal()">
+  <button [disabled]="!activated" mat-raised-button (click)="deleteItemModal()" class="btn btn-block btn-danger">
     {{'SETTINGS.DEACTIVATE' | translate}}
   </button>
 </div>

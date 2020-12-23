@@ -97,7 +97,7 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 	 */
 	initializeForm() {
 		this.authForm = this.fb.group({
-			newPassword: ['', Validators.compose([
+			password: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(this.validator.password.minLength),
 				Validators.maxLength(this.validator.password.maxLength)
@@ -158,7 +158,7 @@ export class PasswordRestorationComponent implements OnInit, OnDestroy {
 		this.loading = true;
 
 		const authData = {
-			newPassword: controls.newPassword.value,
+			newPassword: controls.password.value,
 			verPassword: controls.confirmPassword.value
 		};
 

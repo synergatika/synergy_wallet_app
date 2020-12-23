@@ -73,7 +73,7 @@ export class RegisterPartnerComponent implements OnInit, OnDestroy {
 		private staticDataService: StaticDataService,
 	) {
 		// this.paymentsList = this.staticDataService.getPaymentsList;
-		this.sectorList = this.staticDataService.getSectorList;
+		this.sectorList = this.staticDataService.getSectorsList;
 		this.validator = this.staticDataService.getValidators.user;
 		this.unsubscribe = new Subject();
 	}
