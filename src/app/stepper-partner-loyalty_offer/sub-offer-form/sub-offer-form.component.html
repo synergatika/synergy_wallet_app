@@ -41,10 +41,10 @@
             {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
           </span>
           <span *ngIf="isControlHasError('quantity','min')" class="error text-danger">
-            {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}: {{ '1' }}
+            {{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }} {{ '1' }}
           </span>
           <span *ngIf="isControlHasError('quantity','max')" class="error text-danger">
-            {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}: {{ transaction.possible_quantity }}
+            {{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }} {{ transaction.possible_quantity }}
           </span>
           <span class="form-text text-muted">
             {{ 'PARTNER.WIZARD.SUB_OFFER_FORM.FORM_HINT' | translate }}

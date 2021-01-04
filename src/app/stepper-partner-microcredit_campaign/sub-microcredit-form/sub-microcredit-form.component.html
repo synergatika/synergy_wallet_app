@@ -15,100 +15,101 @@
         [value]='item.support_id' name="item.support_id" [checked]="isRadioButtonChecked(item)"
         [disabled]="isRadioButtonDisable(item)" (click)="onRadioButtonChange(item)">
         {{item.payment_id}}
-        <span *ngIf="item.redeemedTokens === item.initialTokens"><i>(Completed)</i></span>
-        <span *ngIf="item.status === 'order'"><i>(Unpaid)</i></span>
+        <span *ngIf="item.status === 'completed'"><i>({{'SUPPORT.STATUS.COMPLETED' | translate}})</i></span>
+        <span *ngIf="item.status === 'unpaid'"><i>({{'SUPPORT.STATUS.PENDING' | translate}})</i></span>
       </mat-radio-button>
     </mat-radio-group>
   </div>
 
-  <hr>
-
-  <h4 class="heading">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.SUB_HEADING_2' | translate }} <div
-      class="stepper-subtitle">
-      {{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.SUPPORT_ID' | translate }} {{transaction.support_id}}</div>
-  </h4>
-  <div class="stepper-info microcredit-info">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="col-head init">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.INITIAL' | translate }}</div>
-        <div class="token-num">{{transaction.initial_tokens}}</div>
-      </div>
-      <div class="col-md-4">
-        <div class="col-head redeemed">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.REDEEMED' | translate }}</div>
-        <div class="token-num">{{transaction.redeemed_tokens}}</div>
-      </div>
-      <div class="col-md-4">
-        <div class="col-head remaining">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.REMAINING' | translate }}</div>
-        <div class="token-num">{{transaction.possible_tokens}}</div>
-      </div>
-    </div>
-
+  <!--begin::Case hasEnoughTokens-->
+  <div *ngIf="transaction.possible_tokens">
     <hr>
 
-    <div class="mb-3">
-      <h4 class="heading">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.SUB_HEADING_3' | translate }} </h4>
-      <div *ngIf="transactions">
-        <div class="row" *ngFor="let tran of transactions">
-          <div class="col-md-6">
-            <span>{{tran.createdAt | date}}</span>
-          </div>
-          <div class="col-md-6" *ngIf="(tran.type === 'PromiseFund') || ((tran.type === 'SpendFund'))"
-            class="stepper-info microcredit-info">
-            <span class="col-head" [ngClass]="(tran.type==='PromiseFund') ? 'init' : 'redeemed'">
-              {{tran.tokens}} {{ 'HISTORY.TOKENS' | translate }}
-            </span>
-          </div>
-          <div class="col-md-6" *ngIf="(tran.type === 'RevertFund') || ((tran.type === 'ReceiveFund'))"
-            class="stepper-info microcredit-info">
-            <span class="col-head" [ngClass]="(tran.type==='ReceiveFund') ? 'init' : 'redeemed'">
-              {{ (tran.type==='ReceiveFund') ? ('HISTORY.PAID' | translate) :  ('HISTORY.UNPAID' | translate) }}
-            </span>
+    <h4 class="heading">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.SUB_HEADING_2' | translate }} <div
+        class="stepper-subtitle">
+        {{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.SUPPORT_ID' | translate }} {{transaction.support_id}}</div>
+    </h4>
+    <div class="stepper-info microcredit-info">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="col-head init">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.INITIAL' | translate }}</div>
+          <div class="token-num">{{transaction.initial_tokens}}</div>
+        </div>
+        <div class="col-md-4">
+          <div class="col-head redeemed">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.REDEEMED' | translate }}</div>
+          <div class="token-num">{{transaction.redeemed_tokens}}</div>
+        </div>
+        <div class="col-md-4">
+          <div class="col-head remaining">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.REMAINING' | translate }}</div>
+          <div class="token-num">{{transaction.possible_tokens}}</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="mb-3">
+        <h4 class="heading">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.SUB_HEADING_3' | translate }} </h4>
+        <div *ngIf="transactions">
+          <div class="row" *ngFor="let tran of transactions">
+            <div class="col-md-6">
+              <span>{{tran.createdAt | date}}</span>
+            </div>
+            <div class="col-md-6" *ngIf="(tran.type === 'PromiseFund') || ((tran.type === 'SpendFund'))"
+              class="stepper-info microcredit-info">
+              <span class="col-head" [ngClass]="(tran.type==='PromiseFund') ? 'init' : 'redeemed'">
+                {{tran.tokens}} {{ 'HISTORY.TOKENS' | translate }}
+              </span>
+            </div>
+            <div class="col-md-6" *ngIf="(tran.type === 'RevertFund') || ((tran.type === 'ReceiveFund'))"
+              class="stepper-info microcredit-info">
+              <span class="col-head" [ngClass]="(tran.type==='ReceiveFund') ? 'init' : 'redeemed'">
+                {{ (tran.type==='ReceiveFund') ? ('HISTORY.PAID' | translate) : ('HISTORY.UNPAID' | translate) }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!--begin::Case hasEnoughTokens-->
-    <div *ngIf="transaction.possible_tokens">
 
-      <hr>
-      <h6 class="stepper-label">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.FORM_TITLE' | translate }}</h6>
 
-      <!--begin::Form(Wizard Step 2)-->
-      <form [formGroup]="stepperForm">
+    <hr>
+    <h6 class="stepper-label">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.FORM_TITLE' | translate }}</h6>
 
-        <!--begin::Form Group "Tokens to Redeem"-->
-        <div class="form-group">
-          <!--<label>Tokens</label>-->
-          <div class="input-group amount-input">
-            <input type="number" class="form-control" name="tokens" formControlName="tokens" placeholder="Tokens">
-          </div>
-          <span *ngIf="isControlHasError('tokens','required')"
-            class="error text-danger">{{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
-          <span *ngIf="isControlHasError('tokens','min')"
-            class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD' | translate }}
-            {{ '1' }}</span>
-          <span *ngIf="isControlHasError('tokens','max')"
-            class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD' | translate }}
-            {{ transaction.possible_tokens }}</span>
-          <span class="form-text text-muted">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.FORM_HINT' | translate }}</span>
+    <!--begin::Form(Wizard Step 2)-->
+    <form [formGroup]="stepperForm">
+
+      <!--begin::Form Group "Tokens to Redeem"-->
+      <div class="form-group">
+        <!--<label>Tokens</label>-->
+        <div class="input-group amount-input">
+          <input type="number" class="form-control" name="tokens" formControlName="tokens" placeholder="Tokens">
         </div>
-        <!--end::Form Group "Tokens"-->
+        <span *ngIf="isControlHasError('tokens','required')" class="error text-danger">{{
+          'FORM.VALIDATION.REQUIRED_FIELD' | translate }}</span>
+        <span *ngIf="isControlHasError('tokens','min')" class="error text-danger">{{ 'FORM.VALIDATION.MIN_VALUE_FIELD'
+          | translate }}
+          {{ '1' }}</span>
+        <span *ngIf="isControlHasError('tokens','max')" class="error text-danger">{{ 'FORM.VALIDATION.MAX_VALUE_FIELD'
+          | translate }}
+          {{ transaction.possible_tokens }}</span>
+        <span class="form-text text-muted">{{ 'PARTNER.WIZARD.SUB_MICROCREDIT_FORM.FORM_HINT' | translate }}</span>
+      </div>
+      <!--end::Form Group "Tokens"-->
 
-      </form>
-      <!--end::Form-->
-
-    </div>
-    <!--end::Case hasEnoughTokens-->
-
-    <!--begin::Wizard Buttons-->
-    <button mat-raised-button class="mr-2" (click)="onPreviousStep()">
-      {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}
-    </button>
-    <button *ngIf="transaction.possible_tokens" mat-raised-button (click)="onNextStep()">
-      {{ 'PARTNER.WIZARD.NEXT_STEP' | translate }}
-    </button>
-    <!--end::Wizard Buttons-->
+    </form>
+    <!--end::Form-->
 
   </div>
+  <!--end::Case hasEnoughTokens-->
+
+  <!--begin::Wizard Buttons-->
+  <button mat-raised-button class="mr-2" (click)="onPreviousStep()">
+    {{ 'PARTNER.WIZARD.PREVIOUS_STEP' | translate }}
+  </button>
+  <button *ngIf="transaction.possible_tokens" mat-raised-button (click)="onNextStep()">
+    {{ 'PARTNER.WIZARD.NEXT_STEP' | translate }}
+  </button>
+  <!--end::Wizard Buttons-->
+
 </div>

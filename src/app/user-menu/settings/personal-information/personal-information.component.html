@@ -5,7 +5,7 @@
   <div *ngIf="access === 'partner'">
 
     <!--begin::Form-->
-    <form [formGroup]="partnerForm" class="form single-form" id="personal_form">
+    <form [formGroup]="partnerForm" class="form profile-form" id="personal_form">
       <hr>
       <div class="row">
         <div class="sub-heading col-md-12">{{ 'FIELDS.PROFILE.SUBSECTIONS.BASIC' | translate }}</div>
@@ -60,6 +60,7 @@
 
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-6">
 
@@ -81,11 +82,6 @@
             </mat-form-field>
           </div>
           <!--end::Form Group "Subtitle"-->
-
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
 
           <!--begin::Form Group "Description"-->
           <div class="form-group">
@@ -111,37 +107,14 @@
           <!--end::Form Group "Description"-->
 
         </div>
-        <div class="col-md-6">
 
+        <div class="col-md-6">
           <!--begin::Form Group "Image"-->
           <app-image-upload *ngIf="loadImageUploader" [parentForm]="partnerForm" previousURL="{{initialImage}}">
           </app-image-upload>
-          <!-- <div class="form-group">
-            <label class="col-form-label">{{ 'FIELDS.PROFILE.PARTNER_IMAGE.TITLE' | translate }}</label>
-            <div class="">
-              <div class="avatar" id="merchat_avatar">
-                <div class="avatar-img">
-                  <div class="avatar-container">
-                    <img *ngIf="previewUrl" class="avatar-holder" [src]="previewUrl">
-                    <div *ngIf="!originalImage" class="image-cancel">
-                      <span class="mdi mdi-close-circle" (click)="onImageCancel()">
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button type="button" mat-raised-button (click)="fileInputMerch.click()">
-                  {{ 'FIELDS.PROFILE.PARTNER_IMAGE.ACTION' | translate }}
-                </button>
-                <label class="avatar-upload">
-                  <input type="file" hidden (change)="fileProgress($event)" name="profile_avatar"
-                    accept=".png, .jpg, .jpeg" #fileInputMerch>
-                </label>
-              </div>
-            </div>
-          </div> -->
           <!--end::Form Group "Image"-->
-
         </div>
+
       </div>
 
       <!--begin::Case hasAddress-->
@@ -324,9 +297,9 @@
           </div>
         </div>
 
-        <!--begin::Form Group "Name"-->
+        <!--begin::Form Group "Phone"-->
         <div class="form-group">
-          <mat-form-field>
+          <mat-form-field class="col-md-6">
             <mat-label>{{ 'FIELDS.PROFILE.PHONE.TITLE' | translate }}</mat-label>
             <input matInput type="text" name="phone" formControlName="phone"
               placeholder="{{ 'FIELDS.PROFILE.PHONE.PLACEHOLDER' | translate }}">
@@ -344,7 +317,7 @@
             </mat-hint>
           </mat-form-field>
         </div>
-        <!--end::Form Group "Name"-->
+        <!--end::Form Group "Phone"-->
 
         <!--begin::Form Group "Contacts"-->
         <div class="form-group">

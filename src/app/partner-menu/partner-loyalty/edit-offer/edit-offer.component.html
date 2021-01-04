@@ -62,16 +62,13 @@
             </div>
             <!--end::Form Group "Description"-->
 
-          </div>
-          <div class="col-md-6">
-
             <!--begin::Form Group "Instructions"-->
             <div class="form-group">
               <mat-form-field>
                 <mat-label>{{'FIELDS.OFFER.INSTRUCTIONS.TITLE' | translate}}</mat-label>
                 <textarea class="short" matInput type="text" name="Instructions" formControlName="instructions"
                   placeholder="{{'FIELDS.OFFER.INSTRUCTIONS.PLACEHOLDER' | translate}}">
-                            </textarea>
+                                        </textarea>
                 <mat-error *ngIf="isControlHasError('instructions','required')" class="error text-danger">
                   {{ 'FORM.VALIDATION.REQUIRED_FIELD' | translate }}
                 </mat-error>
@@ -87,6 +84,9 @@
               </mat-form-field>
             </div>
             <!--end::Form Group "Instructions"-->
+
+          </div>
+          <div class="col-md-6">
 
             <!--begin::Form Group "Subtitle"-->
             <div class="form-group">
@@ -206,8 +206,8 @@
     {{'OFFER.DELETE_CONFIRM' | translate}} '{{title}}'?
   </div>
   <div class="modal-footer">
-    <button mat-raised-button class="btn btn-secondary mr-3"
-      (click)="deleteItem();c('Close click'); ">{{'OFFER.DELETE' | translate}}
+    <button mat-raised-button class="btn btn-secondary mr-3" (click)="deleteItem();c('Close click'); ">{{'OFFER.DELETE'
+      | translate}}
     </button>
     <button mat-raised-button class="btn" (click)="c('Close click');">
       {{'OFFER.CANCEL' | translate}}
